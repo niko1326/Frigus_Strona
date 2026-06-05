@@ -1,0 +1,44 @@
+---
+import CTAButton from '../components/CTAButton.astro';
+import Layout from '../components/Layout.astro';
+import { BUSINESS, HOURS, PHONE_DISPLAY, PHONE_TEL, SERVICE_AREAS } from '../config/site';
+import { pageMeta } from '../i18n/content';
+
+const meta = pageMeta.pl.contact;
+---
+
+<Layout
+  lang="pl"
+  title={meta.title}
+  description={meta.description}
+  keywords={meta.keywords}
+  currentPath="/kontakt"
+>
+  <section class="page-hero">
+    <div class="container" data-reveal>
+      <p class="eyebrow">Kontakt</p>
+      <h1>Telefon to najszybsza wycena</h1>
+      <p>
+        Bez formularzy i bez kolejek. Zadzwoń, opisz lokal i urządzenie, a szybko wrócimy z propozycją
+        zakresu i terminu.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container contact-panel" data-reveal>
+      <a class="phone-big" href={`tel:${PHONE_TEL}`} aria-label="Zadzwoń do CLIM-PRO">
+        {PHONE_DISPLAY}
+      </a>
+      <ul class="bullet-list">
+        <li>Pon.-Pt.: {HOURS.weekdays}</li>
+        <li>Sobota: {HOURS.saturday}</li>
+        <li>Niedziela: {HOURS.sundayPL}</li>
+        <li>Zespół: {BUSINESS.teamSize} osoby</li>
+        <li>Obszar: {SERVICE_AREAS.join(', ')}</li>
+      </ul>
+      <p class="tiny-note">Najlepsza forma kontaktu: połączenie telefoniczne.</p>
+      <CTAButton href={`tel:${PHONE_TEL}`} label="Zadzwoń po darmową wycenę" ariaLabel="Zadzwoń po darmową wycenę" />
+    </div>
+  </section>
+</Layout>

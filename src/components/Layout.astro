@@ -1,0 +1,116 @@
+---
+import Footer from './Footer.astro';
+import Header from './Header.astro';
+import StickyCallBar from './StickyCallBar.astro';
+import {
+  ANALYTICS,
+  BUSINESS,
+  PHONE_TEL,
+  SERVICE_AREAS,
+  SERVICE_AREAS_EN,
+  SITE
+} from '../config/site';
+import { commonLabels, getAlternatePath, type Locale } from '../i18n/content';
+import '../styles/global.css';
+
+interface Props {
+  lang: Locale;
+  title: string;
+  description: string;
+  currentPath: string;
+  keywords?: string[];
+}
+
+const { lang, title, description, currentPath, keywords = [] } = Astro.props;
+
+const canonicalUrl = new URL(currentPath, SITE.siteUrl).toString();
+const alternatePath = getAlternatePath(currentPath, lang);
+const alternateUrl = new URL(alternatePath, SITE.siteUrl).toString();
+const homeUrl = new URL('/', SITE.siteUrl).toString();
+const labels = commonLabels[lang];
+const areaServed = lang === 'pl' ? [...SERVICE_AREAS] : [...SERVICE_AREAS_EN];
+
+const localBusinessSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: SITE.brandName,
+  description,
+  telephone: PHONE_TEL,
+  areaServed,
+  serviceType: lang === 'pl' ? BUSINESS.serviceTypePL : BUSINESS.serviceTypeEN,
+  url: canonicalUrl,
+  availableLanguage: ['pl', 'en']
+};
+
+const cloudflareBeaconData = JSON.stringify({ token: ANALYTICS.cloudflare.token });
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    {keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
+    <meta name="format-detection" content="telephone=no" />
+    <title>{title}</title>
+
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" hreflang={lang === 'pl' ? 'en' : 'pl'} href={alternateUrl} />
+    <link rel="alternate" hreflang="x-default" href={homeUrl} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)}></script>
+    {
+      ANALYTICS.cloudflare.enabled && ANALYTICS.cloudflare.token && (
+        <script
+          is:inline
+          defer
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon={cloudflareBeaconData}
+        ></script>
+      )
+    }
+  </head>
+  <body>
+    <Header lang={lang} currentPath={currentPath} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer lang={lang} currentPath={currentPath} />
+    <StickyCallBar phoneTel={PHONE_TEL} label={labels.stickyCall} ariaLabel={labels.phoneAria} />
+
+    <script is:inline>
+      (() => {
+        const revealNodes = document.querySelectorAll('[data-reveal]');
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (prefersReduced) {
+          revealNodes.forEach((node) => node.classList.add('is-visible'));
+          return;
+        }
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.18, rootMargin: '0px 0px -40px 0px' }
+        );
+
+        revealNodes.forEach((node) => observer.observe(node));
+      })();
+    </script>
+  </body>
+</html>

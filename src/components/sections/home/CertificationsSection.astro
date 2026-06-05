@@ -1,0 +1,31 @@
+---
+import { BUSINESS } from '../../../config/site';
+import type { Locale } from '../../../i18n/content';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const isPL = lang === 'pl';
+---
+
+<section class="section-sm" data-reveal>
+  <div class="container plain-stack">
+    <p class="eyebrow">{isPL ? 'Uprawnienia / Certyfikaty' : 'Credentials / Certificates'}</p>
+    <p class="plain-highlight plain-highlight-sm">
+      {
+        isPL
+          ? `Posiadamy certyfikaty F-gazowe dla personelu i przedsiębiorcy oraz ${BUSINESS.warrantyYears} lata gwarancji montażowej.`
+          : `We hold F-gas certificates for personnel and company operations, with a ${BUSINESS.warrantyYears}-year installation warranty.`
+      }
+    </p>
+    <p class="tiny-note">
+      {
+        isPL
+          ? 'Informacja ogólna: w kontekście wymagań UDT/F-gaz prace przy stacjonarnych urządzeniach chłodniczych/klimatyzacyjnych realizujemy zgodnie z wymaganiami dotyczącymi F-gazów. Ten opis nie stanowi porady prawnej.'
+          : 'General note: in the UDT/F-gas compliance context, work on stationary refrigeration/AC equipment is carried out in line with F-gas requirements. This section is informational, not legal advice.'
+      }
+    </p>
+  </div>
+</section>

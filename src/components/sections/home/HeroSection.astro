@@ -1,0 +1,54 @@
+---
+import CTAButton from '../../CTAButton.astro';
+import { PHONE_TEL, PRICING } from '../../../config/site';
+import type { Locale } from '../../../i18n/content';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const isPL = lang === 'pl';
+const pricingText = isPL
+  ? `${PRICING.installFromPLN} zł`
+  : `${PRICING.installFromPLN} zł`;
+---
+
+<section class="hero section">
+  <div class="container hero-grid">
+    <div class="hero-copy" data-reveal>
+      <p class="eyebrow">
+        {isPL ? 'Bydgoszcz + Trójmiasto' : 'Bydgoszcz + Tri-City'}
+      </p>
+      <h1>{isPL ? 'Montaż klimatyzacji typu split' : 'Split air conditioner installation'}</h1>
+
+      <div class="hero-price" aria-label={pricingText}>
+        <span>{isPL ? 'Cena od' : 'Starting price'}</span>
+        <strong>{pricingText}</strong>
+      </div>
+
+      <div class="hero-actions">
+        <CTAButton
+          href={`tel:${PHONE_TEL}`}
+          label={isPL ? 'Zadzwoń po darmową wycenę' : 'Call for a free quote'}
+          ariaLabel={isPL ? 'Zadzwoń po darmową wycenę' : 'Call for a free quote'}
+        />
+        <CTAButton
+          href={isPL ? '/uslugi' : '/en/services'}
+          label={isPL ? 'Zobacz usługi' : 'See services'}
+          variant="secondary"
+        />
+      </div>
+    </div>
+
+    <div class="hero-visual" data-reveal>
+      <img
+        class="hero-photo-img"
+        src="/photos/klimatyzator-scienny-haier.png"
+        alt={isPL ? 'Klimatyzacja po montażu' : 'Installed air conditioner'}
+        loading="eager"
+        decoding="async"
+      />
+    </div>
+  </div>
+</section>

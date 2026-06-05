@@ -1,0 +1,38 @@
+---
+import Layout from '../components/Layout.astro';
+import { SITE } from '../config/site';
+import { pageMeta } from '../i18n/content';
+
+const meta = pageMeta.pl.privacy;
+---
+
+<Layout
+  lang="pl"
+  title={meta.title}
+  description={meta.description}
+  keywords={meta.keywords}
+  currentPath="/polityka-prywatnosci"
+>
+  <section class="page-hero">
+    <div class="container" data-reveal>
+      <p class="eyebrow">Polityka prywatności</p>
+      <h1>Podstawowe informacje o danych</h1>
+      <p>
+        Administratorem danych kontaktowych jest {SITE.brandName}. Dane przekazane telefonicznie są używane
+        wyłącznie do kontaktu w sprawie wyceny i realizacji usługi.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container highlight-card" data-reveal>
+      <ul class="bullet-list">
+        <li>Zakres danych: imię, numer telefonu, adres montażu (jeśli podany).</li>
+        <li>Cel: kontakt, ustalenie wyceny i realizacja usługi.</li>
+        <li>Okres przechowywania: nie dłużej niż wymagają tego rozliczenia i kontakt serwisowy.</li>
+        <li>Kontakt w sprawie danych: przez numer telefonu podany na stronie.</li>
+      </ul>
+      <p class="tiny-note">To skrócona wersja informacyjna i może zostać rozszerzona o pełny dokument RODO.</p>
+    </div>
+  </section>
+</Layout>

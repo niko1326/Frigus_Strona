@@ -1,0 +1,24 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = 'icon' } = Astro.props;
+---
+
+<svg
+  class={className}
+  viewBox="0 0 64 64"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.75"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+>
+  <rect x="8" y="14" width="48" height="16" rx="4" />
+  <path d="M14 22h36" />
+  <path d="M22 36c3.5 4 3.5 8 0 12" />
+  <path d="M32 36c3.5 4 3.5 8 0 12" />
+  <path d="M42 36c3.5 4 3.5 8 0 12" />
+</svg>

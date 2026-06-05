@@ -1,0 +1,40 @@
+---
+import CTAButton from '../components/CTAButton.astro';
+import Layout from '../components/Layout.astro';
+import { PHONE_TEL, PRICING } from '../config/site';
+import { pageMeta } from '../i18n/content';
+
+const meta = pageMeta.pl.pricing;
+---
+
+<Layout
+  lang="pl"
+  title={meta.title}
+  description={meta.description}
+  keywords={meta.keywords}
+  currentPath="/cennik"
+>
+  <section class="page-hero">
+    <div class="container" data-reveal>
+      <p class="eyebrow">Cennik</p>
+      <h1>Przejrzysta wycena startowa</h1>
+      <p>
+        Pokazujemy widełki startowe, bo finalna cena zależy od długości instalacji, miejsca montażu i
+        warunków technicznych.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container pricing-panel" data-reveal>
+      <p class="price-main">Montaż od {PRICING.installFromPLN}-{PRICING.installToPLN} zł + cena urządzenia</p>
+      <ul class="bullet-list">
+        <li>{PRICING.travelIncludedPL}</li>
+        <li>Podłączenie do istniejącej instalacji elektrycznej w cenie montażu.</li>
+        <li>Brak formularzy: najkrótsza droga do wyceny to telefon.</li>
+      </ul>
+      <p class="tiny-note">{PRICING.pricingNotePL}</p>
+      <CTAButton href={`tel:${PHONE_TEL}`} label="Zadzwoń po darmową wycenę" ariaLabel="Zadzwoń po darmową wycenę" />
+    </div>
+  </section>
+</Layout>

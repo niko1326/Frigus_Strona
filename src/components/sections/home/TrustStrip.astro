@@ -1,0 +1,39 @@
+---
+import { BUSINESS } from '../../../config/site';
+import type { Locale } from '../../../i18n/content';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const isPL = lang === 'pl';
+
+const items = isPL
+  ? [
+      `${BUSINESS.warrantyYears} lata gwarancji montażowej`,
+      'F-gazy: personel + przedsiębiorca',
+      'Szybkie terminy i szybka odpowiedź',
+      'Porządek po montażu'
+    ]
+  : [
+      `${BUSINESS.warrantyYears}-year installation warranty`,
+      'F-gas: personnel + company certificates',
+      'Fast response and short lead times',
+      'Clean finish after installation'
+    ];
+---
+
+<section class="trust-strip section-sm" data-reveal>
+  <div class="container">
+    <ul class="trust-inline-list">
+      {
+        items.map((item) => (
+          <li>
+            <span>{item}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

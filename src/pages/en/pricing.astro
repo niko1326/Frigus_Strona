@@ -1,0 +1,40 @@
+---
+import CTAButton from '../../components/CTAButton.astro';
+import Layout from '../../components/Layout.astro';
+import { PHONE_TEL, PRICING } from '../../config/site';
+import { pageMeta } from '../../i18n/content';
+
+const meta = pageMeta.en.pricing;
+---
+
+<Layout
+  lang="en"
+  title={meta.title}
+  description={meta.description}
+  keywords={meta.keywords}
+  currentPath="/en/pricing"
+>
+  <section class="page-hero">
+    <div class="container" data-reveal>
+      <p class="eyebrow">Pricing</p>
+      <h1>Clear starting price</h1>
+      <p>
+        We share realistic starting ranges first. Final pricing depends on line length, mounting conditions,
+        and technical layout.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container pricing-panel" data-reveal>
+      <p class="price-main">Installation from PLN {PRICING.installFromPLN}-{PRICING.installToPLN} + unit cost</p>
+      <ul class="bullet-list">
+        <li>{PRICING.travelIncludedEN}</li>
+        <li>Connection to existing electrical installation is included.</li>
+        <li>No forms or widgets. Phone call is the fastest quote path.</li>
+      </ul>
+      <p class="tiny-note">{PRICING.pricingNoteEN}</p>
+      <CTAButton href={`tel:${PHONE_TEL}`} label="Call for a free quote" ariaLabel="Call for a free quote" />
+    </div>
+  </section>
+</Layout>

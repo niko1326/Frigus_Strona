@@ -1,0 +1,23 @@
+---
+interface Props {
+  href: string;
+  label: string;
+  variant?: 'primary' | 'secondary' | 'ghost';
+  ariaLabel?: string;
+  fullWidth?: boolean;
+}
+
+const {
+  href,
+  label,
+  variant = 'primary',
+  ariaLabel,
+  fullWidth = false
+} = Astro.props;
+
+const classNames = ['cta-button', `cta-${variant}`, fullWidth ? 'cta-full' : ''].join(' ').trim();
+---
+
+<a class={classNames} href={href} aria-label={ariaLabel ?? label}>
+  {label}
+</a>

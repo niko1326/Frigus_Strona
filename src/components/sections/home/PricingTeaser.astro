@@ -1,0 +1,27 @@
+---
+import { PRICING } from '../../../config/site';
+import type { Locale } from '../../../i18n/content';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const isPL = lang === 'pl';
+const pricingPath = isPL ? '/cennik' : '/en/pricing';
+---
+
+<section class="section" data-reveal>
+  <div class="container">
+    <div class="plain-stack">
+      <p class="eyebrow">{isPL ? 'Cennik' : 'Pricing'}</p>
+      <p class="plain-highlight">
+        {isPL
+          ? `Montaż od ${PRICING.installFromPLN}-${PRICING.installToPLN} zł + cena urządzenia`
+          : `Installation from PLN ${PRICING.installFromPLN}-${PRICING.installToPLN} + unit price`}
+      </p>
+      <p>{isPL ? 'Dojazd jest wliczony. Finalna cena zależy od układu instalacji.' : 'Travel is included. Final cost depends on installation layout.'}</p>
+      <a class="text-link" href={pricingPath}>{isPL ? 'Sprawdź szczegóły cennika' : 'See pricing details'}</a>
+    </div>
+  </div>
+</section>

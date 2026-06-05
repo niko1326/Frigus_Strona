@@ -1,0 +1,33 @@
+---
+import { SERVICE_AREAS, SERVICE_AREAS_EN } from '../../../config/site';
+import type { Locale } from '../../../i18n/content';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const isPL = lang === 'pl';
+const areas = isPL ? SERVICE_AREAS : SERVICE_AREAS_EN;
+const areasLine = areas.join(', ');
+---
+
+<section class="section" data-reveal>
+  <div class="container plain-stack">
+    <div class="plain-stack">
+      <p class="eyebrow">{isPL ? 'Obszar działania' : 'Service area'}</p>
+      <h2>{isPL ? 'Bydgoszcz, Trójmiasto i okolice' : 'Bydgoszcz, Tri-City and nearby areas'}</h2>
+      <p>
+        {isPL
+          ? 'Realizujemy montaże w domach i mieszkaniach na całym wskazanym obszarze.'
+          : 'We install split units in apartments and houses across the listed locations.'}
+      </p>
+      <p class="tiny-note">
+        {isPL
+          ? 'Uwaga: ewentualne zgody administracyjne i formalności po stronie inwestora/właściciela lokalu.'
+          : 'Note: any building permissions or housing administration approvals are handled by the property owner.'}
+      </p>
+    </div>
+    <p class="plain-area-line">{areasLine}</p>
+  </div>
+</section>

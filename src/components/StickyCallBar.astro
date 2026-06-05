@@ -1,0 +1,32 @@
+---
+import CTAButton from './CTAButton.astro';
+
+interface Props {
+  phoneTel: string;
+  label: string;
+  ariaLabel: string;
+}
+
+const { phoneTel, label, ariaLabel } = Astro.props;
+---
+
+<div class="sticky-call" data-sticky-call>
+  <CTAButton href={`tel:${phoneTel}`} label={label} ariaLabel={ariaLabel} fullWidth={true} />
+</div>
+
+<script is:inline>
+  (() => {
+    const sticky = document.querySelector('[data-sticky-call]');
+    if (!sticky) {
+      return;
+    }
+
+    const onScroll = () => {
+      const shouldShow = window.scrollY > 280;
+      sticky.classList.toggle('is-visible', shouldShow);
+    };
+
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+</script>

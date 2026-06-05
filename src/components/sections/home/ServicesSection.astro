@@ -1,0 +1,60 @@
+---
+import type { Locale } from '../../../i18n/content';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const isPL = lang === 'pl';
+
+const cards = isPL
+  ? [
+      {
+        title: 'Montaż split (mieszkanie/dom)',
+        description: 'Montaż jednostki wewnętrznej i estetyczne poprowadzenie instalacji.'
+      },
+      {
+        title: 'Montaż jednostki zewnętrznej + uruchomienie',
+        description: 'Bezpieczny montaż, próżnia, napełnienie i pełne uruchomienie układu.'
+      },
+      {
+        title: 'Przegląd i czyszczenie',
+        description: 'Regularny serwis podstawowy dla wydajnej i higienicznej pracy urządzenia.'
+      }
+    ]
+  : [
+      {
+        title: 'Split installation (apartment/house)',
+        description: 'Indoor unit mounting and neat refrigerant line routing.'
+      },
+      {
+        title: 'Outdoor unit mounting + startup',
+        description: 'Safe mounting, vacuum process, charging, and full commissioning.'
+      },
+      {
+        title: 'Maintenance and cleaning',
+        description: 'Basic recurring service to keep the system efficient and clean.'
+      }
+    ];
+---
+
+<section class="section" id="services" data-reveal>
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">{isPL ? 'Usługi' : 'Services'}</p>
+      <h2>{isPL ? 'Zakres, którego naprawdę potrzebujesz' : 'Exactly the scope you need'}</h2>
+    </div>
+
+    <ul class="plain-text-list service-list">
+      {
+        cards.map((card) => (
+          <li>
+            <h3 class="plain-list-title">{card.title}</h3>
+            <p>{card.description}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

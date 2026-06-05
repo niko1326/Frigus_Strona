@@ -1,0 +1,64 @@
+---
+import CTAButton from '../components/CTAButton.astro';
+import Layout from '../components/Layout.astro';
+import { PHONE_TEL } from '../config/site';
+import { pageMeta } from '../i18n/content';
+
+const meta = pageMeta.pl.faq;
+---
+
+<Layout
+  lang="pl"
+  title={meta.title}
+  description={meta.description}
+  keywords={meta.keywords}
+  currentPath="/faq"
+>
+  <section class="page-hero">
+    <div class="container" data-reveal>
+      <p class="eyebrow">FAQ</p>
+      <h1>Najczęściej zadawane pytania</h1>
+      <p>Krótko i konkretnie: jak wygląda wycena, montaż i serwis.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container faq-list" data-reveal>
+      <details class="faq-item">
+        <summary>Ile trwa montaż split?</summary>
+        <p>Zwykle około 1 dnia roboczego. Czas zależy od warunków technicznych i długości instalacji.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Czy dojazd jest dodatkowo płatny?</summary>
+        <p>Na naszym obszarze działania dojazd jest wliczony w standardową usługę montażu.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Czy wykonujecie pełną elektrykę?</summary>
+        <p>Podłączamy klimatyzację do istniejącej instalacji elektrycznej. Nie wykonujemy złożonych prac elektrycznych.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Jaka jest gwarancja?</summary>
+        <p>Na montaż udzielamy 2 lat gwarancji. Gwarancja producenta urządzenia jest zgodna z warunkami producenta.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Czy oferujecie przeglądy i czyszczenie?</summary>
+        <p>Tak, wykonujemy serwis podstawowy i czyszczenie urządzeń split.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Jak uzyskać wycenę?</summary>
+        <p>Najszybciej telefonicznie. W części przypadków potrzebna jest krótka wizja na miejscu.</p>
+      </details>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container" data-reveal>
+      <CTAButton href={`tel:${PHONE_TEL}`} label="Zadzwoń po darmową wycenę" ariaLabel="Zadzwoń po darmową wycenę" />
+    </div>
+  </section>
+</Layout>
