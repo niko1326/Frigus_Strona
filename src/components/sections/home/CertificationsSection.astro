@@ -8,6 +8,17 @@ interface Props {
 
 const { lang } = Astro.props;
 const isPL = lang === 'pl';
+
+const certificateImages = [
+  {
+    src: '/photos/certyfikat-1.jpg',
+    alt: isPL ? 'Certyfikat autoryzacyjny 1' : 'Authorized certificate 1',
+  },
+  {
+    src: '/photos/certyfikat-2.jpg',
+    alt: isPL ? 'Certyfikat autoryzacyjny 2' : 'Authorized certificate 2',
+  },
+];
 ---
 
 <section class="section-sm" data-reveal>
@@ -27,5 +38,13 @@ const isPL = lang === 'pl';
           : 'General note: in the UDT/F-gas compliance context, work on stationary refrigeration/AC equipment is carried out in line with F-gas requirements. This section is informational, not legal advice.'
       }
     </p>
+  </div>
+
+  <div class="container gallery-grid" data-reveal>
+    {certificateImages.map((image) => (
+      <figure class="certificate-card">
+        <img src={image.src} alt={image.alt} loading="lazy" />
+      </figure>
+    ))}
   </div>
 </section>

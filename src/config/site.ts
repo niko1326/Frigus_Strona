@@ -1,6 +1,6 @@
 export const SITE = {
-  brandName: 'CLIM-PRO',
-  siteUrl: 'https://clim-pro.pages.dev',
+  brandName: 'FRIGUS',
+  siteUrl: 'https://frigus.pages.dev',
   defaultLocale: 'pl'
 } as const;
 
@@ -11,8 +11,8 @@ export const SERVICE_AREAS = ['Bydgoszcz', 'Gdańsk', 'Gdynia', 'Sopot', 'okolic
 export const SERVICE_AREAS_EN = ['Bydgoszcz', 'Gdańsk', 'Gdynia', 'Sopot', 'nearby towns'] as const;
 
 export const PRICING = {
-  installFromPLN: 1799,
-  installToPLN: 2500,
+  installFromPLN: 3499,
+  installToPLN: 25,
   pricingNotePL:
     'Cena montażu zależy od długości instalacji i warunków technicznych. Na ten moment realizujemy usługę bez VAT dla klientów indywidualnych (brutto = netto).',
   pricingNoteEN:

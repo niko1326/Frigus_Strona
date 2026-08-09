@@ -288,6 +288,16 @@ main {
   margin-top: 0.4rem;
 }
 
+/* Force smaller buttons in hero area to avoid oversized pills */
+.hero-actions .cta-button {
+  font-size: 0.9rem;
+}
+
+.hero-actions .cta-button.cta-sm {
+  min-height: 2rem;
+  padding: 0.32rem 0.8rem;
+}
+
 .hero-visual {
   display: flex;
   align-items: center;
@@ -610,6 +620,19 @@ main {
   width: 100%;
 }
 
+/* Size modifiers for CTA buttons */
+.cta-sm {
+  font-size: 0.82rem;
+  min-height: 2.2rem;
+  padding: 0.42rem 0.75rem;
+}
+
+.cta-lg {
+  font-size: 1.05rem;
+  min-height: 3.6rem;
+  padding: 0.96rem 1.4rem;
+}
+
 a:focus-visible,
 button:focus-visible,
 summary:focus-visible {
@@ -708,8 +731,22 @@ summary:focus-visible {
 
 .gallery-grid {
   display: grid;
-  gap: 0.75rem;
+  gap: 1rem;
   grid-template-columns: 1fr;
+}
+
+.certificate-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.certificate-card img {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 .gallery-placeholder {

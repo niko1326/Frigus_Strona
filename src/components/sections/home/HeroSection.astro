@@ -23,17 +23,19 @@ const pricingText = isPL
       <h1>{isPL ? 'Montaż klimatyzacji typu split' : 'Split air conditioner installation'}</h1>
 
       <div class="hero-price" aria-label={pricingText}>
-        <span>{isPL ? 'Cena od' : 'Starting price'}</span>
+        <span>{isPL ? 'Klimatyzator + montaż od' : 'Starting price (unit + installation)'}</span>
         <strong>{pricingText}</strong>
       </div>
 
       <div class="hero-actions">
         <CTAButton
+          size="sm"
           href={`tel:${PHONE_TEL}`}
           label={isPL ? 'Zadzwoń po darmową wycenę' : 'Call for a free quote'}
           ariaLabel={isPL ? 'Zadzwoń po darmową wycenę' : 'Call for a free quote'}
         />
         <CTAButton
+          size="sm"
           href={isPL ? '/uslugi' : '/en/services'}
           label={isPL ? 'Zobacz usługi' : 'See services'}
           variant="secondary"

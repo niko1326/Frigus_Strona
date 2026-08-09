@@ -17,7 +17,7 @@ const pricingPath = isPL ? '/cennik' : '/en/pricing';
       <p class="eyebrow">{isPL ? 'Cennik' : 'Pricing'}</p>
       <p class="plain-highlight">
         {isPL
-          ? `Montaż od ${PRICING.installFromPLN}-${PRICING.installToPLN} zł + cena urządzenia`
+          ? `Koszt montażu i urządzenia od: ${PRICING.installFromPLN} zł`
           : `Installation from PLN ${PRICING.installFromPLN}-${PRICING.installToPLN} + unit price`}
       </p>
       <p>{isPL ? 'Dojazd jest wliczony. Finalna cena zależy od układu instalacji.' : 'Travel is included. Final cost depends on installation layout.'}</p>
