@@ -57,7 +57,7 @@ export const navLinks: Record<Locale, NavLink[]> = {
 
 export const commonLabels = {
   pl: {
-    callNow: 'Zadzwoń po darmową wycenę',
+    callNow: 'Zadzwoń po wycenę',
     callShort: 'Zadzwoń teraz',
     navAria: 'Główna nawigacja',
     phoneAria: `Zadzwoń do ${SITE.brandName}`,
@@ -65,14 +65,14 @@ export const commonLabels = {
     languageShort: 'EN',
     footerHours: 'Dostępność',
     footerInfo: 'Montaż klimatyzacji typu split i serwis podstawowy',
-    stickyCall: 'Zadzwoń: darmowa wycena',
+    stickyCall: 'Zadzwoń po wycenę',
     seeServices: 'Zobacz usługi',
     readPricing: 'Przejdź do cennika',
     ctaBand: 'Zadzwoń i umów wycenę',
     privacy: 'Polityka prywatności'
   },
   en: {
-    callNow: 'Call for a free quote',
+    callNow: 'Call for a quote',
     callShort: 'Call now',
     navAria: 'Main navigation',
     phoneAria: `Call ${SITE.brandName}`,
@@ -80,7 +80,7 @@ export const commonLabels = {
     languageShort: 'PL',
     footerHours: 'Availability',
     footerInfo: 'Split air conditioner installation and basic maintenance',
-    stickyCall: 'Call: free quote',
+    stickyCall: 'Call for a quote',
     seeServices: 'See services',
     readPricing: 'View pricing',
     ctaBand: 'Call and schedule a quote',
@@ -108,7 +108,7 @@ export const pageMeta: Record<Locale, Record<PageKey, PageMeta>> = {
     },
     pricing: {
       title: `Cennik | ${SITE.brandName}`,
-      description: `Cennik montażu klimatyzacji typu split: ${BUSINESS.pricing.label.pl}. ${BUSINESS.pricing.includedInstallation.description.pl}`,
+      description: BUSINESS.pricing.installationService.fullDescription.pl,
       keywords: ['cennik montaż klimatyzacji', 'ile kosztuje montaż klimatyzacji', 'klimatyzacja split cena montażu']
     },
     faq: {
@@ -118,8 +118,8 @@ export const pageMeta: Record<Locale, Record<PageKey, PageMeta>> = {
     },
     contact: {
       title: `Kontakt | ${SITE.brandName}`,
-      description: `Skontaktuj się z ${SITE.brandName} i umów bezpłatną wycenę telefonicznie. Obszar: ${BUSINESS.serviceArea.summary.pl}.`,
-      keywords: [`kontakt klimatyzacja ${bydgoszcz}`, 'telefon montaż klimatyzacji', 'darmowa wycena klimatyzacji']
+      description: `Skontaktuj się z ${SITE.brandName} i umów wycenę telefonicznie. Obszar: ${BUSINESS.serviceArea.summary.pl}.`,
+      keywords: [`kontakt klimatyzacja ${bydgoszcz}`, 'telefon montaż klimatyzacji', 'wycena klimatyzacji']
     },
     privacy: {
       title: `Polityka prywatności | ${SITE.brandName}`,
@@ -139,13 +139,12 @@ export const pageMeta: Record<Locale, Record<PageKey, PageMeta>> = {
     },
     services: {
       title: `Services | ${SITE.brandName}`,
-      description:
-        'What is included: indoor unit mounting, wall passthrough, outdoor unit mounting, full line run, startup, and maintenance cleaning.',
+      description: `Service scope from ${SITE.brandName}: indoor and outdoor unit installation, wall penetration, line routing and commissioning.`,
       keywords: ['split ac services', 'outdoor unit mounting', 'ac maintenance cleaning']
     },
     pricing: {
       title: `Pricing | ${SITE.brandName}`,
-      description: `Split AC installation pricing: ${BUSINESS.pricing.label.en}. ${BUSINESS.pricing.includedInstallation.description.en}`,
+      description: BUSINESS.pricing.installationService.fullDescription.en,
       keywords: ['split ac installation price', 'air conditioner installation cost', `ac quote ${bydgoszcz}`]
     },
     faq: {
@@ -155,8 +154,8 @@ export const pageMeta: Record<Locale, Record<PageKey, PageMeta>> = {
     },
     contact: {
       title: `Contact | ${SITE.brandName}`,
-      description: `Call ${SITE.brandName} for a free quote and installation scheduling. Service area: ${BUSINESS.serviceArea.summary.en}.`,
-      keywords: ['call ac installer', 'contact split ac installation', 'free ac quote']
+      description: `Call ${SITE.brandName} for a quote and installation scheduling. Service area: ${BUSINESS.serviceArea.summary.en}.`,
+      keywords: ['call ac installer', 'contact split ac installation', 'ac quote']
     },
     privacy: {
       title: `Privacy Policy | ${SITE.brandName}`,

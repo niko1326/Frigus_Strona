@@ -17,24 +17,23 @@ const meta = pageMeta.pl.pricing;
   <section class="page-hero">
     <div class="container" data-reveal>
       <p class="eyebrow">Cennik</p>
-      <h1>Przejrzysta cena startowa</h1>
-      <p>
-        Pokazujemy cenę startową, bo finalna cena zależy od długości instalacji, miejsca montażu i
-        warunków technicznych.
-      </p>
+      <h1>{BUSINESS.pricing.installationService.name.pl}</h1>
+      <p>{BUSINESS.pricing.installationService.fullDescription.pl}</p>
     </div>
   </section>
 
   <section class="section">
     <div class="container pricing-panel" data-reveal>
-      <p class="price-main">Cena montażu: {BUSINESS.pricing.label.pl}</p>
+      <p class="price-main">
+        {BUSINESS.pricing.installationService.name.pl}: {BUSINESS.pricing.label.pl} — {BUSINESS.pricing.installationService.baseVariantLabel.pl}
+      </p>
       <ul class="bullet-list">
-        <li>{BUSINESS.pricing.includedInstallation.description.pl}</li>
+        <li>{BUSINESS.pricing.installationService.complexPriceDescription.pl}</li>
         <li>{BUSINESS.travel.note.pl}</li>
         <li>Brak formularzy: najkrótsza droga do wyceny to telefon.</li>
       </ul>
       <p class="tiny-note">{BUSINESS.pricing.taxNote.pl}</p>
-      <CTAButton href={PRIMARY_PHONE.href} label="Zadzwoń po darmową wycenę" ariaLabel="Zadzwoń po darmową wycenę" />
+      <CTAButton href={PRIMARY_PHONE.href} label="Zadzwoń po wycenę" ariaLabel="Zadzwoń po wycenę" />
     </div>
   </section>
 </Layout>

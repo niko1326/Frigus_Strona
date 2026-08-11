@@ -54,9 +54,14 @@ type BusinessConfig = Readonly<{
     currency: 'PLN';
     fromGrossPLN: number;
     label: LocalizedBusinessText;
-    includedInstallation: Readonly<{
-      maxLineLengthMeters: number;
-      description: LocalizedBusinessText;
+    installationService: Readonly<{
+      kind: 'complete-installation-service';
+      name: LocalizedBusinessText;
+      baseVariant: 'simplest-installation';
+      baseVariantLabel: LocalizedBusinessText;
+      complexVariantPricing: 'after-consultation-or-site-inspection';
+      complexPriceDescription: LocalizedBusinessText;
+      fullDescription: LocalizedBusinessText;
     }>;
     taxNote: LocalizedBusinessText;
   }>;
@@ -88,7 +93,6 @@ type BusinessConfig = Readonly<{
 }>;
 
 const INSTALLATION_PRICE_FROM_GROSS_PLN = 3499;
-const STANDARD_INSTALLATION_MAX_LENGTH_METERS = 5;
 
 const createEmailContact = <const Address extends string>(address: Address) =>
   ({
@@ -141,11 +145,25 @@ export const BUSINESS = {
       pl: `od ${INSTALLATION_PRICE_FROM_GROSS_PLN} zł brutto`,
       en: `from PLN ${INSTALLATION_PRICE_FROM_GROSS_PLN} gross`
     },
-    includedInstallation: {
-      maxLineLengthMeters: STANDARD_INSTALLATION_MAX_LENGTH_METERS,
-      description: {
-        pl: `Kompleksowy montaż do ${STANDARD_INSTALLATION_MAX_LENGTH_METERS} m, jeśli jest łatwy dostęp do prądu z istniejącej instalacji elektrycznej.`,
-        en: `Complete installation up to ${STANDARD_INSTALLATION_MAX_LENGTH_METERS} m, provided there is easy access to power from the existing electrical installation.`
+    installationService: {
+      kind: 'complete-installation-service',
+      name: {
+        pl: 'Kompleksowa usługa montażu',
+        en: 'Complete installation service'
+      },
+      baseVariant: 'simplest-installation',
+      baseVariantLabel: {
+        pl: 'najprostszy wariant montażu',
+        en: 'the simplest installation option'
+      },
+      complexVariantPricing: 'after-consultation-or-site-inspection',
+      complexPriceDescription: {
+        pl: 'Wszystkie bardziej złożone montaże wyceniamy po konsultacji lub oględzinach.',
+        en: 'Any more complex installation is priced after a consultation or site inspection.'
+      },
+      fullDescription: {
+        pl: `Kompleksowa usługa montażu kosztuje od ${INSTALLATION_PRICE_FROM_GROSS_PLN} zł brutto w najprostszym wariancie. Wszystkie bardziej złożone montaże wyceniamy po konsultacji lub oględzinach.`,
+        en: `A complete installation service starts at PLN ${INSTALLATION_PRICE_FROM_GROSS_PLN} gross for the simplest installation option. Any more complex installation is priced after a consultation or site inspection.`
       }
     },
     taxNote: {

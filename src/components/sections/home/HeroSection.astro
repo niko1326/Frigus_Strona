@@ -10,6 +10,8 @@ interface Props {
 const { lang } = Astro.props;
 const isPL = lang === 'pl';
 const pricingText = BUSINESS.pricing.label[lang];
+const installationService = BUSINESS.pricing.installationService;
+const pricingContext = `${installationService.name[lang]} — ${installationService.baseVariantLabel[lang]}`;
 ---
 
 <section class="hero section">
@@ -20,8 +22,8 @@ const pricingText = BUSINESS.pricing.label[lang];
       </p>
       <h1>{BUSINESS.serviceType[lang]}</h1>
 
-      <div class="hero-price" aria-label={pricingText}>
-        <span>{isPL ? 'Cena montażu' : 'Installation price'}</span>
+      <div class="hero-price" aria-label={`${pricingContext}: ${pricingText}`}>
+        <span>{pricingContext}</span>
         <strong>{pricingText}</strong>
       </div>
 
@@ -29,8 +31,8 @@ const pricingText = BUSINESS.pricing.label[lang];
         <CTAButton
           size="sm"
           href={PRIMARY_PHONE.href}
-          label={isPL ? 'Zadzwoń po darmową wycenę' : 'Call for a free quote'}
-          ariaLabel={isPL ? 'Zadzwoń po darmową wycenę' : 'Call for a free quote'}
+          label={isPL ? 'Zadzwoń po wycenę' : 'Call for a quote'}
+          ariaLabel={isPL ? 'Zadzwoń po wycenę' : 'Call for a quote'}
         />
         <CTAButton
           size="sm"

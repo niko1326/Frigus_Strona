@@ -1,4 +1,5 @@
 ---
+import { BUSINESS } from '../../../config/site';
 import type { Locale } from '../../../i18n/content';
 
 interface Props {
@@ -11,12 +12,12 @@ const isPL = lang === 'pl';
 const steps = isPL
   ? [
       { title: 'Telefon', description: 'Krótka rozmowa, orientacyjny zakres i termin wizji lub montażu.' },
-      { title: 'Wycena', description: 'Wycena telefoniczna lub na miejscu, zależnie od układu mieszkania.' },
+      { title: 'Wycena', description: BUSINESS.pricing.installationService.fullDescription.pl },
       { title: 'Montaż', description: 'Montaż zwykle trwa około 1 dnia, z zachowaniem porządku.' }
     ]
   : [
       { title: 'Call', description: 'Short call to understand scope and propose a timeline.' },
-      { title: 'Quote', description: 'Phone quote or on-site quote depending on layout complexity.' },
+      { title: 'Quote', description: BUSINESS.pricing.installationService.fullDescription.en },
       { title: 'Install', description: 'Installation usually takes about one day with a clean finish.' }
     ];
 ---

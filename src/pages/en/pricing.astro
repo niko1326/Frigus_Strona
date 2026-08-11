@@ -17,24 +17,23 @@ const meta = pageMeta.en.pricing;
   <section class="page-hero">
     <div class="container" data-reveal>
       <p class="eyebrow">Pricing</p>
-      <h1>Clear starting price</h1>
-      <p>
-        We share a starting price first. Final pricing depends on line length, mounting conditions,
-        and technical layout.
-      </p>
+      <h1>{BUSINESS.pricing.installationService.name.en}</h1>
+      <p>{BUSINESS.pricing.installationService.fullDescription.en}</p>
     </div>
   </section>
 
   <section class="section">
     <div class="container pricing-panel" data-reveal>
-      <p class="price-main">Installation price: {BUSINESS.pricing.label.en}</p>
+      <p class="price-main">
+        {BUSINESS.pricing.installationService.name.en}: {BUSINESS.pricing.label.en} — {BUSINESS.pricing.installationService.baseVariantLabel.en}
+      </p>
       <ul class="bullet-list">
-        <li>{BUSINESS.pricing.includedInstallation.description.en}</li>
+        <li>{BUSINESS.pricing.installationService.complexPriceDescription.en}</li>
         <li>{BUSINESS.travel.note.en}</li>
         <li>No forms or widgets. Phone call is the fastest quote path.</li>
       </ul>
       <p class="tiny-note">{BUSINESS.pricing.taxNote.en}</p>
-      <CTAButton href={PRIMARY_PHONE.href} label="Call for a free quote" ariaLabel="Call for a free quote" />
+      <CTAButton href={PRIMARY_PHONE.href} label="Call for a quote" ariaLabel="Call for a quote" />
     </div>
   </section>
 </Layout>
