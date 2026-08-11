@@ -749,15 +749,6 @@ summary:focus-visible {
   display: block;
 }
 
-.gallery-placeholder {
-  min-height: 140px;
-  border: 1px dashed color-mix(in srgb, var(--accent-dark) 25%, var(--line));
-  border-radius: var(--radius-md);
-  background:
-    linear-gradient(125deg, rgba(255, 255, 255, 0.86), rgba(239, 247, 248, 0.8)),
-    repeating-linear-gradient(-45deg, transparent 0 8px, rgba(131, 212, 191, 0.12) 8px 16px);
-}
-
 .sticky-call {
   position: fixed;
   left: 1rem;

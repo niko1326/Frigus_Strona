@@ -50,17 +50,10 @@ Mapowanie tras i metadata SEO:
 
 - `src/i18n/content.ts`
 
-## Jak dodać zdjęcia później
+## Zdjęcia realizacji
 
-Aktualnie używany jest placeholder galerii:
-
-- `src/components/PhotoGalleryPlaceholder.astro`
-
-Sugerowany workflow:
-
-1. Dodaj zdjęcia do `public/photos/`.
-2. Podmień placeholdery na `<img src="/photos/nazwa.jpg" ... />` w `src/components/PhotoGalleryPlaceholder.astro`.
-3. Zachowaj rozmiary i kompresję (WebP/AVIF), żeby utrzymać wydajność.
+Sekcja realizacji pozostaje wyłączona do czasu zatwierdzenia zdjęć przeznaczonych do publikacji.
+Po ich dodaniu do `public/photos/` należy użyć zoptymalizowanych formatów WebP/AVIF i podać opisowe teksty alternatywne PL/EN.
 
 ## Cloudflare Web Analytics (privacy-friendly)
 

@@ -64,11 +64,6 @@ type ServicesContent = Readonly<{
     outdoor: TextBlock;
     cleanup: TextBlock;
   }>;
-  gallery: Readonly<{
-    eyebrow: string;
-    title: string;
-    description: string;
-  }>;
 }>;
 
 type PricingContent = Readonly<{
@@ -94,7 +89,6 @@ type ContactContent = Readonly<{
 type PrivacyContent = Readonly<{
   hero: PageHeroContent;
   items: readonly string[];
-  note: string;
 }>;
 
 type SitePageContent = Readonly<{
@@ -202,12 +196,6 @@ export const pageContent = {
           title: 'Porządek po montażu',
           description: 'Po zakończeniu prac zostawiamy miejsce montażu uporządkowane.'
         }
-      },
-      gallery: {
-        eyebrow: 'Realizacje',
-        title: 'Miejsce na zdjęcia z montaży',
-        description:
-          'Na etapie startu używamy minimalistycznych placeholderów. Zdjęcia można podmienić później bez zmian układu.'
       }
     },
     pricing: {
@@ -267,8 +255,7 @@ export const pageContent = {
         'Cel: kontakt, ustalenie wyceny i realizacja usługi.',
         'Okres przechowywania: nie dłużej niż wymagają tego rozliczenia i kontakt serwisowy.',
         'Kontakt w sprawie danych: z użyciem danych kontaktowych podanych na stronie.'
-      ],
-      note: 'To skrócona wersja informacyjna i może zostać rozszerzona o pełny dokument RODO.'
+      ]
     }
   },
   en: {
@@ -366,11 +353,6 @@ export const pageContent = {
           title: 'Clean finish',
           description: 'After installation, we leave the workspace in order.'
         }
-      },
-      gallery: {
-        eyebrow: 'Portfolio',
-        title: 'Space for installation photos',
-        description: 'At launch we use minimal placeholders. Real photos can be dropped in later without layout changes.'
       }
     },
     pricing: {
@@ -430,8 +412,7 @@ export const pageContent = {
         'Purpose: quote communication and service delivery.',
         'Storage period: no longer than needed for accounting and service communication.',
         'Data questions: use the contact details listed on this website.'
-      ],
-      note: 'This is a concise informational version and can be expanded into a full GDPR policy.'
+      ]
     }
   }
 } as const satisfies Localized<SitePageContent>;
