@@ -2,6 +2,7 @@
 import Layout from '../Layout.astro';
 import CTABand from '../sections/home/CTABand.astro';
 import CertificationsSection from '../sections/home/CertificationsSection.astro';
+import EquipmentTeaser from '../sections/home/EquipmentTeaser.astro';
 import HeroSection from '../sections/home/HeroSection.astro';
 import HowItWorksSection from '../sections/home/HowItWorksSection.astro';
 import PricingTeaser from '../sections/home/PricingTeaser.astro';
@@ -22,13 +23,13 @@ const meta = pageMeta[lang].home;
   lang={lang}
   title={meta.title}
   description={meta.description}
-  keywords={meta.keywords}
   currentPath={routeMap.home[lang]}
 >
   <HeroSection lang={lang} />
   <TrustStrip lang={lang} />
   <CertificationsSection lang={lang} />
   <ServicesSection lang={lang} />
+  <EquipmentTeaser lang={lang} />
   <HowItWorksSection lang={lang} />
   <PricingTeaser lang={lang} />
   <ServiceAreaSection lang={lang} />

@@ -28,6 +28,10 @@ Wszystkie główne dane biznesowe są w jednym pliku:
 
 - `src/config/site.ts`
 
+Typowane dane marek i modeli klimatyzatorów są w:
+
+- `src/config/equipment.ts`
+
 Kluczowe pola:
 
 - `SITE.brandName`, `SITE.siteUrl`
@@ -43,12 +47,18 @@ Dane kontaktowe i zatwierdzone wartości biznesowe nie są duplikowane w kompone
 
 ## Struktura językowa
 
-- Polski: `/`, `/uslugi`, `/cennik`, `/faq`, `/kontakt`
-- English: `/en/`, `/en/services`, `/en/pricing`, `/en/faq`, `/en/contact`
+- Polski: `/`, `/uslugi`, `/klimatyzatory/`, `/klimatyzatory/gree/`, `/klimatyzatory/kaisai/`, `/cennik`, `/faq`, `/kontakt`
+- English: `/en/`, `/en/services`, `/en/air-conditioners/`, `/en/air-conditioners/gree/`, `/en/air-conditioners/kaisai/`, `/en/pricing`, `/en/faq`, `/en/contact`
 
 Mapowanie tras i metadata SEO:
 
 - `src/i18n/content.ts`
+
+Treści podstron urządzeń:
+
+- `src/i18n/equipment-content.ts`
+
+Listę polecanych modeli KAISAI pozostawiono pustą do czasu zatwierdzenia konkretnych urządzeń. Karty obsługują opcjonalne obrazy z wymiarami i tekstami alternatywnymi PL/EN; nie należy dodawać zastępczych zdjęć innej marki.
 
 ## Zdjęcia realizacji
 

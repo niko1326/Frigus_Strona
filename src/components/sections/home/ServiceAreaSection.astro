@@ -9,7 +9,6 @@ interface Props {
 
 const { lang } = Astro.props;
 const copy = pageContent[lang].home.serviceArea;
-const areasLine = BUSINESS.serviceArea.regions.map((region) => region.label[lang]).join(' · ');
 ---
 
 <section class="section" data-reveal>
@@ -20,6 +19,5 @@ const areasLine = BUSINESS.serviceArea.regions.map((region) => region.label[lang
       <p>{copy.description}</p>
       <p class="tiny-note">{copy.note}</p>
     </div>
-    <p class="plain-area-line">{areasLine}</p>
   </div>
 </section>

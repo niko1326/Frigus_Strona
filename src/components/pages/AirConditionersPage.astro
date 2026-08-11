@@ -1,0 +1,83 @@
+---
+import { EQUIPMENT } from '../../config/equipment';
+import { CONTACT_PHONE } from '../../config/site';
+import { commonLabels, pageMeta, routeMap, type Locale } from '../../i18n/content';
+import { equipmentContent } from '../../i18n/equipment-content';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import CTAButton from '../CTAButton.astro';
+import Layout from '../Layout.astro';
+import PageHero from '../PageHero.astro';
+import EquipmentBrandCard from '../equipment/EquipmentBrandCard.astro';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const copy = equipmentContent[lang].overview;
+const labels = commonLabels[lang];
+const meta = pageMeta[lang].airConditioners;
+const currentPath = routeMap.airConditioners[lang];
+const breadcrumbs = [
+  { label: labels.homeBreadcrumb, path: routeMap.home[lang] },
+  { label: copy.breadcrumbLabel, path: currentPath }
+] as const;
+---
+
+<Layout
+  lang={lang}
+  title={meta.title}
+  description={meta.description}
+  currentPath={currentPath}
+  breadcrumbs={breadcrumbs.map((item) => ({ name: item.label, path: item.path }))}
+>
+  <Breadcrumbs ariaLabel={labels.breadcrumbsAria} items={breadcrumbs} />
+  <PageHero
+    eyebrow={copy.hero.eyebrow}
+    title={copy.hero.title}
+    description={copy.hero.description}
+    action={{
+      href: CONTACT_PHONE.href,
+      label: labels.selectAirConditioner,
+      ariaLabel: `${labels.phoneActionPrefix} — ${labels.selectAirConditioner}`
+    }}
+  />
+
+  <section class="section section-muted" aria-labelledby="equipment-brands-title">
+    <div class="container" data-reveal>
+      <div class="section-head">
+        <p class="eyebrow">{copy.brandsEyebrow}</p>
+        <h2 id="equipment-brands-title">{copy.brandsTitle}</h2>
+      </div>
+
+      <div class="equipment-brand-grid">
+        <EquipmentBrandCard
+          brand={EQUIPMENT.brands.gree}
+          lang={lang}
+          href={routeMap.gree[lang]}
+          warrantyTermsNote={EQUIPMENT.warranty.termsNote[lang]}
+        />
+        <EquipmentBrandCard
+          brand={EQUIPMENT.brands.kaisai}
+          lang={lang}
+          href={routeMap.kaisai[lang]}
+          warrantyTermsNote={EQUIPMENT.warranty.termsNote[lang]}
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cta-band equipment-overview-cta" data-reveal>
+      <div>
+        <h2>{copy.selection.title}</h2>
+        <p>{copy.selection.description}</p>
+      </div>
+      <CTAButton
+        href={CONTACT_PHONE.href}
+        label={copy.selection.cta.label}
+        ariaLabel={`${labels.phoneActionPrefix} — ${copy.selection.cta.label}`}
+      />
+    </div>
+  </section>
+</Layout>

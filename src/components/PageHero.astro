@@ -1,9 +1,17 @@
 ---
 import type { PageHeroContent } from '../i18n/page-content';
+import CTAButton from './CTAButton.astro';
 
-type Props = PageHeroContent;
+type Props = PageHeroContent &
+  Readonly<{
+    action?: Readonly<{
+      href: string;
+      label: string;
+      ariaLabel?: string;
+    }>;
+  }>;
 
-const { eyebrow, title, description } = Astro.props;
+const { eyebrow, title, description, action } = Astro.props;
 ---
 
 <section class="page-hero">
@@ -11,5 +19,6 @@ const { eyebrow, title, description } = Astro.props;
     <p class="eyebrow">{eyebrow}</p>
     <h1>{title}</h1>
     <p>{description}</p>
+    {action && <CTAButton href={action.href} label={action.label} ariaLabel={action.ariaLabel ?? action.label} />}
   </div>
 </section>

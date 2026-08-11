@@ -1,0 +1,44 @@
+---
+import type { EquipmentBrandId, RecommendedEquipmentModel } from '../../config/equipment';
+import { commonLabels, type Locale } from '../../i18n/content';
+import CTAButton from '../CTAButton.astro';
+
+interface Props {
+  model: RecommendedEquipmentModel;
+  brandId: EquipmentBrandId;
+  lang: Locale;
+  contactHref: string;
+}
+
+const { model, brandId, lang, contactHref } = Astro.props;
+const labels = commonLabels[lang];
+---
+
+<article class="equipment-model-card" id={`${brandId}-${model.id}`}>
+  {
+    model.image && (
+      <img
+        class="equipment-model-image"
+        src={model.image.src}
+        alt={model.image.alt[lang]}
+        width={model.image.width}
+        height={model.image.height}
+        loading="lazy"
+        decoding="async"
+      />
+    )
+  }
+
+  <div class="equipment-model-copy">
+    <p class="eyebrow">{model.label[lang]}</p>
+    <h3>{model.name}</h3>
+    <p>{model.description[lang]}</p>
+    <CTAButton
+      href={contactHref}
+      label={model.ctaLabel[lang]}
+      ariaLabel={`${labels.phoneActionPrefix} — ${model.ctaLabel[lang]}`}
+      variant="secondary"
+      size="sm"
+    />
+  </div>
+</article>

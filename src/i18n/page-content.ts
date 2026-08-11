@@ -1,5 +1,6 @@
 import { BUSINESS } from '../config/site';
-import type { Locale } from './content';
+import { EQUIPMENT } from '../config/equipment';
+import { routeMap, type Locale } from './content';
 
 export type Localized<T> = Readonly<Record<Locale, T>>;
 
@@ -16,7 +17,10 @@ type TextBlock = Readonly<{
 
 type HomeContent = Readonly<{
   hero: Readonly<{
-    imageAlt: string;
+    eyebrow: string;
+    visualEyebrow: string;
+    visualTitle: string;
+    visualDescription: string;
   }>;
   trust: Readonly<{
     items: readonly string[];
@@ -31,6 +35,12 @@ type HomeContent = Readonly<{
     eyebrow: string;
     title: string;
     cards: readonly TextBlock[];
+  }>;
+  equipment: Readonly<{
+    eyebrow: string;
+    title: string;
+    description: string;
+    linkLabel: string;
   }>;
   howItWorks: Readonly<{
     eyebrow: string;
@@ -79,6 +89,10 @@ type FaqContent = Readonly<{
   items: readonly Readonly<{
     question: string;
     answer: string;
+    links?: readonly Readonly<{
+      href: string;
+      label: string;
+    }>[];
   }>[];
 }>;
 
@@ -107,14 +121,17 @@ export const pageContent = {
   pl: {
     home: {
       hero: {
-        imageAlt: 'Klimatyzacja po montażu'
+        eyebrow: 'Dobór urządzenia i kompletny montaż',
+        visualEyebrow: 'GREE · KAISAI',
+        visualTitle: 'Urządzenie dobrane do pomieszczenia',
+        visualDescription: 'Dostawa i kompletny montaż'
       },
       trust: {
         items: [
-          BUSINESS.warranty.description.pl,
+          `GREE i KAISAI: ${EQUIPMENT.warranty.label.pl.toLowerCase()}. ${EQUIPMENT.warranty.termsNote.pl}`,
           BUSINESS.credentials.summary.pl,
-          'Szybkie terminy i szybka odpowiedź',
-          'Porządek po montażu'
+          'Dobór modelu i mocy',
+          'Dostawa urządzenia i kompletny montaż'
         ]
       },
       certifications: {
@@ -142,6 +159,13 @@ export const pageContent = {
           }
         ]
       },
+      equipment: {
+        eyebrow: 'Klimatyzatory',
+        title: 'GREE i KAISAI dobrane do Twoich potrzeb',
+        description:
+          'Nie musisz znać modeli ani parametrów technicznych. Pomagamy dobrać odpowiednie urządzenie GREE lub KAISAI, dostarczamy je i wykonujemy kompletny montaż.',
+        linkLabel: 'Zobacz klimatyzatory, które montujemy'
+      },
       howItWorks: {
         eyebrow: 'Jak to działa',
         title: 'Prosto: 3 kroki do gotowej klimatyzacji',
@@ -157,8 +181,8 @@ export const pageContent = {
       },
       serviceArea: {
         eyebrow: 'Obszar działania',
-        description: 'Realizujemy montaże w domach i mieszkaniach na całym wskazanym obszarze.',
-        note: 'Uwaga: ewentualne zgody administracyjne i formalności po stronie inwestora/właściciela lokalu.'
+        description: 'Realizujemy montaże w domach i mieszkaniach w Bydgoszczy oraz miejscowościach w jej otoczeniu.',
+        note: 'Przy dalszych lokalizacjach potwierdzamy możliwość realizacji indywidualnie.'
       },
       cta: {
         headline: 'Zadzwoń i umów wycenę'
@@ -217,26 +241,98 @@ export const pageContent = {
       hero: {
         eyebrow: 'FAQ',
         title: 'Najczęściej zadawane pytania',
-        description: 'Krótko i konkretnie: jak wygląda wycena, montaż i serwis.'
+        description: 'Praktyczne odpowiedzi o doborze urządzenia, montażu, użytkowaniu i obsłudze Bydgoszczy oraz okolic.'
       },
       items: [
         {
-          question: 'Ile trwa montaż split?',
-          answer: 'Zwykle około 1 dnia roboczego. Czas zależy od warunków technicznych i długości instalacji.'
-        },
-        { question: 'Czy dojazd jest dodatkowo płatny?', answer: BUSINESS.travel.note.pl },
-        {
-          question: 'Jak wyceniacie bardziej złożone montaże?',
-          answer: BUSINESS.pricing.installationService.complexPriceDescription.pl
-        },
-        { question: 'Jaka jest gwarancja?', answer: BUSINESS.warranty.description.pl },
-        {
-          question: 'Czy oferujecie przeglądy i czyszczenie?',
-          answer: 'Tak, wykonujemy serwis podstawowy i czyszczenie urządzeń split.'
+          question: 'Ile kosztuje montaż klimatyzacji w Bydgoszczy?',
+          answer: `${BUSINESS.pricing.installationService.fullDescription.pl} Podana kwota dotyczy usługi montażu. Dobór urządzenia, długość instalacji i warunki montażowe uwzględniamy w wycenie całej realizacji, którą przedstawiamy przed rozpoczęciem prac.`
         },
         {
-          question: 'Jak uzyskać wycenę?',
-          answer: 'Zadzwoń, aby omówić montaż i ustalić, czy potrzebne są oględziny.'
+          question: 'Jak dobrać moc klimatyzatora do pomieszczenia?',
+          answer:
+            'Liczy się nie tylko powierzchnia, ale też nasłonecznienie, liczba okien, piętro i układ pomieszczenia. Nie musisz dobierać mocy samodzielnie — robimy to na podstawie informacji o lokalu i sposobie użytkowania.'
+        },
+        {
+          question: 'Czy montujecie klimatyzację w Osielsku i Niemczu?',
+          answer:
+            'Tak. Realizujemy montaż klimatyzacji w Osielsku, Niemczu i Maksymilianowie oraz w innych miejscowościach w bezpośrednim sąsiedztwie Bydgoszczy. Pomagamy dobrać urządzenie, dostarczamy je i wykonujemy kompletny montaż.'
+        },
+        {
+          question: 'Ile trwa standardowy montaż klimatyzacji?',
+          answer:
+            'Standardowy montaż zwykle zajmuje około jednego dnia roboczego. Dokładny czas zależy od warunków technicznych i przebiegu instalacji.'
+        },
+        {
+          question: 'Jakie klimatyzatory montujecie?',
+          answer:
+            'Specjalizujemy się przede wszystkim w urządzeniach GREE i KAISAI. Zamiast przedstawiać cały katalog, pomagamy dobrać konkretny model do pomieszczenia, oczekiwań i budżetu.',
+          links: [
+            { href: routeMap.airConditioners.pl, label: 'Zobacz klimatyzatory' },
+            { href: routeMap.gree.pl, label: 'Klimatyzatory GREE' },
+            { href: routeMap.kaisai.pl, label: 'Klimatyzatory KAISAI' }
+          ]
+        },
+        {
+          question: 'Czy montujecie klimatyzację w Białych Błotach i Łochowie?',
+          answer:
+            'Tak. Obsługujemy Białe Błota i Łochowo, a także pobliski Murowaniec i Zielonkę. Zakres oraz termin ustalamy przed realizacją.'
+        },
+        {
+          question: 'Czy klimatyzacją można ogrzewać mieszkanie?',
+          answer:
+            'Tak, wiele nowoczesnych urządzeń może pracować również w trybie grzania. Jeśli planujesz regularnie ogrzewać pomieszczenie klimatyzatorem, dobieramy model odpowiedni do takiego sposobu użytkowania.',
+          links: [{ href: `${routeMap.gree.pl}#gree-pular-pro`, label: 'Poznaj GREE Pular PRO' }]
+        },
+        {
+          question: 'Jak wygląda montaż klimatyzacji w mieszkaniu?',
+          answer:
+            'Najpierw dobieramy miejsce i trasę instalacji. Następnie zabezpieczamy miejsce pracy, wykonujemy instalację, montujemy jednostki, uruchamiamy i sprawdzamy urządzenie oraz pokazujemy klientowi podstawy obsługi.'
+        },
+        {
+          question: 'Ile energii zużywa klimatyzator?',
+          answer:
+            'Zużycie energii zależy między innymi od mocy urządzenia, warunków w pomieszczeniu, ustawionej temperatury i sposobu użytkowania. Dlatego dobieramy moc do konkretnego wnętrza zamiast opierać się wyłącznie na jego powierzchni.'
+        },
+        {
+          question: 'GREE czy KAISAI – którą markę wybrać?',
+          answer:
+            'Obie marki mają modele, które chętnie montujemy. GREE oferuje szeroki wybór urządzeń i wersji wyposażenia, natomiast KAISAI jest ciekawą propozycją dla osób szukających dobrego stosunku wyposażenia do ceny. Ostateczny wybór zależy od budżetu i sposobu użytkowania.'
+        },
+        {
+          question: 'Ile lat gwarancji ma klimatyzator?',
+          answer: `Urządzenia GREE i KAISAI są objęte ${EQUIPMENT.warranty.durationYears}-letnią gwarancją producenta na urządzenie. ${EQUIPMENT.warranty.termsNote.pl}`
+        },
+        {
+          question: 'Czy dojeżdżacie do Solca Kujawskiego i Brzozy?',
+          answer:
+            'Tak. Realizujemy montaże w Solcu Kujawskim, Brzozie oraz w innych miejscowościach w rozsądnym zasięgu od Bydgoszczy.'
+        },
+        {
+          question: 'Czy klimatyzator ma Wi-Fi?',
+          answer:
+            'Wiele modeli GREE i KAISAI oferuje sterowanie przez aplikację. Dostępność Wi-Fi zależy jednak od konkretnego urządzenia, dlatego sprawdzamy tę funkcję podczas doboru modelu.'
+        },
+        {
+          question: 'Czy przed montażem trzeba przygotować mieszkanie?',
+          answer:
+            'Wystarczy zapewnić dostęp do miejsca montażu i odsunąć delikatne przedmioty z najbliższego otoczenia. Przed rozpoczęciem prac zabezpieczamy miejsce, w którym wykonujemy instalację.'
+        },
+        {
+          question: 'Gdzie można zamontować jednostkę zewnętrzną?',
+          answer:
+            'Miejsce ustalamy po sprawdzeniu warunków technicznych, planowanej trasy instalacji i dostępu potrzebnego do późniejszego serwisu. Rozwiązanie dobieramy indywidualnie do budynku.'
+        },
+        {
+          question: 'Czy montujecie klimatyzację w Koronowie lub Szubinie?',
+          answer:
+            'Tak. Realizujemy montaże również w Koronowie i Szubinie. Przy dalszych lokalizacjach najlepiej skontaktować się z nami i potwierdzić możliwość realizacji.'
+        },
+        {
+          question: 'Nie wiem, jaki klimatyzator wybrać – czy możecie mi pomóc?',
+          answer:
+            'Tak. Nie musisz znać modeli, mocy ani parametrów technicznych. Wystarczy, że podasz podstawowe informacje o pomieszczeniu i swoich oczekiwaniach, a pomożemy dobrać odpowiednie urządzenie.',
+          links: [{ href: routeMap.contact.pl, label: 'Poproś o dobór klimatyzatora' }]
         }
       ]
     },
@@ -268,14 +364,17 @@ export const pageContent = {
   en: {
     home: {
       hero: {
-        imageAlt: 'Installed air conditioner'
+        eyebrow: 'System selection and complete installation',
+        visualEyebrow: 'GREE · KAISAI',
+        visualTitle: 'A system selected for the room',
+        visualDescription: 'Supply and complete installation'
       },
       trust: {
         items: [
-          BUSINESS.warranty.description.en,
+          `GREE and KAISAI: ${EQUIPMENT.warranty.label.en.toLowerCase()}. ${EQUIPMENT.warranty.termsNote.en}`,
           BUSINESS.credentials.summary.en,
-          'Fast response and short lead times',
-          'Clean finish after installation'
+          'Model and capacity selection',
+          'Unit supply and complete installation'
         ]
       },
       certifications: {
@@ -303,6 +402,13 @@ export const pageContent = {
           }
         ]
       },
+      equipment: {
+        eyebrow: 'Air conditioners',
+        title: 'GREE and KAISAI selected for your needs',
+        description:
+          'You do not need to know model names or technical specifications. We help select the right GREE or KAISAI unit, supply it and provide complete installation.',
+        linkLabel: 'See the air conditioners we install'
+      },
       howItWorks: {
         eyebrow: 'How it works',
         title: 'Simple: 3 steps to working AC',
@@ -318,8 +424,8 @@ export const pageContent = {
       },
       serviceArea: {
         eyebrow: 'Service area',
-        description: 'We install split units in apartments and houses across the listed locations.',
-        note: 'Note: any building permissions or housing administration approvals are handled by the property owner.'
+        description: 'We install systems in houses and apartments in Bydgoszcz and the surrounding area.',
+        note: 'For locations farther away, we confirm availability individually.'
       },
       cta: {
         headline: 'Call and schedule your quote'
@@ -378,26 +484,98 @@ export const pageContent = {
       hero: {
         eyebrow: 'FAQ',
         title: 'Frequently asked questions',
-        description: 'Quick answers about quotes, installation timeline, and maintenance.'
+        description: 'Practical answers about system selection, installation, everyday use, and service around Bydgoszcz.'
       },
       items: [
         {
-          question: 'How long does a split installation take?',
-          answer: 'Usually around one working day, depending on technical conditions and line length.'
-        },
-        { question: 'Is travel charged separately?', answer: BUSINESS.travel.note.en },
-        {
-          question: 'How are more complex installations priced?',
-          answer: BUSINESS.pricing.installationService.complexPriceDescription.en
-        },
-        { question: 'What warranty do you provide?', answer: BUSINESS.warranty.description.en },
-        {
-          question: 'Do you offer maintenance cleaning?',
-          answer: 'Yes, we offer basic maintenance and cleaning for split systems.'
+          question: 'How much does air conditioning installation cost in Bydgoszcz?',
+          answer: `${BUSINESS.pricing.installationService.fullDescription.en} The stated amount covers the installation service. We account for the selected unit, installation length and site conditions in the quote for the complete project, which we provide before work begins.`
         },
         {
-          question: 'What is the fastest way to get a quote?',
-          answer: 'Call us to discuss the installation and determine whether a site inspection is needed.'
+          question: 'How do you choose the right air conditioner capacity?',
+          answer:
+            'Room size is only one factor. Sun exposure, the number of windows, the floor and the room layout also matter. You do not need to calculate capacity yourself — we select it using information about the space and how the unit will be used.'
+        },
+        {
+          question: 'Do you install air conditioning in Osielsko and Niemcz?',
+          answer:
+            'Yes. We install air conditioning in Osielsko, Niemcz and Maksymilianowo, as well as other places immediately around Bydgoszcz. We help select the unit, supply it and provide complete installation.'
+        },
+        {
+          question: 'How long does a standard air conditioning installation take?',
+          answer:
+            'A standard installation usually takes around one working day. The exact time depends on the technical conditions and the installation route.'
+        },
+        {
+          question: 'Which air conditioners do you install?',
+          answer:
+            'We focus primarily on GREE and KAISAI equipment. Instead of presenting a full catalogue, we help select a specific model for the room, your expectations and budget.',
+          links: [
+            { href: routeMap.airConditioners.en, label: 'See air conditioners' },
+            { href: routeMap.gree.en, label: 'GREE air conditioners' },
+            { href: routeMap.kaisai.en, label: 'KAISAI air conditioners' }
+          ]
+        },
+        {
+          question: 'Do you install air conditioning in Białe Błota and Łochowo?',
+          answer:
+            'Yes. We serve Białe Błota and Łochowo, as well as nearby Murowaniec and Zielonka. We confirm the scope and timing before the work.'
+        },
+        {
+          question: 'Can an air conditioner heat an apartment?',
+          answer:
+            'Yes. Many modern units can also work in heating mode. If you plan to heat a room regularly with air conditioning, we select a model suited to that use.',
+          links: [{ href: `${routeMap.gree.en}#gree-pular-pro`, label: 'See GREE Pular PRO' }]
+        },
+        {
+          question: 'What happens during an apartment air conditioning installation?',
+          answer:
+            'We first choose the unit locations and installation route. We then protect the work area, install the line and both units, commission and test the system, and explain the basic controls to the customer.'
+        },
+        {
+          question: 'How much electricity does an air conditioner use?',
+          answer:
+            'Energy use depends on the unit capacity, room conditions, temperature setting and how the system is used. This is why we size the unit for the specific space rather than using floor area alone.'
+        },
+        {
+          question: 'GREE or KAISAI — which brand should I choose?',
+          answer:
+            'Both brands offer models we are happy to install. GREE has a broad selection of units and feature levels, while KAISAI is an interesting option for customers looking for a good balance between features and price. The final choice depends on the budget and intended use.'
+        },
+        {
+          question: 'How long is the air conditioner warranty?',
+          answer: `GREE and KAISAI units come with a ${EQUIPMENT.warranty.durationYears}-year manufacturer's warranty on the unit. ${EQUIPMENT.warranty.termsNote.en}`
+        },
+        {
+          question: 'Do you travel to Solec Kujawski and Brzoza?',
+          answer:
+            'Yes. We also install systems in Solec Kujawski, Brzoza and other locations within a reasonable distance of Bydgoszcz.'
+        },
+        {
+          question: 'Does an air conditioner have Wi-Fi?',
+          answer:
+            'Many GREE and KAISAI models offer app control. Wi-Fi availability depends on the specific unit, so we confirm that feature when selecting a model.'
+        },
+        {
+          question: 'Do I need to prepare the apartment before installation?',
+          answer:
+            'Please provide access to the installation area and move fragile items away from the immediate workspace. We protect the work area before starting the installation.'
+        },
+        {
+          question: 'Where can the outdoor unit be installed?',
+          answer:
+            'We choose the location after checking the technical conditions, the planned installation route and the access needed for future service. The solution is selected individually for the building.'
+        },
+        {
+          question: 'Do you install air conditioning in Koronowo or Szubin?',
+          answer:
+            'Yes. We also install systems in Koronowo and Szubin. For locations farther away, please contact us so we can confirm availability.'
+        },
+        {
+          question: 'I do not know which air conditioner to choose — can you help?',
+          answer:
+            'Yes. You do not need to know model names, capacities or technical specifications. Tell us the basics about the room and what you expect from the unit, and we will help select a suitable system.',
+          links: [{ href: routeMap.contact.en, label: 'Ask us to select an air conditioner' }]
         }
       ]
     },

@@ -149,13 +149,13 @@ export const SITE = {
   siteUrl: 'https://frigac.pl',
   defaultLocale: 'pl',
   defaultSocialImage: {
-    src: '/photos/klimatyzator-scienny-haier.png',
+    src: '/social-card.png',
     mimeType: 'image/png',
-    width: 1080,
-    height: 1080,
+    width: 1200,
+    height: 630,
     alt: {
-      pl: 'Klimatyzacja po montażu',
-      en: 'Installed air conditioner'
+      pl: 'FRIGAC — klimatyzacja w Bydgoszczy',
+      en: 'FRIGAC — air conditioning in Bydgoszcz'
     }
   }
 } as const satisfies SiteConfig;
@@ -222,20 +222,29 @@ export const BUSINESS = {
           pl: 'Bydgoszcz i okolice',
           en: 'Bydgoszcz and nearby areas'
         },
-        places: ['Bydgoszcz']
-      },
-      {
-        id: 'trojmiasto',
-        label: {
-          pl: 'Gdańsk i Trójmiasto',
-          en: 'Gdańsk and the Tri-City area'
-        },
-        places: ['Gdańsk', 'Gdynia', 'Sopot']
+        places: [
+          'Bydgoszcz',
+          'Osielsko',
+          'Niemcz',
+          'Maksymilianowo',
+          'Białe Błota',
+          'Łochowo',
+          'Brzoza',
+          'Solec Kujawski',
+          'Murowaniec',
+          'Zielonka',
+          'Nowa Wieś Wielka',
+          'Koronowo',
+          'Szubin',
+          'Dobrcz',
+          'Dąbrowa Chełmińska',
+          'Nakło nad Notecią'
+        ]
       }
     ],
     summary: {
-      pl: 'Bydgoszcz i okolice oraz Gdańsk i Trójmiasto',
-      en: 'Bydgoszcz and nearby areas, plus Gdańsk and the Tri-City area'
+      pl: 'Bydgoszcz i okolice',
+      en: 'Bydgoszcz and surrounding areas'
     }
   },
   travel: {
@@ -320,8 +329,8 @@ export const BUSINESS = {
     }
   },
   serviceType: {
-    pl: 'Montaż klimatyzacji typu split',
-    en: 'Split air conditioner installation'
+    pl: 'Montaż klimatyzacji – Bydgoszcz i okolice',
+    en: 'Air conditioning installation in Bydgoszcz and surrounding areas'
   }
 } as const satisfies BusinessConfig;
 

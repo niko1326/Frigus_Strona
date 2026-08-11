@@ -1,0 +1,132 @@
+---
+import {
+  EQUIPMENT,
+  type EquipmentBrandId,
+  type EquipmentModel,
+  type OtherEquipmentModel,
+  type RecommendedEquipmentModel
+} from '../../config/equipment';
+import { CONTACT_PHONE } from '../../config/site';
+import { commonLabels, pageMeta, routeMap, type Locale } from '../../i18n/content';
+import { equipmentContent } from '../../i18n/equipment-content';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import CTAButton from '../CTAButton.astro';
+import Layout from '../Layout.astro';
+import PageHero from '../PageHero.astro';
+import EquipmentModelCard from '../equipment/EquipmentModelCard.astro';
+
+interface Props {
+  lang: Locale;
+  brandId: EquipmentBrandId;
+}
+
+const isRecommendedModel = (model: EquipmentModel): model is RecommendedEquipmentModel =>
+  model.group === 'recommended';
+const isOtherModel = (model: EquipmentModel): model is OtherEquipmentModel => model.group === 'other';
+
+const { lang, brandId } = Astro.props;
+const brand = EQUIPMENT.brands[brandId];
+const copy = equipmentContent[lang].brands[brandId];
+const labels = commonLabels[lang];
+const meta = pageMeta[lang][brandId];
+const currentPath = routeMap[brandId][lang];
+const brandModels: readonly EquipmentModel[] = brand.models;
+const recommendedModels = brandModels.filter(isRecommendedModel);
+const otherModels = brandModels.filter(isOtherModel);
+const breadcrumbs = [
+  { label: labels.homeBreadcrumb, path: routeMap.home[lang] },
+  { label: equipmentContent[lang].overview.breadcrumbLabel, path: routeMap.airConditioners[lang] },
+  { label: copy.breadcrumbLabel, path: currentPath }
+] as const;
+---
+
+<Layout
+  lang={lang}
+  title={meta.title}
+  description={meta.description}
+  currentPath={currentPath}
+  breadcrumbs={breadcrumbs.map((item) => ({ name: item.label, path: item.path }))}
+>
+  <Breadcrumbs ariaLabel={labels.breadcrumbsAria} items={breadcrumbs} />
+  <PageHero
+    eyebrow={copy.hero.eyebrow}
+    title={copy.hero.title}
+    description={copy.hero.description}
+    action={{
+      href: CONTACT_PHONE.href,
+      label: copy.heroCta.label,
+      ariaLabel: `${labels.phoneActionPrefix} — ${copy.heroCta.label}`
+    }}
+  />
+
+  <section class="section-sm" aria-labelledby={`${brandId}-highlights-title`}>
+    <div class="container" data-reveal>
+      <h2 id={`${brandId}-highlights-title`} class="visually-hidden">{copy.highlightsLabel}</h2>
+      <ul class="equipment-highlights">
+        {brand.pageHighlights.map((highlight) => <li>{highlight[lang]}</li>)}
+      </ul>
+      <p class="tiny-note">{EQUIPMENT.warranty.termsNote[lang]}</p>
+    </div>
+  </section>
+
+  {
+    recommendedModels.length > 0 && (
+      <section class="section section-muted" aria-labelledby={`${brandId}-recommended-title`}>
+        <div class="container" data-reveal>
+          <div class="section-head">
+            <h2 id={`${brandId}-recommended-title`}>{copy.recommendedTitle}</h2>
+          </div>
+          <div class="equipment-model-grid">
+            {recommendedModels.map((model) => (
+              <EquipmentModelCard
+                model={model}
+                brandId={brandId}
+                lang={lang}
+                contactHref={CONTACT_PHONE.href}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    'selection' in copy && copy.selection && (
+      <section class="section">
+        <div class="container equipment-selection" data-reveal>
+          <h2>{copy.selection.title}</h2>
+          <p>{copy.selection.description}</p>
+          <CTAButton
+            href={CONTACT_PHONE.href}
+            label={copy.selection.cta.label}
+            ariaLabel={`${labels.phoneActionPrefix} — ${copy.selection.cta.label}`}
+          />
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section" aria-labelledby={`${brandId}-other-models-title`}>
+    <div class="container equipment-other-models" data-reveal>
+      <h2 id={`${brandId}-other-models-title`}>{copy.otherModels.title}</h2>
+      <p>{copy.otherModels.description}</p>
+      {
+        otherModels.length > 0 && (
+          <ul class="inline-model-list" aria-label={copy.otherModels.title}>
+            {otherModels.map((model) => <li>{model.name}</li>)}
+          </ul>
+        )
+      }
+      {
+        'cta' in copy.otherModels && copy.otherModels.cta && (
+          <CTAButton
+            href={CONTACT_PHONE.href}
+            label={copy.otherModels.cta.label}
+            ariaLabel={`${labels.phoneActionPrefix} — ${copy.otherModels.cta.label}`}
+          />
+        )
+      }
+    </div>
+  </section>
+</Layout>

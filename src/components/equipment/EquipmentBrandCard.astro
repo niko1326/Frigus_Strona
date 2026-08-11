@@ -1,0 +1,46 @@
+---
+import type { EquipmentBrand } from '../../config/equipment';
+import type { Locale } from '../../i18n/content';
+
+interface Props {
+  brand: EquipmentBrand;
+  lang: Locale;
+  href: string;
+  warrantyTermsNote: string;
+}
+
+const { brand, lang, href, warrantyTermsNote } = Astro.props;
+const brandImage = brand.overviewImage;
+---
+
+<article class:list={['equipment-brand-card', `equipment-brand-${brand.id}`, { 'has-image': Boolean(brandImage) }]}>
+  <div class="equipment-brand-media">
+    {
+      brandImage ? (
+      <img
+        class="equipment-brand-image"
+        src={brandImage.src}
+        alt={brandImage.alt[lang]}
+        width={brandImage.width}
+        height={brandImage.height}
+        loading="lazy"
+        decoding="async"
+      />
+      ) : (
+        <div class="equipment-brand-visual" aria-hidden="true">
+          <span>{brand.name}</span>
+        </div>
+      )
+    }
+  </div>
+
+  <div class="equipment-brand-copy">
+    <h3 class="equipment-brand-name">{brand.name}</h3>
+    <p>{brand.description[lang]}</p>
+    <ul class="equipment-feature-list">
+      {brand.overviewFeatures.map((feature) => <li>{feature[lang]}</li>)}
+    </ul>
+    <p class="tiny-note">{warrantyTermsNote}</p>
+    <a class="text-link" href={href}>{brand.ctaLabel[lang]} <span aria-hidden="true">→</span></a>
+  </div>
+</article>

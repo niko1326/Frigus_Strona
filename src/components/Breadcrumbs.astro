@@ -1,0 +1,27 @@
+---
+interface Props {
+  ariaLabel: string;
+  items: readonly Readonly<{
+    label: string;
+    path: string;
+  }>[];
+}
+
+const { ariaLabel, items } = Astro.props;
+---
+
+<nav class="breadcrumbs container" aria-label={ariaLabel}>
+  <ol>
+    {
+      items.map((item, index) => {
+        const isCurrent = index === items.length - 1;
+
+        return (
+          <li>
+            {isCurrent ? <span aria-current="page">{item.label}</span> : <a href={item.path}>{item.label}</a>}
+          </li>
+        );
+      })
+    }
+  </ol>
+</nav>

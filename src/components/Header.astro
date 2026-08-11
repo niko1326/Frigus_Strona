@@ -1,5 +1,6 @@
 ---
 import { CONTACT_PHONE, SITE } from '../config/site';
+import { EQUIPMENT, type EquipmentBrand } from '../config/equipment';
 import { commonLabels, getAlternatePath, navLinks, routeMap, type Locale } from '../i18n/content';
 import IconPhone from './icons/IconPhone.astro';
 
@@ -23,6 +24,10 @@ const normalize = (path: string): string => {
 };
 
 const current = normalize(currentPath);
+const equipmentNavItems: readonly Readonly<{ brand: EquipmentBrand; href: string }>[] = [
+  { brand: EQUIPMENT.brands.gree, href: routeMap.gree[lang] },
+  { brand: EQUIPMENT.brands.kaisai, href: routeMap.kaisai[lang] }
+];
 ---
 
 <header class="site-header">
@@ -33,11 +38,61 @@ const current = normalize(currentPath);
       <ul>
         {
           navLinks[lang].map((link) => {
-            const active = current === normalize(link.href);
+            const normalizedHref = normalize(link.href);
+            const isCurrentPage = current === normalizedHref;
+            const isEquipmentLink = normalizedHref === normalize(routeMap.airConditioners[lang]);
+            const isEquipmentChild = isEquipmentLink && current.startsWith(`${normalizedHref}/`);
+            const active = isCurrentPage || isEquipmentChild;
+
+            if (isEquipmentLink) {
+              return (
+                <li class="nav-dropdown">
+                  <a
+                    class={active ? 'is-active' : ''}
+                    href={link.href}
+                    aria-current={isCurrentPage ? 'page' : undefined}
+                  >
+                    {link.label}
+                    <span class="nav-dropdown-chevron" aria-hidden="true">⌄</span>
+                  </a>
+                  <ul class="nav-dropdown-menu" aria-label={labels.equipmentBrandsAria}>
+                    {equipmentNavItems.map(({ brand, href }) => {
+                      const isBrandCurrent = current === normalize(href);
+                      const image = brand.navigationImage;
+
+                      return (
+                        <li>
+                          <a
+                            class:list={[{ 'has-image': Boolean(image), 'is-current': isBrandCurrent }]}
+                            href={href}
+                            aria-current={isBrandCurrent ? 'page' : undefined}
+                          >
+                            {image && (
+                              <span class="nav-dropdown-image" aria-hidden="true">
+                                <img
+                                  src={image.src}
+                                  alt=""
+                                  width={image.width}
+                                  height={image.height}
+                                  loading="lazy"
+                                  decoding="async"
+                                />
+                              </span>
+                            )}
+                            <span class="nav-dropdown-brand">{brand.name}</span>
+                            <span class="nav-dropdown-arrow" aria-hidden="true">→</span>
+                          </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </li>
+              );
+            }
 
             return (
               <li>
-                <a class={active ? 'is-active' : ''} href={link.href}>
+                <a class={active ? 'is-active' : ''} href={link.href} aria-current={isCurrentPage ? 'page' : undefined}>
                   {link.label}
                 </a>
               </li>

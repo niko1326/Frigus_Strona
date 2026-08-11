@@ -20,7 +20,7 @@ const pricingContext = `${installationService.name[lang]} — ${installationServ
   <div class="container hero-grid">
     <div class="hero-copy" data-reveal>
       <p class="eyebrow">
-        {BUSINESS.serviceArea.summary[lang]}
+        {copy.eyebrow}
       </p>
       <h1>{BUSINESS.serviceType[lang]}</h1>
 
@@ -45,14 +45,10 @@ const pricingContext = `${installationService.name[lang]} — ${installationServ
       </div>
     </div>
 
-    <div class="hero-visual" data-reveal>
-      <img
-        class="hero-photo-img"
-        src="/photos/klimatyzator-scienny-haier.png"
-        alt={copy.imageAlt}
-        loading="eager"
-        decoding="async"
-      />
+    <div class="hero-brand-panel" data-reveal>
+      <p class="eyebrow">{copy.visualEyebrow}</p>
+      <p class="hero-panel-title">{copy.visualTitle}</p>
+      <p>{copy.visualDescription}</p>
     </div>
   </div>
 </section>
