@@ -1,24 +1,21 @@
 ---
 import type { Locale } from '../i18n/content';
+import { pageContent } from '../i18n/page-content';
 
 interface Props {
   lang: Locale;
 }
 
 const { lang } = Astro.props;
-const isPL = lang === 'pl';
+const copy = pageContent[lang].services.gallery;
 ---
 
 <section class="section" data-reveal>
   <div class="container">
     <div class="section-head">
-      <p class="eyebrow">{isPL ? 'Realizacje' : 'Portfolio'}</p>
-      <h2>{isPL ? 'Miejsce na zdjęcia z montaży' : 'Space for installation photos'}</h2>
-      <p>
-        {isPL
-          ? 'Na etapie startu używamy minimalistycznych placeholderów. Zdjęcia można podmienić później bez zmian układu.'
-          : 'At launch we use minimal placeholders. Real photos can be dropped in later without layout changes.'}
-      </p>
+      <p class="eyebrow">{copy.eyebrow}</p>
+      <h2>{copy.title}</h2>
+      <p>{copy.description}</p>
     </div>
     <div class="gallery-grid">
       <div class="gallery-placeholder" aria-hidden="true"></div>

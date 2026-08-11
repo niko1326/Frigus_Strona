@@ -1,0 +1,43 @@
+---
+import { BUSINESS, CONTACT_PHONE } from '../../config/site';
+import { commonLabels, pageMeta, routeMap, type Locale } from '../../i18n/content';
+import { pageContent } from '../../i18n/page-content';
+import CTAButton from '../CTAButton.astro';
+import Layout from '../Layout.astro';
+import PageHero from '../PageHero.astro';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const copy = pageContent[lang].pricing;
+const labels = commonLabels[lang];
+const meta = pageMeta[lang].pricing;
+const installationService = BUSINESS.pricing.installationService;
+---
+
+<Layout
+  lang={lang}
+  title={meta.title}
+  description={meta.description}
+  keywords={meta.keywords}
+  currentPath={routeMap.pricing[lang]}
+>
+  <PageHero eyebrow={copy.hero.eyebrow} title={copy.hero.title} description={copy.hero.description} />
+
+  <section class="section">
+    <div class="container pricing-panel" data-reveal>
+      <p class="price-main">
+        {installationService.name[lang]}: {BUSINESS.pricing.label[lang]} — {installationService.baseVariantLabel[lang]}
+      </p>
+      <ul class="bullet-list">
+        <li>{installationService.complexPriceDescription[lang]}</li>
+        <li>{BUSINESS.travel.note[lang]}</li>
+        <li>{copy.phoneNote}</li>
+      </ul>
+      <p class="tiny-note">{BUSINESS.pricing.taxNote[lang]}</p>
+      <CTAButton href={CONTACT_PHONE.href} label={labels.callNow} ariaLabel={labels.callNow} />
+    </div>
+  </section>
+</Layout>

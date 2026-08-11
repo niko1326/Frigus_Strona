@@ -1,14 +1,16 @@
 ---
 import CTAButton from '../../CTAButton.astro';
 import { BUSINESS, CONTACT_PHONE } from '../../../config/site';
-import type { Locale } from '../../../i18n/content';
+import { commonLabels, routeMap, type Locale } from '../../../i18n/content';
+import { pageContent } from '../../../i18n/page-content';
 
 interface Props {
   lang: Locale;
 }
 
 const { lang } = Astro.props;
-const isPL = lang === 'pl';
+const copy = pageContent[lang].home.hero;
+const labels = commonLabels[lang];
 const pricingText = BUSINESS.pricing.label[lang];
 const installationService = BUSINESS.pricing.installationService;
 const pricingContext = `${installationService.name[lang]} — ${installationService.baseVariantLabel[lang]}`;
@@ -31,13 +33,13 @@ const pricingContext = `${installationService.name[lang]} — ${installationServ
         <CTAButton
           size="sm"
           href={CONTACT_PHONE.href}
-          label={isPL ? 'Zadzwoń po wycenę' : 'Call for a quote'}
-          ariaLabel={isPL ? 'Zadzwoń po wycenę' : 'Call for a quote'}
+          label={labels.callNow}
+          ariaLabel={labels.callNow}
         />
         <CTAButton
           size="sm"
-          href={isPL ? '/uslugi' : '/en/services'}
-          label={isPL ? 'Zobacz usługi' : 'See services'}
+          href={routeMap.services[lang]}
+          label={labels.seeServices}
           variant="secondary"
         />
       </div>
@@ -47,7 +49,7 @@ const pricingContext = `${installationService.name[lang]} — ${installationServ
       <img
         class="hero-photo-img"
         src="/photos/klimatyzator-scienny-haier.png"
-        alt={isPL ? 'Klimatyzacja po montażu' : 'Installed air conditioner'}
+        alt={copy.imageAlt}
         loading="eager"
         decoding="async"
       />

@@ -1,6 +1,6 @@
 ---
 import { CONTACT_PHONE, SITE } from '../config/site';
-import { commonLabels, getAlternatePath, navLinks, type Locale } from '../i18n/content';
+import { commonLabels, getAlternatePath, navLinks, routeMap, type Locale } from '../i18n/content';
 import IconPhone from './icons/IconPhone.astro';
 
 interface Props {
@@ -12,7 +12,7 @@ const { lang, currentPath } = Astro.props;
 
 const labels = commonLabels[lang];
 const altPath = getAlternatePath(currentPath, lang);
-const homeHref = lang === 'pl' ? '/' : '/en/';
+const homeHref = routeMap.home[lang];
 
 const normalize = (path: string): string => {
   if (path !== '/' && path.endsWith('/')) {
@@ -26,7 +26,7 @@ const current = normalize(currentPath);
 ---
 
 <header class="site-header">
-  <a class="skip-link" href="#main">{lang === 'pl' ? 'Przejdź do treści' : 'Skip to content'}</a>
+  <a class="skip-link" href="#main">{labels.skipLink}</a>
   <div class="container header-bar">
     <a class="brand" href={homeHref}>{SITE.brandName}</a>
     <nav class="site-nav" aria-label={labels.navAria}>

@@ -1,34 +1,20 @@
 ---
-import { BUSINESS } from '../../../config/site';
 import type { Locale } from '../../../i18n/content';
+import { pageContent } from '../../../i18n/page-content';
 
 interface Props {
   lang: Locale;
 }
 
 const { lang } = Astro.props;
-const isPL = lang === 'pl';
-
-const items = isPL
-  ? [
-      BUSINESS.warranty.description.pl,
-      BUSINESS.certifications.summary.pl,
-      'Szybkie terminy i szybka odpowiedź',
-      'Porządek po montażu'
-    ]
-  : [
-      BUSINESS.warranty.description.en,
-      BUSINESS.certifications.summary.en,
-      'Fast response and short lead times',
-      'Clean finish after installation'
-    ];
+const copy = pageContent[lang].home.trust;
 ---
 
 <section class="trust-strip section-sm" data-reveal>
   <div class="container">
     <ul class="trust-inline-list">
       {
-        items.map((item) => (
+        copy.items.map((item) => (
           <li>
             <span>{item}</span>
           </li>

@@ -1,0 +1,84 @@
+---
+import { BUSINESS, CONTACT_PHONE } from '../../config/site';
+import { commonLabels, pageMeta, routeMap, type Locale } from '../../i18n/content';
+import { pageContent } from '../../i18n/page-content';
+import CTAButton from '../CTAButton.astro';
+import Layout from '../Layout.astro';
+import PageHero from '../PageHero.astro';
+import PhotoGalleryPlaceholder from '../PhotoGalleryPlaceholder.astro';
+import IconDrill from '../icons/IconDrill.astro';
+import IconIndoor from '../icons/IconIndoor.astro';
+import IconOutdoor from '../icons/IconOutdoor.astro';
+import IconSparkle from '../icons/IconSparkle.astro';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const copy = pageContent[lang].services;
+const labels = commonLabels[lang];
+const meta = pageMeta[lang].services;
+---
+
+<Layout
+  lang={lang}
+  title={meta.title}
+  description={meta.description}
+  keywords={meta.keywords}
+  currentPath={routeMap.services[lang]}
+>
+  <PageHero eyebrow={copy.hero.eyebrow} title={copy.hero.title} description={copy.hero.description} />
+
+  <section class="section">
+    <div class="container content-grid" data-reveal>
+      <article class="highlight-card">
+        <IconIndoor class="service-icon" />
+        <h2>{copy.installation.title}</h2>
+        <ul class="bullet-list">
+          {copy.installation.items.map((item) => <li>{item}</li>)}
+        </ul>
+        <p class="tiny-note">{BUSINESS.pricing.installationService.fullDescription[lang]}</p>
+      </article>
+
+      <article class="highlight-card">
+        <IconSparkle class="service-icon" />
+        <h2>{copy.maintenance.title}</h2>
+        <p>{copy.maintenance.description}</p>
+        <ul class="bullet-list">
+          {copy.maintenance.items.map((item) => <li>{item}</li>)}
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="section section-muted">
+    <div class="container card-grid card-grid-3" data-reveal>
+      <article class="info-card">
+        <IconDrill class="service-icon" />
+        <h3>{copy.features.preparation.title}</h3>
+        <p>{copy.features.preparation.description}</p>
+      </article>
+
+      <article class="info-card">
+        <IconOutdoor class="service-icon" />
+        <h3>{copy.features.outdoor.title}</h3>
+        <p>{copy.features.outdoor.description}</p>
+      </article>
+
+      <article class="info-card">
+        <IconSparkle class="service-icon" />
+        <h3>{copy.features.cleanup.title}</h3>
+        <p>{copy.features.cleanup.description}</p>
+      </article>
+    </div>
+  </section>
+
+  <PhotoGalleryPlaceholder lang={lang} />
+
+  <section class="section">
+    <div class="container" data-reveal>
+      <CTAButton href={CONTACT_PHONE.href} label={labels.callNow} ariaLabel={labels.callNow} />
+    </div>
+  </section>
+</Layout>

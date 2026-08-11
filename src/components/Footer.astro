@@ -30,7 +30,7 @@ const privacyLink = getPathByPage('privacy', lang);
     </div>
 
     <div>
-      <p class="footer-heading">{lang === 'pl' ? 'Informacje' : 'Info'}</p>
+      <p class="footer-heading">{labels.footerInfoHeading}</p>
       <a href={privacyLink}>{labels.privacy}</a>
       <a href={altPath}>{labels.languageSwitch}</a>
       <p class="footer-small">{BUSINESS.serviceArea.summary[lang]}</p>

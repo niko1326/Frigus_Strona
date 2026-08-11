@@ -1,37 +1,25 @@
 ---
-import { BUSINESS } from '../../../config/site';
 import type { Locale } from '../../../i18n/content';
+import { pageContent } from '../../../i18n/page-content';
 
 interface Props {
   lang: Locale;
 }
 
 const { lang } = Astro.props;
-const isPL = lang === 'pl';
-
-const steps = isPL
-  ? [
-      { title: 'Telefon', description: 'Krótka rozmowa, orientacyjny zakres i termin wizji lub montażu.' },
-      { title: 'Wycena', description: BUSINESS.pricing.installationService.fullDescription.pl },
-      { title: 'Montaż', description: 'Montaż zwykle trwa około 1 dnia, z zachowaniem porządku.' }
-    ]
-  : [
-      { title: 'Call', description: 'Short call to understand scope and propose a timeline.' },
-      { title: 'Quote', description: BUSINESS.pricing.installationService.fullDescription.en },
-      { title: 'Install', description: 'Installation usually takes about one day with a clean finish.' }
-    ];
+const copy = pageContent[lang].home.howItWorks;
 ---
 
 <section class="section" data-reveal>
   <div class="container">
     <div class="section-head">
-      <p class="eyebrow">{isPL ? 'Jak to działa' : 'How it works'}</p>
-      <h2>{isPL ? 'Prosto: 3 kroki do gotowej klimatyzacji' : 'Simple: 3 steps to working AC'}</h2>
+      <p class="eyebrow">{copy.eyebrow}</p>
+      <h2>{copy.title}</h2>
     </div>
 
     <ol class="steps-plain-list">
       {
-        steps.map((step, index) => (
+        copy.steps.map((step, index) => (
           <li>
             <span class="step-index">0{index + 1}</span>
             <div>

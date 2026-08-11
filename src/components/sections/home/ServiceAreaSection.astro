@@ -1,31 +1,24 @@
 ---
 import { BUSINESS } from '../../../config/site';
 import type { Locale } from '../../../i18n/content';
+import { pageContent } from '../../../i18n/page-content';
 
 interface Props {
   lang: Locale;
 }
 
 const { lang } = Astro.props;
-const isPL = lang === 'pl';
+const copy = pageContent[lang].home.serviceArea;
 const areasLine = BUSINESS.serviceArea.regions.map((region) => region.label[lang]).join(' · ');
 ---
 
 <section class="section" data-reveal>
   <div class="container plain-stack">
     <div class="plain-stack">
-      <p class="eyebrow">{isPL ? 'Obszar działania' : 'Service area'}</p>
+      <p class="eyebrow">{copy.eyebrow}</p>
       <h2>{BUSINESS.serviceArea.summary[lang]}</h2>
-      <p>
-        {isPL
-          ? 'Realizujemy montaże w domach i mieszkaniach na całym wskazanym obszarze.'
-          : 'We install split units in apartments and houses across the listed locations.'}
-      </p>
-      <p class="tiny-note">
-        {isPL
-          ? 'Uwaga: ewentualne zgody administracyjne i formalności po stronie inwestora/właściciela lokalu.'
-          : 'Note: any building permissions or housing administration approvals are handled by the property owner.'}
-      </p>
+      <p>{copy.description}</p>
+      <p class="tiny-note">{copy.note}</p>
     </div>
     <p class="plain-area-line">{areasLine}</p>
   </div>
