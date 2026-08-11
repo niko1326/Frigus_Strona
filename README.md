@@ -1,6 +1,6 @@
-# CLIM-PRO Astro Website
+# FRIGAC Astro Website
 
-Minimalistyczna, szybka strona dla CLIM-PRO (Bydgoszcz + Trójmiasto), z naciskiem na konwersję telefoniczną.
+Minimalistyczna, szybka strona dla FRIGAC (Bydgoszcz + Trójmiasto), z naciskiem na konwersję telefoniczną.
 
 ## Tech stack
 
@@ -85,7 +85,7 @@ Po ustawieniu `enabled: true` i tokena, snippet Cloudflare jest automatycznie do
    - Build output directory: `dist`
 4. Deploy.
 
-Opcjonalnie ustaw własną domenę i zaktualizuj `site` w `astro.config.mjs` oraz `SITE.siteUrl` w `src/config/site.ts`.
+Domena produkcyjna `https://frigac.pl` jest ustawiona w `astro.config.mjs` oraz w `SITE.siteUrl` w `src/config/site.ts`.
 
 ## Alternatywa: GitHub Pages
 

@@ -1,6 +1,6 @@
 export const SITE = {
   brandName: 'FRIGAC',
-  siteUrl: 'https://frigus.pages.dev',
+  siteUrl: 'https://frigac.pl',
   defaultLocale: 'pl'
 } as const;
 

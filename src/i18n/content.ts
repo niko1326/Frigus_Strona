@@ -41,7 +41,7 @@ export const commonLabels = {
     callNow: 'Zadzwoń po darmową wycenę',
     callShort: 'Zadzwoń teraz',
     navAria: 'Główna nawigacja',
-    phoneAria: 'Zadzwoń do CLIM-PRO',
+    phoneAria: 'Zadzwoń do FRIGAC',
     languageSwitch: 'Przełącz na English',
     languageShort: 'EN',
     footerHours: 'Godziny',
@@ -56,7 +56,7 @@ export const commonLabels = {
     callNow: 'Call for a free quote',
     callShort: 'Call now',
     navAria: 'Main navigation',
-    phoneAria: 'Call CLIM-PRO',
+    phoneAria: 'Call FRIGAC',
     languageSwitch: 'Switch to Polish',
     languageShort: 'PL',
     footerHours: 'Hours',
@@ -72,7 +72,7 @@ export const commonLabels = {
 export const pageMeta: Record<Locale, Record<PageKey, PageMeta>> = {
   pl: {
     home: {
-      title: 'CLIM-PRO | Montaż klimatyzacji split - Bydgoszcz i Trójmiasto',
+      title: 'FRIGAC | Montaż klimatyzacji split - Bydgoszcz i Trójmiasto',
       description:
         'Montaż klimatyzacji typu split w Bydgoszczy i Trójmieście. Szybka wycena telefoniczna, czysty montaż, 2 lata gwarancji.',
       keywords: [
@@ -84,64 +84,64 @@ export const pageMeta: Record<Locale, Record<PageKey, PageMeta>> = {
       ]
     },
     services: {
-      title: 'Usługi | CLIM-PRO',
+      title: 'Usługi | FRIGAC',
       description:
-        'Zakres usługi CLIM-PRO: montaż jednostki wewnętrznej i zewnętrznej, przepust przez ścianę, prowadzenie instalacji i uruchomienie.',
+        'Zakres usługi FRIGAC: montaż jednostki wewnętrznej i zewnętrznej, przepust przez ścianę, prowadzenie instalacji i uruchomienie.',
       keywords: ['usługi klimatyzacja split', 'montaż jednostki zewnętrznej', 'przegląd klimatyzacji']
     },
     pricing: {
-      title: 'Cennik | CLIM-PRO',
+      title: 'Cennik | FRIGAC',
       description: 'Cennik startowy montażu klimatyzacji typu split. Cena montażu od podanego zakresu + cena urządzenia.',
       keywords: ['cennik montaż klimatyzacji', 'ile kosztuje montaż klimatyzacji', 'klimatyzacja split cena montażu']
     },
     faq: {
-      title: 'FAQ | CLIM-PRO',
+      title: 'FAQ | FRIGAC',
       description: 'Najczęstsze pytania o montaż klimatyzacji split, wycenę, terminy, gwarancję i przygotowanie mieszkania.',
       keywords: ['faq klimatyzacja split', 'czas montażu klimatyzacji', 'gwarancja montażowa klimatyzacji']
     },
     contact: {
-      title: 'Kontakt | CLIM-PRO',
-      description: 'Skontaktuj się z CLIM-PRO i umów bezpłatną wycenę telefonicznie. Obsługa Bydgoszcz i Trójmiasto.',
+      title: 'Kontakt | FRIGAC',
+      description: 'Skontaktuj się z FRIGAC i umów bezpłatną wycenę telefonicznie. Obsługa Bydgoszcz i Trójmiasto.',
       keywords: ['kontakt klimatyzacja Bydgoszcz', 'telefon montaż klimatyzacji', 'darmowa wycena klimatyzacji']
     },
     privacy: {
-      title: 'Polityka prywatności | CLIM-PRO',
-      description: 'Podstawowe informacje o przetwarzaniu danych kontaktowych przez CLIM-PRO.',
-      keywords: ['polityka prywatności clim-pro']
+      title: 'Polityka prywatności | FRIGAC',
+      description: 'Podstawowe informacje o przetwarzaniu danych kontaktowych przez FRIGAC.',
+      keywords: ['polityka prywatności frigac']
     }
   },
   en: {
     home: {
-      title: 'CLIM-PRO | Split AC Installation in Bydgoszcz and Tri-City',
+      title: 'FRIGAC | Split AC Installation in Bydgoszcz and Tri-City',
       description:
         'Minimal, reliable split AC installation in Bydgoszcz and Tri-City. Fast phone quotes, clean work, 2-year installation warranty.',
       keywords: ['split ac installation bydgoszcz', 'ac installation gdansk', 'air conditioner installation tri-city']
     },
     services: {
-      title: 'Services | CLIM-PRO',
+      title: 'Services | FRIGAC',
       description:
         'What is included: indoor unit mounting, wall passthrough, outdoor unit mounting, full line run, startup, and maintenance cleaning.',
       keywords: ['split ac services', 'outdoor unit mounting', 'ac maintenance cleaning']
     },
     pricing: {
-      title: 'Pricing | CLIM-PRO',
+      title: 'Pricing | FRIGAC',
       description: 'Starting price for split AC installation: installation from the listed range plus unit cost.',
       keywords: ['split ac installation price', 'air conditioner installation cost', 'ac quote bydgoszcz']
     },
     faq: {
-      title: 'FAQ | CLIM-PRO',
+      title: 'FAQ | FRIGAC',
       description: 'Common questions about split AC installation, timelines, pricing, warranty, and preparation.',
       keywords: ['split ac faq', 'installation timeline', 'ac warranty']
     },
     contact: {
-      title: 'Contact | CLIM-PRO',
-      description: 'Call CLIM-PRO for a free quote and installation scheduling in Bydgoszcz and Tri-City.',
+      title: 'Contact | FRIGAC',
+      description: 'Call FRIGAC for a free quote and installation scheduling in Bydgoszcz and Tri-City.',
       keywords: ['call ac installer', 'contact split ac installation', 'free ac quote']
     },
     privacy: {
-      title: 'Privacy Policy | CLIM-PRO',
-      description: 'Basic information about personal data handling at CLIM-PRO.',
-      keywords: ['clim-pro privacy policy']
+      title: 'Privacy Policy | FRIGAC',
+      description: 'Basic information about personal data handling at FRIGAC.',
+      keywords: ['frigac privacy policy']
     }
   }
 };
