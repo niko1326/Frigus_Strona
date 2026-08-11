@@ -1,7 +1,7 @@
 ---
 import CTAButton from '../components/CTAButton.astro';
 import Layout from '../components/Layout.astro';
-import { BUSINESS, PRIMARY_PHONE } from '../config/site';
+import { BUSINESS, CONTACT_PHONE } from '../config/site';
 import { pageMeta } from '../i18n/content';
 
 const meta = pageMeta.pl.faq;
@@ -58,7 +58,7 @@ const meta = pageMeta.pl.faq;
 
   <section class="section">
     <div class="container" data-reveal>
-      <CTAButton href={PRIMARY_PHONE.href} label="Zadzwoń po wycenę" ariaLabel="Zadzwoń po wycenę" />
+      <CTAButton href={CONTACT_PHONE.href} label="Zadzwoń po wycenę" ariaLabel="Zadzwoń po wycenę" />
     </div>
   </section>
 </Layout>

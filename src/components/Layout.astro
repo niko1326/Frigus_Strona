@@ -5,7 +5,7 @@ import StickyCallBar from './StickyCallBar.astro';
 import {
   ANALYTICS,
   BUSINESS,
-  PRIMARY_PHONE,
+  CONTACT_PHONE,
   SITE
 } from '../config/site';
 import { commonLabels, getAlternatePath, type Locale } from '../i18n/content';
@@ -34,7 +34,7 @@ const localBusinessSchema = {
   name: SITE.brandName,
   legalName: BUSINESS.legalName,
   description,
-  telephone: BUSINESS.contact.phones.map((phone) => phone.tel),
+  telephone: CONTACT_PHONE.tel,
   email: BUSINESS.contact.email.address,
   areaServed,
   serviceType: BUSINESS.serviceType[lang],
@@ -85,7 +85,7 @@ const cloudflareBeaconData = JSON.stringify({ token: ANALYTICS.cloudflare.token 
       <slot />
     </main>
     <Footer lang={lang} currentPath={currentPath} />
-    <StickyCallBar phoneHref={PRIMARY_PHONE.href} label={labels.stickyCall} ariaLabel={labels.phoneAria} />
+    <StickyCallBar phoneHref={CONTACT_PHONE.href} label={labels.stickyCall} />
 
     <script is:inline>
       (() => {

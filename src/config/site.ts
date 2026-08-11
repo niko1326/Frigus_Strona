@@ -9,7 +9,6 @@ type SiteConfig = Readonly<{
   defaultLocale: 'pl' | 'en';
 }>;
 
-type PhoneContactId = 'hubert' | 'nikodem';
 type PhoneNumber = `+${string}`;
 type PhoneHref = `tel:${PhoneNumber}`;
 type EmailHref = `mailto:${string}`;
@@ -20,7 +19,6 @@ type EmailContact = Readonly<{
 }>;
 
 type PhoneContact = Readonly<{
-  id: PhoneContactId;
   contactName: string;
   display: string;
   tel: PhoneNumber;
@@ -43,8 +41,7 @@ type BusinessConfig = Readonly<{
   legalName: string;
   contact: Readonly<{
     email: EmailContact;
-    defaultPhoneId: PhoneContactId;
-    phones: readonly PhoneContact[];
+    phone: PhoneContact;
   }>;
   availability: Readonly<{
     mode: 'by-appointment';
@@ -88,7 +85,6 @@ type BusinessConfig = Readonly<{
       items: readonly CertificateScan[];
     }>;
   }>;
-  teamSize: number;
   serviceType: LocalizedBusinessText;
 }>;
 
@@ -101,13 +97,11 @@ const createEmailContact = <const Address extends string>(address: Address) =>
   }) as const satisfies EmailContact;
 
 const createPhoneContact = <
-  const Id extends PhoneContactId,
   const ContactName extends string,
   const Display extends string,
   const Tel extends PhoneNumber
->(id: Id, contactName: ContactName, display: Display, tel: Tel) =>
+>(contactName: ContactName, display: Display, tel: Tel) =>
   ({
-    id,
     contactName,
     display,
     tel,
@@ -124,12 +118,7 @@ export const BUSINESS = {
   legalName: 'Frigus Hubert Maciejewski',
   contact: {
     email: createEmailContact('kontakt@frigac.pl'),
-    // Existing single-number CTAs continue to route to Hubert's number.
-    defaultPhoneId: 'hubert',
-    phones: [
-      createPhoneContact('hubert', 'Hubert Maciejewski', '735 400 610', '+48735400610'),
-      createPhoneContact('nikodem', 'Nikodem Hirsch', '885 788 889', '+48885788889')
-    ]
+    phone: createPhoneContact('Hubert Maciejewski', '735 400 610', '+48735400610')
   },
   availability: {
     mode: 'by-appointment',
@@ -240,17 +229,13 @@ export const BUSINESS = {
       ]
     }
   },
-  // TODO: Confirm this pre-existing public claim; it was not part of the approved data set.
-  teamSize: 2,
   serviceType: {
     pl: 'Montaż klimatyzacji typu split',
     en: 'Split air conditioner installation'
   }
 } as const satisfies BusinessConfig;
 
-export const PRIMARY_PHONE =
-  BUSINESS.contact.phones.find((phone) => phone.id === BUSINESS.contact.defaultPhoneId) ??
-  BUSINESS.contact.phones[0];
+export const CONTACT_PHONE = BUSINESS.contact.phone;
 
 export const ANALYTICS = {
   cloudflare: {

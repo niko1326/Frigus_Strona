@@ -1,6 +1,6 @@
 ---
 import CTAButton from '../../CTAButton.astro';
-import { PRIMARY_PHONE } from '../../../config/site';
+import { CONTACT_PHONE } from '../../../config/site';
 import type { Locale } from '../../../i18n/content';
 
 interface Props {
@@ -15,7 +15,7 @@ const isPL = lang === 'pl';
   <div class="container cta-inline">
     <p class="plain-highlight plain-highlight-sm">{isPL ? 'Zadzwoń i umów wycenę' : 'Call and schedule your quote'}</p>
     <CTAButton
-      href={PRIMARY_PHONE.href}
+      href={CONTACT_PHONE.href}
       label={isPL ? 'Zadzwoń po wycenę' : 'Call for a quote'}
       ariaLabel={isPL ? 'Zadzwoń po wycenę' : 'Call for a quote'}
     />

@@ -6,7 +6,7 @@ import IconDrill from '../../components/icons/IconDrill.astro';
 import IconIndoor from '../../components/icons/IconIndoor.astro';
 import IconOutdoor from '../../components/icons/IconOutdoor.astro';
 import IconSparkle from '../../components/icons/IconSparkle.astro';
-import { BUSINESS, PRIMARY_PHONE } from '../../config/site';
+import { BUSINESS, CONTACT_PHONE } from '../../config/site';
 import { pageMeta } from '../../i18n/content';
 
 const meta = pageMeta.en.services;
@@ -86,7 +86,7 @@ const meta = pageMeta.en.services;
 
   <section class="section">
     <div class="container" data-reveal>
-      <CTAButton href={PRIMARY_PHONE.href} label="Call for a quote" ariaLabel="Call for a quote" />
+      <CTAButton href={CONTACT_PHONE.href} label="Call for a quote" ariaLabel="Call for a quote" />
     </div>
   </section>
 </Layout>

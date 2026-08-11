@@ -4,14 +4,13 @@ import CTAButton from './CTAButton.astro';
 interface Props {
   phoneHref: `tel:+${string}`;
   label: string;
-  ariaLabel: string;
 }
 
-const { phoneHref, label, ariaLabel } = Astro.props;
+const { phoneHref, label } = Astro.props;
 ---
 
 <div class="sticky-call" data-sticky-call>
-  <CTAButton href={phoneHref} label={label} ariaLabel={ariaLabel} fullWidth={true} />
+  <CTAButton href={phoneHref} label={label} fullWidth={true} />
 </div>
 
 <script is:inline>

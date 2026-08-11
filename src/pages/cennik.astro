@@ -1,7 +1,7 @@
 ---
 import CTAButton from '../components/CTAButton.astro';
 import Layout from '../components/Layout.astro';
-import { BUSINESS, PRIMARY_PHONE } from '../config/site';
+import { BUSINESS, CONTACT_PHONE } from '../config/site';
 import { pageMeta } from '../i18n/content';
 
 const meta = pageMeta.pl.pricing;
@@ -33,7 +33,7 @@ const meta = pageMeta.pl.pricing;
         <li>Brak formularzy: najkrótsza droga do wyceny to telefon.</li>
       </ul>
       <p class="tiny-note">{BUSINESS.pricing.taxNote.pl}</p>
-      <CTAButton href={PRIMARY_PHONE.href} label="Zadzwoń po wycenę" ariaLabel="Zadzwoń po wycenę" />
+      <CTAButton href={CONTACT_PHONE.href} label="Zadzwoń po wycenę" ariaLabel="Zadzwoń po wycenę" />
     </div>
   </section>
 </Layout>

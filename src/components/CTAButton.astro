@@ -13,8 +13,7 @@ const {
   label,
   variant = 'primary',
   ariaLabel,
-  fullWidth = false
-  ,
+  fullWidth = false,
   size = 'md'
 } = Astro.props;
 
@@ -22,6 +21,6 @@ const sizeClass = size === 'md' ? '' : `cta-${size}`;
 const classNames = ['cta-button', `cta-${variant}`, sizeClass, fullWidth ? 'cta-full' : ''].join(' ').trim();
 ---
 
-<a class={classNames} href={href} aria-label={ariaLabel ?? label}>
+<a class={classNames} href={href} aria-label={ariaLabel}>
   {label}
 </a>

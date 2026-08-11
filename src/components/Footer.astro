@@ -1,5 +1,5 @@
 ---
-import { BUSINESS, SITE } from '../config/site';
+import { BUSINESS, CONTACT_PHONE, SITE } from '../config/site';
 import { commonLabels, getAlternatePath, getPathByPage, type Locale } from '../i18n/content';
 
 interface Props {
@@ -18,18 +18,10 @@ const privacyLink = getPathByPage('privacy', lang);
     <div>
       <p class="footer-brand">{SITE.brandName}</p>
       <p>{labels.footerInfo}</p>
-      {
-        BUSINESS.contact.phones.map((phone) => (
-          <a
-            href={phone.href}
-            class="footer-phone"
-            aria-label={lang === 'pl' ? `Zadzwoń do ${phone.contactName}` : `Call ${phone.contactName}`}
-          >
-            {phone.display} — {phone.contactName}
-          </a>
-        ))
-      }
-      <a href={BUSINESS.contact.email.href}>{BUSINESS.contact.email.address}</a>
+      <a href={CONTACT_PHONE.href} class="footer-phone">
+        {CONTACT_PHONE.display} — {CONTACT_PHONE.contactName}
+      </a>
+      <a href={BUSINESS.contact.email.href} aria-label={labels.emailAria}>{BUSINESS.contact.email.address}</a>
     </div>
 
     <div>

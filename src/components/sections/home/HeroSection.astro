@@ -1,6 +1,6 @@
 ---
 import CTAButton from '../../CTAButton.astro';
-import { BUSINESS, PRIMARY_PHONE } from '../../../config/site';
+import { BUSINESS, CONTACT_PHONE } from '../../../config/site';
 import type { Locale } from '../../../i18n/content';
 
 interface Props {
@@ -30,7 +30,7 @@ const pricingContext = `${installationService.name[lang]} — ${installationServ
       <div class="hero-actions">
         <CTAButton
           size="sm"
-          href={PRIMARY_PHONE.href}
+          href={CONTACT_PHONE.href}
           label={isPL ? 'Zadzwoń po wycenę' : 'Call for a quote'}
           ariaLabel={isPL ? 'Zadzwoń po wycenę' : 'Call for a quote'}
         />

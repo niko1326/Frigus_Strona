@@ -32,7 +32,7 @@ Kluczowe pola:
 
 - `SITE.brandName`, `SITE.siteUrl`
 - `BUSINESS.legalName`
-- `BUSINESS.contact.phones`, `BUSINESS.contact.email`
+- `BUSINESS.contact.phone`, `BUSINESS.contact.email`
 - `BUSINESS.availability`
 - `BUSINESS.pricing`, `BUSINESS.warranty`
 - `BUSINESS.serviceArea`, `BUSINESS.travel`

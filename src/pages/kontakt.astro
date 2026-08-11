@@ -1,10 +1,11 @@
 ---
 import CTAButton from '../components/CTAButton.astro';
 import Layout from '../components/Layout.astro';
-import { BUSINESS, PRIMARY_PHONE } from '../config/site';
-import { pageMeta } from '../i18n/content';
+import { BUSINESS, CONTACT_PHONE } from '../config/site';
+import { commonLabels, pageMeta } from '../i18n/content';
 
 const meta = pageMeta.pl.contact;
+const labels = commonLabels.pl;
 ---
 
 <Layout
@@ -27,24 +28,17 @@ const meta = pageMeta.pl.contact;
 
   <section class="section">
     <div class="container contact-panel" data-reveal>
-      {
-        BUSINESS.contact.phones.map((phone) => (
-          <p>
-            <a class="phone-big" href={phone.href} aria-label={`Zadzwoń do ${phone.contactName}`}>
-              {phone.display}
-            </a>{' '}
-            — {phone.contactName}
-          </p>
-        ))
-      }
-      <a href={BUSINESS.contact.email.href}>{BUSINESS.contact.email.address}</a>
+      <p>
+        <a class="phone-big" href={CONTACT_PHONE.href} aria-label={labels.phoneAria}>{CONTACT_PHONE.display}</a>{' '}
+        — {CONTACT_PHONE.contactName}
+      </p>
+      <a href={BUSINESS.contact.email.href} aria-label={labels.emailAria}>{BUSINESS.contact.email.address}</a>
       <ul class="bullet-list">
         <li>Dostępność: {BUSINESS.availability.label.pl}</li>
-        <li>Zespół: {BUSINESS.teamSize} osoby</li>
         <li>Obszar: {BUSINESS.serviceArea.summary.pl}</li>
       </ul>
       <p class="tiny-note">Skontaktuj się telefonicznie lub mailowo.</p>
-      <CTAButton href={PRIMARY_PHONE.href} label="Zadzwoń po wycenę" ariaLabel="Zadzwoń po wycenę" />
+      <CTAButton href={CONTACT_PHONE.href} label="Zadzwoń po wycenę" ariaLabel="Zadzwoń po wycenę" />
     </div>
   </section>
 </Layout>

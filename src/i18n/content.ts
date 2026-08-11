@@ -1,4 +1,4 @@
-import { BUSINESS, SITE } from '../config/site';
+import { BUSINESS, CONTACT_PHONE, SITE } from '../config/site';
 
 export type Locale = 'pl' | 'en';
 export type PageKey = 'home' | 'services' | 'pricing' | 'faq' | 'contact' | 'privacy';
@@ -60,7 +60,8 @@ export const commonLabels = {
     callNow: 'Zadzwoń po wycenę',
     callShort: 'Zadzwoń teraz',
     navAria: 'Główna nawigacja',
-    phoneAria: `Zadzwoń do ${SITE.brandName}`,
+    phoneAria: `Zadzwoń do ${SITE.brandName} pod numer ${CONTACT_PHONE.display}`,
+    emailAria: `Napisz do ${SITE.brandName} na adres ${BUSINESS.contact.email.address}`,
     languageSwitch: 'Przełącz na English',
     languageShort: 'EN',
     footerHours: 'Dostępność',
@@ -75,7 +76,8 @@ export const commonLabels = {
     callNow: 'Call for a quote',
     callShort: 'Call now',
     navAria: 'Main navigation',
-    phoneAria: `Call ${SITE.brandName}`,
+    phoneAria: `Call ${SITE.brandName} at ${CONTACT_PHONE.display}`,
+    emailAria: `Email ${SITE.brandName} at ${BUSINESS.contact.email.address}`,
     languageSwitch: 'Switch to Polish',
     languageShort: 'PL',
     footerHours: 'Availability',
