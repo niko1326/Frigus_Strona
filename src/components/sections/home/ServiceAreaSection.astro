@@ -1,5 +1,5 @@
 ---
-import { SERVICE_AREAS, SERVICE_AREAS_EN } from '../../../config/site';
+import { BUSINESS } from '../../../config/site';
 import type { Locale } from '../../../i18n/content';
 
 interface Props {
@@ -8,15 +8,14 @@ interface Props {
 
 const { lang } = Astro.props;
 const isPL = lang === 'pl';
-const areas = isPL ? SERVICE_AREAS : SERVICE_AREAS_EN;
-const areasLine = areas.join(', ');
+const areasLine = BUSINESS.serviceArea.regions.map((region) => region.label[lang]).join(' · ');
 ---
 
 <section class="section" data-reveal>
   <div class="container plain-stack">
     <div class="plain-stack">
       <p class="eyebrow">{isPL ? 'Obszar działania' : 'Service area'}</p>
-      <h2>{isPL ? 'Bydgoszcz, Trójmiasto i okolice' : 'Bydgoszcz, Tri-City and nearby areas'}</h2>
+      <h2>{BUSINESS.serviceArea.summary[lang]}</h2>
       <p>
         {isPL
           ? 'Realizujemy montaże w domach i mieszkaniach na całym wskazanym obszarze.'

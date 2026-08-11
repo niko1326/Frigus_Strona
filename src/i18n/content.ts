@@ -1,3 +1,5 @@
+import { BUSINESS, SITE } from '../config/site';
+
 export type Locale = 'pl' | 'en';
 export type PageKey = 'home' | 'services' | 'pricing' | 'faq' | 'contact' | 'privacy';
 
@@ -11,6 +13,23 @@ type PageMeta = {
   description: string;
   keywords: string[];
 };
+
+type ServiceRegionId = (typeof BUSINESS.serviceArea.regions)[number]['id'];
+
+const getServiceRegion = (id: ServiceRegionId) => {
+  const region = BUSINESS.serviceArea.regions.find((candidate) => candidate.id === id);
+
+  if (!region) {
+    throw new Error(`Missing service region in business config: ${id}`);
+  }
+
+  return region;
+};
+
+const bydgoszczRegion = getServiceRegion('bydgoszcz');
+const triCityRegion = getServiceRegion('trojmiasto');
+const [bydgoszcz] = bydgoszczRegion.places;
+const [gdansk, gdynia] = triCityRegion.places;
 
 export const routeMap: Record<PageKey, { pl: string; en: string }> = {
   home: { pl: '/', en: '/en/' },
@@ -41,10 +60,10 @@ export const commonLabels = {
     callNow: 'Zadzwoń po darmową wycenę',
     callShort: 'Zadzwoń teraz',
     navAria: 'Główna nawigacja',
-    phoneAria: 'Zadzwoń do FRIGAC',
+    phoneAria: `Zadzwoń do ${SITE.brandName}`,
     languageSwitch: 'Przełącz na English',
     languageShort: 'EN',
-    footerHours: 'Godziny',
+    footerHours: 'Dostępność',
     footerInfo: 'Montaż klimatyzacji typu split i serwis podstawowy',
     stickyCall: 'Zadzwoń: darmowa wycena',
     seeServices: 'Zobacz usługi',
@@ -56,10 +75,10 @@ export const commonLabels = {
     callNow: 'Call for a free quote',
     callShort: 'Call now',
     navAria: 'Main navigation',
-    phoneAria: 'Call FRIGAC',
+    phoneAria: `Call ${SITE.brandName}`,
     languageSwitch: 'Switch to Polish',
     languageShort: 'PL',
-    footerHours: 'Hours',
+    footerHours: 'Availability',
     footerInfo: 'Split air conditioner installation and basic maintenance',
     stickyCall: 'Call: free quote',
     seeServices: 'See services',
@@ -72,76 +91,77 @@ export const commonLabels = {
 export const pageMeta: Record<Locale, Record<PageKey, PageMeta>> = {
   pl: {
     home: {
-      title: 'FRIGAC | Montaż klimatyzacji split - Bydgoszcz i Trójmiasto',
-      description:
-        'Montaż klimatyzacji typu split w Bydgoszczy i Trójmieście. Szybka wycena telefoniczna, czysty montaż, 2 lata gwarancji.',
+      title: `${SITE.brandName} | Montaż klimatyzacji split - ${BUSINESS.serviceArea.summary.pl}`,
+      description: `Montaż klimatyzacji typu split: ${BUSINESS.serviceArea.summary.pl}. Szybka wycena telefoniczna, czysty montaż. ${BUSINESS.warranty.description.pl}`,
       keywords: [
-        'montaż klimatyzacji Bydgoszcz',
-        'montaż klimatyzacji Gdańsk',
-        'montaż klimatyzacji Gdynia',
+        `montaż klimatyzacji ${bydgoszcz}`,
+        `montaż klimatyzacji ${gdansk}`,
+        `montaż klimatyzacji ${gdynia}`,
         'montaż klimatyzacji split',
         'klimatyzacja mieszkanie dom'
       ]
     },
     services: {
-      title: 'Usługi | FRIGAC',
-      description:
-        'Zakres usługi FRIGAC: montaż jednostki wewnętrznej i zewnętrznej, przepust przez ścianę, prowadzenie instalacji i uruchomienie.',
+      title: `Usługi | ${SITE.brandName}`,
+      description: `Zakres usługi ${SITE.brandName}: montaż jednostki wewnętrznej i zewnętrznej, przepust przez ścianę, prowadzenie instalacji i uruchomienie.`,
       keywords: ['usługi klimatyzacja split', 'montaż jednostki zewnętrznej', 'przegląd klimatyzacji']
     },
     pricing: {
-      title: 'Cennik | FRIGAC',
-      description: 'Cennik startowy montażu klimatyzacji typu split. Cena montażu od podanego zakresu + cena urządzenia.',
+      title: `Cennik | ${SITE.brandName}`,
+      description: `Cennik montażu klimatyzacji typu split: ${BUSINESS.pricing.label.pl}. ${BUSINESS.pricing.includedInstallation.description.pl}`,
       keywords: ['cennik montaż klimatyzacji', 'ile kosztuje montaż klimatyzacji', 'klimatyzacja split cena montażu']
     },
     faq: {
-      title: 'FAQ | FRIGAC',
+      title: `FAQ | ${SITE.brandName}`,
       description: 'Najczęstsze pytania o montaż klimatyzacji split, wycenę, terminy, gwarancję i przygotowanie mieszkania.',
-      keywords: ['faq klimatyzacja split', 'czas montażu klimatyzacji', 'gwarancja montażowa klimatyzacji']
+      keywords: ['faq klimatyzacja split', 'czas montażu klimatyzacji', 'gwarancja producenta klimatyzacji']
     },
     contact: {
-      title: 'Kontakt | FRIGAC',
-      description: 'Skontaktuj się z FRIGAC i umów bezpłatną wycenę telefonicznie. Obsługa Bydgoszcz i Trójmiasto.',
-      keywords: ['kontakt klimatyzacja Bydgoszcz', 'telefon montaż klimatyzacji', 'darmowa wycena klimatyzacji']
+      title: `Kontakt | ${SITE.brandName}`,
+      description: `Skontaktuj się z ${SITE.brandName} i umów bezpłatną wycenę telefonicznie. Obszar: ${BUSINESS.serviceArea.summary.pl}.`,
+      keywords: [`kontakt klimatyzacja ${bydgoszcz}`, 'telefon montaż klimatyzacji', 'darmowa wycena klimatyzacji']
     },
     privacy: {
-      title: 'Polityka prywatności | FRIGAC',
-      description: 'Podstawowe informacje o przetwarzaniu danych kontaktowych przez FRIGAC.',
-      keywords: ['polityka prywatności frigac']
+      title: `Polityka prywatności | ${SITE.brandName}`,
+      description: `Podstawowe informacje o przetwarzaniu danych kontaktowych przez ${BUSINESS.legalName}.`,
+      keywords: [`polityka prywatności ${SITE.brandName.toLowerCase()}`]
     }
   },
   en: {
     home: {
-      title: 'FRIGAC | Split AC Installation in Bydgoszcz and Tri-City',
-      description:
-        'Minimal, reliable split AC installation in Bydgoszcz and Tri-City. Fast phone quotes, clean work, 2-year installation warranty.',
-      keywords: ['split ac installation bydgoszcz', 'ac installation gdansk', 'air conditioner installation tri-city']
+      title: `${SITE.brandName} | Split AC Installation - ${BUSINESS.serviceArea.summary.en}`,
+      description: `Split AC installation: ${BUSINESS.serviceArea.summary.en}. Fast phone quotes and clean work. ${BUSINESS.warranty.description.en}`,
+      keywords: [
+        `split ac installation ${bydgoszcz}`,
+        `ac installation ${gdansk}`,
+        `air conditioner installation ${triCityRegion.label.en}`
+      ]
     },
     services: {
-      title: 'Services | FRIGAC',
+      title: `Services | ${SITE.brandName}`,
       description:
         'What is included: indoor unit mounting, wall passthrough, outdoor unit mounting, full line run, startup, and maintenance cleaning.',
       keywords: ['split ac services', 'outdoor unit mounting', 'ac maintenance cleaning']
     },
     pricing: {
-      title: 'Pricing | FRIGAC',
-      description: 'Starting price for split AC installation: installation from the listed range plus unit cost.',
-      keywords: ['split ac installation price', 'air conditioner installation cost', 'ac quote bydgoszcz']
+      title: `Pricing | ${SITE.brandName}`,
+      description: `Split AC installation pricing: ${BUSINESS.pricing.label.en}. ${BUSINESS.pricing.includedInstallation.description.en}`,
+      keywords: ['split ac installation price', 'air conditioner installation cost', `ac quote ${bydgoszcz}`]
     },
     faq: {
-      title: 'FAQ | FRIGAC',
+      title: `FAQ | ${SITE.brandName}`,
       description: 'Common questions about split AC installation, timelines, pricing, warranty, and preparation.',
       keywords: ['split ac faq', 'installation timeline', 'ac warranty']
     },
     contact: {
-      title: 'Contact | FRIGAC',
-      description: 'Call FRIGAC for a free quote and installation scheduling in Bydgoszcz and Tri-City.',
+      title: `Contact | ${SITE.brandName}`,
+      description: `Call ${SITE.brandName} for a free quote and installation scheduling. Service area: ${BUSINESS.serviceArea.summary.en}.`,
       keywords: ['call ac installer', 'contact split ac installation', 'free ac quote']
     },
     privacy: {
-      title: 'Privacy Policy | FRIGAC',
-      description: 'Basic information about personal data handling at FRIGAC.',
-      keywords: ['frigac privacy policy']
+      title: `Privacy Policy | ${SITE.brandName}`,
+      description: `Basic information about personal data handling by ${BUSINESS.legalName}.`,
+      keywords: [`${SITE.brandName.toLowerCase()} privacy policy`]
     }
   }
 };

@@ -1,7 +1,7 @@
 ---
 import CTAButton from '../../components/CTAButton.astro';
 import Layout from '../../components/Layout.astro';
-import { PHONE_TEL, PRICING } from '../../config/site';
+import { BUSINESS, PRIMARY_PHONE } from '../../config/site';
 import { pageMeta } from '../../i18n/content';
 
 const meta = pageMeta.en.pricing;
@@ -19,7 +19,7 @@ const meta = pageMeta.en.pricing;
       <p class="eyebrow">Pricing</p>
       <h1>Clear starting price</h1>
       <p>
-        We share realistic starting ranges first. Final pricing depends on line length, mounting conditions,
+        We share a starting price first. Final pricing depends on line length, mounting conditions,
         and technical layout.
       </p>
     </div>
@@ -27,14 +27,14 @@ const meta = pageMeta.en.pricing;
 
   <section class="section">
     <div class="container pricing-panel" data-reveal>
-      <p class="price-main">Installation from PLN {PRICING.installFromPLN}-{PRICING.installToPLN} + unit cost</p>
+      <p class="price-main">Installation price: {BUSINESS.pricing.label.en}</p>
       <ul class="bullet-list">
-        <li>{PRICING.travelIncludedEN}</li>
-        <li>Connection to existing electrical installation is included.</li>
+        <li>{BUSINESS.pricing.includedInstallation.description.en}</li>
+        <li>{BUSINESS.travel.note.en}</li>
         <li>No forms or widgets. Phone call is the fastest quote path.</li>
       </ul>
-      <p class="tiny-note">{PRICING.pricingNoteEN}</p>
-      <CTAButton href={`tel:${PHONE_TEL}`} label="Call for a free quote" ariaLabel="Call for a free quote" />
+      <p class="tiny-note">{BUSINESS.pricing.taxNote.en}</p>
+      <CTAButton href={PRIMARY_PHONE.href} label="Call for a free quote" ariaLabel="Call for a free quote" />
     </div>
   </section>
 </Layout>

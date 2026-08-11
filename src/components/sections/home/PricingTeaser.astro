@@ -1,5 +1,5 @@
 ---
-import { PRICING } from '../../../config/site';
+import { BUSINESS } from '../../../config/site';
 import type { Locale } from '../../../i18n/content';
 
 interface Props {
@@ -17,10 +17,11 @@ const pricingPath = isPL ? '/cennik' : '/en/pricing';
       <p class="eyebrow">{isPL ? 'Cennik' : 'Pricing'}</p>
       <p class="plain-highlight">
         {isPL
-          ? `Koszt montażu i urządzenia od: ${PRICING.installFromPLN} zł`
-          : `Installation from PLN ${PRICING.installFromPLN}-${PRICING.installToPLN} + unit price`}
+          ? `Cena montażu: ${BUSINESS.pricing.label.pl}`
+          : `Installation price: ${BUSINESS.pricing.label.en}`}
       </p>
-      <p>{isPL ? 'Dojazd jest wliczony. Finalna cena zależy od układu instalacji.' : 'Travel is included. Final cost depends on installation layout.'}</p>
+      <p>{BUSINESS.pricing.includedInstallation.description[lang]}</p>
+      <p>{BUSINESS.travel.note[lang]}</p>
       <a class="text-link" href={pricingPath}>{isPL ? 'Sprawdź szczegóły cennika' : 'See pricing details'}</a>
     </div>
   </div>

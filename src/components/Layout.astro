@@ -5,9 +5,7 @@ import StickyCallBar from './StickyCallBar.astro';
 import {
   ANALYTICS,
   BUSINESS,
-  PHONE_TEL,
-  SERVICE_AREAS,
-  SERVICE_AREAS_EN,
+  PRIMARY_PHONE,
   SITE
 } from '../config/site';
 import { commonLabels, getAlternatePath, type Locale } from '../i18n/content';
@@ -28,16 +26,18 @@ const alternatePath = getAlternatePath(currentPath, lang);
 const alternateUrl = new URL(alternatePath, SITE.siteUrl).toString();
 const homeUrl = new URL('/', SITE.siteUrl).toString();
 const labels = commonLabels[lang];
-const areaServed = lang === 'pl' ? [...SERVICE_AREAS] : [...SERVICE_AREAS_EN];
+const areaServed = BUSINESS.serviceArea.regions.map((region) => region.label[lang]);
 
 const localBusinessSchema = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
   name: SITE.brandName,
+  legalName: BUSINESS.legalName,
   description,
-  telephone: PHONE_TEL,
+  telephone: BUSINESS.contact.phones.map((phone) => phone.tel),
+  email: BUSINESS.contact.email.address,
   areaServed,
-  serviceType: lang === 'pl' ? BUSINESS.serviceTypePL : BUSINESS.serviceTypeEN,
+  serviceType: BUSINESS.serviceType[lang],
   url: canonicalUrl,
   availableLanguage: ['pl', 'en']
 };
@@ -85,7 +85,7 @@ const cloudflareBeaconData = JSON.stringify({ token: ANALYTICS.cloudflare.token 
       <slot />
     </main>
     <Footer lang={lang} currentPath={currentPath} />
-    <StickyCallBar phoneTel={PHONE_TEL} label={labels.stickyCall} ariaLabel={labels.phoneAria} />
+    <StickyCallBar phoneHref={PRIMARY_PHONE.href} label={labels.stickyCall} ariaLabel={labels.phoneAria} />
 
     <script is:inline>
       (() => {

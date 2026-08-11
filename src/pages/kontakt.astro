@@ -1,7 +1,7 @@
 ---
 import CTAButton from '../components/CTAButton.astro';
 import Layout from '../components/Layout.astro';
-import { BUSINESS, HOURS, PHONE_DISPLAY, PHONE_TEL, SERVICE_AREAS } from '../config/site';
+import { BUSINESS, PRIMARY_PHONE } from '../config/site';
 import { pageMeta } from '../i18n/content';
 
 const meta = pageMeta.pl.contact;
@@ -27,18 +27,24 @@ const meta = pageMeta.pl.contact;
 
   <section class="section">
     <div class="container contact-panel" data-reveal>
-      <a class="phone-big" href={`tel:${PHONE_TEL}`} aria-label="Zadzwoń do FRIGAC">
-        {PHONE_DISPLAY}
-      </a>
+      {
+        BUSINESS.contact.phones.map((phone) => (
+          <p>
+            <a class="phone-big" href={phone.href} aria-label={`Zadzwoń do ${phone.contactName}`}>
+              {phone.display}
+            </a>{' '}
+            — {phone.contactName}
+          </p>
+        ))
+      }
+      <a href={BUSINESS.contact.email.href}>{BUSINESS.contact.email.address}</a>
       <ul class="bullet-list">
-        <li>Pon.-Pt.: {HOURS.weekdays}</li>
-        <li>Sobota: {HOURS.saturday}</li>
-        <li>Niedziela: {HOURS.sundayPL}</li>
+        <li>Dostępność: {BUSINESS.availability.label.pl}</li>
         <li>Zespół: {BUSINESS.teamSize} osoby</li>
-        <li>Obszar: {SERVICE_AREAS.join(', ')}</li>
+        <li>Obszar: {BUSINESS.serviceArea.summary.pl}</li>
       </ul>
-      <p class="tiny-note">Najlepsza forma kontaktu: połączenie telefoniczne.</p>
-      <CTAButton href={`tel:${PHONE_TEL}`} label="Zadzwoń po darmową wycenę" ariaLabel="Zadzwoń po darmową wycenę" />
+      <p class="tiny-note">Skontaktuj się telefonicznie lub mailowo.</p>
+      <CTAButton href={PRIMARY_PHONE.href} label="Zadzwoń po darmową wycenę" ariaLabel="Zadzwoń po darmową wycenę" />
     </div>
   </section>
 </Layout>

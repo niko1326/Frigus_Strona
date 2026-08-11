@@ -1,5 +1,5 @@
 ---
-import { HOURS, PHONE_DISPLAY, PHONE_TEL, SITE } from '../config/site';
+import { BUSINESS, SITE } from '../config/site';
 import { commonLabels, getAlternatePath, getPathByPage, type Locale } from '../i18n/content';
 
 interface Props {
@@ -18,23 +18,30 @@ const privacyLink = getPathByPage('privacy', lang);
     <div>
       <p class="footer-brand">{SITE.brandName}</p>
       <p>{labels.footerInfo}</p>
-      <a href={`tel:${PHONE_TEL}`} class="footer-phone" aria-label={labels.phoneAria}>
-        {PHONE_DISPLAY}
-      </a>
+      {
+        BUSINESS.contact.phones.map((phone) => (
+          <a
+            href={phone.href}
+            class="footer-phone"
+            aria-label={lang === 'pl' ? `Zadzwoń do ${phone.contactName}` : `Call ${phone.contactName}`}
+          >
+            {phone.display} — {phone.contactName}
+          </a>
+        ))
+      }
+      <a href={BUSINESS.contact.email.href}>{BUSINESS.contact.email.address}</a>
     </div>
 
     <div>
       <p class="footer-heading">{labels.footerHours}</p>
-      <p>{lang === 'pl' ? 'Pon.-Pt.' : 'Mon-Fri'} {HOURS.weekdays}</p>
-      <p>{lang === 'pl' ? 'Sobota' : 'Saturday'} {HOURS.saturday}</p>
-      <p>{lang === 'pl' ? 'Niedziela' : 'Sunday'} {lang === 'pl' ? HOURS.sundayPL : HOURS.sundayEN}</p>
+      <p>{BUSINESS.availability.label[lang]}</p>
     </div>
 
     <div>
       <p class="footer-heading">{lang === 'pl' ? 'Informacje' : 'Info'}</p>
       <a href={privacyLink}>{labels.privacy}</a>
       <a href={altPath}>{labels.languageSwitch}</a>
-      <p class="footer-small">{lang === 'pl' ? 'Bydgoszcz + Trójmiasto' : 'Bydgoszcz + Tri-City'}</p>
+      <p class="footer-small">{BUSINESS.serviceArea.summary[lang]}</p>
     </div>
   </div>
 </footer>

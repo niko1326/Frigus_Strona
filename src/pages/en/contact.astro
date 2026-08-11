@@ -1,7 +1,7 @@
 ---
 import CTAButton from '../../components/CTAButton.astro';
 import Layout from '../../components/Layout.astro';
-import { BUSINESS, HOURS, PHONE_DISPLAY, PHONE_TEL, SERVICE_AREAS_EN } from '../../config/site';
+import { BUSINESS, PRIMARY_PHONE } from '../../config/site';
 import { pageMeta } from '../../i18n/content';
 
 const meta = pageMeta.en.contact;
@@ -27,18 +27,24 @@ const meta = pageMeta.en.contact;
 
   <section class="section">
     <div class="container contact-panel" data-reveal>
-      <a class="phone-big" href={`tel:${PHONE_TEL}`} aria-label="Call FRIGAC">
-        {PHONE_DISPLAY}
-      </a>
+      {
+        BUSINESS.contact.phones.map((phone) => (
+          <p>
+            <a class="phone-big" href={phone.href} aria-label={`Call ${phone.contactName}`}>
+              {phone.display}
+            </a>{' '}
+            — {phone.contactName}
+          </p>
+        ))
+      }
+      <a href={BUSINESS.contact.email.href}>{BUSINESS.contact.email.address}</a>
       <ul class="bullet-list">
-        <li>Mon-Fri: {HOURS.weekdays}</li>
-        <li>Saturday: {HOURS.saturday}</li>
-        <li>Sunday: {HOURS.sundayEN}</li>
+        <li>Availability: {BUSINESS.availability.label.en}</li>
         <li>Team: {BUSINESS.teamSize} people</li>
-        <li>Area: {SERVICE_AREAS_EN.join(', ')}</li>
+        <li>Area: {BUSINESS.serviceArea.summary.en}</li>
       </ul>
-      <p class="tiny-note">Primary contact channel: direct phone call.</p>
-      <CTAButton href={`tel:${PHONE_TEL}`} label="Call for a free quote" ariaLabel="Call for a free quote" />
+      <p class="tiny-note">Contact us by phone or email.</p>
+      <CTAButton href={PRIMARY_PHONE.href} label="Call for a free quote" ariaLabel="Call for a free quote" />
     </div>
   </section>
 </Layout>

@@ -9,41 +9,22 @@ interface Props {
 const { lang } = Astro.props;
 const isPL = lang === 'pl';
 
-const certificateImages = [
-  {
-    src: '/photos/certyfikat-1.jpg',
-    alt: isPL ? 'Certyfikat autoryzacyjny 1' : 'Authorized certificate 1',
-  },
-  {
-    src: '/photos/certyfikat-2.jpg',
-    alt: isPL ? 'Certyfikat autoryzacyjny 2' : 'Authorized certificate 2',
-  },
-];
+const certificateImages = BUSINESS.certifications.scans.publicationApproved
+  ? BUSINESS.certifications.scans.items
+  : [];
 ---
 
 <section class="section-sm" data-reveal>
   <div class="container plain-stack">
     <p class="eyebrow">{isPL ? 'Uprawnienia / Certyfikaty' : 'Credentials / Certificates'}</p>
-    <p class="plain-highlight plain-highlight-sm">
-      {
-        isPL
-          ? `Posiadamy certyfikaty F-gazowe dla personelu i przedsiębiorcy oraz ${BUSINESS.warrantyYears} lata gwarancji montażowej.`
-          : `We hold F-gas certificates for personnel and company operations, with a ${BUSINESS.warrantyYears}-year installation warranty.`
-      }
-    </p>
-    <p class="tiny-note">
-      {
-        isPL
-          ? 'Informacja ogólna: w kontekście wymagań UDT/F-gaz prace przy stacjonarnych urządzeniach chłodniczych/klimatyzacyjnych realizujemy zgodnie z wymaganiami dotyczącymi F-gazów. Ten opis nie stanowi porady prawnej.'
-          : 'General note: in the UDT/F-gas compliance context, work on stationary refrigeration/AC equipment is carried out in line with F-gas requirements. This section is informational, not legal advice.'
-      }
-    </p>
+    <p class="plain-highlight plain-highlight-sm">{BUSINESS.certifications.summary[lang]}</p>
+    <p class="tiny-note">{BUSINESS.warranty.description[lang]}</p>
   </div>
 
   <div class="container gallery-grid" data-reveal>
     {certificateImages.map((image) => (
       <figure class="certificate-card">
-        <img src={image.src} alt={image.alt} loading="lazy" />
+        <img src={image.src} alt={image.alt[lang]} loading="lazy" />
       </figure>
     ))}
   </div>

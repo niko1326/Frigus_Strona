@@ -1,6 +1,6 @@
 ---
 import CTAButton from '../../CTAButton.astro';
-import { PHONE_TEL, PRICING } from '../../../config/site';
+import { BUSINESS, PRIMARY_PHONE } from '../../../config/site';
 import type { Locale } from '../../../i18n/content';
 
 interface Props {
@@ -9,28 +9,26 @@ interface Props {
 
 const { lang } = Astro.props;
 const isPL = lang === 'pl';
-const pricingText = isPL
-  ? `${PRICING.installFromPLN} zł`
-  : `${PRICING.installFromPLN} zł`;
+const pricingText = BUSINESS.pricing.label[lang];
 ---
 
 <section class="hero section">
   <div class="container hero-grid">
     <div class="hero-copy" data-reveal>
       <p class="eyebrow">
-        {isPL ? 'Bydgoszcz + Trójmiasto' : 'Bydgoszcz + Tri-City'}
+        {BUSINESS.serviceArea.summary[lang]}
       </p>
-      <h1>{isPL ? 'Montaż klimatyzacji typu split' : 'Split air conditioner installation'}</h1>
+      <h1>{BUSINESS.serviceType[lang]}</h1>
 
       <div class="hero-price" aria-label={pricingText}>
-        <span>{isPL ? 'Klimatyzator + montaż od' : 'Starting price (unit + installation)'}</span>
+        <span>{isPL ? 'Cena montażu' : 'Installation price'}</span>
         <strong>{pricingText}</strong>
       </div>
 
       <div class="hero-actions">
         <CTAButton
           size="sm"
-          href={`tel:${PHONE_TEL}`}
+          href={PRIMARY_PHONE.href}
           label={isPL ? 'Zadzwoń po darmową wycenę' : 'Call for a free quote'}
           ariaLabel={isPL ? 'Zadzwoń po darmową wycenę' : 'Call for a free quote'}
         />

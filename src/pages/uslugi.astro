@@ -6,7 +6,7 @@ import IconDrill from '../components/icons/IconDrill.astro';
 import IconIndoor from '../components/icons/IconIndoor.astro';
 import IconOutdoor from '../components/icons/IconOutdoor.astro';
 import IconSparkle from '../components/icons/IconSparkle.astro';
-import { PHONE_TEL } from '../config/site';
+import { BUSINESS, PRIMARY_PHONE } from '../config/site';
 import { pageMeta } from '../i18n/content';
 
 const meta = pageMeta.pl.services;
@@ -40,7 +40,7 @@ const meta = pageMeta.pl.services;
           <li>przepust przez ścianę</li>
           <li>montaż jednostki zewnętrznej</li>
           <li>prowadzenie pełnej instalacji chłodniczej i uruchomienie</li>
-          <li>podłączenie do istniejącej instalacji elektrycznej</li>
+          <li>{BUSINESS.pricing.includedInstallation.description.pl}</li>
         </ul>
         <p class="tiny-note">Nie wykonujemy złożonych prac elektrycznych ani rozbudowy rozdzielni.</p>
       </article>
@@ -87,7 +87,7 @@ const meta = pageMeta.pl.services;
 
   <section class="section">
     <div class="container" data-reveal>
-      <CTAButton href={`tel:${PHONE_TEL}`} label="Zadzwoń po darmową wycenę" ariaLabel="Zadzwoń po darmową wycenę" />
+      <CTAButton href={PRIMARY_PHONE.href} label="Zadzwoń po darmową wycenę" ariaLabel="Zadzwoń po darmową wycenę" />
     </div>
   </section>
 </Layout>

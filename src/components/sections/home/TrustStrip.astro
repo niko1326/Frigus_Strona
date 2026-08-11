@@ -11,14 +11,14 @@ const isPL = lang === 'pl';
 
 const items = isPL
   ? [
-      `${BUSINESS.warrantyYears} lata gwarancji montażowej`,
-      'F-gazy: personel + przedsiębiorca',
+      BUSINESS.warranty.description.pl,
+      BUSINESS.certifications.summary.pl,
       'Szybkie terminy i szybka odpowiedź',
       'Porządek po montażu'
     ]
   : [
-      `${BUSINESS.warrantyYears}-year installation warranty`,
-      'F-gas: personnel + company certificates',
+      BUSINESS.warranty.description.en,
+      BUSINESS.certifications.summary.en,
       'Fast response and short lead times',
       'Clean finish after installation'
     ];

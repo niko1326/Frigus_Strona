@@ -1,6 +1,6 @@
 # FRIGAC Astro Website
 
-Minimalistyczna, szybka strona dla FRIGAC (Bydgoszcz + Trójmiasto), z naciskiem na konwersję telefoniczną.
+Minimalistyczna, szybka strona marketingowa z naciskiem na kontakt bezpośredni.
 
 ## Tech stack
 
@@ -22,7 +22,7 @@ npm run build
 npm run preview
 ```
 
-## Edycja telefonu, cen i godzin
+## Edycja danych strony i firmy
 
 Wszystkie główne dane biznesowe są w jednym pliku:
 
@@ -30,14 +30,16 @@ Wszystkie główne dane biznesowe są w jednym pliku:
 
 Kluczowe pola:
 
-- `PHONE_DISPLAY`, `PHONE_TEL`
-- `SERVICE_AREAS`, `SERVICE_AREAS_EN`
-- `PRICING.installFromPLN`, `PRICING.installToPLN`
-- `PRICING.pricingNotePL`, `PRICING.pricingNoteEN`
-- `HOURS`
+- `SITE.brandName`, `SITE.siteUrl`
+- `BUSINESS.legalName`
+- `BUSINESS.contact.phones`, `BUSINESS.contact.email`
+- `BUSINESS.availability`
+- `BUSINESS.pricing`, `BUSINESS.warranty`
+- `BUSINESS.serviceArea`, `BUSINESS.travel`
+- `BUSINESS.certifications`
 - `ANALYTICS.cloudflare`
 
-Telefon i ceny nie są hardcode'owane w komponentach.
+Dane kontaktowe i zatwierdzone wartości biznesowe nie są duplikowane w komponentach.
 
 ## Struktura językowa
 
