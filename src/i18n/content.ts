@@ -3,6 +3,8 @@ import { BUSINESS, CONTACT_PHONE, SITE } from '../config/site';
 export type Locale = 'pl' | 'en';
 export type PageKey = 'home' | 'services' | 'pricing' | 'faq' | 'contact' | 'privacy';
 
+export type LocalizedPathPair = Readonly<Record<Locale, string>>;
+
 type NavLink = {
   href: string;
   label: string;
@@ -31,14 +33,14 @@ const triCityRegion = getServiceRegion('trojmiasto');
 const [bydgoszcz] = bydgoszczRegion.places;
 const [gdansk, gdynia] = triCityRegion.places;
 
-export const routeMap: Record<PageKey, { pl: string; en: string }> = {
+export const routeMap = {
   home: { pl: '/', en: '/en/' },
   services: { pl: '/uslugi', en: '/en/services' },
   pricing: { pl: '/cennik', en: '/en/pricing' },
   faq: { pl: '/faq', en: '/en/faq' },
   contact: { pl: '/kontakt', en: '/en/contact' },
   privacy: { pl: '/polityka-prywatnosci', en: '/en/privacy-policy' }
-};
+} as const satisfies Record<PageKey, LocalizedPathPair>;
 
 export const navLinks: Record<Locale, NavLink[]> = {
   pl: [
@@ -185,18 +187,21 @@ const normalizePath = (value: string): string => {
   return noQuery;
 };
 
-export const getAlternatePath = (pathname: string, locale: Locale): string => {
+export const getLocalizedPaths = (pathname: string): LocalizedPathPair => {
   const current = normalizePath(pathname);
 
-  const foundPair = (Object.values(routeMap) as Array<{ pl: string; en: string }>).find(
+  const foundPair = (Object.values(routeMap) as readonly LocalizedPathPair[]).find(
     (pair) => normalizePath(pair.pl) === current || normalizePath(pair.en) === current
   );
 
   if (!foundPair) {
-    return locale === 'pl' ? routeMap.home.en : routeMap.home.pl;
+    throw new Error(`Missing localized route mapping for path: ${pathname}`);
   }
 
-  return locale === 'pl' ? foundPair.en : foundPair.pl;
+  return foundPair;
 };
+
+export const getAlternatePath = (pathname: string, locale: Locale): string =>
+  getLocalizedPaths(pathname)[locale === 'pl' ? 'en' : 'pl'];
 
 export const getPathByPage = (page: PageKey, locale: Locale): string => routeMap[page][locale];

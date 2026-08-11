@@ -23,6 +23,9 @@ type HomeContent = Readonly<{
   }>;
   certifications: Readonly<{
     eyebrow: string;
+    title: string;
+    documentsTitle: string;
+    documentsDescription: string;
   }>;
   services: Readonly<{
     eyebrow: string;
@@ -109,13 +112,17 @@ export const pageContent = {
       trust: {
         items: [
           BUSINESS.warranty.description.pl,
-          BUSINESS.certifications.summary.pl,
+          BUSINESS.credentials.summary.pl,
           'Szybkie terminy i szybka odpowiedź',
           'Porządek po montażu'
         ]
       },
       certifications: {
-        eyebrow: 'Uprawnienia / Certyfikaty'
+        eyebrow: 'Uprawnienia',
+        title: 'Certyfikaty F-gazowe i autoryzacja producenta',
+        documentsTitle: 'Skany autoryzacji GREE',
+        documentsDescription:
+          'Poniższe skany dotyczą wyłącznie autoryzacji producenta GREE. Nie są certyfikatami F-gazowymi.'
       },
       services: {
         eyebrow: 'Usługi',
@@ -266,13 +273,17 @@ export const pageContent = {
       trust: {
         items: [
           BUSINESS.warranty.description.en,
-          BUSINESS.certifications.summary.en,
+          BUSINESS.credentials.summary.en,
           'Fast response and short lead times',
           'Clean finish after installation'
         ]
       },
       certifications: {
-        eyebrow: 'Credentials / Certificates'
+        eyebrow: 'Credentials',
+        title: 'F-gas certificates and manufacturer authorization',
+        documentsTitle: 'GREE authorization scans',
+        documentsDescription:
+          'The scans below relate only to the GREE manufacturer authorization. They are not F-gas certificates.'
       },
       services: {
         eyebrow: 'Services',

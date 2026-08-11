@@ -36,7 +36,7 @@ Kluczowe pola:
 - `BUSINESS.availability`
 - `BUSINESS.pricing`, `BUSINESS.warranty`
 - `BUSINESS.serviceArea`, `BUSINESS.travel`
-- `BUSINESS.certifications`
+- `BUSINESS.credentials`
 - `ANALYTICS.cloudflare`
 
 Dane kontaktowe i zatwierdzone wartości biznesowe nie są duplikowane w komponentach.
@@ -81,6 +81,13 @@ Po ustawieniu `enabled: true` i tokena, snippet Cloudflare jest automatycznie do
 4. Deploy.
 
 Domena produkcyjna `https://frigac.pl` jest ustawiona w `astro.config.mjs` oraz w `SITE.siteUrl` w `src/config/site.ts`.
+
+### Preview i indeksacja
+
+Cloudflare Pages domyślnie dodaje nagłówek `X-Robots-Tag: noindex` do deploymentów preview:
+https://developers.cloudflare.com/pages/configuration/preview-deployments/#preview-indexing-by-search-engines
+
+Projekt nie próbuje rozpoznawać preview przez `import.meta.env.PROD`, ponieważ każdy statyczny build wdrożeniowy Astro działa w trybie produkcyjnym. Po wdrożeniu preview nagłówek należy potwierdzić przez `curl -I <preview-url>`. Przy zmianie platformy hostingowej analogiczne `noindex` trzeba skonfigurować na poziomie tej platformy lub CDN.
 
 ## Alternatywa: GitHub Pages
 

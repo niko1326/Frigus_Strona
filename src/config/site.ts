@@ -7,6 +7,13 @@ type SiteConfig = Readonly<{
   brandName: string;
   siteUrl: `https://${string}`;
   defaultLocale: 'pl' | 'en';
+  defaultSocialImage: Readonly<{
+    src: `/${string}`;
+    mimeType: 'image/png';
+    width: number;
+    height: number;
+    alt: LocalizedBusinessText;
+  }>;
 }>;
 
 type PhoneNumber = `+${string}`;
@@ -31,11 +38,19 @@ type ServiceRegion = Readonly<{
   places: readonly string[];
 }>;
 
-type CertificateScan = Readonly<{
+type CredentialDocument = Readonly<{
   src: `/${string}`;
-  type: 'gree-authorization';
-  alt: LocalizedBusinessText;
+  kind: 'gree-manufacturer-authorization';
+  label: LocalizedBusinessText;
 }>;
+
+type HeldCredential = Readonly<{
+  held: true;
+  title: LocalizedBusinessText;
+  description: LocalizedBusinessText;
+}>;
+
+type GreeAuthorizationActivity = 'design' | 'sale' | 'installation' | 'commissioning' | 'servicing';
 
 type BusinessConfig = Readonly<{
   legalName: string;
@@ -75,20 +90,41 @@ type BusinessConfig = Readonly<{
     billing: 'included-in-margin';
     note: LocalizedBusinessText;
   }>;
-  certifications: Readonly<{
-    fGasPersonnel: true;
-    fGasCompany: true;
-    greeAuthorization: true;
-    summary: LocalizedBusinessText;
-    scans: Readonly<{
-      publicationApproved: true;
-      items: readonly CertificateScan[];
+  credentials: Readonly<{
+    fGasPersonnel: HeldCredential & Readonly<{
+      issuer: 'UDT';
     }>;
+    fGasEntrepreneur: HeldCredential;
+    manufacturerAuthorizations: Readonly<{
+      gree: Readonly<{
+        held: true;
+        status: 'authorized-installer';
+        title: LocalizedBusinessText;
+        description: LocalizedBusinessText;
+        productSeries: readonly string[];
+        productSeriesDescription: LocalizedBusinessText;
+        activities: readonly GreeAuthorizationActivity[];
+        scopeDescription: LocalizedBusinessText;
+        documents: Readonly<{
+          publicationApproved: true;
+          items: readonly CredentialDocument[];
+        }>;
+      }>;
+    }>;
+    summary: LocalizedBusinessText;
   }>;
   serviceType: LocalizedBusinessText;
 }>;
 
 const INSTALLATION_PRICE_FROM_GROSS_PLN = 3499;
+const GREE_PRODUCT_SERIES = ['RAC', 'U-Match', 'Free Match'] as const;
+const GREE_AUTHORIZATION_ACTIVITIES = [
+  'design',
+  'sale',
+  'installation',
+  'commissioning',
+  'servicing'
+] as const satisfies readonly GreeAuthorizationActivity[];
 
 const createEmailContact = <const Address extends string>(address: Address) =>
   ({
@@ -111,7 +147,17 @@ const createPhoneContact = <
 export const SITE = {
   brandName: 'FRIGAC',
   siteUrl: 'https://frigac.pl',
-  defaultLocale: 'pl'
+  defaultLocale: 'pl',
+  defaultSocialImage: {
+    src: '/photos/klimatyzator-scienny-haier.png',
+    mimeType: 'image/png',
+    width: 1080,
+    height: 1080,
+    alt: {
+      pl: 'Klimatyzacja po montażu',
+      en: 'Installed air conditioner'
+    }
+  }
 } as const satisfies SiteConfig;
 
 export const BUSINESS = {
@@ -199,34 +245,78 @@ export const BUSINESS = {
       en: 'Travel is included in the margin.'
     }
   },
-  certifications: {
-    fGasPersonnel: true,
-    fGasCompany: true,
-    greeAuthorization: true,
-    summary: {
-      pl: 'Certyfikat F-gaz posiada personel i przedsiębiorca. Posiadamy również autoryzację GREE.',
-      en: 'Both personnel and the company hold F-gas certification. We also hold GREE authorization.'
+  credentials: {
+    fGasPersonnel: {
+      held: true,
+      issuer: 'UDT',
+      title: {
+        pl: 'Certyfikat F-gazowy personelu',
+        en: 'Personnel F-gas certificate'
+      },
+      description: {
+        pl: 'Posiadamy certyfikat F-gazowy personelu wydany przez UDT.',
+        en: 'We hold a personnel F-gas certificate issued by UDT.'
+      }
     },
-    scans: {
-      publicationApproved: true,
-      items: [
-        {
-          src: '/photos/certyfikat-1.jpg',
-          type: 'gree-authorization',
-          alt: {
-            pl: 'Skan autoryzacji GREE nr 1',
-            en: 'GREE authorization scan 1'
-          }
+    fGasEntrepreneur: {
+      held: true,
+      title: {
+        pl: 'Certyfikat F-gazowy przedsiębiorcy',
+        en: 'Business F-gas certificate'
+      },
+      description: {
+        pl: 'Posiadamy certyfikat F-gazowy przedsiębiorcy.',
+        en: 'The business holds an F-gas certificate.'
+      }
+    },
+    manufacturerAuthorizations: {
+      gree: {
+        held: true,
+        status: 'authorized-installer',
+        title: {
+          pl: 'Autoryzacja producenta GREE',
+          en: 'GREE manufacturer authorization'
         },
-        {
-          src: '/photos/certyfikat-2.jpg',
-          type: 'gree-authorization',
-          alt: {
-            pl: 'Skan autoryzacji GREE nr 2',
-            en: 'GREE authorization scan 2'
-          }
+        description: {
+          pl: 'Posiadamy status Autoryzowanego Instalatora GREE.',
+          en: 'We hold GREE Authorized Installer status.'
+        },
+        productSeries: GREE_PRODUCT_SERIES,
+        productSeriesDescription: {
+          pl: `Autoryzacja obejmuje urządzenia serii ${GREE_PRODUCT_SERIES.join(', ')}.`,
+          en: `The authorization covers the ${GREE_PRODUCT_SERIES.join(', ')} product series.`
+        },
+        activities: GREE_AUTHORIZATION_ACTIVITIES,
+        scopeDescription: {
+          pl: 'Autoryzacja obejmuje projektowanie, sprzedaż, montaż, uruchamianie i serwisowanie urządzeń objętych autoryzacją.',
+          en: 'The authorization covers the design, sale, installation, commissioning and servicing of the authorized equipment.'
+        },
+        documents: {
+          publicationApproved: true,
+          items: [
+            {
+              src: '/photos/certyfikat-1.jpg',
+              kind: 'gree-manufacturer-authorization',
+              label: {
+                pl: 'Skan autoryzacji producenta GREE — dokument 1',
+                en: 'GREE manufacturer authorization scan — document 1'
+              }
+            },
+            {
+              src: '/photos/certyfikat-2.jpg',
+              kind: 'gree-manufacturer-authorization',
+              label: {
+                pl: 'Skan autoryzacji producenta GREE — dokument 2',
+                en: 'GREE manufacturer authorization scan — document 2'
+              }
+            }
+          ]
         }
-      ]
+      }
+    },
+    summary: {
+      pl: 'Certyfikat F-gazowy personelu wydany przez UDT, certyfikat F-gazowy przedsiębiorcy oraz autoryzacja producenta GREE.',
+      en: 'Personnel F-gas certificate issued by UDT, business F-gas certificate, and GREE manufacturer authorization.'
     }
   },
   serviceType: {
