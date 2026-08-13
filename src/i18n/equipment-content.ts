@@ -23,6 +23,7 @@ type BrandPageContent = Readonly<{
   highlightsLabel: string;
   heroCta: CtaContent;
   recommendedTitle: string;
+  modelLabel: string;
   colorPicker: Readonly<{
     colorsLabel: string;
     selectedColorLabel: string;
@@ -75,6 +76,7 @@ export const equipmentContent = {
         highlightsLabel: 'Najważniejsze informacje',
         heroCta: { label: 'Dobierz klimatyzator GREE' },
         recommendedTitle: 'Poznaj wybrane modele GREE',
+        modelLabel: 'Model',
         colorPicker: {
           colorsLabel: 'Dostępne kolory',
           selectedColorLabel: 'Wybrany kolor'
@@ -102,6 +104,7 @@ export const equipmentContent = {
         highlightsLabel: 'Najważniejsze informacje',
         heroCta: { label: 'Dobierz klimatyzator KAISAI' },
         recommendedTitle: 'Poznaj wybrane modele KAISAI',
+        modelLabel: 'Model',
         colorPicker: {
           colorsLabel: 'Dostępne kolory',
           selectedColorLabel: 'Wybrany kolor'
@@ -151,6 +154,7 @@ export const equipmentContent = {
         highlightsLabel: 'Key information',
         heroCta: { label: 'Choose a GREE air conditioner' },
         recommendedTitle: 'Explore selected GREE models',
+        modelLabel: 'Model',
         colorPicker: {
           colorsLabel: 'Available colours',
           selectedColorLabel: 'Selected colour'
@@ -178,6 +182,7 @@ export const equipmentContent = {
         highlightsLabel: 'Key information',
         heroCta: { label: 'Choose a KAISAI air conditioner' },
         recommendedTitle: 'Explore selected KAISAI models',
+        modelLabel: 'Model',
         colorPicker: {
           colorsLabel: 'Available colours',
           selectedColorLabel: 'Selected colour'

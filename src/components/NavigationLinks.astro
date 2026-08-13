@@ -1,0 +1,89 @@
+---
+import { EQUIPMENT, type EquipmentBrand } from '../config/equipment';
+import { commonLabels, navLinks, routeMap, type Locale } from '../i18n/content';
+
+interface Props {
+  lang: Locale;
+  currentPath: string;
+}
+
+const { lang, currentPath } = Astro.props;
+const labels = commonLabels[lang];
+
+const normalize = (path: string): string => {
+  if (path !== '/' && path.endsWith('/')) return path.slice(0, -1);
+  return path;
+};
+
+const current = normalize(currentPath);
+const equipmentNavItems: readonly Readonly<{ brand: EquipmentBrand; href: string }>[] = [
+  { brand: EQUIPMENT.brands.gree, href: routeMap.gree[lang] },
+  { brand: EQUIPMENT.brands.kaisai, href: routeMap.kaisai[lang] }
+];
+---
+
+<ul>
+  {
+    navLinks[lang].map((link) => {
+      const normalizedHref = normalize(link.href);
+      const isCurrentPage = current === normalizedHref;
+      const isEquipmentLink = normalizedHref === normalize(routeMap.airConditioners[lang]);
+      const isEquipmentChild = isEquipmentLink && current.startsWith(`${normalizedHref}/`);
+      const active = isCurrentPage || isEquipmentChild;
+
+      if (isEquipmentLink) {
+        return (
+          <li class="nav-dropdown">
+            <a
+              class={active ? 'is-active' : ''}
+              href={link.href}
+              aria-current={isCurrentPage ? 'page' : undefined}
+            >
+              {link.label}
+              <span class="nav-dropdown-chevron" aria-hidden="true">⌄</span>
+            </a>
+            <ul class="nav-dropdown-menu" aria-label={labels.equipmentBrandsAria}>
+              {equipmentNavItems.map(({ brand, href }) => {
+                const isBrandCurrent = current === normalize(href);
+                const image = brand.navigationImage;
+
+                return (
+                  <li>
+                    <a
+                      class:list={[{ 'has-image': Boolean(image), 'is-current': isBrandCurrent }]}
+                      href={href}
+                      aria-current={isBrandCurrent ? 'page' : undefined}
+                    >
+                      {image && (
+                        <span class="nav-dropdown-image" aria-hidden="true">
+                          <img
+                            src={image.src}
+                            alt=""
+                            width={image.width}
+                            height={image.height}
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        </span>
+                      )}
+                      <span class="nav-dropdown-brand">{brand.name}</span>
+                      <span class="nav-dropdown-arrow" aria-hidden="true">→</span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </li>
+        );
+      }
+
+      return (
+        <li>
+          <a class={active ? 'is-active' : ''} href={link.href} aria-current={isCurrentPage ? 'page' : undefined}>
+            {link.label}
+          </a>
+        </li>
+      );
+    })
+  }
+</ul>

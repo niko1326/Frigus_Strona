@@ -9,10 +9,14 @@ interface Props {
   index: number;
   colorsLabel: string;
   selectedColorLabel: string;
+  modelLabel: string;
+  totalModels: number;
 }
 
-const { model, brandId, lang, index, colorsLabel, selectedColorLabel } = Astro.props;
+const { model, brandId, lang, index, colorsLabel, selectedColorLabel, modelLabel, totalModels } = Astro.props;
 const defaultVariant = model.colorVariants[0];
+const modelNumber = String(index + 1).padStart(2, '0');
+const totalModelCount = String(totalModels).padStart(2, '0');
 ---
 
 <article
@@ -21,6 +25,7 @@ const defaultVariant = model.colorVariants[0];
   data-model-showcase
 >
   <div class="equipment-showcase-copy">
+    <p class="equipment-model-index">{modelLabel} {modelNumber} / {totalModelCount}</p>
     <h3>{model.name}</h3>
     <p class="equipment-model-description">{model.description[lang]}</p>
 
@@ -56,6 +61,7 @@ const defaultVariant = model.colorVariants[0];
   </div>
 
   <div class="equipment-showcase-media">
+    <p class="equipment-media-model-name">{model.name}</p>
     <img
       src={defaultVariant.image.src}
       alt={defaultVariant.image.alt[lang]}
