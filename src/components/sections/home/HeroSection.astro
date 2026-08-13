@@ -14,7 +14,7 @@ const copy = pageContent[lang].home.hero;
 const labels = commonLabels[lang];
 const pricingText = BUSINESS.pricing.label[lang];
 const installationService = BUSINESS.pricing.installationService;
-const pricingContext = `${installationService.name[lang]} — ${installationService.baseVariantLabel[lang]}`;
+const pricingContext = installationService.name[lang];
 const isShowcaseModel = (model: EquipmentModel): model is ShowcaseEquipmentModel =>
   model.group === 'recommended' && Boolean(model.colorVariants?.length);
 const greeModels: readonly EquipmentModel[] = EQUIPMENT.brands.gree.models;
@@ -23,9 +23,9 @@ const heroSelections = [
   {
     modelId: 'pular',
     variantId: 'matt',
-    backgroundStart: '#0d2938',
-    backgroundEnd: '#176b72',
-    glow: '#78ddca'
+    backgroundStart: '#526f86',
+    backgroundEnd: '#8fc8c2',
+    glow: '#f4fbff'
   },
   {
     modelId: 'pular-pro',
@@ -40,13 +40,6 @@ const heroSelections = [
     backgroundStart: '#edf9f8',
     backgroundEnd: '#a8d7e2',
     glow: '#ffffff'
-  },
-  {
-    modelId: 'airy',
-    variantId: 'champagne',
-    backgroundStart: '#102a3b',
-    backgroundEnd: '#246c70',
-    glow: '#8edbc9'
   }
 ] as const;
 const heroItems = heroSelections.flatMap((selection) => {
@@ -74,11 +67,13 @@ const defaultHeroItem = heroItems[0];
         {copy.eyebrow}
       </p>
       <h1>{BUSINESS.serviceType[lang]}</h1>
+      <p class="hero-description">{copy.description}</p>
 
       <div class="hero-price" aria-label={`${pricingContext}: ${pricingText}`}>
         <span>{pricingContext}</span>
         <strong>{pricingText}</strong>
       </div>
+      <p class="hero-price-note">{installationService.complexPriceDescription[lang]}</p>
 
       <div class="hero-actions">
         <CTAButton

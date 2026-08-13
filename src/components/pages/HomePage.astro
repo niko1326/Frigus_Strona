@@ -1,13 +1,10 @@
 ---
 import Layout from '../Layout.astro';
-import CTABand from '../sections/home/CTABand.astro';
 import CertificationsSection from '../sections/home/CertificationsSection.astro';
 import EquipmentTeaser from '../sections/home/EquipmentTeaser.astro';
 import HeroSection from '../sections/home/HeroSection.astro';
 import HowItWorksSection from '../sections/home/HowItWorksSection.astro';
-import PricingTeaser from '../sections/home/PricingTeaser.astro';
 import ServiceAreaSection from '../sections/home/ServiceAreaSection.astro';
-import ServicesSection from '../sections/home/ServicesSection.astro';
 import TrustStrip from '../sections/home/TrustStrip.astro';
 import { pageMeta, routeMap, type Locale } from '../../i18n/content';
 
@@ -27,11 +24,8 @@ const meta = pageMeta[lang].home;
 >
   <HeroSection lang={lang} />
   <TrustStrip lang={lang} />
-  <ServicesSection lang={lang} />
   <EquipmentTeaser lang={lang} />
   <HowItWorksSection lang={lang} />
-  <PricingTeaser lang={lang} />
   <ServiceAreaSection lang={lang} />
   <CertificationsSection lang={lang} />
-  <CTABand lang={lang} />
 </Layout>

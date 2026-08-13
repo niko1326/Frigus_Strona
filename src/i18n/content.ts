@@ -11,6 +11,7 @@ export type PageKey =
   | 'pricing'
   | 'faq'
   | 'contact'
+  | 'triCity'
   | 'privacy';
 
 export type LocalizedPathPair = Readonly<Record<Locale, string>>;
@@ -35,6 +36,7 @@ export const routeMap = {
   pricing: { pl: '/cennik', en: '/en/pricing' },
   faq: { pl: '/faq', en: '/en/faq' },
   contact: { pl: '/kontakt', en: '/en/contact' },
+  triCity: { pl: '/trojmiasto/', en: '/en/tri-city/' },
   privacy: { pl: '/polityka-prywatnosci', en: '/en/privacy-policy' }
 } as const satisfies Record<PageKey, LocalizedPathPair>;
 
@@ -78,7 +80,8 @@ export const commonLabels = {
     readPricing: 'Przejdź do cennika',
     ctaBand: 'Zadzwoń i umów wycenę',
     privacy: 'Polityka prywatności',
-    certifications: 'Certyfikaty i uprawnienia'
+    certifications: 'Certyfikaty i uprawnienia',
+    triCity: 'Klimatyzacja w Trójmieście'
   },
   en: {
     callNow: 'Call for a quote',
@@ -102,7 +105,8 @@ export const commonLabels = {
     readPricing: 'View pricing',
     ctaBand: 'Call and schedule a quote',
     privacy: 'Privacy policy',
-    certifications: 'Certificates and credentials'
+    certifications: 'Certificates and credentials',
+    triCity: 'Air conditioning in the Tri-City'
   }
 } as const;
 
@@ -143,6 +147,10 @@ export const pageMeta: Record<Locale, Record<PageKey, PageMeta>> = {
     contact: {
       title: `Kontakt | ${SITE.brandName}`,
       description: `Skontaktuj się z ${SITE.brandName} i umów wycenę telefonicznie. Obszar: ${BUSINESS.serviceArea.summary.pl}.`
+    },
+    triCity: {
+      title: `Montaż klimatyzacji Trójmiasto | ${SITE.brandName}`,
+      description: `Dobór urządzeń GREE i KAISAI oraz kompletny montaż klimatyzacji w Gdańsku, Gdyni i Sopocie. Skontaktuj się z ${SITE.brandName} i ustal zakres realizacji.`
     },
     privacy: {
       title: `Polityka prywatności | ${SITE.brandName}`,
@@ -185,6 +193,10 @@ export const pageMeta: Record<Locale, Record<PageKey, PageMeta>> = {
     contact: {
       title: `Contact | ${SITE.brandName}`,
       description: `Call ${SITE.brandName} for a quote and installation scheduling. Service area: ${BUSINESS.serviceArea.summary.en}.`
+    },
+    triCity: {
+      title: `Air Conditioning Installation in the Tri-City | ${SITE.brandName}`,
+      description: `GREE and KAISAI system selection with complete air conditioning installation in Gdańsk, Gdynia and Sopot. Contact ${SITE.brandName} to discuss your project.`
     },
     privacy: {
       title: `Privacy Policy | ${SITE.brandName}`,

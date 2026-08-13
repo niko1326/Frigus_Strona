@@ -15,6 +15,7 @@ const copy = pageContent[lang].pricing;
 const labels = commonLabels[lang];
 const meta = pageMeta[lang].pricing;
 const installationService = BUSINESS.pricing.installationService;
+const baseScope = installationService.baseVariantScope;
 ---
 
 <Layout
@@ -26,16 +27,43 @@ const installationService = BUSINESS.pricing.installationService;
   <PageHero eyebrow={copy.hero.eyebrow} title={copy.hero.title} description={copy.hero.description} />
 
   <section class="section">
-    <div class="container pricing-panel" data-reveal>
-      <p class="price-main">
-        {installationService.name[lang]}: {BUSINESS.pricing.label[lang]} — {installationService.baseVariantLabel[lang]}
-      </p>
-      <ul class="bullet-list">
-        <li>{installationService.complexPriceDescription[lang]}</li>
-        <li>{BUSINESS.travel.note[lang]}</li>
-        <li>{copy.phoneNote}</li>
-      </ul>
-      <p class="tiny-note">{BUSINESS.pricing.taxNote[lang]}</p>
+    <div class="container pricing-layout" data-reveal>
+      <article class="pricing-panel pricing-main-card">
+        <p class="eyebrow">{installationService.baseVariantLabel[lang]}</p>
+        <p class="price-main">{BUSINESS.pricing.label[lang]}</p>
+        <p>{baseScope.description[lang]}</p>
+
+        <h2>{copy.includedTitle}</h2>
+        <ul class="pricing-included-list">
+          {baseScope.includedItems.map((item) => <li>{item[lang]}</li>)}
+        </ul>
+      </article>
+
+      <aside class="pricing-details-card">
+        <section>
+          <h2>{copy.conditionsTitle}</h2>
+          <p>{baseScope.electricalCondition[lang]}</p>
+          <p>{BUSINESS.travel.note[lang]}</p>
+        </section>
+
+        <section>
+          <h2>{copy.projectQuoteTitle}</h2>
+          <p>{baseScope.priceSubject[lang]}</p>
+          <p>{baseScope.devicePricingDescription[lang]}</p>
+          <p>{installationService.complexPriceDescription[lang]}</p>
+        </section>
+
+        <p class="tiny-note">{BUSINESS.pricing.taxNote[lang]}</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section-muted">
+    <div class="container pricing-contact" data-reveal>
+      <div>
+        <h2>{copy.contactTitle}</h2>
+        <p>{copy.phoneNote}</p>
+      </div>
       <CTAButton href={CONTACT_PHONE.href} label={labels.callNow} ariaLabel={labels.callNow} />
     </div>
   </section>

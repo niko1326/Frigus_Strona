@@ -29,17 +29,20 @@ const meta = pageMeta[lang].services;
   <PageHero eyebrow={copy.hero.eyebrow} title={copy.hero.title} description={copy.hero.description} />
 
   <section class="section">
-    <div class="container content-grid" data-reveal>
-      <article class="highlight-card">
+    <div class="container services-offer-grid" data-reveal>
+      <article class="service-offer-card service-offer-primary">
         <IconIndoor class="service-icon" />
         <h2>{copy.installation.title}</h2>
+        <p>{copy.installation.description}</p>
         <ul class="bullet-list">
           {copy.installation.items.map((item) => <li>{item}</li>)}
         </ul>
-        <p class="tiny-note">{BUSINESS.pricing.installationService.fullDescription[lang]}</p>
+        <a class="text-link" href={routeMap.pricing[lang]}>
+          {copy.process.pricingLinkLabel} <span aria-hidden="true">→</span>
+        </a>
       </article>
 
-      <article class="highlight-card">
+      <article class="service-offer-card">
         <IconSparkle class="service-icon" />
         <h2>{copy.maintenance.title}</h2>
         <p>{copy.maintenance.description}</p>
@@ -51,6 +54,31 @@ const meta = pageMeta[lang].services;
   </section>
 
   <section class="section section-muted">
+    <div class="container" data-reveal>
+      <div class="section-head">
+        <p class="eyebrow">{copy.process.eyebrow}</p>
+        <h2>{copy.process.title}</h2>
+      </div>
+      <ol class="service-process-list">
+        {
+          copy.process.steps.map((step, index) => (
+            <li>
+              <span class="step-index">0{index + 1}</span>
+              <div>
+                <h3>{step.title}</h3>
+                <p>{step.description}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+      <a class="text-link" href={routeMap.airConditioners[lang]}>
+        {copy.process.equipmentLinkLabel} <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="section">
     <div class="container card-grid card-grid-3" data-reveal>
       <article class="info-card">
         <IconDrill class="service-icon" />
@@ -73,7 +101,11 @@ const meta = pageMeta[lang].services;
   </section>
 
   <section class="section">
-    <div class="container" data-reveal>
+    <div class="container service-contact-strip" data-reveal>
+      <div>
+        <h2>{copy.process.contactTitle}</h2>
+        <p>{BUSINESS.availability.label[lang]}</p>
+      </div>
       <CTAButton href={CONTACT_PHONE.href} label={labels.callNow} ariaLabel={labels.callNow} />
     </div>
   </section>

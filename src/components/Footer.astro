@@ -12,6 +12,7 @@ const labels = commonLabels[lang];
 const altPath = getAlternatePath(currentPath, lang);
 const privacyLink = getPathByPage('privacy', lang);
 const certificationsLink = getPathByPage('certifications', lang);
+const triCityLink = getPathByPage('triCity', lang);
 ---
 
 <footer class="site-footer" data-reveal>
@@ -33,6 +34,7 @@ const certificationsLink = getPathByPage('certifications', lang);
     <div>
       <p class="footer-heading">{labels.footerInfoHeading}</p>
       <a href={certificationsLink}>{labels.certifications}</a>
+      <a href={triCityLink}>{labels.triCity}</a>
       <a href={privacyLink}>{labels.privacy}</a>
       <a href={altPath}>{labels.languageSwitch}</a>
       <p class="footer-small">{BUSINESS.serviceArea.summary[lang]}</p>

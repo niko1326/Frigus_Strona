@@ -1,6 +1,6 @@
 ---
 import { BUSINESS } from '../../../config/site';
-import type { Locale } from '../../../i18n/content';
+import { routeMap, type Locale } from '../../../i18n/content';
 import { pageContent } from '../../../i18n/page-content';
 
 interface Props {
@@ -12,12 +12,28 @@ const copy = pageContent[lang].home.serviceArea;
 ---
 
 <section class="section" data-reveal>
-  <div class="container plain-stack">
-    <div class="plain-stack">
+  <div class="container home-regions">
+    <div class="section-head">
       <p class="eyebrow">{copy.eyebrow}</p>
-      <h2>{BUSINESS.serviceArea.summary[lang]}</h2>
+      <h2>{copy.title}</h2>
       <p>{copy.description}</p>
-      <p class="tiny-note">{copy.note}</p>
     </div>
+    <div class="home-region-grid">
+      {
+        BUSINESS.serviceArea.regions.map((region) => (
+          <article class:list={['home-region-card', region.id === 'trojmiasto' && 'home-region-card-linked']}>
+            <h3>{region.label[lang]}</h3>
+            <p>{copy.regionDescriptions[region.id as 'bydgoszcz' | 'trojmiasto']}</p>
+            {region.id === 'trojmiasto' && (
+              <a class="text-link" href={routeMap.triCity[lang]}>
+                {lang === 'pl' ? 'Klimatyzacja w Trójmieście' : 'Air conditioning in the Tri-City'}
+                <span aria-hidden="true">→</span>
+              </a>
+            )}
+          </article>
+        ))
+      }
+    </div>
+    <p class="tiny-note">{copy.note}</p>
   </div>
 </section>

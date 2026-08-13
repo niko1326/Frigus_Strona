@@ -26,6 +26,7 @@ type EmailContact = Readonly<{
 }>;
 
 type PhoneContact = Readonly<{
+  id: string;
   contactName: string;
   display: string;
   tel: PhoneNumber;
@@ -56,7 +57,7 @@ type BusinessConfig = Readonly<{
   legalName: string;
   contact: Readonly<{
     email: EmailContact;
-    phone: PhoneContact;
+    phones: readonly [PhoneContact, ...PhoneContact[]];
   }>;
   availability: Readonly<{
     mode: 'by-appointment';
@@ -71,6 +72,14 @@ type BusinessConfig = Readonly<{
       name: LocalizedBusinessText;
       baseVariant: 'simplest-installation';
       baseVariantLabel: LocalizedBusinessText;
+      baseVariantScope: Readonly<{
+        maxInstallationLengthMeters: number;
+        description: LocalizedBusinessText;
+        includedItems: readonly LocalizedBusinessText[];
+        electricalCondition: LocalizedBusinessText;
+        priceSubject: LocalizedBusinessText;
+        devicePricingDescription: LocalizedBusinessText;
+      }>;
       complexVariantPricing: 'after-consultation-or-site-inspection';
       complexPriceDescription: LocalizedBusinessText;
       fullDescription: LocalizedBusinessText;
@@ -123,6 +132,7 @@ type BusinessConfig = Readonly<{
 }>;
 
 const INSTALLATION_PRICE_FROM_GROSS_PLN = 3499;
+const BASE_INSTALLATION_LENGTH_METERS = 5;
 const GREE_PRODUCT_SERIES = ['RAC', 'U-Match', 'Free Match'] as const;
 const GREE_AUTHORIZATION_ACTIVITIES = [
   'design',
@@ -139,11 +149,13 @@ const createEmailContact = <const Address extends string>(address: Address) =>
   }) as const satisfies EmailContact;
 
 const createPhoneContact = <
+  const Id extends string,
   const ContactName extends string,
   const Display extends string,
   const Tel extends PhoneNumber
->(contactName: ContactName, display: Display, tel: Tel) =>
+>(id: Id, contactName: ContactName, display: Display, tel: Tel) =>
   ({
+    id,
     contactName,
     display,
     tel,
@@ -170,7 +182,10 @@ export const BUSINESS = {
   legalName: 'Frigus Hubert Maciejewski',
   contact: {
     email: createEmailContact('kontakt@frigac.pl'),
-    phone: createPhoneContact('Hubert Maciejewski', '735 400 610', '+48735400610')
+    phones: [
+      createPhoneContact('hubert', 'Hubert Maciejewski', '735 400 610', '+48735400610'),
+      createPhoneContact('nikodem', 'Nikodem Hirsch', '885 788 889', '+48885788889')
+    ]
   },
   availability: {
     mode: 'by-appointment',
@@ -197,19 +212,60 @@ export const BUSINESS = {
         pl: 'najprostszy wariant montażu',
         en: 'the simplest installation option'
       },
+      baseVariantScope: {
+        maxInstallationLengthMeters: BASE_INSTALLATION_LENGTH_METERS,
+        description: {
+          pl: `Cena od ${INSTALLATION_PRICE_FROM_GROSS_PLN} zł brutto dotyczy najprostszego wariantu kompleksowego montażu klimatyzacji split z trasą instalacji do ${BASE_INSTALLATION_LENGTH_METERS} m.`,
+          en: `The price from PLN ${INSTALLATION_PRICE_FROM_GROSS_PLN} gross applies to the simplest complete split air-conditioning installation, with an installation run of up to ${BASE_INSTALLATION_LENGTH_METERS} m.`
+        },
+        includedItems: [
+          {
+            pl: 'montaż jednostki wewnętrznej',
+            en: 'indoor unit mounting'
+          },
+          {
+            pl: 'przepust przez ścianę',
+            en: 'wall passthrough'
+          },
+          {
+            pl: 'montaż jednostki zewnętrznej',
+            en: 'outdoor unit mounting'
+          },
+          {
+            pl: `wykonanie instalacji chłodniczej o długości do ${BASE_INSTALLATION_LENGTH_METERS} m`,
+            en: `refrigerant line installation up to ${BASE_INSTALLATION_LENGTH_METERS} m long`
+          },
+          {
+            pl: 'uruchomienie układu',
+            en: 'system commissioning'
+          }
+        ],
+        electricalCondition: {
+          pl: 'Wariant zakłada łatwy dostęp do zasilania z istniejącej instalacji elektrycznej.',
+          en: 'This option assumes easy access to power from the existing electrical installation.'
+        },
+        priceSubject: {
+          pl: 'Podana cena dotyczy usługi montażu.',
+          en: 'The stated price covers the installation service.'
+        },
+        devicePricingDescription: {
+          pl: 'Urządzenie dobieramy do pomieszczenia i oczekiwań, a jego cenę uwzględniamy w wycenie całej realizacji przedstawianej przed rozpoczęciem prac.',
+          en: 'We select the unit for the room and your requirements, then include its price in the quote for the complete project provided before work begins.'
+        }
+      },
       complexVariantPricing: 'after-consultation-or-site-inspection',
       complexPriceDescription: {
         pl: 'Wszystkie bardziej złożone montaże wyceniamy po konsultacji lub oględzinach.',
         en: 'Any more complex installation is priced after a consultation or site inspection.'
       },
       fullDescription: {
-        pl: `Kompleksowa usługa montażu kosztuje od ${INSTALLATION_PRICE_FROM_GROSS_PLN} zł brutto w najprostszym wariancie. Wszystkie bardziej złożone montaże wyceniamy po konsultacji lub oględzinach.`,
-        en: `A complete installation service starts at PLN ${INSTALLATION_PRICE_FROM_GROSS_PLN} gross for the simplest installation option. Any more complex installation is priced after a consultation or site inspection.`
+        pl: `Kompleksowa usługa montażu w najprostszym wariancie, z trasą instalacji do ${BASE_INSTALLATION_LENGTH_METERS} m, kosztuje od ${INSTALLATION_PRICE_FROM_GROSS_PLN} zł brutto. Wariant zakłada łatwy dostęp do zasilania z istniejącej instalacji elektrycznej. Wszystkie bardziej złożone montaże wyceniamy po konsultacji lub oględzinach.`,
+        en: `A complete installation service in the simplest option, with an installation run of up to ${BASE_INSTALLATION_LENGTH_METERS} m, starts at PLN ${INSTALLATION_PRICE_FROM_GROSS_PLN} gross. This option assumes easy access to power from the existing electrical installation. Any more complex installation is priced after a consultation or site inspection.`
       }
     },
     taxNote: {
-      pl: 'Jesteśmy na ryczałcie, dlatego dla klienta cena netto = brutto.',
-      en: 'We use lump-sum taxation, so for the customer the net price equals the gross price.'
+      pl: 'Podane ceny są cenami końcowymi. Nie doliczamy podatku VAT.',
+      en: 'All prices shown are final. VAT is not added.'
     }
   },
   warranty: {
@@ -246,18 +302,26 @@ export const BUSINESS = {
           'Dąbrowa Chełmińska',
           'Nakło nad Notecią'
         ]
+      },
+      {
+        id: 'trojmiasto',
+        label: {
+          pl: 'Trójmiasto',
+          en: 'Tri-City'
+        },
+        places: ['Gdańsk', 'Gdynia', 'Sopot']
       }
     ],
     summary: {
-      pl: 'Bydgoszcz i okolice',
-      en: 'Bydgoszcz and surrounding areas'
+      pl: 'Bydgoszcz i okolice oraz Trójmiasto',
+      en: 'Bydgoszcz and surrounding areas, and the Tri-City'
     }
   },
   travel: {
     billing: 'included-in-margin',
     note: {
-      pl: 'Dojazd jest wliczony w marżę.',
-      en: 'Travel is included in the margin.'
+      pl: 'Dojazd jest wliczony w cenę.',
+      en: 'Travel is included in the price.'
     }
   },
   credentials: {
@@ -352,7 +416,8 @@ export const BUSINESS = {
   }
 } as const satisfies BusinessConfig;
 
-export const CONTACT_PHONE = BUSINESS.contact.phone;
+export const CONTACT_PHONES = BUSINESS.contact.phones;
+export const CONTACT_PHONE = CONTACT_PHONES[0];
 
 export const ANALYTICS = {
   cloudflare: {

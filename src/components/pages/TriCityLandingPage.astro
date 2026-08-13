@@ -1,0 +1,156 @@
+---
+import { EQUIPMENT } from '../../config/equipment';
+import { BUSINESS, CONTACT_PHONE } from '../../config/site';
+import { commonLabels, pageMeta, routeMap, type Locale } from '../../i18n/content';
+import { triCityContent } from '../../i18n/location-content';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import CTAButton from '../CTAButton.astro';
+import Layout from '../Layout.astro';
+import PageHero from '../PageHero.astro';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const copy = triCityContent[lang];
+const labels = commonLabels[lang];
+const meta = pageMeta[lang].triCity;
+const currentPath = routeMap.triCity[lang];
+const triCityRegion = BUSINESS.serviceArea.regions.find((region) => region.id === 'trojmiasto');
+
+if (!triCityRegion) {
+  throw new Error('Missing Tri-City service region in business config');
+}
+
+const baseScope = BUSINESS.pricing.installationService.baseVariantScope;
+const breadcrumbs = [
+  { label: labels.homeBreadcrumb, path: routeMap.home[lang] },
+  { label: copy.hero.title, path: currentPath }
+] as const;
+const brands = [
+  { brand: EQUIPMENT.brands.gree, href: routeMap.gree[lang] },
+  { brand: EQUIPMENT.brands.kaisai, href: routeMap.kaisai[lang] }
+] as const;
+---
+
+<Layout
+  lang={lang}
+  title={meta.title}
+  description={meta.description}
+  currentPath={currentPath}
+  socialImageAlt={lang === 'pl' ? 'FRIGAC — klimatyzacja w Trójmieście' : 'FRIGAC — air conditioning in the Tri-City'}
+  breadcrumbs={breadcrumbs.map((item) => ({ name: item.label, path: item.path }))}
+>
+  <Breadcrumbs ariaLabel={labels.breadcrumbsAria} items={breadcrumbs} />
+  <PageHero
+    eyebrow={copy.hero.eyebrow}
+    title={copy.hero.title}
+    description={copy.hero.description}
+    action={{ href: CONTACT_PHONE.href, label: labels.callNow, ariaLabel: labels.callNow }}
+  />
+
+  <section class="section-sm" aria-labelledby="tri-city-area-title">
+    <div class="container location-area-grid" data-reveal>
+      <div>
+        <p class="eyebrow">{copy.area.eyebrow}</p>
+        <h2 id="tri-city-area-title">{copy.area.title}</h2>
+        <p>{copy.area.description}</p>
+        <p class="tiny-note">{copy.area.availabilityNote}</p>
+      </div>
+      <div class="location-places" aria-label={copy.area.placesLabel}>
+        {triCityRegion.places.map((place) => <span>{place}</span>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-muted" aria-labelledby="tri-city-offer-title">
+    <div class="container" data-reveal>
+      <div class="section-head">
+        <p class="eyebrow">{copy.offer.eyebrow}</p>
+        <h2 id="tri-city-offer-title">{copy.offer.title}</h2>
+      </div>
+      <ol class="location-process-grid">
+        {
+          copy.offer.items.map((item, index) => (
+            <li>
+              <span class="step-index">0{index + 1}</span>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+            </li>
+          ))
+        }
+      </ol>
+      <a class="text-link" href={routeMap.services[lang]}>
+        {copy.offer.servicesLink} <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="tri-city-pricing-title">
+    <div class="container location-pricing-grid" data-reveal>
+      <div class="location-price-card">
+        <p class="eyebrow">{copy.pricing.eyebrow}</p>
+        <h2 id="tri-city-pricing-title">{copy.pricing.title}</h2>
+        <p>{baseScope.description[lang]}</p>
+      </div>
+      <div class="location-scope-card">
+        <h3>{copy.pricing.scopeTitle}</h3>
+        <ul class="pricing-included-list">
+          {baseScope.includedItems.map((item) => <li>{item[lang]}</li>)}
+        </ul>
+        <p class="tiny-note">{baseScope.electricalCondition[lang]}</p>
+        <p class="tiny-note">{BUSINESS.pricing.installationService.complexPriceDescription[lang]}</p>
+        <a class="text-link" href={routeMap.pricing[lang]}>
+          {copy.pricing.pricingLink} <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-muted" aria-labelledby="tri-city-equipment-title">
+    <div class="container location-equipment-grid" data-reveal>
+      <div class="section-head">
+        <p class="eyebrow">{copy.equipment.eyebrow}</p>
+        <h2 id="tri-city-equipment-title">{copy.equipment.title}</h2>
+        <p>{copy.equipment.description}</p>
+        <a class="text-link" href={routeMap.airConditioners[lang]}>
+          {copy.equipment.link} <span aria-hidden="true">→</span>
+        </a>
+      </div>
+      <div class="location-brand-list">
+        {
+          brands.map(({ brand, href }) => (
+            <a href={href} aria-label={brand.ctaLabel[lang]}>
+              {brand.overviewImage && (
+                <img
+                  src={brand.overviewImage.src}
+                  alt=""
+                  width={brand.overviewImage.width}
+                  height={brand.overviewImage.height}
+                  loading="lazy"
+                  decoding="async"
+                />
+              )}
+              <span>{brand.name}</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container location-contact-card" data-reveal>
+      <div>
+        <h2>{copy.contact.title}</h2>
+        <p>{copy.contact.description}</p>
+      </div>
+      <div class="location-contact-actions">
+        <a class="location-contact-phone" href={CONTACT_PHONE.href}>{CONTACT_PHONE.display}</a>
+        <a href={BUSINESS.contact.email.href}>{BUSINESS.contact.email.address}</a>
+        <CTAButton href={CONTACT_PHONE.href} label={labels.callNow} ariaLabel={labels.callNow} />
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -6,6 +6,7 @@ import {
   ANALYTICS,
   BUSINESS,
   CONTACT_PHONE,
+  CONTACT_PHONES,
   SITE
 } from '../config/site';
 import { commonLabels, getLocalizedPaths, type Locale } from '../i18n/content';
@@ -16,13 +17,21 @@ interface Props {
   title: string;
   description: string;
   currentPath: string;
+  socialImageAlt?: string;
   breadcrumbs?: readonly Readonly<{
     name: string;
     path: string;
   }>[];
 }
 
-const { lang, title, description, currentPath, breadcrumbs = [] } = Astro.props;
+const {
+  lang,
+  title,
+  description,
+  currentPath,
+  socialImageAlt = SITE.defaultSocialImage.alt[lang],
+  breadcrumbs = []
+} = Astro.props;
 
 const localizedPaths = getLocalizedPaths(currentPath);
 const localizedUrls: Record<Locale, string> = {
@@ -50,8 +59,10 @@ const localBusinessSchema = {
   '@id': businessEntityId,
   name: SITE.brandName,
   legalName: BUSINESS.legalName,
-  description: BUSINESS.serviceType[lang],
-  telephone: CONTACT_PHONE.tel,
+  description: lang === 'pl'
+    ? `Montaż klimatyzacji — ${BUSINESS.serviceArea.summary.pl}`
+    : `Air conditioning installation — ${BUSINESS.serviceArea.summary.en}`,
+  telephone: CONTACT_PHONES.map((phone) => phone.tel),
   email: BUSINESS.contact.email.address,
   areaServed,
   url: siteRootUrl
@@ -131,13 +142,13 @@ const cloudflareBeaconData = JSON.stringify({ token: ANALYTICS.cloudflare.token 
     <meta property="og:image:type" content={SITE.defaultSocialImage.mimeType} />
     <meta property="og:image:width" content={String(SITE.defaultSocialImage.width)} />
     <meta property="og:image:height" content={String(SITE.defaultSocialImage.height)} />
-    <meta property="og:image:alt" content={SITE.defaultSocialImage.alt[lang]} />
+    <meta property="og:image:alt" content={socialImageAlt} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImageUrl} />
-    <meta name="twitter:image:alt" content={SITE.defaultSocialImage.alt[lang]} />
+    <meta name="twitter:image:alt" content={socialImageAlt} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />

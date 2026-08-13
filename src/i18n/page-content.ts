@@ -18,9 +18,7 @@ type TextBlock = Readonly<{
 type HomeContent = Readonly<{
   hero: Readonly<{
     eyebrow: string;
-    visualEyebrow: string;
-    visualTitle: string;
-    visualDescription: string;
+    description: string;
   }>;
   trust: Readonly<{
     items: readonly string[];
@@ -30,6 +28,7 @@ type HomeContent = Readonly<{
     title: string;
     description: string;
     linkLabel: string;
+    contactTitle: string;
     documentsTitle: string;
     documentsDescription: string;
   }>;
@@ -48,6 +47,8 @@ type HomeContent = Readonly<{
     eyebrow: string;
     title: string;
     steps: readonly TextBlock[];
+    servicesLinkLabel: string;
+    pricingLinkLabel: string;
   }>;
   pricing: Readonly<{
     eyebrow: string;
@@ -55,8 +56,13 @@ type HomeContent = Readonly<{
   }>;
   serviceArea: Readonly<{
     eyebrow: string;
+    title: string;
     description: string;
     note: string;
+    regionDescriptions: Readonly<{
+      bydgoszcz: string;
+      trojmiasto: string;
+    }>;
   }>;
   cta: Readonly<{
     headline: string;
@@ -67,6 +73,7 @@ type ServicesContent = Readonly<{
   hero: PageHeroContent;
   installation: Readonly<{
     title: string;
+    description: string;
     items: readonly string[];
   }>;
   maintenance: Readonly<{
@@ -79,10 +86,22 @@ type ServicesContent = Readonly<{
     outdoor: TextBlock;
     cleanup: TextBlock;
   }>;
+  process: Readonly<{
+    eyebrow: string;
+    title: string;
+    steps: readonly TextBlock[];
+    pricingLinkLabel: string;
+    equipmentLinkLabel: string;
+    contactTitle: string;
+  }>;
 }>;
 
 type PricingContent = Readonly<{
   hero: PageHeroContent;
+  includedTitle: string;
+  conditionsTitle: string;
+  projectQuoteTitle: string;
+  contactTitle: string;
   phoneNote: string;
 }>;
 
@@ -124,13 +143,11 @@ export const pageContent = {
     home: {
       hero: {
         eyebrow: 'Dobór urządzenia i kompletny montaż',
-        visualEyebrow: 'GREE · KAISAI',
-        visualTitle: 'Urządzenie dobrane do pomieszczenia',
-        visualDescription: 'Dostawa i kompletny montaż'
+        description: 'Dobieramy urządzenie, dostarczamy je i wykonujemy kompletny montaż.'
       },
       trust: {
         items: [
-          `GREE i KAISAI: ${EQUIPMENT.warranty.label.pl.toLowerCase()}. ${EQUIPMENT.warranty.termsNote.pl}`,
+          EQUIPMENT.warranty.label.pl,
           'Dobór modelu i mocy',
           'Dostawa urządzenia i kompletny montaż'
         ]
@@ -140,6 +157,7 @@ export const pageContent = {
         title: 'Certyfikaty i statusy producentów',
         description: 'Posiadamy wymagane certyfikaty F-gazowe, status Autoryzowanego Instalatora GREE oraz APS KAISAI.',
         linkLabel: 'Zobacz certyfikaty i szczegóły uprawnień',
+        contactTitle: 'Porozmawiajmy o montażu',
         documentsTitle: 'Skany autoryzacji GREE',
         documentsDescription:
           'Poniższe skany dotyczą wyłącznie autoryzacji producenta GREE. Nie są certyfikatami F-gazowymi.'
@@ -173,10 +191,12 @@ export const pageContent = {
         eyebrow: 'Jak to działa',
         title: 'Prosto: 3 kroki do gotowej klimatyzacji',
         steps: [
-          { title: 'Telefon', description: 'Krótka rozmowa, orientacyjny zakres i termin wizji lub montażu.' },
-          { title: 'Wycena', description: BUSINESS.pricing.installationService.fullDescription.pl },
-          { title: 'Montaż', description: 'Montaż zwykle trwa około 1 dnia, z zachowaniem porządku.' }
-        ]
+          { title: 'Kontakt', description: 'Krótko omawiamy pomieszczenie i oczekiwania.' },
+          { title: 'Dobór i wycena', description: 'Dobieramy urządzenie, moc i zakres montażu.' },
+          { title: 'Montaż', description: 'Dostarczamy urządzenie i uruchamiamy gotowy układ.' }
+        ],
+        servicesLinkLabel: 'Zobacz zakres usług',
+        pricingLinkLabel: 'Sprawdź szczegóły cennika'
       },
       pricing: {
         eyebrow: 'Cennik',
@@ -184,8 +204,13 @@ export const pageContent = {
       },
       serviceArea: {
         eyebrow: 'Obszar działania',
-        description: 'Realizujemy montaże w domach i mieszkaniach w Bydgoszczy oraz miejscowościach w jej otoczeniu.',
-        note: 'Przy dalszych lokalizacjach potwierdzamy możliwość realizacji indywidualnie.'
+        title: 'Dwa obszary, ta sama jakość montażu',
+        description: 'Realizujemy montaże w Bydgoszczy i okolicach oraz na terenie Trójmiasta.',
+        note: 'Dokładny termin i możliwość realizacji potwierdzamy podczas kontaktu.',
+        regionDescriptions: {
+          bydgoszcz: 'Bydgoszcz i miejscowości w jej otoczeniu',
+          trojmiasto: 'Gdańsk, Gdynia i Sopot'
+        }
       },
       cta: {
         headline: 'Zadzwoń i umów wycenę'
@@ -200,6 +225,8 @@ export const pageContent = {
       },
       installation: {
         title: 'Co obejmuje montaż split',
+        description:
+          'Wykonujemy kompletną instalację pojedynczego klimatyzatora split — od przygotowania trasy po uruchomienie gotowego układu.',
         items: [
           'montaż jednostki wewnętrznej',
           'przepust przez ścianę',
@@ -230,14 +257,39 @@ export const pageContent = {
           title: 'Porządek po montażu',
           description: 'Po zakończeniu prac zostawiamy miejsce montażu uporządkowane.'
         }
+      },
+      process: {
+        eyebrow: 'Przebieg realizacji',
+        title: 'Od rozmowy do gotowej klimatyzacji',
+        steps: [
+          {
+            title: 'Rozpoznanie potrzeb',
+            description: 'Omawiamy pomieszczenie, oczekiwania i planowane miejsce montażu.'
+          },
+          {
+            title: 'Dobór i wycena',
+            description: 'Dobieramy urządzenie, jego moc oraz zakres potrzebnych prac.'
+          },
+          {
+            title: 'Montaż i uruchomienie',
+            description: 'Dostarczamy urządzenie, wykonujemy instalację i uruchamiamy układ.'
+          }
+        ],
+        pricingLinkLabel: 'Sprawdź zakres ceny od 3499 zł',
+        equipmentLinkLabel: 'Zobacz dostępne klimatyzatory',
+        contactTitle: 'Omówmy Twój montaż'
       }
     },
     pricing: {
       hero: {
         eyebrow: 'Cennik',
         title: BUSINESS.pricing.installationService.name.pl,
-        description: BUSINESS.pricing.installationService.fullDescription.pl
+        description: BUSINESS.pricing.installationService.baseVariantScope.description.pl
       },
+      includedTitle: 'Co obejmuje cena od 3499 zł brutto',
+      conditionsTitle: 'Warunki wariantu podstawowego',
+      projectQuoteTitle: 'Urządzenie i bardziej złożony montaż',
+      contactTitle: 'Ustalmy zakres Twojej realizacji',
       phoneNote: 'Brak formularzy: najkrótsza droga do wyceny to telefon.'
     },
     faq: {
@@ -368,13 +420,11 @@ export const pageContent = {
     home: {
       hero: {
         eyebrow: 'System selection and complete installation',
-        visualEyebrow: 'GREE · KAISAI',
-        visualTitle: 'A system selected for the room',
-        visualDescription: 'Supply and complete installation'
+        description: 'We select and supply the unit, then provide complete installation.'
       },
       trust: {
         items: [
-          `GREE and KAISAI: ${EQUIPMENT.warranty.label.en.toLowerCase()}. ${EQUIPMENT.warranty.termsNote.en}`,
+          EQUIPMENT.warranty.label.en,
           'Model and capacity selection',
           'Unit supply and complete installation'
         ]
@@ -384,6 +434,7 @@ export const pageContent = {
         title: 'Certificates and manufacturer statuses',
         description: 'We hold the required F-gas certificates, GREE Authorized Installer status and KAISAI APS.',
         linkLabel: 'See certificates and credential details',
+        contactTitle: 'Let’s discuss your installation',
         documentsTitle: 'GREE authorization scans',
         documentsDescription:
           'The scans below relate only to the GREE manufacturer authorization. They are not F-gas certificates.'
@@ -417,10 +468,12 @@ export const pageContent = {
         eyebrow: 'How it works',
         title: 'Simple: 3 steps to working AC',
         steps: [
-          { title: 'Call', description: 'Short call to understand scope and propose a timeline.' },
-          { title: 'Quote', description: BUSINESS.pricing.installationService.fullDescription.en },
-          { title: 'Install', description: 'Installation usually takes about one day with a clean finish.' }
-        ]
+          { title: 'Contact', description: 'We briefly discuss the room and your expectations.' },
+          { title: 'Selection and quote', description: 'We select the unit, capacity and installation scope.' },
+          { title: 'Installation', description: 'We supply the unit and commission the complete system.' }
+        ],
+        servicesLinkLabel: 'See the service scope',
+        pricingLinkLabel: 'See pricing details'
       },
       pricing: {
         eyebrow: 'Pricing',
@@ -428,8 +481,13 @@ export const pageContent = {
       },
       serviceArea: {
         eyebrow: 'Service area',
-        description: 'We install systems in houses and apartments in Bydgoszcz and the surrounding area.',
-        note: 'For locations farther away, we confirm availability individually.'
+        title: 'Two areas, the same installation quality',
+        description: 'We install systems in Bydgoszcz and surrounding areas, as well as across the Tri-City.',
+        note: 'We confirm the exact schedule and availability when you contact us.',
+        regionDescriptions: {
+          bydgoszcz: 'Bydgoszcz and nearby towns',
+          trojmiasto: 'Gdańsk, Gdynia and Sopot'
+        }
       },
       cta: {
         headline: 'Call and schedule your quote'
@@ -444,6 +502,8 @@ export const pageContent = {
       },
       installation: {
         title: 'What split installation includes',
+        description:
+          'We provide a complete single-split installation, from planning the installation route to commissioning the finished system.',
         items: [
           'indoor unit mounting',
           'wall passthrough',
@@ -474,14 +534,39 @@ export const pageContent = {
           title: 'Clean finish',
           description: 'After installation, we leave the workspace in order.'
         }
+      },
+      process: {
+        eyebrow: 'Project stages',
+        title: 'From the first conversation to working air conditioning',
+        steps: [
+          {
+            title: 'Understanding your needs',
+            description: 'We discuss the room, your requirements and the planned installation location.'
+          },
+          {
+            title: 'Selection and quote',
+            description: 'We select the unit, its capacity and the required scope of work.'
+          },
+          {
+            title: 'Installation and commissioning',
+            description: 'We supply the unit, complete the installation and commission the system.'
+          }
+        ],
+        pricingLinkLabel: 'See what the price from PLN 3499 covers',
+        equipmentLinkLabel: 'Explore available air conditioners',
+        contactTitle: 'Let’s discuss your installation'
       }
     },
     pricing: {
       hero: {
         eyebrow: 'Pricing',
         title: BUSINESS.pricing.installationService.name.en,
-        description: BUSINESS.pricing.installationService.fullDescription.en
+        description: BUSINESS.pricing.installationService.baseVariantScope.description.en
       },
+      includedTitle: 'What the price from PLN 3499 gross covers',
+      conditionsTitle: 'Conditions of the basic option',
+      projectQuoteTitle: 'The unit and more complex installations',
+      contactTitle: 'Let us define the scope of your project',
       phoneNote: 'No forms or widgets. Phone call is the fastest quote path.'
     },
     faq: {
