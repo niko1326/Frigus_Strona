@@ -17,10 +17,54 @@ const installationService = BUSINESS.pricing.installationService;
 const pricingContext = `${installationService.name[lang]} — ${installationService.baseVariantLabel[lang]}`;
 const isShowcaseModel = (model: EquipmentModel): model is ShowcaseEquipmentModel =>
   model.group === 'recommended' && Boolean(model.colorVariants?.length);
-const heroImages = EQUIPMENT.brands.gree.models
-  .filter(isShowcaseModel)
-  .map((model) => model.colorVariants[0].image);
-const defaultHeroImage = heroImages[0];
+const greeModels: readonly EquipmentModel[] = EQUIPMENT.brands.gree.models;
+const showcaseModels = greeModels.filter(isShowcaseModel);
+const heroSelections = [
+  {
+    modelId: 'pular',
+    variantId: 'matt',
+    backgroundStart: '#0d2938',
+    backgroundEnd: '#176b72',
+    glow: '#78ddca'
+  },
+  {
+    modelId: 'pular-pro',
+    variantId: 'dark',
+    backgroundStart: '#eff9fa',
+    backgroundEnd: '#a9dcd7',
+    glow: '#ffffff'
+  },
+  {
+    modelId: 'clivia',
+    variantId: 'navy-blue',
+    backgroundStart: '#edf9f8',
+    backgroundEnd: '#a8d7e2',
+    glow: '#ffffff'
+  },
+  {
+    modelId: 'airy',
+    variantId: 'champagne',
+    backgroundStart: '#102a3b',
+    backgroundEnd: '#246c70',
+    glow: '#8edbc9'
+  }
+] as const;
+const heroItems = heroSelections.flatMap((selection) => {
+  const model = showcaseModels.find((item) => item.id === selection.modelId);
+  const variant = model?.colorVariants.find((item) => item.id === selection.variantId);
+
+  return variant
+    ? [
+        {
+          image: variant.image,
+          backgroundStart: selection.backgroundStart,
+          backgroundEnd: selection.backgroundEnd,
+          glow: selection.glow
+        }
+      ]
+    : [];
+});
+const defaultHeroItem = heroItems[0];
 ---
 
 <section class="hero section">
@@ -56,21 +100,25 @@ const defaultHeroImage = heroImages[0];
       class="hero-product-panel"
       href={routeMap.gree[lang]}
       data-reveal
+      style={`--hero-bg-start: ${defaultHeroItem.backgroundStart}; --hero-bg-end: ${defaultHeroItem.backgroundEnd}; --hero-glow: ${defaultHeroItem.glow}`}
       data-hero-images={JSON.stringify(
-        heroImages.map((image) => ({
-          src: image.src,
-          alt: image.alt[lang],
-          width: image.width,
-          height: image.height
+        heroItems.map((item) => ({
+          src: item.image.src,
+          alt: item.image.alt[lang],
+          width: item.image.width,
+          height: item.image.height,
+          backgroundStart: item.backgroundStart,
+          backgroundEnd: item.backgroundEnd,
+          glow: item.glow
         }))
       )}
       aria-label={lang === 'pl' ? 'Zobacz klimatyzatory GREE' : 'Explore GREE air conditioners'}
     >
       <img
-        src={defaultHeroImage.src}
-        alt={defaultHeroImage.alt[lang]}
-        width={defaultHeroImage.width}
-        height={defaultHeroImage.height}
+        src={defaultHeroItem.image.src}
+        alt={defaultHeroItem.image.alt[lang]}
+        width={defaultHeroItem.image.width}
+        height={defaultHeroItem.image.height}
         loading="eager"
         fetchpriority="high"
         decoding="async"
@@ -91,6 +139,9 @@ const defaultHeroImage = heroImages[0];
         alt: string;
         width: number;
         height: number;
+        backgroundStart: string;
+        backgroundEnd: string;
+        glow: string;
       }>;
 
       if (images.length > 1) {
@@ -102,6 +153,9 @@ const defaultHeroImage = heroImages[0];
         image.alt = selected.alt;
         image.width = selected.width;
         image.height = selected.height;
+        panel.style.setProperty('--hero-bg-start', selected.backgroundStart);
+        panel.style.setProperty('--hero-bg-end', selected.backgroundEnd);
+        panel.style.setProperty('--hero-glow', selected.glow);
       }
     } catch {
       // The server-rendered default image remains available if the data cannot be read.
