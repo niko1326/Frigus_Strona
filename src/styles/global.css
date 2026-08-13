@@ -1462,6 +1462,7 @@ summary:focus-visible {
 
 .equipment-model-showcase {
   scroll-margin-top: 7rem;
+  overflow: hidden;
   display: grid;
   align-items: center;
   gap: clamp(1.25rem, 4vw, 3rem);
@@ -1503,7 +1504,7 @@ summary:focus-visible {
 
 .equipment-showcase-media {
   position: relative;
-  min-height: clamp(17rem, 54vw, 30rem);
+  min-height: clamp(10.5rem, 44vw, 13.5rem);
   display: grid;
   place-items: center;
   isolation: isolate;
@@ -1529,13 +1530,15 @@ summary:focus-visible {
   content: '';
   position: absolute;
   z-index: -1;
-  width: min(90%, 28rem);
-  aspect-ratio: 1;
+  top: 50%;
+  width: min(94%, 28rem);
+  height: clamp(6.5rem, 29vw, 9rem);
   border-radius: 50%;
+  transform: translateY(-45%);
   background:
-    radial-gradient(circle at 32% 25%, rgba(255, 255, 255, 0.94), transparent 35%),
+    radial-gradient(ellipse at 32% 25%, rgba(255, 255, 255, 0.94), transparent 38%),
     linear-gradient(145deg, color-mix(in srgb, var(--accent-blue) 28%, #fff), color-mix(in srgb, var(--accent-green) 32%, #fff));
-  box-shadow: 0 28px 70px rgba(13, 31, 41, 0.1);
+  box-shadow: 0 18px 42px rgba(13, 31, 41, 0.1);
 }
 
 .equipment-showcase-media img {
@@ -2277,8 +2280,40 @@ summary:focus-visible {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
+  .equipment-showcase-list {
+    gap: clamp(4rem, 9vw, 8rem);
+  }
+
   .equipment-model-showcase {
+    overflow: visible;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(2rem, 6vw, 5rem);
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .equipment-model-index,
+  .equipment-media-model-name {
+    display: none;
+  }
+
+  .equipment-showcase-media {
+    min-height: clamp(17rem, 54vw, 30rem);
+  }
+
+  .equipment-showcase-media::before {
+    top: auto;
+    width: min(90%, 28rem);
+    height: auto;
+    aspect-ratio: 1;
+    transform: none;
+    background:
+      radial-gradient(circle at 32% 25%, rgba(255, 255, 255, 0.94), transparent 35%),
+      linear-gradient(145deg, color-mix(in srgb, var(--accent-blue) 28%, #fff), color-mix(in srgb, var(--accent-green) 32%, #fff));
+    box-shadow: 0 28px 70px rgba(13, 31, 41, 0.1);
   }
 
   .equipment-model-showcase.is-reversed .equipment-showcase-copy {
