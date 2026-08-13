@@ -122,7 +122,7 @@ export const pageMeta: Record<Locale, Record<PageKey, PageMeta>> = {
     },
     kaisai: {
       title: `Klimatyzatory KAISAI z montażem Bydgoszcz | ${SITE.brandName}`,
-      description: `${SITE.brandName} pomaga dobrać klimatyzator KAISAI i wykonuje kompletny montaż klimatyzacji w Bydgoszczy i okolicach.`
+      description: `${SITE.brandName} pomaga dobrać klimatyzator KAISAI i wykonuje kompletny montaż w Bydgoszczy i okolicach. Poznaj wybrane modele i warianty kolorystyczne.`
     },
     pricing: {
       title: `Cennik montażu klimatyzacji w Bydgoszczy | ${SITE.brandName}`,

@@ -455,47 +455,44 @@ main {
   padding: 0.32rem 0.8rem;
 }
 
-.hero-brand-panel {
+.hero-product-panel {
   position: relative;
   isolation: isolate;
   display: grid;
-  align-content: end;
-  gap: 0.65rem;
+  place-items: center;
   min-height: clamp(280px, 48vw, 420px);
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  padding: clamp(1.35rem, 4vw, 2.4rem);
+  padding: clamp(1.4rem, 4vw, 3rem);
   background:
     radial-gradient(circle at 88% 18%, color-mix(in srgb, var(--accent-blue) 30%, transparent), transparent 38%),
     radial-gradient(circle at 96% 90%, color-mix(in srgb, var(--accent-green) 30%, transparent), transparent 42%),
     var(--surface-soft);
+  box-shadow: var(--shadow-soft);
 }
 
-.hero-brand-panel::before {
+.hero-product-panel::before {
   content: '';
   position: absolute;
   z-index: -1;
-  top: clamp(1.25rem, 5vw, 3rem);
-  left: clamp(1.25rem, 5vw, 3rem);
-  width: clamp(4.8rem, 12vw, 7rem);
-  height: clamp(1.7rem, 4vw, 2.5rem);
-  border: clamp(0.2rem, 0.55vw, 0.32rem) solid var(--accent-dark);
-  border-radius: 0.75rem;
-  opacity: 0.9;
+  width: min(78%, 25rem);
+  aspect-ratio: 1;
+  border: 1px solid color-mix(in srgb, var(--accent-dark) 10%, transparent);
+  border-radius: 50%;
+  background: color-mix(in srgb, #fff 52%, transparent);
 }
 
-.hero-brand-panel .eyebrow {
-  margin: 0;
+.hero-product-panel img {
+  width: min(100%, 42rem);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 26px 30px rgba(13, 31, 41, 0.2));
+  transition: transform 0.3s ease;
 }
 
-.hero-panel-title {
-  max-width: 19ch;
-  color: var(--ink);
-  font-size: clamp(1.4rem, 4vw, 2.3rem);
-  font-weight: 800;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+.hero-product-panel:hover img {
+  transform: translateY(-0.25rem) scale(1.015);
 }
 
 .trust-strip ul {
@@ -1379,7 +1376,7 @@ summary:focus-visible {
     gap: 2rem;
   }
 
-  .hero-brand-panel {
+  .hero-product-panel {
     min-height: clamp(360px, 36vw, 520px);
   }
 

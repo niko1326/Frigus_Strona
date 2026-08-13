@@ -453,7 +453,189 @@ export const EQUIPMENT = {
         { pl: 'Kompletny montaż', en: 'Complete installation' },
         { pl: 'Bydgoszcz i okolice', en: 'Bydgoszcz and surrounding areas' }
       ],
-      models: []
+      models: [
+        {
+          id: 'air',
+          name: 'KAISAI AIR',
+          group: 'recommended',
+          label: {
+            pl: 'Codzienny komfort',
+            en: 'Everyday comfort'
+          },
+          description: {
+            pl: 'Nowoczesny, minimalistyczny model do domu, mieszkania lub niewielkiego lokalu. Łączy energooszczędną pracę z funkcjami wspierającymi wygodne użytkowanie przez cały rok.',
+            en: 'A modern, minimalist model for a home, apartment or small commercial space. It combines energy-efficient operation with features designed for convenient year-round use.'
+          },
+          ctaLabel: {
+            pl: 'Zapytaj o KAISAI AIR',
+            en: 'Ask about KAISAI AIR'
+          },
+          colorVariants: [
+            {
+              id: 'white',
+              label: { pl: 'Biały', en: 'White' },
+              swatch: '#f2f1ed',
+              image: {
+                src: '/photos/kaisai/models/kaisai-air-white.webp',
+                mimeType: 'image/webp',
+                width: 1400,
+                height: 457,
+                alt: {
+                  pl: 'Klimatyzator KAISAI AIR w kolorze białym',
+                  en: 'KAISAI AIR air conditioner in white'
+                }
+              }
+            }
+          ]
+        },
+        {
+          id: 'art',
+          name: 'KAISAI ART',
+          group: 'recommended',
+          label: {
+            pl: 'Design i wygodne sterowanie',
+            en: 'Design and convenient control'
+          },
+          description: {
+            pl: 'Model łączący współczesny wygląd z praktycznymi rozwiązaniami zwiększającymi komfort. Dostępny w białym i czarnym wykończeniu, pasuje do mieszkań, apartamentów i nowoczesnych lokali.',
+            en: 'A model combining contemporary styling with practical comfort features. Available in white and black, it suits apartments, homes and modern commercial interiors.'
+          },
+          ctaLabel: {
+            pl: 'Zapytaj o KAISAI ART',
+            en: 'Ask about KAISAI ART'
+          },
+          colorVariants: [
+            {
+              id: 'white',
+              label: { pl: 'Biały', en: 'White' },
+              swatch: '#f2f1ed',
+              image: {
+                src: '/photos/kaisai/models/kaisai-art-white.webp',
+                mimeType: 'image/webp',
+                width: 1400,
+                height: 530,
+                alt: {
+                  pl: 'Klimatyzator KAISAI ART w kolorze białym',
+                  en: 'KAISAI ART air conditioner in white'
+                }
+              }
+            },
+            {
+              id: 'black',
+              label: { pl: 'Czarny', en: 'Black' },
+              swatch: '#171819',
+              image: {
+                src: '/photos/kaisai/models/kaisai-art-black.webp',
+                mimeType: 'image/webp',
+                width: 1400,
+                height: 530,
+                alt: {
+                  pl: 'Klimatyzator KAISAI ART w kolorze czarnym',
+                  en: 'KAISAI ART air conditioner in black'
+                }
+              }
+            }
+          ]
+        },
+        {
+          id: 'geo-plus',
+          name: 'KAISAI GEO+',
+          group: 'recommended',
+          label: {
+            pl: 'Komfort i rozbudowana filtracja',
+            en: 'Comfort and advanced filtration'
+          },
+          description: {
+            pl: 'Klimatyzator łączący komfort termiczny z rozbudowanym systemem filtracji powietrza. Nowoczesna forma i dwa warianty kolorystyczne pozwalają dopasować go do domu lub biura.',
+            en: 'An air conditioner combining thermal comfort with an advanced air-filtration system. Its modern form and two colour options make it suitable for a home or office.'
+          },
+          ctaLabel: {
+            pl: 'Zapytaj o KAISAI GEO+',
+            en: 'Ask about KAISAI GEO+'
+          },
+          colorVariants: [
+            {
+              id: 'white',
+              label: { pl: 'Biały', en: 'White' },
+              swatch: '#f2f1ed',
+              image: {
+                src: '/photos/kaisai/models/kaisai-geo-plus-white.webp',
+                mimeType: 'image/webp',
+                width: 1400,
+                height: 542,
+                alt: {
+                  pl: 'Klimatyzator KAISAI GEO+ w kolorze białym',
+                  en: 'KAISAI GEO+ air conditioner in white'
+                }
+              }
+            },
+            {
+              id: 'grey',
+              label: { pl: 'Szary', en: 'Grey' },
+              swatch: '#9da1a4',
+              image: {
+                src: '/photos/kaisai/models/kaisai-geo-plus-grey.webp',
+                mimeType: 'image/webp',
+                width: 1400,
+                height: 532,
+                alt: {
+                  pl: 'Klimatyzator KAISAI GEO+ w kolorze szarym',
+                  en: 'KAISAI GEO+ air conditioner in grey'
+                }
+              }
+            }
+          ]
+        },
+        {
+          id: 'pro-heat-plus',
+          name: 'KAISAI PRO HEAT+',
+          group: 'recommended',
+          label: {
+            pl: 'Chłodzenie i ogrzewanie',
+            en: 'Cooling and heating'
+          },
+          description: {
+            pl: 'Model przeznaczony do komfortowego chłodzenia i efektywnego ogrzewania przez cały rok. Jest dostępny w wersji białej i czarnej oraz oferuje zdalne sterowanie przez Wi-Fi.',
+            en: 'A model designed for comfortable cooling and efficient year-round heating. It is available in white and black and offers remote control over Wi-Fi.'
+          },
+          ctaLabel: {
+            pl: 'Zapytaj o KAISAI PRO HEAT+',
+            en: 'Ask about KAISAI PRO HEAT+'
+          },
+          colorVariants: [
+            {
+              id: 'white',
+              label: { pl: 'Biały', en: 'White' },
+              swatch: '#f2f1ed',
+              image: {
+                src: '/photos/kaisai/models/kaisai-pro-heat-plus-white.webp',
+                mimeType: 'image/webp',
+                width: 757,
+                height: 279,
+                alt: {
+                  pl: 'Klimatyzator KAISAI PRO HEAT+ w kolorze białym',
+                  en: 'KAISAI PRO HEAT+ air conditioner in white'
+                }
+              }
+            },
+            {
+              id: 'black',
+              label: { pl: 'Czarny', en: 'Black' },
+              swatch: '#171819',
+              image: {
+                src: '/photos/kaisai/models/kaisai-pro-heat-plus-black.webp',
+                mimeType: 'image/webp',
+                width: 992,
+                height: 392,
+                alt: {
+                  pl: 'Klimatyzator KAISAI PRO HEAT+ w kolorze czarnym',
+                  en: 'KAISAI PRO HEAT+ air conditioner in black'
+                }
+              }
+            }
+          ]
+        }
+      ]
     }
   }
 } as const satisfies EquipmentConfig;

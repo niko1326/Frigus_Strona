@@ -4,18 +4,19 @@ import type { Locale } from '../../i18n/content';
 
 interface Props {
   model: ShowcaseEquipmentModel;
+  brandId: string;
   lang: Locale;
   index: number;
   colorsLabel: string;
   selectedColorLabel: string;
 }
 
-const { model, lang, index, colorsLabel, selectedColorLabel } = Astro.props;
+const { model, brandId, lang, index, colorsLabel, selectedColorLabel } = Astro.props;
 const defaultVariant = model.colorVariants[0];
 ---
 
 <article
-  id={`gree-${model.id}`}
+  id={`${brandId}-${model.id}`}
   class:list={['equipment-model-showcase', { 'is-reversed': index % 2 === 1 }]}
   data-model-showcase
 >

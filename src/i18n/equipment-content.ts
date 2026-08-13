@@ -101,10 +101,16 @@ export const equipmentContent = {
         breadcrumbLabel: 'KAISAI',
         highlightsLabel: 'Najważniejsze informacje',
         heroCta: { label: 'Dobierz klimatyzator KAISAI' },
-        recommendedTitle: 'Klimatyzatory KAISAI, które najczęściej polecamy',
+        recommendedTitle: 'Poznaj wybrane modele KAISAI',
         colorPicker: {
           colorsLabel: 'Dostępne kolory',
           selectedColorLabel: 'Wybrany kolor'
+        },
+        selection: {
+          title: 'Nie wiesz, który model KAISAI wybrać?',
+          description:
+            'Opowiedz nam o pomieszczeniu i sposobie użytkowania klimatyzacji. Pomożemy dobrać odpowiedni model, wariant i moc urządzenia.',
+          cta: { label: 'Poproś o dobór klimatyzatora' }
         },
         otherModels: {
           title: 'Szukasz innego modelu KAISAI?',
@@ -171,10 +177,16 @@ export const equipmentContent = {
         breadcrumbLabel: 'KAISAI',
         highlightsLabel: 'Key information',
         heroCta: { label: 'Choose a KAISAI air conditioner' },
-        recommendedTitle: 'KAISAI air conditioners we recommend most often',
+        recommendedTitle: 'Explore selected KAISAI models',
         colorPicker: {
           colorsLabel: 'Available colours',
           selectedColorLabel: 'Selected colour'
+        },
+        selection: {
+          title: 'Not sure which KAISAI model to choose?',
+          description:
+            'Tell us about the room and how you plan to use the system. We will help select the right model, finish and capacity.',
+          cta: { label: 'Ask us to select an air conditioner' }
         },
         otherModels: {
           title: 'Looking for a different KAISAI model?',

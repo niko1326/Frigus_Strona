@@ -1,5 +1,6 @@
 ---
 import CTAButton from '../../CTAButton.astro';
+import { EQUIPMENT, type EquipmentModel, type ShowcaseEquipmentModel } from '../../../config/equipment';
 import { BUSINESS, CONTACT_PHONE } from '../../../config/site';
 import { commonLabels, routeMap, type Locale } from '../../../i18n/content';
 import { pageContent } from '../../../i18n/page-content';
@@ -14,6 +15,12 @@ const labels = commonLabels[lang];
 const pricingText = BUSINESS.pricing.label[lang];
 const installationService = BUSINESS.pricing.installationService;
 const pricingContext = `${installationService.name[lang]} — ${installationService.baseVariantLabel[lang]}`;
+const isShowcaseModel = (model: EquipmentModel): model is ShowcaseEquipmentModel =>
+  model.group === 'recommended' && Boolean(model.colorVariants?.length);
+const heroImages = EQUIPMENT.brands.gree.models
+  .filter(isShowcaseModel)
+  .map((model) => model.colorVariants[0].image);
+const defaultHeroImage = heroImages[0];
 ---
 
 <section class="hero section">
@@ -45,10 +52,59 @@ const pricingContext = `${installationService.name[lang]} — ${installationServ
       </div>
     </div>
 
-    <div class="hero-brand-panel" data-reveal>
-      <p class="eyebrow">{copy.visualEyebrow}</p>
-      <p class="hero-panel-title">{copy.visualTitle}</p>
-      <p>{copy.visualDescription}</p>
-    </div>
+    <a
+      class="hero-product-panel"
+      href={routeMap.gree[lang]}
+      data-reveal
+      data-hero-images={JSON.stringify(
+        heroImages.map((image) => ({
+          src: image.src,
+          alt: image.alt[lang],
+          width: image.width,
+          height: image.height
+        }))
+      )}
+      aria-label={lang === 'pl' ? 'Zobacz klimatyzatory GREE' : 'Explore GREE air conditioners'}
+    >
+      <img
+        src={defaultHeroImage.src}
+        alt={defaultHeroImage.alt[lang]}
+        width={defaultHeroImage.width}
+        height={defaultHeroImage.height}
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+        data-random-hero-image
+      />
+    </a>
   </div>
 </section>
+
+<script>
+  const panel = document.querySelector('[data-hero-images]');
+  const image = panel?.querySelector('[data-random-hero-image]');
+
+  if (panel instanceof HTMLElement && image instanceof HTMLImageElement) {
+    try {
+      const images = JSON.parse(panel.dataset.heroImages ?? '[]') as Array<{
+        src: string;
+        alt: string;
+        width: number;
+        height: number;
+      }>;
+
+      if (images.length > 1) {
+        const randomValues = new Uint32Array(1);
+        crypto.getRandomValues(randomValues);
+        const selected = images[randomValues[0] % images.length];
+
+        image.src = selected.src;
+        image.alt = selected.alt;
+        image.width = selected.width;
+        image.height = selected.height;
+      }
+    } catch {
+      // The server-rendered default image remains available if the data cannot be read.
+    }
+  }
+</script>

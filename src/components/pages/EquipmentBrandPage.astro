@@ -36,7 +36,7 @@ const meta = pageMeta[lang][brandId];
 const currentPath = routeMap[brandId][lang];
 const brandModels: readonly EquipmentModel[] = brand.models;
 const recommendedModels = brandModels.filter(isRecommendedModel);
-const showcaseModels = brandId === 'gree' ? recommendedModels.filter(hasColorVariants) : [];
+const showcaseModels = recommendedModels.filter(hasColorVariants);
 const cardModels = recommendedModels.filter((model) => !hasColorVariants(model));
 const otherModels = brandModels.filter(isOtherModel);
 const breadcrumbs = [
@@ -86,6 +86,7 @@ const breadcrumbs = [
             {showcaseModels.map((model, index) => (
               <EquipmentModelShowcase
                 model={model}
+                brandId={brandId}
                 lang={lang}
                 index={index}
                 colorsLabel={copy.colorPicker.colorsLabel}
