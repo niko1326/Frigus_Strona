@@ -1,10 +1,10 @@
 ---
-import { BUSINESS, CONTACT_PHONE } from '../../config/site';
-import { commonLabels, pageMeta, routeMap, type Locale } from '../../i18n/content';
+import { BUSINESS, CONTACT_PHONES } from '../../config/site';
+import { pageMeta, routeMap, type Locale } from '../../i18n/content';
 import { pageContent } from '../../i18n/page-content';
-import CTAButton from '../CTAButton.astro';
 import Layout from '../Layout.astro';
 import PageHero from '../PageHero.astro';
+import IconPhone from '../icons/IconPhone.astro';
 
 interface Props {
   lang: Locale;
@@ -12,7 +12,6 @@ interface Props {
 
 const { lang } = Astro.props;
 const copy = pageContent[lang].contact;
-const labels = commonLabels[lang];
 const meta = pageMeta[lang].contact;
 ---
 
@@ -25,18 +24,50 @@ const meta = pageMeta[lang].contact;
   <PageHero eyebrow={copy.hero.eyebrow} title={copy.hero.title} description={copy.hero.description} />
 
   <section class="section">
-    <div class="container contact-panel" data-reveal>
-      <p>
-        <a class="phone-big" href={CONTACT_PHONE.href} aria-label={labels.phoneAria}>{CONTACT_PHONE.display}</a>{' '}
-        — {CONTACT_PHONE.contactName}
-      </p>
-      <a href={BUSINESS.contact.email.href} aria-label={labels.emailAria}>{BUSINESS.contact.email.address}</a>
-      <ul class="bullet-list">
-        <li>{copy.availabilityLabel}: {BUSINESS.availability.label[lang]}</li>
-        <li>{copy.areaLabel}: {BUSINESS.serviceArea.summary[lang]}</li>
-      </ul>
+    <div class="container contact-layout" data-reveal>
+      <section class="contact-phone-section" aria-labelledby="contact-phone-title">
+        <p class="eyebrow">{copy.phoneEyebrow}</p>
+        <h2 id="contact-phone-title">{copy.phoneTitle}</h2>
+        <div class="contact-phone-grid">
+          {
+            CONTACT_PHONES.map((phone) => (
+              <a class="contact-person-card" href={phone.href}>
+                <span class="contact-person-icon" aria-hidden="true"><IconPhone class="icon" /></span>
+                <span class="contact-person-name">{phone.contactName}</span>
+                <strong>{phone.display}</strong>
+                <span class="contact-person-action">{copy.callLabel} <span aria-hidden="true">→</span></span>
+              </a>
+            ))
+          }
+        </div>
+      </section>
+
+      <aside class="contact-email-card" aria-labelledby="contact-email-title">
+        <p class="eyebrow">{copy.emailEyebrow}</p>
+        <h2 id="contact-email-title">{copy.emailTitle}</h2>
+        <p>{copy.emailDescription}</p>
+        <a class="contact-email-address" href={BUSINESS.contact.email.href}>{BUSINESS.contact.email.address}</a>
+        <a class="cta-button cta-primary" href={BUSINESS.contact.email.href} aria-label={`${copy.emailAction}: ${BUSINESS.contact.email.address}`}>
+          {copy.emailAction}
+        </a>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section-muted">
+    <div class="container contact-details" data-reveal>
+      <h2>{copy.detailsTitle}</h2>
+      <dl>
+        <div>
+          <dt>{copy.availabilityLabel}</dt>
+          <dd>{BUSINESS.availability.label[lang]}</dd>
+        </div>
+        <div>
+          <dt>{copy.areaLabel}</dt>
+          <dd>{BUSINESS.serviceArea.summary[lang]}</dd>
+        </div>
+      </dl>
       <p class="tiny-note">{copy.note}</p>
-      <CTAButton href={CONTACT_PHONE.href} label={labels.callNow} ariaLabel={labels.callNow} />
     </div>
   </section>
 </Layout>

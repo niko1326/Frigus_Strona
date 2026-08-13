@@ -119,6 +119,14 @@ type FaqContent = Readonly<{
 
 type ContactContent = Readonly<{
   hero: PageHeroContent;
+  phoneEyebrow: string;
+  phoneTitle: string;
+  callLabel: string;
+  emailEyebrow: string;
+  emailTitle: string;
+  emailDescription: string;
+  emailAction: string;
+  detailsTitle: string;
   availabilityLabel: string;
   areaLabel: string;
   note: string;
@@ -394,10 +402,19 @@ export const pageContent = {
     contact: {
       hero: {
         eyebrow: 'Kontakt',
-        title: 'Telefon to najszybsza wycena',
+        title: 'Porozmawiajmy o Twojej klimatyzacji',
         description:
-          'Bez formularzy i bez kolejek. Zadzwoń, opisz lokal i urządzenie, a szybko wrócimy z propozycją zakresu i terminu.'
+          'Wybierz bezpośredni kontakt telefoniczny albo napisz do nas. Omówimy lokalizację, pomieszczenie i oczekiwany zakres montażu.'
       },
+      phoneEyebrow: 'Kontakt telefoniczny',
+      phoneTitle: 'Zadzwoń bezpośrednio',
+      callLabel: 'Zadzwoń',
+      emailEyebrow: 'Kontakt mailowy',
+      emailTitle: 'Wolisz opisać realizację?',
+      emailDescription:
+        'Napisz, gdzie ma odbyć się montaż i jakiego pomieszczenia dotyczy. Możesz od razu dołączyć podstawowe informacje potrzebne do rozmowy o wycenie.',
+      emailAction: 'Napisz wiadomość',
+      detailsTitle: 'Realizacja i dostępność',
       availabilityLabel: 'Dostępność',
       areaLabel: 'Obszar',
       note: 'Skontaktuj się telefonicznie lub mailowo.'
@@ -671,10 +688,19 @@ export const pageContent = {
     contact: {
       hero: {
         eyebrow: 'Contact',
-        title: 'Phone call is the fastest quote',
+        title: 'Let’s discuss your air conditioning project',
         description:
-          'No forms, no booking widgets. Call us, share your location and unit plan, and we will return with a practical next step.'
+          'Choose a direct phone contact or send us an email. We will discuss the location, the room and the expected installation scope.'
       },
+      phoneEyebrow: 'Phone contact',
+      phoneTitle: 'Call us directly',
+      callLabel: 'Call',
+      emailEyebrow: 'Email contact',
+      emailTitle: 'Prefer to describe your project?',
+      emailDescription:
+        'Tell us where the installation will take place and which room it concerns. You can include the basic details needed to discuss the quote.',
+      emailAction: 'Send an email',
+      detailsTitle: 'Service and availability',
       availabilityLabel: 'Availability',
       areaLabel: 'Area',
       note: 'Contact us by phone or email.'

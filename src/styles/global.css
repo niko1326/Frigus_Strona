@@ -1855,19 +1855,148 @@ summary:focus-visible {
   font-size: 0.9rem;
 }
 
-.contact-panel {
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  background: var(--surface);
-  padding: clamp(1.2rem, 3vw, 2rem);
+.contact-layout {
   display: grid;
-  gap: 0.9rem;
+  gap: 1.25rem;
 }
 
-.phone-big {
-  font-size: clamp(1.45rem, 5vw, 2.2rem);
-  font-weight: 800;
+.contact-phone-section {
+  display: grid;
+  align-content: start;
+  gap: 0.8rem;
+}
+
+.contact-phone-grid {
+  display: grid;
+  gap: 0.8rem;
+  margin-top: 0.35rem;
+}
+
+.contact-person-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    'icon name action'
+    'icon phone action';
+  align-items: center;
+  gap: 0.15rem 0.85rem;
+  min-height: 7.2rem;
+  padding: 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--ink);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contact-person-card:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--accent-dark) 22%, var(--line));
+  box-shadow: var(--shadow-soft);
+}
+
+.contact-person-icon {
+  grid-area: icon;
+  width: 2.75rem;
+  height: 2.75rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent-green) 42%, #fff);
   color: var(--accent-dark);
+}
+
+.contact-person-icon .icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.contact-person-name {
+  grid-area: name;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 650;
+}
+
+.contact-person-card strong {
+  grid-area: phone;
+  color: var(--accent-dark);
+  font-size: clamp(1.25rem, 3vw, 1.65rem);
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.contact-person-action {
+  grid-area: action;
+  color: var(--accent-dark);
+  font-size: 0.88rem;
+  font-weight: 750;
+}
+
+.contact-email-card {
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 0.85rem;
+  padding: clamp(1.35rem, 3vw, 2.2rem);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(circle at 88% 12%, color-mix(in srgb, var(--accent-blue) 42%, transparent), transparent 38%),
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--accent-green) 22%, #fff),
+      color-mix(in srgb, var(--accent-blue) 18%, #fff)
+    );
+}
+
+.contact-email-card h2 {
+  max-width: 16ch;
+}
+
+.contact-email-address {
+  color: var(--accent-dark);
+  font-size: clamp(1.05rem, 2.5vw, 1.35rem);
+  font-weight: 750;
+  overflow-wrap: anywhere;
+}
+
+.contact-email-card .cta-button {
+  margin-top: 0.25rem;
+}
+
+.contact-details {
+  display: grid;
+  gap: 1rem;
+}
+
+.contact-details dl {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.contact-details dl > div {
+  display: grid;
+  gap: 0.25rem;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+.contact-details dt {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.contact-details dd {
+  margin: 0;
+  color: var(--accent-dark);
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-weight: 720;
 }
 
 .sticky-call {
@@ -2038,6 +2167,29 @@ summary:focus-visible {
 
   .location-process-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .contact-layout {
+    grid-template-columns: minmax(0, 1.18fr) minmax(20rem, 0.82fr);
+    align-items: stretch;
+  }
+
+  .contact-details dl {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .contact-person-card {
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas:
+      'icon name'
+      'icon phone'
+      'action action';
+  }
+
+  .contact-person-action {
+    margin-top: 0.45rem;
   }
 }
 
