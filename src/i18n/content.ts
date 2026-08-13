@@ -130,7 +130,7 @@ export const pageMeta: Record<Locale, Record<PageKey, PageMeta>> = {
     },
     certifications: {
       title: `Certyfikaty i uprawnienia | ${SITE.brandName}`,
-      description: `Sprawdź certyfikaty F-gazowe oraz statusy APS GREE i KAISAI posiadane przez ${SITE.brandName}.`
+      description: `Sprawdź certyfikaty F-gazowe, status Autoryzowanego Instalatora GREE oraz APS KAISAI posiadane przez ${SITE.brandName}.`
     },
     pricing: {
       title: `Cennik montażu klimatyzacji w Bydgoszczy | ${SITE.brandName}`,
@@ -172,7 +172,7 @@ export const pageMeta: Record<Locale, Record<PageKey, PageMeta>> = {
     },
     certifications: {
       title: `Certificates and Credentials | ${SITE.brandName}`,
-      description: `See the F-gas certificates and GREE and KAISAI APS statuses held by ${SITE.brandName}.`
+      description: `See the F-gas certificates, GREE Authorized Installer status and KAISAI APS held by ${SITE.brandName}.`
     },
     pricing: {
       title: `Air Conditioning Installation Pricing in Bydgoszcz | ${SITE.brandName}`,

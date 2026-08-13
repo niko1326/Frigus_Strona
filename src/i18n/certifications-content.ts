@@ -4,7 +4,7 @@ type CertificationsPageContent = Readonly<{
   hero: PageHeroContent;
   breadcrumbLabel: string;
   fGasTitle: string;
-  apsTitle: string;
+  manufacturerStatusesTitle: string;
   documentsTitle: string;
   documentsDescription: string;
 }>;
@@ -15,11 +15,11 @@ export const certificationsContent = {
       eyebrow: 'Uprawnienia FRIGAC',
       title: 'Certyfikaty i statusy producentów',
       description:
-        'W jednym miejscu prezentujemy posiadane certyfikaty F-gazowe oraz statusy APS marek GREE i KAISAI.'
+        'W jednym miejscu prezentujemy posiadane certyfikaty F-gazowe, status Autoryzowanego Instalatora GREE oraz APS KAISAI.'
     },
     breadcrumbLabel: 'Certyfikaty',
     fGasTitle: 'Certyfikaty F-gazowe',
-    apsTitle: 'Statusy APS producentów',
+    manufacturerStatusesTitle: 'Statusy producentów',
     documentsTitle: 'Dostępne dokumenty GREE',
     documentsDescription:
       'Poniższe skany dotyczą dokumentów GREE. Nie są certyfikatami F-gazowymi ani dokumentami KAISAI.'
@@ -29,11 +29,11 @@ export const certificationsContent = {
       eyebrow: 'FRIGAC credentials',
       title: 'Certificates and manufacturer statuses',
       description:
-        'This page presents our F-gas certificates and the APS statuses held for the GREE and KAISAI brands.'
+        'This page presents our F-gas certificates, GREE Authorized Installer status and KAISAI APS.'
     },
     breadcrumbLabel: 'Certificates',
     fGasTitle: 'F-gas certificates',
-    apsTitle: 'Manufacturer APS statuses',
+    manufacturerStatusesTitle: 'Manufacturer statuses',
     documentsTitle: 'Available GREE documents',
     documentsDescription:
       'The scans below relate to GREE documents. They are not F-gas certificates or KAISAI documents.'

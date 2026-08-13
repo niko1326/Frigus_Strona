@@ -138,7 +138,7 @@ export const pageContent = {
       certifications: {
         eyebrow: 'Uprawnienia',
         title: 'Certyfikaty i statusy producentów',
-        description: 'Posiadamy wymagane certyfikaty F-gazowe oraz statusy APS marek GREE i KAISAI.',
+        description: 'Posiadamy wymagane certyfikaty F-gazowe, status Autoryzowanego Instalatora GREE oraz APS KAISAI.',
         linkLabel: 'Zobacz certyfikaty i szczegóły uprawnień',
         documentsTitle: 'Skany autoryzacji GREE',
         documentsDescription:
@@ -382,7 +382,7 @@ export const pageContent = {
       certifications: {
         eyebrow: 'Credentials',
         title: 'Certificates and manufacturer statuses',
-        description: 'We hold the required F-gas certificates and GREE and KAISAI APS statuses.',
+        description: 'We hold the required F-gas certificates, GREE Authorized Installer status and KAISAI APS.',
         linkLabel: 'See certificates and credential details',
         documentsTitle: 'GREE authorization scans',
         documentsDescription:

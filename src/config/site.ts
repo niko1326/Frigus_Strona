@@ -289,12 +289,12 @@ export const BUSINESS = {
         held: true,
         status: 'authorized-installer',
         title: {
-          pl: 'APS GREE',
-          en: 'GREE APS'
+          pl: 'Autoryzowany Instalator GREE',
+          en: 'GREE Authorized Installer'
         },
         description: {
-          pl: 'Posiadamy APS GREE i status Autoryzowanego Instalatora GREE.',
-          en: 'We hold GREE APS and GREE Authorized Installer status.'
+          pl: 'Posiadamy status Autoryzowanego Instalatora GREE.',
+          en: 'We hold GREE Authorized Installer status.'
         },
         productSeries: GREE_PRODUCT_SERIES,
         productSeriesDescription: {
@@ -342,8 +342,8 @@ export const BUSINESS = {
       }
     },
     summary: {
-      pl: 'Certyfikat F-gazowy personelu, certyfikat F-gazowy przedsiębiorcy, APS GREE i APS KAISAI.',
-      en: 'Personnel F-gas certificate, business F-gas certificate, GREE APS and KAISAI APS.'
+      pl: 'Certyfikat F-gazowy personelu, certyfikat F-gazowy przedsiębiorcy, status Autoryzowanego Instalatora GREE i APS KAISAI.',
+      en: 'Personnel F-gas certificate, business F-gas certificate, GREE Authorized Installer status and KAISAI APS.'
     }
   },
   serviceType: {
