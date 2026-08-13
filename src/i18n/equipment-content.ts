@@ -23,6 +23,10 @@ type BrandPageContent = Readonly<{
   highlightsLabel: string;
   heroCta: CtaContent;
   recommendedTitle: string;
+  colorPicker: Readonly<{
+    colorsLabel: string;
+    selectedColorLabel: string;
+  }>;
   selection?: Readonly<{
     title: string;
     description: string;
@@ -70,7 +74,11 @@ export const equipmentContent = {
         breadcrumbLabel: 'GREE',
         highlightsLabel: 'Najważniejsze informacje',
         heroCta: { label: 'Dobierz klimatyzator GREE' },
-        recommendedTitle: 'Klimatyzatory GREE, które najczęściej polecamy',
+        recommendedTitle: 'Poznaj wybrane modele GREE',
+        colorPicker: {
+          colorsLabel: 'Dostępne kolory',
+          selectedColorLabel: 'Wybrany kolor'
+        },
         selection: {
           title: 'Nie wiesz, który model wybrać?',
           description:
@@ -80,7 +88,7 @@ export const equipmentContent = {
         otherModels: {
           title: 'Pozostałe klimatyzatory GREE',
           description:
-            'Montujemy również inne urządzenia z aktualnej oferty GREE. Jeśli Pular, Fairy lub Pular PRO nie odpowiadają potrzebom klienta, dobieramy indywidualnie odpowiedni model z szerszej oferty producenta.'
+            'Montujemy również inne urządzenia z aktualnej oferty GREE. Jeśli pokazane modele nie odpowiadają potrzebom klienta, dobieramy indywidualnie odpowiednie urządzenie z szerszej oferty producenta.'
         }
       },
       kaisai: {
@@ -94,6 +102,10 @@ export const equipmentContent = {
         highlightsLabel: 'Najważniejsze informacje',
         heroCta: { label: 'Dobierz klimatyzator KAISAI' },
         recommendedTitle: 'Klimatyzatory KAISAI, które najczęściej polecamy',
+        colorPicker: {
+          colorsLabel: 'Dostępne kolory',
+          selectedColorLabel: 'Wybrany kolor'
+        },
         otherModels: {
           title: 'Szukasz innego modelu KAISAI?',
           description:
@@ -132,7 +144,11 @@ export const equipmentContent = {
         breadcrumbLabel: 'GREE',
         highlightsLabel: 'Key information',
         heroCta: { label: 'Choose a GREE air conditioner' },
-        recommendedTitle: 'GREE air conditioners we recommend most often',
+        recommendedTitle: 'Explore selected GREE models',
+        colorPicker: {
+          colorsLabel: 'Available colours',
+          selectedColorLabel: 'Selected colour'
+        },
         selection: {
           title: 'Not sure which model to choose?',
           description:
@@ -142,7 +158,7 @@ export const equipmentContent = {
         otherModels: {
           title: 'Other GREE air conditioners',
           description:
-            'We also install other units from the current GREE range. If Pular, Fairy or Pular PRO does not fit your needs, we select a suitable model individually from the wider manufacturer range.'
+            'We also install other units from the current GREE range. If the models shown do not fit your needs, we select a suitable unit individually from the wider manufacturer range.'
         }
       },
       kaisai: {
@@ -156,6 +172,10 @@ export const equipmentContent = {
         highlightsLabel: 'Key information',
         heroCta: { label: 'Choose a KAISAI air conditioner' },
         recommendedTitle: 'KAISAI air conditioners we recommend most often',
+        colorPicker: {
+          colorsLabel: 'Available colours',
+          selectedColorLabel: 'Selected colour'
+        },
         otherModels: {
           title: 'Looking for a different KAISAI model?',
           description:

@@ -10,6 +10,13 @@ export type EquipmentImage = Readonly<{
   alt: LocalizedBusinessText;
 }>;
 
+export type EquipmentColorVariant = Readonly<{
+  id: string;
+  label: LocalizedBusinessText;
+  swatch: `#${string}`;
+  image: EquipmentImage;
+}>;
+
 type EquipmentModelBase = Readonly<{
   id: string;
   name: string;
@@ -22,6 +29,12 @@ export type RecommendedEquipmentModel = EquipmentModelBase &
     label: LocalizedBusinessText;
     description: LocalizedBusinessText;
     ctaLabel: LocalizedBusinessText;
+    colorVariants?: readonly [EquipmentColorVariant, ...EquipmentColorVariant[]];
+  }>;
+
+export type ShowcaseEquipmentModel = RecommendedEquipmentModel &
+  Readonly<{
+    colorVariants: readonly [EquipmentColorVariant, ...EquipmentColorVariant[]];
   }>;
 
 export type OtherEquipmentModel = EquipmentModelBase &
@@ -76,6 +89,22 @@ const SELECTED_DEVICE_WIFI_LABEL = {
   en: 'Wi-Fi control in selected units'
 } as const satisfies LocalizedBusinessText;
 
+const GREE_LOGO = {
+  src: '/photos/Logo_GREE_kolorowe.png',
+  mimeType: 'image/png',
+  width: 842,
+  height: 190,
+  alt: { pl: 'Logo GREE', en: 'GREE logo' }
+} as const satisfies EquipmentImage;
+
+const KAISAI_LOGO = {
+  src: '/photos/Logo_KAISAI_szare.png',
+  mimeType: 'image/png',
+  width: 390,
+  height: 75,
+  alt: { pl: 'Logo KAISAI', en: 'KAISAI logo' }
+} as const satisfies EquipmentImage;
+
 export const EQUIPMENT = {
   warranty: {
     type: 'manufacturer',
@@ -93,6 +122,8 @@ export const EQUIPMENT = {
     gree: {
       id: 'gree',
       name: 'GREE',
+      navigationImage: GREE_LOGO,
+      overviewImage: GREE_LOGO,
       description: {
         pl: 'Sprawdzone klimatyzatory z szerokim wyborem modeli, funkcji i wersji stylistycznych. Dobieramy urządzenia GREE zarówno do standardowego chłodzenia, jak i dla klientów planujących wykorzystywać klimatyzację również do ogrzewania.',
         en: 'Proven air conditioners with a wide choice of models, features and styles. We select GREE units both for standard cooling and for customers planning to use air conditioning for heating as well.'
@@ -129,24 +160,39 @@ export const EQUIPMENT = {
           ctaLabel: {
             pl: 'Zapytaj o GREE Pular',
             en: 'Ask about GREE Pular'
-          }
-        },
-        {
-          id: 'fairy',
-          name: 'GREE Fairy',
-          group: 'recommended',
-          label: {
-            pl: 'Design i komfort',
-            en: 'Design and comfort'
           },
-          description: {
-            pl: 'Model dla osób, dla których oprócz komfortu ważny jest również wygląd jednostki wewnętrznej. Dobrze sprawdzi się w nowoczesnych i estetycznie urządzonych wnętrzach.',
-            en: 'A model for people who value the appearance of the indoor unit as well as comfort. It works well in modern, aesthetically designed interiors.'
-          },
-          ctaLabel: {
-            pl: 'Zapytaj o GREE Fairy',
-            en: 'Ask about GREE Fairy'
-          }
+          colorVariants: [
+            {
+              id: 'matt',
+              label: { pl: 'Biały mat', en: 'Matt white' },
+              swatch: '#f2f1ed',
+              image: {
+                src: '/photos/gree/models/pular-matt.webp',
+                mimeType: 'image/webp',
+                width: 1400,
+                height: 498,
+                alt: {
+                  pl: 'Klimatyzator GREE Pular w kolorze białym matowym',
+                  en: 'GREE Pular air conditioner in matt white'
+                }
+              }
+            },
+            {
+              id: 'shiny',
+              label: { pl: 'Biały połysk', en: 'Gloss white' },
+              swatch: '#ffffff',
+              image: {
+                src: '/photos/gree/models/pular-shiny.webp',
+                mimeType: 'image/webp',
+                width: 1400,
+                height: 475,
+                alt: {
+                  pl: 'Klimatyzator GREE Pular w kolorze białym z połyskiem',
+                  en: 'GREE Pular air conditioner in gloss white'
+                }
+              }
+            }
+          ]
         },
         {
           id: 'pular-pro',
@@ -163,16 +209,216 @@ export const EQUIPMENT = {
           ctaLabel: {
             pl: 'Zapytaj o Pular PRO',
             en: 'Ask about Pular PRO'
-          }
+          },
+          colorVariants: [
+            {
+              id: 'white',
+              label: { pl: 'Biały', en: 'White' },
+              swatch: '#f2f1ed',
+              image: {
+                src: '/photos/gree/models/pular-pro-white.webp',
+                mimeType: 'image/webp',
+                width: 1400,
+                height: 498,
+                alt: {
+                  pl: 'Klimatyzator GREE Pular PRO w kolorze białym',
+                  en: 'GREE Pular PRO air conditioner in white'
+                }
+              }
+            },
+            {
+              id: 'dark',
+              label: { pl: 'Ciemny', en: 'Dark' },
+              swatch: '#3f4243',
+              image: {
+                src: '/photos/gree/models/pular-pro-dark.webp',
+                mimeType: 'image/webp',
+                width: 1358,
+                height: 462,
+                alt: {
+                  pl: 'Klimatyzator GREE Pular PRO w ciemnym kolorze',
+                  en: 'GREE Pular PRO air conditioner in dark finish'
+                }
+              }
+            }
+          ]
         },
         {
           id: 'clivia',
           name: 'GREE Clivia',
-          group: 'other'
+          group: 'recommended',
+          label: {
+            pl: 'Technologia i wyrazisty design',
+            en: 'Technology and distinctive design'
+          },
+          description: {
+            pl: 'Flagowy model GREE łączący rozbudowane funkcje komfortu, inteligentne sterowanie G-AI i kontrolę wilgotności z szerokim wyborem wykończeń.',
+            en: 'A flagship GREE model combining advanced comfort features, intelligent G-AI control and humidity management with a wide choice of finishes.'
+          },
+          ctaLabel: {
+            pl: 'Zapytaj o GREE Clivia',
+            en: 'Ask about GREE Clivia'
+          },
+          colorVariants: [
+            {
+              id: 'white',
+              label: { pl: 'Biały', en: 'White' },
+              swatch: '#f2f1ed',
+              image: {
+                src: '/photos/gree/models/clivia-white.webp',
+                mimeType: 'image/webp',
+                width: 1400,
+                height: 481,
+                alt: {
+                  pl: 'Klimatyzator GREE Clivia w kolorze białym',
+                  en: 'GREE Clivia air conditioner in white'
+                }
+              }
+            },
+            {
+              id: 'beige-stone',
+              label: { pl: 'Beige Stone', en: 'Beige Stone' },
+              swatch: '#c7b49f',
+              image: {
+                src: '/photos/gree/models/clivia-beige-stone.webp',
+                mimeType: 'image/webp',
+                width: 1400,
+                height: 462,
+                alt: {
+                  pl: 'Klimatyzator GREE Clivia w wykończeniu Beige Stone',
+                  en: 'GREE Clivia air conditioner in Beige Stone finish'
+                }
+              }
+            },
+            {
+              id: 'silver',
+              label: { pl: 'Srebrny', en: 'Silver' },
+              swatch: '#aeb2b5',
+              image: {
+                src: '/photos/gree/models/clivia-silver.webp',
+                mimeType: 'image/webp',
+                width: 1400,
+                height: 481,
+                alt: {
+                  pl: 'Klimatyzator GREE Clivia w kolorze srebrnym',
+                  en: 'GREE Clivia air conditioner in silver'
+                }
+              }
+            },
+            {
+              id: 'navy-blue',
+              label: { pl: 'Navy Blue', en: 'Navy Blue' },
+              swatch: '#173047',
+              image: {
+                src: '/photos/gree/models/clivia-navy-blue.webp',
+                mimeType: 'image/webp',
+                width: 1400,
+                height: 481,
+                alt: {
+                  pl: 'Klimatyzator GREE Clivia w wykończeniu Navy Blue',
+                  en: 'GREE Clivia air conditioner in Navy Blue finish'
+                }
+              }
+            },
+            {
+              id: 'satin-black',
+              label: { pl: 'Satin Black', en: 'Satin Black' },
+              swatch: '#262728',
+              image: {
+                src: '/photos/gree/models/clivia-satin-black.webp',
+                mimeType: 'image/webp',
+                width: 1400,
+                height: 451,
+                alt: {
+                  pl: 'Klimatyzator GREE Clivia w wykończeniu Satin Black',
+                  en: 'GREE Clivia air conditioner in Satin Black finish'
+                }
+              }
+            }
+          ]
         },
         {
           id: 'airy',
           name: 'GREE Airy',
+          group: 'recommended',
+          label: {
+            pl: 'Nowoczesny komfort',
+            en: 'Modern comfort'
+          },
+          description: {
+            pl: 'Nowoczesny klimatyzator o dopracowanej formie, dostępny w kilku wykończeniach i wyposażony w inteligentną technologię G-AI Plus 2.0.',
+            en: 'A modern air conditioner with a refined form, available in several finishes and equipped with intelligent G-AI Plus 2.0 technology.'
+          },
+          ctaLabel: {
+            pl: 'Zapytaj o GREE Airy',
+            en: 'Ask about GREE Airy'
+          },
+          colorVariants: [
+            {
+              id: 'white',
+              label: { pl: 'Biały', en: 'White' },
+              swatch: '#f2f1ed',
+              image: {
+                src: '/photos/gree/models/airy-white.webp',
+                mimeType: 'image/webp',
+                width: 1400,
+                height: 441,
+                alt: {
+                  pl: 'Klimatyzator GREE Airy w kolorze białym',
+                  en: 'GREE Airy air conditioner in white'
+                }
+              }
+            },
+            {
+              id: 'champagne',
+              label: { pl: 'Champagne', en: 'Champagne' },
+              swatch: '#c5ad8c',
+              image: {
+                src: '/photos/gree/models/airy-champagne.webp',
+                mimeType: 'image/webp',
+                width: 1400,
+                height: 429,
+                alt: {
+                  pl: 'Klimatyzator GREE Airy w wykończeniu Champagne',
+                  en: 'GREE Airy air conditioner in Champagne finish'
+                }
+              }
+            },
+            {
+              id: 'silver',
+              label: { pl: 'Srebrny', en: 'Silver' },
+              swatch: '#adb1b3',
+              image: {
+                src: '/photos/gree/models/airy-silver.webp',
+                mimeType: 'image/webp',
+                width: 1400,
+                height: 429,
+                alt: {
+                  pl: 'Klimatyzator GREE Airy w kolorze srebrnym',
+                  en: 'GREE Airy air conditioner in silver'
+                }
+              }
+            },
+            {
+              id: 'dark',
+              label: { pl: 'Ciemny', en: 'Dark' },
+              swatch: '#303234',
+              image: {
+                src: '/photos/gree/models/airy-dark.webp',
+                mimeType: 'image/webp',
+                width: 1400,
+                height: 429,
+                alt: {
+                  pl: 'Klimatyzator GREE Airy w ciemnym kolorze',
+                  en: 'GREE Airy air conditioner in dark finish'
+                }
+              }
+            }
+          ]
+        },
+        {
+          id: 'fairy',
+          name: 'GREE Fairy',
           group: 'other'
         },
         {
@@ -185,6 +431,8 @@ export const EQUIPMENT = {
     kaisai: {
       id: 'kaisai',
       name: 'KAISAI',
+      navigationImage: KAISAI_LOGO,
+      overviewImage: KAISAI_LOGO,
       description: {
         pl: 'Nowoczesne i funkcjonalne klimatyzatory oferujące bardzo dobry stosunek wyposażenia do ceny. Dobry wybór dla osób szukających sprawdzonego urządzenia do mieszkania lub domu.',
         en: 'Modern and functional air conditioners offering very good value for their features. A good choice for people looking for a proven unit for an apartment or house.'

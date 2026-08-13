@@ -1,0 +1,99 @@
+---
+import type { ShowcaseEquipmentModel } from '../../config/equipment';
+import type { Locale } from '../../i18n/content';
+
+interface Props {
+  model: ShowcaseEquipmentModel;
+  lang: Locale;
+  index: number;
+  colorsLabel: string;
+  selectedColorLabel: string;
+}
+
+const { model, lang, index, colorsLabel, selectedColorLabel } = Astro.props;
+const defaultVariant = model.colorVariants[0];
+---
+
+<article
+  id={`gree-${model.id}`}
+  class:list={['equipment-model-showcase', { 'is-reversed': index % 2 === 1 }]}
+  data-model-showcase
+>
+  <div class="equipment-showcase-copy">
+    <h3>{model.name}</h3>
+    <p class="equipment-model-description">{model.description[lang]}</p>
+
+    <fieldset class="equipment-color-picker">
+      <legend>{colorsLabel}</legend>
+      <div class="equipment-color-options">
+        {
+          model.colorVariants.map((variant, variantIndex) => (
+            <button
+              class="equipment-color-option"
+              type="button"
+              style={`--swatch-color: ${variant.swatch}`}
+              aria-label={variant.label[lang]}
+              aria-pressed={variantIndex === 0 ? 'true' : 'false'}
+              title={variant.label[lang]}
+              data-color-option
+              data-image-src={variant.image.src}
+              data-image-alt={variant.image.alt[lang]}
+              data-image-width={variant.image.width}
+              data-image-height={variant.image.height}
+              data-color-label={variant.label[lang]}
+            >
+              <span class="visually-hidden">{variant.label[lang]}</span>
+            </button>
+          ))
+        }
+      </div>
+      <p class="equipment-selected-color">
+        <span>{selectedColorLabel}:</span>
+        <strong data-selected-color aria-live="polite">{defaultVariant.label[lang]}</strong>
+      </p>
+    </fieldset>
+  </div>
+
+  <div class="equipment-showcase-media">
+    <img
+      src={defaultVariant.image.src}
+      alt={defaultVariant.image.alt[lang]}
+      width={defaultVariant.image.width}
+      height={defaultVariant.image.height}
+      loading="lazy"
+      decoding="async"
+      data-model-image
+    />
+  </div>
+</article>
+
+<script>
+  document.querySelectorAll('[data-model-showcase]').forEach((showcase) => {
+    const image = showcase.querySelector('[data-model-image]');
+    const selectedColor = showcase.querySelector('[data-selected-color]');
+    const options = showcase.querySelectorAll('[data-color-option]');
+
+    if (!(image instanceof HTMLImageElement)) return;
+
+    options.forEach((option) => {
+      if (!(option instanceof HTMLButtonElement)) return;
+
+      option.addEventListener('click', () => {
+        const { imageSrc, imageAlt, imageWidth, imageHeight, colorLabel } = option.dataset;
+
+        if (!imageSrc || !imageAlt) return;
+
+        image.src = imageSrc;
+        image.alt = imageAlt;
+
+        if (imageWidth) image.width = Number(imageWidth);
+        if (imageHeight) image.height = Number(imageHeight);
+
+        options.forEach((item) => item.setAttribute('aria-pressed', 'false'));
+        option.setAttribute('aria-pressed', 'true');
+
+        if (selectedColor && colorLabel) selectedColor.textContent = colorLabel;
+      });
+    });
+  });
+</script>

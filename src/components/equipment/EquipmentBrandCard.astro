@@ -15,23 +15,23 @@ const brandImage = brand.overviewImage;
 
 <article class:list={['equipment-brand-card', `equipment-brand-${brand.id}`, { 'has-image': Boolean(brandImage) }]}>
   <div class="equipment-brand-media">
-    {
-      brandImage ? (
-      <img
-        class="equipment-brand-image"
-        src={brandImage.src}
-        alt={brandImage.alt[lang]}
-        width={brandImage.width}
-        height={brandImage.height}
-        loading="lazy"
-        decoding="async"
-      />
-      ) : (
-        <div class="equipment-brand-visual" aria-hidden="true">
-          <span>{brand.name}</span>
-        </div>
-      )
-    }
+    <div class="equipment-brand-visual">
+      {
+        brandImage ? (
+          <img
+            class="equipment-brand-logo"
+            src={brandImage.src}
+            alt={brandImage.alt[lang]}
+            width={brandImage.width}
+            height={brandImage.height}
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <span aria-hidden="true">{brand.name}</span>
+        )
+      }
+    </div>
   </div>
 
   <div class="equipment-brand-copy">

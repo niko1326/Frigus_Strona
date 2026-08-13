@@ -4,7 +4,8 @@ import {
   type EquipmentBrandId,
   type EquipmentModel,
   type OtherEquipmentModel,
-  type RecommendedEquipmentModel
+  type RecommendedEquipmentModel,
+  type ShowcaseEquipmentModel
 } from '../../config/equipment';
 import { CONTACT_PHONE } from '../../config/site';
 import { commonLabels, pageMeta, routeMap, type Locale } from '../../i18n/content';
@@ -14,6 +15,7 @@ import CTAButton from '../CTAButton.astro';
 import Layout from '../Layout.astro';
 import PageHero from '../PageHero.astro';
 import EquipmentModelCard from '../equipment/EquipmentModelCard.astro';
+import EquipmentModelShowcase from '../equipment/EquipmentModelShowcase.astro';
 
 interface Props {
   lang: Locale;
@@ -23,6 +25,8 @@ interface Props {
 const isRecommendedModel = (model: EquipmentModel): model is RecommendedEquipmentModel =>
   model.group === 'recommended';
 const isOtherModel = (model: EquipmentModel): model is OtherEquipmentModel => model.group === 'other';
+const hasColorVariants = (model: RecommendedEquipmentModel): model is ShowcaseEquipmentModel =>
+  Boolean(model.colorVariants?.length);
 
 const { lang, brandId } = Astro.props;
 const brand = EQUIPMENT.brands[brandId];
@@ -32,6 +36,8 @@ const meta = pageMeta[lang][brandId];
 const currentPath = routeMap[brandId][lang];
 const brandModels: readonly EquipmentModel[] = brand.models;
 const recommendedModels = brandModels.filter(isRecommendedModel);
+const showcaseModels = brandId === 'gree' ? recommendedModels.filter(hasColorVariants) : [];
+const cardModels = recommendedModels.filter((model) => !hasColorVariants(model));
 const otherModels = brandModels.filter(isOtherModel);
 const breadcrumbs = [
   { label: labels.homeBreadcrumb, path: routeMap.home[lang] },
@@ -70,14 +76,37 @@ const breadcrumbs = [
   </section>
 
   {
-    recommendedModels.length > 0 && (
+    showcaseModels.length > 0 && (
+      <section class="section equipment-showcase-section" aria-labelledby={`${brandId}-recommended-title`}>
+        <div class="equipment-showcase-container">
+          <div class="section-head">
+            <h2 id={`${brandId}-recommended-title`}>{copy.recommendedTitle}</h2>
+          </div>
+          <div class="equipment-showcase-list">
+            {showcaseModels.map((model, index) => (
+              <EquipmentModelShowcase
+                model={model}
+                lang={lang}
+                index={index}
+                colorsLabel={copy.colorPicker.colorsLabel}
+                selectedColorLabel={copy.colorPicker.selectedColorLabel}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    cardModels.length > 0 && (
       <section class="section section-muted" aria-labelledby={`${brandId}-recommended-title`}>
         <div class="container" data-reveal>
           <div class="section-head">
             <h2 id={`${brandId}-recommended-title`}>{copy.recommendedTitle}</h2>
           </div>
           <div class="equipment-model-grid">
-            {recommendedModels.map((model) => (
+            {cardModels.map((model) => (
               <EquipmentModelCard
                 model={model}
                 brandId={brandId}

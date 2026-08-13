@@ -118,7 +118,7 @@ export const pageMeta: Record<Locale, Record<PageKey, PageMeta>> = {
     },
     gree: {
       title: `Klimatyzatory GREE z montażem Bydgoszcz | ${SITE.brandName}`,
-      description: `${SITE.brandName} dobiera klimatyzatory GREE i zapewnia kompletny montaż klimatyzacji w Bydgoszczy i okolicach. Poznaj najczęściej polecane modele.`
+      description: `${SITE.brandName} dobiera klimatyzatory GREE i zapewnia kompletny montaż klimatyzacji w Bydgoszczy i okolicach. Poznaj wybrane modele i warianty kolorystyczne.`
     },
     kaisai: {
       title: `Klimatyzatory KAISAI z montażem Bydgoszcz | ${SITE.brandName}`,
