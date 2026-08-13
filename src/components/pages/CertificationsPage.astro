@@ -1,0 +1,83 @@
+---
+import { BUSINESS } from '../../config/site';
+import { commonLabels, pageMeta, routeMap, type Locale } from '../../i18n/content';
+import { certificationsContent } from '../../i18n/certifications-content';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import Layout from '../Layout.astro';
+import PageHero from '../PageHero.astro';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const copy = certificationsContent[lang];
+const meta = pageMeta[lang].certifications;
+const credentials = BUSINESS.credentials;
+const gree = credentials.manufacturerAuthorizations.gree;
+const kaisai = credentials.manufacturerAuthorizations.kaisai;
+const documents = gree.documents.publicationApproved ? gree.documents.items : [];
+const breadcrumbs = [
+  { label: commonLabels[lang].homeBreadcrumb, path: routeMap.home[lang] },
+  { label: copy.breadcrumbLabel, path: routeMap.certifications[lang] }
+] as const;
+---
+
+<Layout
+  lang={lang}
+  title={meta.title}
+  description={meta.description}
+  currentPath={routeMap.certifications[lang]}
+  breadcrumbs={breadcrumbs.map((item) => ({ name: item.label, path: item.path }))}
+>
+  <Breadcrumbs ariaLabel={commonLabels[lang].breadcrumbsAria} items={breadcrumbs} />
+  <PageHero eyebrow={copy.hero.eyebrow} title={copy.hero.title} description={copy.hero.description} />
+
+  <section class="section credentials-page-section" aria-labelledby="f-gas-title">
+    <div class="container">
+      <h2 id="f-gas-title">{copy.fGasTitle}</h2>
+      <div class="credentials-detail-grid">
+        <article class="credential-detail-card">
+          <h3>{credentials.fGasPersonnel.title[lang]}</h3>
+          <p>{credentials.fGasPersonnel.description[lang]}</p>
+        </article>
+        <article class="credential-detail-card">
+          <h3>{credentials.fGasEntrepreneur.title[lang]}</h3>
+          <p>{credentials.fGasEntrepreneur.description[lang]}</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-muted credentials-page-section" aria-labelledby="aps-title">
+    <div class="container">
+      <h2 id="aps-title">{copy.apsTitle}</h2>
+      <div class="credentials-detail-grid">
+        <article class="credential-detail-card">
+          <h3>{gree.title[lang]}</h3>
+          <p>{gree.description[lang]}</p>
+          <p>{gree.productSeriesDescription[lang]}</p>
+          <p>{gree.scopeDescription[lang]}</p>
+        </article>
+        <article class="credential-detail-card">
+          <h3>{kaisai.title[lang]}</h3>
+          <p>{kaisai.description[lang]}</p>
+        </article>
+      </div>
+
+      {
+        documents.length > 0 && (
+          <div class="credential-documents">
+            <h3>{copy.documentsTitle}</h3>
+            <p class="tiny-note">{copy.documentsDescription}</p>
+            <ul class="bullet-list">
+              {documents.map((document) => (
+                <li><a class="text-link" href={document.src}>{document.label[lang]}</a></li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+    </div>
+  </section>
+</Layout>

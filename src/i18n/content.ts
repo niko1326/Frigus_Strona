@@ -7,6 +7,7 @@ export type PageKey =
   | 'airConditioners'
   | 'gree'
   | 'kaisai'
+  | 'certifications'
   | 'pricing'
   | 'faq'
   | 'contact'
@@ -30,6 +31,7 @@ export const routeMap = {
   airConditioners: { pl: '/klimatyzatory/', en: '/en/air-conditioners/' },
   gree: { pl: '/klimatyzatory/gree/', en: '/en/air-conditioners/gree/' },
   kaisai: { pl: '/klimatyzatory/kaisai/', en: '/en/air-conditioners/kaisai/' },
+  certifications: { pl: '/certyfikaty', en: '/en/certifications' },
   pricing: { pl: '/cennik', en: '/en/pricing' },
   faq: { pl: '/faq', en: '/en/faq' },
   contact: { pl: '/kontakt', en: '/en/contact' },
@@ -75,7 +77,8 @@ export const commonLabels = {
     seeServices: 'Zobacz usługi',
     readPricing: 'Przejdź do cennika',
     ctaBand: 'Zadzwoń i umów wycenę',
-    privacy: 'Polityka prywatności'
+    privacy: 'Polityka prywatności',
+    certifications: 'Certyfikaty i uprawnienia'
   },
   en: {
     callNow: 'Call for a quote',
@@ -98,7 +101,8 @@ export const commonLabels = {
     seeServices: 'See services',
     readPricing: 'View pricing',
     ctaBand: 'Call and schedule a quote',
-    privacy: 'Privacy policy'
+    privacy: 'Privacy policy',
+    certifications: 'Certificates and credentials'
   }
 } as const;
 
@@ -123,6 +127,10 @@ export const pageMeta: Record<Locale, Record<PageKey, PageMeta>> = {
     kaisai: {
       title: `Klimatyzatory KAISAI z montażem Bydgoszcz | ${SITE.brandName}`,
       description: `${SITE.brandName} pomaga dobrać klimatyzator KAISAI i wykonuje kompletny montaż w Bydgoszczy i okolicach. Poznaj wybrane modele i warianty kolorystyczne.`
+    },
+    certifications: {
+      title: `Certyfikaty i uprawnienia | ${SITE.brandName}`,
+      description: `Sprawdź certyfikaty F-gazowe oraz statusy APS GREE i KAISAI posiadane przez ${SITE.brandName}.`
     },
     pricing: {
       title: `Cennik montażu klimatyzacji w Bydgoszczy | ${SITE.brandName}`,
@@ -161,6 +169,10 @@ export const pageMeta: Record<Locale, Record<PageKey, PageMeta>> = {
     kaisai: {
       title: `KAISAI Air Conditioners with Installation in Bydgoszcz | ${SITE.brandName}`,
       description: `${SITE.brandName} helps select a KAISAI air conditioner and provides complete installation in Bydgoszcz and surrounding areas.`
+    },
+    certifications: {
+      title: `Certificates and Credentials | ${SITE.brandName}`,
+      description: `See the F-gas certificates and GREE and KAISAI APS statuses held by ${SITE.brandName}.`
     },
     pricing: {
       title: `Air Conditioning Installation Pricing in Bydgoszcz | ${SITE.brandName}`,

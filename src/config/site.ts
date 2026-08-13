@@ -110,6 +110,12 @@ type BusinessConfig = Readonly<{
           items: readonly CredentialDocument[];
         }>;
       }>;
+      kaisai: Readonly<{
+        held: true;
+        status: 'aps';
+        title: LocalizedBusinessText;
+        description: LocalizedBusinessText;
+      }>;
     }>;
     summary: LocalizedBusinessText;
   }>;
@@ -283,12 +289,12 @@ export const BUSINESS = {
         held: true,
         status: 'authorized-installer',
         title: {
-          pl: 'Autoryzacja producenta GREE',
-          en: 'GREE manufacturer authorization'
+          pl: 'APS GREE',
+          en: 'GREE APS'
         },
         description: {
-          pl: 'Posiadamy status Autoryzowanego Instalatora GREE.',
-          en: 'We hold GREE Authorized Installer status.'
+          pl: 'Posiadamy APS GREE i status Autoryzowanego Instalatora GREE.',
+          en: 'We hold GREE APS and GREE Authorized Installer status.'
         },
         productSeries: GREE_PRODUCT_SERIES,
         productSeriesDescription: {
@@ -321,11 +327,23 @@ export const BUSINESS = {
             }
           ]
         }
+      },
+      kaisai: {
+        held: true,
+        status: 'aps',
+        title: {
+          pl: 'APS KAISAI',
+          en: 'KAISAI APS'
+        },
+        description: {
+          pl: 'Posiadamy APS KAISAI.',
+          en: 'We hold KAISAI APS status.'
+        }
       }
     },
     summary: {
-      pl: 'Certyfikat F-gazowy personelu wydany przez UDT, certyfikat F-gazowy przedsiębiorcy oraz autoryzacja producenta GREE.',
-      en: 'Personnel F-gas certificate issued by UDT, business F-gas certificate, and GREE manufacturer authorization.'
+      pl: 'Certyfikat F-gazowy personelu, certyfikat F-gazowy przedsiębiorcy, APS GREE i APS KAISAI.',
+      en: 'Personnel F-gas certificate, business F-gas certificate, GREE APS and KAISAI APS.'
     }
   },
   serviceType: {

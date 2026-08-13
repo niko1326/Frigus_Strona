@@ -28,6 +28,8 @@ type HomeContent = Readonly<{
   certifications: Readonly<{
     eyebrow: string;
     title: string;
+    description: string;
+    linkLabel: string;
     documentsTitle: string;
     documentsDescription: string;
   }>;
@@ -129,14 +131,15 @@ export const pageContent = {
       trust: {
         items: [
           `GREE i KAISAI: ${EQUIPMENT.warranty.label.pl.toLowerCase()}. ${EQUIPMENT.warranty.termsNote.pl}`,
-          BUSINESS.credentials.summary.pl,
           'Dobór modelu i mocy',
           'Dostawa urządzenia i kompletny montaż'
         ]
       },
       certifications: {
         eyebrow: 'Uprawnienia',
-        title: 'Certyfikaty F-gazowe i autoryzacja producenta',
+        title: 'Certyfikaty i statusy producentów',
+        description: 'Posiadamy wymagane certyfikaty F-gazowe oraz statusy APS marek GREE i KAISAI.',
+        linkLabel: 'Zobacz certyfikaty i szczegóły uprawnień',
         documentsTitle: 'Skany autoryzacji GREE',
         documentsDescription:
           'Poniższe skany dotyczą wyłącznie autoryzacji producenta GREE. Nie są certyfikatami F-gazowymi.'
@@ -372,14 +375,15 @@ export const pageContent = {
       trust: {
         items: [
           `GREE and KAISAI: ${EQUIPMENT.warranty.label.en.toLowerCase()}. ${EQUIPMENT.warranty.termsNote.en}`,
-          BUSINESS.credentials.summary.en,
           'Model and capacity selection',
           'Unit supply and complete installation'
         ]
       },
       certifications: {
         eyebrow: 'Credentials',
-        title: 'F-gas certificates and manufacturer authorization',
+        title: 'Certificates and manufacturer statuses',
+        description: 'We hold the required F-gas certificates and GREE and KAISAI APS statuses.',
+        linkLabel: 'See certificates and credential details',
         documentsTitle: 'GREE authorization scans',
         documentsDescription:
           'The scans below relate only to the GREE manufacturer authorization. They are not F-gas certificates.'
