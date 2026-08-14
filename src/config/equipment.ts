@@ -608,10 +608,10 @@ export const EQUIPMENT = {
               label: { pl: 'Biały', en: 'White' },
               swatch: '#f2f1ed',
               image: {
-                src: '/photos/kaisai/models/kaisai-pro-heat-plus-white.webp',
-                mimeType: 'image/webp',
-                width: 757,
-                height: 279,
+                src: '/photos/kaisai/models/whitenewkaisaiplusheat.png',
+                mimeType: 'image/png',
+                width: 1536,
+                height: 1024,
                 alt: {
                   pl: 'Klimatyzator KAISAI PRO HEAT+ w kolorze białym',
                   en: 'KAISAI PRO HEAT+ air conditioner in white'
@@ -623,10 +623,10 @@ export const EQUIPMENT = {
               label: { pl: 'Czarny', en: 'Black' },
               swatch: '#171819',
               image: {
-                src: '/photos/kaisai/models/kaisai-pro-heat-plus-black.webp',
-                mimeType: 'image/webp',
-                width: 992,
-                height: 392,
+                src: '/photos/kaisai/models/blacknewkaisaiproheatplus.png',
+                mimeType: 'image/png',
+                width: 1536,
+                height: 1024,
                 alt: {
                   pl: 'Klimatyzator KAISAI PRO HEAT+ w kolorze czarnym',
                   en: 'KAISAI PRO HEAT+ air conditioner in black'
