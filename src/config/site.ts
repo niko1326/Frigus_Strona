@@ -80,6 +80,14 @@ type BusinessConfig = Readonly<{
         priceSubject: LocalizedBusinessText;
         devicePricingDescription: LocalizedBusinessText;
       }>;
+      condensateDrainage: Readonly<{
+        gravity: LocalizedBusinessText;
+        pumpOption: Readonly<{
+          available: true;
+          pricing: 'additional-charge-by-selected-pump';
+          description: LocalizedBusinessText;
+        }>;
+      }>;
       complexVariantPricing: 'after-consultation-or-site-inspection';
       complexPriceDescription: LocalizedBusinessText;
       fullDescription: LocalizedBusinessText;
@@ -251,6 +259,20 @@ export const BUSINESS = {
         devicePricingDescription: {
           pl: 'Urządzenie dobieramy do pomieszczenia i oczekiwań, a jego cenę uwzględniamy w wycenie całej realizacji przedstawianej przed rozpoczęciem prac.',
           en: 'We select the unit for the room and your requirements, then include its price in the quote for the complete project provided before work begins.'
+        }
+      },
+      condensateDrainage: {
+        gravity: {
+          pl: 'grawitacyjne odprowadzenie skroplin',
+          en: 'gravity condensate drainage'
+        },
+        pumpOption: {
+          available: true,
+          pricing: 'additional-charge-by-selected-pump',
+          description: {
+            pl: 'możliwość odprowadzania skroplin za pomocą pompki; pompka jest dodatkowo płatna, a koszt zależy od wybranej pompki',
+            en: 'condensate drainage with a pump is also available; the pump carries an additional charge that depends on the selected pump'
+          }
         }
       },
       complexVariantPricing: 'after-consultation-or-site-inspection',

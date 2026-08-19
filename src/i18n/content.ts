@@ -123,16 +123,16 @@ export const pageMeta: Record<Locale, Record<PageKey, PageMeta>> = {
       description: `Kompletny montaż klimatyzacji w Bydgoszczy i okolicach: przygotowanie instalacji, montaż jednostek i uruchomienie urządzenia.`
     },
     airConditioners: {
-      title: `Klimatyzatory z montażem Bydgoszcz | ${SITE.brandName}`,
-      description: `Klimatyzatory GREE i KAISAI z doborem urządzenia i kompletnym montażem w Bydgoszczy i okolicach. Sprawdź marki polecane przez ${SITE.brandName}.`
+      title: `Klimatyzatory GREE i KAISAI z montażem | ${SITE.brandName}`,
+      description: `Klimatyzatory GREE i KAISAI z doborem urządzenia i kompletnym montażem. Sprawdź marki polecane przez ${SITE.brandName}.`
     },
     gree: {
-      title: `Klimatyzatory GREE z montażem Bydgoszcz | ${SITE.brandName}`,
-      description: `${SITE.brandName} dobiera klimatyzatory GREE i zapewnia kompletny montaż klimatyzacji w Bydgoszczy i okolicach. Poznaj wybrane modele i warianty kolorystyczne.`
+      title: `Klimatyzatory GREE z montażem | ${SITE.brandName}`,
+      description: `${SITE.brandName} dobiera klimatyzatory GREE i zapewnia kompletny montaż. Poznaj wybrane modele i warianty kolorystyczne.`
     },
     kaisai: {
-      title: `Klimatyzatory KAISAI z montażem Bydgoszcz | ${SITE.brandName}`,
-      description: `${SITE.brandName} pomaga dobrać klimatyzator KAISAI i wykonuje kompletny montaż w Bydgoszczy i okolicach. Poznaj wybrane modele i warianty kolorystyczne.`
+      title: `Klimatyzatory KAISAI z montażem | ${SITE.brandName}`,
+      description: `${SITE.brandName} pomaga dobrać klimatyzator KAISAI i wykonuje kompletny montaż. Poznaj wybrane modele i warianty kolorystyczne.`
     },
     certifications: {
       title: `Certyfikaty i uprawnienia | ${SITE.brandName}`,
@@ -169,16 +169,16 @@ export const pageMeta: Record<Locale, Record<PageKey, PageMeta>> = {
       description: `Complete air conditioning installation in Bydgoszcz and surrounding areas, from line preparation and unit mounting to commissioning.`
     },
     airConditioners: {
-      title: `Air Conditioners with Installation in Bydgoszcz | ${SITE.brandName}`,
-      description: `GREE and KAISAI air conditioners with system selection and complete installation in Bydgoszcz and surrounding areas.`
+      title: `GREE and KAISAI Air Conditioners with Installation | ${SITE.brandName}`,
+      description: `GREE and KAISAI air conditioners with system selection and complete installation.`
     },
     gree: {
-      title: `GREE Air Conditioners with Installation in Bydgoszcz | ${SITE.brandName}`,
-      description: `${SITE.brandName} helps select a GREE air conditioner and provides complete installation in Bydgoszcz and surrounding areas.`
+      title: `GREE Air Conditioners with Installation | ${SITE.brandName}`,
+      description: `${SITE.brandName} helps select a GREE air conditioner and provides complete installation.`
     },
     kaisai: {
-      title: `KAISAI Air Conditioners with Installation in Bydgoszcz | ${SITE.brandName}`,
-      description: `${SITE.brandName} helps select a KAISAI air conditioner and provides complete installation in Bydgoszcz and surrounding areas.`
+      title: `KAISAI Air Conditioners with Installation | ${SITE.brandName}`,
+      description: `${SITE.brandName} helps select a KAISAI air conditioner and provides complete installation.`
     },
     certifications: {
       title: `Certificates and Credentials | ${SITE.brandName}`,

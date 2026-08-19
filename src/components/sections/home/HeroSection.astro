@@ -15,6 +15,9 @@ const labels = commonLabels[lang];
 const pricingText = BUSINESS.pricing.label[lang];
 const installationService = BUSINESS.pricing.installationService;
 const pricingContext = installationService.name[lang];
+const heroTitle = lang === 'pl'
+  ? { service: 'Montaż klimatyzacji', separator: ' – ', location: 'Bydgoszcz i okolice' }
+  : { service: 'Air conditioning installation', separator: ' in ', location: 'Bydgoszcz & nearby areas' };
 const isShowcaseModel = (model: EquipmentModel): model is ShowcaseEquipmentModel =>
   model.group === 'recommended' && Boolean(model.colorVariants?.length);
 const greeModels: readonly EquipmentModel[] = EQUIPMENT.brands.gree.models;
@@ -23,23 +26,32 @@ const heroSelections = [
   {
     modelId: 'pular',
     variantId: 'matt',
-    backgroundStart: '#526f86',
-    backgroundEnd: '#8fc8c2',
-    glow: '#f4fbff'
+    backgroundStart: '#8fb6c0',
+    backgroundEnd: '#cbe3df',
+    glow: '#ffffff',
+    gradientWidth: '94%',
+    gradientHeight: '60%',
+    gradientOpacity: '0.74'
   },
   {
     modelId: 'pular-pro',
     variantId: 'dark',
     backgroundStart: '#eff9fa',
     backgroundEnd: '#a9dcd7',
-    glow: '#ffffff'
+    glow: '#ffffff',
+    gradientWidth: '110%',
+    gradientHeight: '72%',
+    gradientOpacity: '0.86'
   },
   {
     modelId: 'clivia',
     variantId: 'navy-blue',
     backgroundStart: '#edf9f8',
     backgroundEnd: '#a8d7e2',
-    glow: '#ffffff'
+    glow: '#ffffff',
+    gradientWidth: '110%',
+    gradientHeight: '72%',
+    gradientOpacity: '0.86'
   }
 ] as const;
 const heroItems = heroSelections.flatMap((selection) => {
@@ -52,7 +64,10 @@ const heroItems = heroSelections.flatMap((selection) => {
           image: variant.image,
           backgroundStart: selection.backgroundStart,
           backgroundEnd: selection.backgroundEnd,
-          glow: selection.glow
+          glow: selection.glow,
+          gradientWidth: selection.gradientWidth,
+          gradientHeight: selection.gradientHeight,
+          gradientOpacity: selection.gradientOpacity
         }
       ]
     : [];
@@ -63,11 +78,14 @@ const defaultHeroItem = heroItems[0];
 <section class="hero section">
   <div class="container hero-grid">
     <div class="hero-copy" data-reveal>
-      <p class="eyebrow">
+      <p class="eyebrow hero-eyebrow">
         {copy.eyebrow}
       </p>
-      <h1>{BUSINESS.serviceType[lang]}</h1>
-      <p class="hero-description">{copy.description}</p>
+      <h1 class:list={['hero-title', `hero-title-${lang}`]} aria-label={BUSINESS.serviceType[lang]}>
+        <span class="hero-title-part">{heroTitle.service}</span>
+        <span class="hero-title-separator" aria-hidden="true">{heroTitle.separator}</span>
+        <span class="hero-title-part">{heroTitle.location}</span>
+      </h1>
 
       <div class="hero-price" aria-label={`${pricingContext}: ${pricingText}`}>
         <span>{pricingContext}</span>
@@ -95,7 +113,7 @@ const defaultHeroItem = heroItems[0];
       class="hero-product-panel"
       href={routeMap.gree[lang]}
       data-reveal
-      style={`--hero-bg-start: ${defaultHeroItem.backgroundStart}; --hero-bg-end: ${defaultHeroItem.backgroundEnd}; --hero-glow: ${defaultHeroItem.glow}`}
+      style={`--hero-bg-start: ${defaultHeroItem.backgroundStart}; --hero-bg-end: ${defaultHeroItem.backgroundEnd}; --hero-glow: ${defaultHeroItem.glow}; --hero-gradient-width: ${defaultHeroItem.gradientWidth}; --hero-gradient-height: ${defaultHeroItem.gradientHeight}; --hero-gradient-opacity: ${defaultHeroItem.gradientOpacity}`}
       data-hero-images={JSON.stringify(
         heroItems.map((item) => ({
           src: item.image.src,
@@ -104,7 +122,10 @@ const defaultHeroItem = heroItems[0];
           height: item.image.height,
           backgroundStart: item.backgroundStart,
           backgroundEnd: item.backgroundEnd,
-          glow: item.glow
+          glow: item.glow,
+          gradientWidth: item.gradientWidth,
+          gradientHeight: item.gradientHeight,
+          gradientOpacity: item.gradientOpacity
         }))
       )}
       aria-label={lang === 'pl' ? 'Zobacz klimatyzatory GREE' : 'Explore GREE air conditioners'}
@@ -137,6 +158,9 @@ const defaultHeroItem = heroItems[0];
         backgroundStart: string;
         backgroundEnd: string;
         glow: string;
+        gradientWidth: string;
+        gradientHeight: string;
+        gradientOpacity: string;
       }>;
 
       if (images.length > 1) {
@@ -151,6 +175,9 @@ const defaultHeroItem = heroItems[0];
         panel.style.setProperty('--hero-bg-start', selected.backgroundStart);
         panel.style.setProperty('--hero-bg-end', selected.backgroundEnd);
         panel.style.setProperty('--hero-glow', selected.glow);
+        panel.style.setProperty('--hero-gradient-width', selected.gradientWidth);
+        panel.style.setProperty('--hero-gradient-height', selected.gradientHeight);
+        panel.style.setProperty('--hero-gradient-opacity', selected.gradientOpacity);
       }
     } catch {
       // The server-rendered default image remains available if the data cannot be read.

@@ -24,7 +24,11 @@ const copy = pageContent[lang].home.serviceArea;
           <article class:list={['home-region-card', region.id === 'trojmiasto' && 'home-region-card-linked']}>
             <h3>{region.label[lang]}</h3>
             <p>{copy.regionDescriptions[region.id as 'bydgoszcz' | 'trojmiasto']}</p>
-            {region.id === 'trojmiasto' && (
+            {region.id === 'bydgoszcz' ? (
+              <span class="home-region-current">
+                {lang === 'pl' ? 'Klimatyzacja w Bydgoszczy i okolicach' : 'Air conditioning in Bydgoszcz and nearby areas'}
+              </span>
+            ) : (
               <a class="text-link" href={routeMap.triCity[lang]}>
                 {lang === 'pl' ? 'Klimatyzacja w Trójmieście' : 'Air conditioning in the Tri-City'}
                 <span aria-hidden="true">→</span>

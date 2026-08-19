@@ -18,7 +18,6 @@ type TextBlock = Readonly<{
 type HomeContent = Readonly<{
   hero: Readonly<{
     eyebrow: string;
-    description: string;
   }>;
   trust: Readonly<{
     items: readonly string[];
@@ -150,8 +149,7 @@ export const pageContent = {
   pl: {
     home: {
       hero: {
-        eyebrow: 'Dobór urządzenia i kompletny montaż',
-        description: 'Dobieramy urządzenie, dostarczamy je i wykonujemy kompletny montaż.'
+        eyebrow: 'Dobór urządzenia i kompletny montaż'
       },
       trust: {
         items: [
@@ -239,7 +237,9 @@ export const pageContent = {
           'montaż jednostki wewnętrznej',
           'przepust przez ścianę',
           'montaż jednostki zewnętrznej',
-          'prowadzenie pełnej instalacji chłodniczej i uruchomienie'
+          'prowadzenie pełnej instalacji chłodniczej i uruchomienie',
+          BUSINESS.pricing.installationService.condensateDrainage.gravity.pl,
+          BUSINESS.pricing.installationService.condensateDrainage.pumpOption.description.pl
         ]
       },
       maintenance: {
@@ -436,8 +436,7 @@ export const pageContent = {
   en: {
     home: {
       hero: {
-        eyebrow: 'System selection and complete installation',
-        description: 'We select and supply the unit, then provide complete installation.'
+        eyebrow: 'System selection and complete installation'
       },
       trust: {
         items: [
@@ -525,7 +524,9 @@ export const pageContent = {
           'indoor unit mounting',
           'wall passthrough',
           'outdoor unit mounting',
-          'full refrigerant line run and commissioning'
+          'full refrigerant line run and commissioning',
+          BUSINESS.pricing.installationService.condensateDrainage.gravity.en,
+          BUSINESS.pricing.installationService.condensateDrainage.pumpOption.description.en
         ]
       },
       maintenance: {

@@ -40,7 +40,9 @@ const equipmentNavItems: readonly Readonly<{ brand: EquipmentBrand; href: string
               aria-current={isCurrentPage ? 'page' : undefined}
             >
               {link.label}
-              <span class="nav-dropdown-chevron" aria-hidden="true">⌄</span>
+              <svg class="nav-dropdown-chevron" aria-hidden="true" viewBox="0 0 12 8">
+                <path d="M1 1.25 6 6.25l5-5" />
+              </svg>
             </a>
             <ul class="nav-dropdown-menu" aria-label={labels.equipmentBrandsAria}>
               {equipmentNavItems.map(({ brand, href }) => {
@@ -50,11 +52,12 @@ const equipmentNavItems: readonly Readonly<{ brand: EquipmentBrand; href: string
                 return (
                   <li>
                     <a
-                      class:list={[{ 'has-image': Boolean(image), 'is-current': isBrandCurrent }]}
+                      class:list={['nav-brand-logo-link', { 'is-current': isBrandCurrent }]}
                       href={href}
                       aria-current={isBrandCurrent ? 'page' : undefined}
+                      aria-label={brand.ctaLabel[lang]}
                     >
-                      {image && (
+                      {image ? (
                         <span class="nav-dropdown-image" aria-hidden="true">
                           <img
                             src={image.src}
@@ -65,8 +68,7 @@ const equipmentNavItems: readonly Readonly<{ brand: EquipmentBrand; href: string
                             decoding="async"
                           />
                         </span>
-                      )}
-                      <span class="nav-dropdown-brand">{brand.name}</span>
+                      ) : <span>{brand.name}</span>}
                       <span class="nav-dropdown-arrow" aria-hidden="true">→</span>
                     </a>
                   </li>

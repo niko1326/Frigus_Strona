@@ -9,13 +9,14 @@ type Props = PageHeroContent &
       label: string;
       ariaLabel?: string;
     }>;
+    reveal?: boolean;
   }>;
 
-const { eyebrow, title, description, action } = Astro.props;
+const { eyebrow, title, description, action, reveal = true } = Astro.props;
 ---
 
 <section class="page-hero">
-  <div class="container" data-reveal>
+  <div class="container" data-reveal={reveal ? true : undefined}>
     <p class="eyebrow">{eyebrow}</p>
     <h1>{title}</h1>
     <p>{description}</p>

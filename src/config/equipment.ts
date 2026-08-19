@@ -142,7 +142,7 @@ export const EQUIPMENT = {
         FIVE_YEAR_WARRANTY_LABEL,
         { pl: 'Autoryzowany montaż', en: 'Authorized installation' },
         { pl: 'Dobór modelu i mocy', en: 'Model and capacity selection' },
-        { pl: 'Bydgoszcz i okolice', en: 'Bydgoszcz and surrounding areas' }
+        { pl: 'Dostawa urządzenia i kompletny montaż', en: 'Unit supply and complete installation' }
       ],
       models: [
         {
@@ -451,7 +451,7 @@ export const EQUIPMENT = {
         FIVE_YEAR_WARRANTY_LABEL,
         { pl: 'Dobór odpowiedniej mocy', en: 'Capacity selected for the room' },
         { pl: 'Kompletny montaż', en: 'Complete installation' },
-        { pl: 'Bydgoszcz i okolice', en: 'Bydgoszcz and surrounding areas' }
+        { pl: 'Dostawa urządzenia', en: 'Unit supply' }
       ],
       models: [
         {

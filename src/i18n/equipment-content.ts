@@ -52,7 +52,7 @@ export const equipmentContent = {
         eyebrow: 'Dobór urządzenia i kompletny montaż',
         title: 'Klimatyzatory, które montujemy',
         description:
-          'W FRIGAC stawiamy na sprawdzone klimatyzatory marek GREE i KAISAI. Pomagamy dobrać urządzenie do wielkości pomieszczenia, sposobu użytkowania i budżetu, a następnie wykonujemy kompletny montaż na terenie Bydgoszczy i okolic.'
+          'W FRIGAC stawiamy na sprawdzone klimatyzatory marek GREE i KAISAI. Pomagamy dobrać urządzenie do wielkości pomieszczenia, sposobu użytkowania i budżetu, a następnie wykonujemy kompletny montaż.'
       },
       breadcrumbLabel: 'Klimatyzatory',
       brandsEyebrow: 'Sprawdzone marki',
@@ -68,9 +68,9 @@ export const equipmentContent = {
       gree: {
         hero: {
           eyebrow: 'Klimatyzacja GREE z profesjonalnym montażem',
-          title: 'Klimatyzatory GREE z montażem – Bydgoszcz i okolice',
+          title: 'Klimatyzatory GREE z montażem',
           description:
-            'FRIGAC pomaga dobrać odpowiedni klimatyzator GREE do pomieszczenia, oczekiwań użytkownika oraz zakładanego budżetu. Zapewniamy urządzenie i kompletny montaż na terenie Bydgoszczy i okolic.'
+            'FRIGAC pomaga dobrać odpowiedni klimatyzator GREE do pomieszczenia, oczekiwań użytkownika oraz zakładanego budżetu. Zapewniamy urządzenie i kompletny montaż.'
         },
         breadcrumbLabel: 'GREE',
         highlightsLabel: 'Najważniejsze informacje',
@@ -96,9 +96,9 @@ export const equipmentContent = {
       kaisai: {
         hero: {
           eyebrow: 'Klimatyzacja KAISAI – funkcjonalność w rozsądnej cenie',
-          title: 'Klimatyzatory KAISAI z montażem – Bydgoszcz i okolice',
+          title: 'Klimatyzatory KAISAI z montażem',
           description:
-            'FRIGAC pomaga dobrać klimatyzator KAISAI do wielkości pomieszczenia, oczekiwań i budżetu klienta. Zapewniamy urządzenie oraz kompletny montaż na terenie Bydgoszczy i okolic.'
+            'FRIGAC pomaga dobrać klimatyzator KAISAI do wielkości pomieszczenia, oczekiwań i budżetu klienta. Zapewniamy urządzenie oraz kompletny montaż.'
         },
         breadcrumbLabel: 'KAISAI',
         highlightsLabel: 'Najważniejsze informacje',
@@ -130,7 +130,7 @@ export const equipmentContent = {
         eyebrow: 'System selection and complete installation',
         title: 'Air conditioners we install',
         description:
-          'At FRIGAC, we focus on proven GREE and KAISAI air conditioners. We help select a unit for the room size, intended use and budget, then provide complete installation in Bydgoszcz and surrounding areas.'
+          'At FRIGAC, we focus on proven GREE and KAISAI air conditioners. We help select a unit for the room size, intended use and budget, then provide complete installation.'
       },
       breadcrumbLabel: 'Air conditioners',
       brandsEyebrow: 'Proven brands',
@@ -146,9 +146,9 @@ export const equipmentContent = {
       gree: {
         hero: {
           eyebrow: 'GREE air conditioning with professional installation',
-          title: 'GREE air conditioners with installation in Bydgoszcz',
+          title: 'GREE air conditioners with installation',
           description:
-            'FRIGAC helps select the right GREE air conditioner for the room, the way it will be used and the available budget. We supply the unit and provide complete installation in Bydgoszcz and surrounding areas.'
+            'FRIGAC helps select the right GREE air conditioner for the room, the way it will be used and the available budget. We supply the unit and provide complete installation.'
         },
         breadcrumbLabel: 'GREE',
         highlightsLabel: 'Key information',
@@ -174,9 +174,9 @@ export const equipmentContent = {
       kaisai: {
         hero: {
           eyebrow: 'KAISAI air conditioning – practical features at a sensible price',
-          title: 'KAISAI air conditioners with installation in Bydgoszcz',
+          title: 'KAISAI air conditioners with installation',
           description:
-            'FRIGAC helps select a KAISAI air conditioner for the room size, your expectations and budget. We supply the unit and provide complete installation in Bydgoszcz and surrounding areas.'
+            'FRIGAC helps select a KAISAI air conditioner for the room size, your expectations and budget. We supply the unit and provide complete installation.'
         },
         breadcrumbLabel: 'KAISAI',
         highlightsLabel: 'Key information',
