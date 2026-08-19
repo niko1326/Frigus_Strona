@@ -140,7 +140,7 @@ export const pageMeta: Record<Locale, Record<PageKey, PageMeta>> = {
     },
     pricing: {
       title: `Cennik montażu klimatyzacji w Bydgoszczy | ${SITE.brandName}`,
-      description: `Kompleksowa usługa montażu od ${BUSINESS.pricing.fromGrossPLN} zł brutto w najprostszym wariancie. Złożone montaże wyceniamy po konsultacji lub oględzinach.`
+      description: `Kompleksowa usługa montażu od ${BUSINESS.pricing.fromGrossPLN} zł brutto oraz przegląd i czyszczenie od ${BUSINESS.pricing.maintenanceService.fromPLN} zł. Złożone montaże wyceniamy indywidualnie.`
     },
     faq: {
       title: `FAQ: klimatyzacja i montaż Bydgoszcz | ${SITE.brandName}`,
@@ -186,7 +186,7 @@ export const pageMeta: Record<Locale, Record<PageKey, PageMeta>> = {
     },
     pricing: {
       title: `Air Conditioning Installation Pricing in Bydgoszcz | ${SITE.brandName}`,
-      description: `Complete installation from PLN ${BUSINESS.pricing.fromGrossPLN} gross for the simplest option. Complex installations are quoted after consultation or a site inspection.`
+      description: `Complete installation from PLN ${BUSINESS.pricing.fromGrossPLN} gross, plus inspection and cleaning from PLN ${BUSINESS.pricing.maintenanceService.fromPLN}. Complex installations are quoted individually.`
     },
     faq: {
       title: `Air Conditioning Installation FAQ | ${SITE.brandName}`,

@@ -1899,6 +1899,11 @@ summary:focus-visible {
   gap: 1rem;
 }
 
+.pricing-content {
+  display: grid;
+  gap: 1rem;
+}
+
 .pricing-panel {
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
@@ -1912,6 +1917,37 @@ summary:focus-visible {
   background:
     radial-gradient(circle at 92% 8%, color-mix(in srgb, var(--accent-green) 25%, transparent), transparent 32%),
     var(--surface);
+}
+
+.pricing-main-card > .price-main {
+  font-size: clamp(2.15rem, 5vw, 3.25rem);
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+.pricing-maintenance-card {
+  background:
+    radial-gradient(circle at 92% 8%, color-mix(in srgb, var(--accent-blue) 22%, transparent), transparent 34%),
+    var(--surface);
+}
+
+.pricing-maintenance-card > div {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.pricing-maintenance-details {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.pricing-maintenance-details h3 {
+  font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+}
+
+.price-service {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  line-height: 1.05;
 }
 
 .pricing-main-card h2,
@@ -2510,6 +2546,11 @@ summary:focus-visible {
   .services-offer-grid,
   .pricing-layout {
     grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  }
+
+  .pricing-maintenance-card {
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.9fr);
+    align-items: center;
   }
 
   .service-process-list {

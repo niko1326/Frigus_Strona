@@ -81,6 +81,7 @@ type BusinessConfig = Readonly<{
         devicePricingDescription: LocalizedBusinessText;
       }>;
       condensateDrainage: Readonly<{
+        title: LocalizedBusinessText;
         gravity: LocalizedBusinessText;
         pumpOption: Readonly<{
           available: true;
@@ -91,6 +92,15 @@ type BusinessConfig = Readonly<{
       complexVariantPricing: 'after-consultation-or-site-inspection';
       complexPriceDescription: LocalizedBusinessText;
       fullDescription: LocalizedBusinessText;
+    }>;
+    maintenanceService: Readonly<{
+      kind: 'inspection-and-cleaning';
+      name: LocalizedBusinessText;
+      fromPLN: number;
+      label: LocalizedBusinessText;
+      includedItems: readonly LocalizedBusinessText[];
+      priceMayVary: true;
+      priceNote: LocalizedBusinessText;
     }>;
     taxNote: LocalizedBusinessText;
   }>;
@@ -140,7 +150,16 @@ type BusinessConfig = Readonly<{
 }>;
 
 const INSTALLATION_PRICE_FROM_GROSS_PLN = 3499;
+const MAINTENANCE_PRICE_FROM_PLN = 250;
 const BASE_INSTALLATION_LENGTH_METERS = 5;
+const GRAVITY_CONDENSATE_DRAINAGE = {
+  pl: 'grawitacyjne odprowadzenie skroplin',
+  en: 'gravity condensate drainage'
+} as const satisfies LocalizedBusinessText;
+const CONDENSATE_PUMP_OPTION = {
+  pl: 'możliwość odprowadzania skroplin za pomocą pompki; pompka jest dodatkowo płatna, a koszt zależy od wybranej pompki',
+  en: 'condensate drainage with a pump is also available; the pump carries an additional charge that depends on the selected pump'
+} as const satisfies LocalizedBusinessText;
 const GREE_PRODUCT_SERIES = ['RAC', 'U-Match', 'Free Match'] as const;
 const GREE_AUTHORIZATION_ACTIVITIES = [
   'design',
@@ -246,7 +265,8 @@ export const BUSINESS = {
           {
             pl: 'uruchomienie układu',
             en: 'system commissioning'
-          }
+          },
+          GRAVITY_CONDENSATE_DRAINAGE
         ],
         electricalCondition: {
           pl: 'Wariant zakłada łatwy dostęp do zasilania z istniejącej instalacji elektrycznej.',
@@ -262,17 +282,15 @@ export const BUSINESS = {
         }
       },
       condensateDrainage: {
-        gravity: {
-          pl: 'grawitacyjne odprowadzenie skroplin',
-          en: 'gravity condensate drainage'
+        title: {
+          pl: 'Odprowadzanie skroplin',
+          en: 'Condensate drainage'
         },
+        gravity: GRAVITY_CONDENSATE_DRAINAGE,
         pumpOption: {
           available: true,
           pricing: 'additional-charge-by-selected-pump',
-          description: {
-            pl: 'możliwość odprowadzania skroplin za pomocą pompki; pompka jest dodatkowo płatna, a koszt zależy od wybranej pompki',
-            en: 'condensate drainage with a pump is also available; the pump carries an additional charge that depends on the selected pump'
-          }
+          description: CONDENSATE_PUMP_OPTION
         }
       },
       complexVariantPricing: 'after-consultation-or-site-inspection',
@@ -283,6 +301,37 @@ export const BUSINESS = {
       fullDescription: {
         pl: `Kompleksowa usługa montażu w najprostszym wariancie, z trasą instalacji do ${BASE_INSTALLATION_LENGTH_METERS} m, kosztuje od ${INSTALLATION_PRICE_FROM_GROSS_PLN} zł brutto. Wariant zakłada łatwy dostęp do zasilania z istniejącej instalacji elektrycznej. Wszystkie bardziej złożone montaże wyceniamy po konsultacji lub oględzinach.`,
         en: `A complete installation service in the simplest option, with an installation run of up to ${BASE_INSTALLATION_LENGTH_METERS} m, starts at PLN ${INSTALLATION_PRICE_FROM_GROSS_PLN} gross. This option assumes easy access to power from the existing electrical installation. Any more complex installation is priced after a consultation or site inspection.`
+      }
+    },
+    maintenanceService: {
+      kind: 'inspection-and-cleaning',
+      name: {
+        pl: 'Przegląd i czyszczenie klimatyzacji',
+        en: 'Air-conditioning inspection and cleaning'
+      },
+      fromPLN: MAINTENANCE_PRICE_FROM_PLN,
+      label: {
+        pl: `od ${MAINTENANCE_PRICE_FROM_PLN} zł`,
+        en: `from PLN ${MAINTENANCE_PRICE_FROM_PLN}`
+      },
+      includedItems: [
+        {
+          pl: 'czyszczenie filtrów i elementów dostępnych serwisowo',
+          en: 'filter cleaning and cleaning of service-accessible components'
+        },
+        {
+          pl: 'kontrola odprowadzenia skroplin',
+          en: 'condensate drainage check'
+        },
+        {
+          pl: 'sprawdzenie pracy urządzenia po czyszczeniu',
+          en: 'operation check after cleaning'
+        }
+      ],
+      priceMayVary: true,
+      priceNote: {
+        pl: 'Cena może się zmienić w przypadku trudnego dostępu do jednostki zewnętrznej lub bardzo mocnych zabrudzeń.',
+        en: 'The price may vary if access to the outdoor unit is difficult or the system is very heavily soiled.'
       }
     },
     taxNote: {

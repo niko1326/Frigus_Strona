@@ -98,6 +98,7 @@ type ServicesContent = Readonly<{
 type PricingContent = Readonly<{
   hero: PageHeroContent;
   includedTitle: string;
+  maintenanceIncludedTitle: string;
   conditionsTitle: string;
   projectQuoteTitle: string;
   contactTitle: string;
@@ -246,11 +247,7 @@ export const pageContent = {
         title: 'Przegląd i czyszczenie',
         description:
           'Oferujemy serwis okresowy: czyszczenie jednostki wewnętrznej, kontrolę podstawowych parametrów i sprawdzenie działania układu.',
-        items: [
-          'czyszczenie filtrów i elementów dostępnych serwisowo',
-          'kontrola odprowadzenia skroplin',
-          'sprawdzenie pracy urządzenia po czyszczeniu'
-        ]
+        items: BUSINESS.pricing.maintenanceService.includedItems.map((item) => item.pl)
       },
       features: {
         preparation: {
@@ -295,6 +292,7 @@ export const pageContent = {
         description: BUSINESS.pricing.installationService.baseVariantScope.description.pl
       },
       includedTitle: 'Co obejmuje cena od 3499 zł brutto',
+      maintenanceIncludedTitle: 'Co obejmuje przegląd i czyszczenie',
       conditionsTitle: 'Warunki wariantu podstawowego',
       projectQuoteTitle: 'Urządzenie i bardziej złożony montaż',
       contactTitle: 'Ustalmy zakres Twojej realizacji',
@@ -533,11 +531,7 @@ export const pageContent = {
         title: 'Maintenance and cleaning',
         description:
           'We provide recurring basic service: cleaning accessible parts and checking essential operating parameters.',
-        items: [
-          'indoor unit cleaning and filter service',
-          'condensate drainage check',
-          'post-cleaning operation check'
-        ]
+        items: BUSINESS.pricing.maintenanceService.includedItems.map((item) => item.en)
       },
       features: {
         preparation: {
@@ -582,6 +576,7 @@ export const pageContent = {
         description: BUSINESS.pricing.installationService.baseVariantScope.description.en
       },
       includedTitle: 'What the price from PLN 3499 gross covers',
+      maintenanceIncludedTitle: 'What inspection and cleaning includes',
       conditionsTitle: 'Conditions of the basic option',
       projectQuoteTitle: 'The unit and more complex installations',
       contactTitle: 'Let us define the scope of your project',

@@ -16,6 +16,8 @@ const labels = commonLabels[lang];
 const meta = pageMeta[lang].pricing;
 const installationService = BUSINESS.pricing.installationService;
 const baseScope = installationService.baseVariantScope;
+const condensateDrainage = installationService.condensateDrainage;
+const maintenanceService = BUSINESS.pricing.maintenanceService;
 ---
 
 <Layout
@@ -27,34 +29,55 @@ const baseScope = installationService.baseVariantScope;
   <PageHero eyebrow={copy.hero.eyebrow} title={copy.hero.title} description={copy.hero.description} />
 
   <section class="section">
-    <div class="container pricing-layout" data-reveal>
-      <article class="pricing-panel pricing-main-card">
-        <p class="eyebrow">{installationService.baseVariantLabel[lang]}</p>
-        <p class="price-main">{BUSINESS.pricing.label[lang]}</p>
-        <p>{baseScope.description[lang]}</p>
+    <div class="container pricing-content" data-reveal>
+      <div class="pricing-layout">
+        <article class="pricing-panel pricing-main-card">
+          <p class="eyebrow">{installationService.baseVariantLabel[lang]}</p>
+          <p class="price-main">{BUSINESS.pricing.label[lang]}</p>
+          <p>{baseScope.description[lang]}</p>
 
-        <h2>{copy.includedTitle}</h2>
-        <ul class="pricing-included-list">
-          {baseScope.includedItems.map((item) => <li>{item[lang]}</li>)}
-        </ul>
+          <h2>{copy.includedTitle}</h2>
+          <ul class="pricing-included-list">
+            {baseScope.includedItems.map((item) => <li>{item[lang]}</li>)}
+          </ul>
+        </article>
+
+        <aside class="pricing-details-card">
+          <section>
+            <h2>{copy.conditionsTitle}</h2>
+            <p>{baseScope.electricalCondition[lang]}</p>
+            <p>{BUSINESS.travel.note[lang]}</p>
+          </section>
+
+          <section>
+            <h2>{copy.projectQuoteTitle}</h2>
+            <p>{baseScope.priceSubject[lang]}</p>
+            <p>{baseScope.devicePricingDescription[lang]}</p>
+            <p>{installationService.complexPriceDescription[lang]}</p>
+          </section>
+
+          <section>
+            <h2>{condensateDrainage.title[lang]}</h2>
+            <p>{condensateDrainage.pumpOption.description[lang]}</p>
+          </section>
+
+          <p class="tiny-note">{BUSINESS.pricing.taxNote[lang]}</p>
+        </aside>
+      </div>
+
+      <article class="pricing-panel pricing-maintenance-card">
+        <div>
+          <h2>{maintenanceService.name[lang]}</h2>
+          <p class="price-main price-service">{maintenanceService.label[lang]}</p>
+        </div>
+        <div class="pricing-maintenance-details">
+          <h3>{copy.maintenanceIncludedTitle}</h3>
+          <ul class="pricing-included-list">
+            {maintenanceService.includedItems.map((item) => <li>{item[lang]}</li>)}
+          </ul>
+          <p class="tiny-note">{maintenanceService.priceNote[lang]}</p>
+        </div>
       </article>
-
-      <aside class="pricing-details-card">
-        <section>
-          <h2>{copy.conditionsTitle}</h2>
-          <p>{baseScope.electricalCondition[lang]}</p>
-          <p>{BUSINESS.travel.note[lang]}</p>
-        </section>
-
-        <section>
-          <h2>{copy.projectQuoteTitle}</h2>
-          <p>{baseScope.priceSubject[lang]}</p>
-          <p>{baseScope.devicePricingDescription[lang]}</p>
-          <p>{installationService.complexPriceDescription[lang]}</p>
-        </section>
-
-        <p class="tiny-note">{BUSINESS.pricing.taxNote[lang]}</p>
-      </aside>
     </div>
   </section>
 
