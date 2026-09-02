@@ -1,40 +1,62 @@
 ---
-import { HOURS, PHONE_DISPLAY, PHONE_TEL, SITE } from '../config/site';
-import { commonLabels, getAlternatePath, getPathByPage, type Locale } from '../i18n/content';
+import { BRANDS } from '../config/brands';
+import { COMPANY, CONTACTS, EMAIL, HOURS, SERVICE_AREAS, SITE } from '../config/site';
+import { labels, routes } from '../i18n/content';
 
-interface Props {
-  lang: Locale;
-  currentPath: string;
-}
-
-const { lang, currentPath } = Astro.props;
-const labels = commonLabels[lang];
-const altPath = getAlternatePath(currentPath, lang);
-const privacyLink = getPathByPage('privacy', lang);
+const year = new Date().getFullYear();
+const areasLine = SERVICE_AREAS.join(', ');
 ---
 
-<footer class="site-footer" data-reveal>
+<footer class="site-footer">
   <div class="container footer-grid">
-    <div>
+    <div class="footer-col">
       <p class="footer-brand">{SITE.brandName}</p>
       <p>{labels.footerInfo}</p>
-      <a href={`tel:${PHONE_TEL}`} class="footer-phone" aria-label={labels.phoneAria}>
-        {PHONE_DISPLAY}
-      </a>
+      <div class="footer-phones">
+        {
+          CONTACTS.map((contact) => (
+            <a href={`tel:${contact.tel}`} class="footer-phone" aria-label={`Zadzwoń do ${contact.name}a: ${contact.display}`}>
+              {contact.display} <span class="footer-phone-name">({contact.name})</span>
+            </a>
+          ))
+        }
+      </div>
+      <a class="footer-email" href={`mailto:${EMAIL}`}>{EMAIL}</a>
+      <p class="footer-small">Obszar działania: {areasLine}</p>
     </div>
 
-    <div>
+    <nav class="footer-col footer-col-links" aria-label="Usługi i miasta">
+      <p class="footer-heading">Na skróty</p>
+      <a href={routes.services}>Usługi</a>
+      <a href={routes.pricing}>Cennik</a>
+      <a href={routes.bydgoszcz}>Klimatyzacja Bydgoszcz</a>
+      <a href={routes.trojmiasto}>Klimatyzacja Trójmiasto</a>
+      {BRANDS.map((brand) => <a href={brand.href}>{brand.linkLabel}</a>)}
+      <a href={routes.calcPower}>Kalkulator klimatyzacji</a>
+      <a href={routes.blog}>Porady</a>
+    </nav>
+
+    <div class="footer-col footer-hours">
       <p class="footer-heading">{labels.footerHours}</p>
-      <p>{lang === 'pl' ? 'Pon.-Pt.' : 'Mon-Fri'} {HOURS.weekdays}</p>
-      <p>{lang === 'pl' ? 'Sobota' : 'Saturday'} {HOURS.saturday}</p>
-      <p>{lang === 'pl' ? 'Niedziela' : 'Sunday'} {lang === 'pl' ? HOURS.sundayPL : HOURS.sundayEN}</p>
+      <p>{HOURS.dailyLabel}: {HOURS.daily}</p>
+      <p class="footer-small">Także w weekendy.</p>
     </div>
 
-    <div>
-      <p class="footer-heading">{lang === 'pl' ? 'Informacje' : 'Info'}</p>
-      <a href={privacyLink}>{labels.privacy}</a>
-      <a href={altPath}>{labels.languageSwitch}</a>
-      <p class="footer-small">{lang === 'pl' ? 'Bydgoszcz + Trójmiasto' : 'Bydgoszcz + Tri-City'}</p>
-    </div>
+    <nav class="footer-col" aria-label="Informacje prawne">
+      <p class="footer-heading">Informacje</p>
+      <a href={routes.about}>O nas</a>
+      <a href={routes.faq}>FAQ</a>
+      <a href={routes.privacy}>{labels.privacy}</a>
+      <a href={routes.terms}>{labels.terms}</a>
+    </nav>
+  </div>
+
+  <div class="container footer-bottom">
+    <p class="footer-motto">Klimatyzacja. Komfort. Frigac.</p>
+    <p>
+      &copy; {year} {COMPANY.legalName}. Wszelkie prawa zastrzeżone.
+      {COMPANY.nip && ` NIP: ${COMPANY.nip}.`}
+      {COMPANY.address && ` ${COMPANY.address}.`}
+    </p>
   </div>
 </footer>

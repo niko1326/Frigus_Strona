@@ -1,60 +1,50 @@
 ---
-import type { Locale } from '../../../i18n/content';
+import IconIndoor from '../../icons/IconIndoor.astro';
+import IconOutdoor from '../../icons/IconOutdoor.astro';
+import IconWind from '../../icons/IconWind.astro';
+import { routes } from '../../../i18n/content';
 
-interface Props {
-  lang: Locale;
-}
-
-const { lang } = Astro.props;
-const isPL = lang === 'pl';
-
-const cards = isPL
-  ? [
-      {
-        title: 'Montaż split (mieszkanie/dom)',
-        description: 'Montaż jednostki wewnętrznej i estetyczne poprowadzenie instalacji.'
-      },
-      {
-        title: 'Montaż jednostki zewnętrznej + uruchomienie',
-        description: 'Bezpieczny montaż, próżnia, napełnienie i pełne uruchomienie układu.'
-      },
-      {
-        title: 'Przegląd i czyszczenie',
-        description: 'Regularny serwis podstawowy dla wydajnej i higienicznej pracy urządzenia.'
-      }
-    ]
-  : [
-      {
-        title: 'Split installation (apartment/house)',
-        description: 'Indoor unit mounting and neat refrigerant line routing.'
-      },
-      {
-        title: 'Outdoor unit mounting + startup',
-        description: 'Safe mounting, vacuum process, charging, and full commissioning.'
-      },
-      {
-        title: 'Maintenance and cleaning',
-        description: 'Basic recurring service to keep the system efficient and clean.'
-      }
-    ];
+const cards = [
+  {
+    Icon: IconIndoor,
+    title: 'Dobór i montaż klimatyzacji',
+    description:
+      'Pomagamy wybrać urządzenie dopasowane do metrażu i budżetu, a następnie montujemy je z estetycznym poprowadzeniem instalacji.'
+  },
+  {
+    Icon: IconOutdoor,
+    title: 'Jednostka zewnętrzna i uruchomienie',
+    description:
+      'Bezpieczny montaż jednostki zewnętrznej, próżnia, napełnienie układu i pełne uruchomienie z testem działania.'
+  },
+  {
+    Icon: IconWind,
+    title: 'Przeglądy i czyszczenie',
+    description:
+      'Okresowy serwis klimatyzacji: czyszczenie filtrów i wymiennika, kontrola parametrów i higieniczna praca urządzenia.'
+  }
+];
 ---
 
 <section class="section" id="services" data-reveal>
   <div class="container">
     <div class="section-head">
-      <p class="eyebrow">{isPL ? 'Usługi' : 'Services'}</p>
-      <h2>{isPL ? 'Zakres, którego naprawdę potrzebujesz' : 'Exactly the scope you need'}</h2>
+      <p class="eyebrow">Usługi</p>
+      <h2>Czym zajmujemy się na co dzień</h2>
     </div>
 
-    <ul class="plain-text-list service-list">
+    <div class="card-grid card-grid-3">
       {
-        cards.map((card) => (
-          <li>
-            <h3 class="plain-list-title">{card.title}</h3>
-            <p>{card.description}</p>
-          </li>
+        cards.map(({ Icon, title, description }) => (
+          <article class="info-card">
+            <Icon class="service-icon" />
+            <h3>{title}</h3>
+            <p>{description}</p>
+          </article>
         ))
       }
-    </ul>
+    </div>
+
+    <a class="text-link" href={routes.services}>Zobacz pełny zakres usług</a>
   </div>
 </section>

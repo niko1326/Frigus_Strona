@@ -1,49 +1,32 @@
 ---
 import { BUSINESS } from '../../../config/site';
-import type { Locale } from '../../../i18n/content';
-
-interface Props {
-  lang: Locale;
-}
-
-const { lang } = Astro.props;
-const isPL = lang === 'pl';
 
 const certificateImages = [
   {
     src: '/photos/certyfikat-1.jpg',
-    alt: isPL ? 'Certyfikat autoryzacyjny 1' : 'Authorized certificate 1',
+    alt: 'Certyfikat F-gazowy dla personelu FRIGAC'
   },
   {
     src: '/photos/certyfikat-2.jpg',
-    alt: isPL ? 'Certyfikat autoryzacyjny 2' : 'Authorized certificate 2',
-  },
+    alt: 'Certyfikat F-gazowy dla przedsiębiorcy FRIGAC'
+  }
 ];
 ---
 
-<section class="section-sm" data-reveal>
+<section class="section section-gray" data-reveal>
   <div class="container plain-stack">
-    <p class="eyebrow">{isPL ? 'Uprawnienia / Certyfikaty' : 'Credentials / Certificates'}</p>
-    <p class="plain-highlight plain-highlight-sm">
-      {
-        isPL
-          ? `Posiadamy certyfikaty F-gazowe dla personelu i przedsiębiorcy oraz ${BUSINESS.warrantyYears} lata gwarancji montażowej.`
-          : `We hold F-gas certificates for personnel and company operations, with a ${BUSINESS.warrantyYears}-year installation warranty.`
-      }
-    </p>
-    <p class="tiny-note">
-      {
-        isPL
-          ? 'Informacja ogólna: w kontekście wymagań UDT/F-gaz prace przy stacjonarnych urządzeniach chłodniczych/klimatyzacyjnych realizujemy zgodnie z wymaganiami dotyczącymi F-gazów. Ten opis nie stanowi porady prawnej.'
-          : 'General note: in the UDT/F-gas compliance context, work on stationary refrigeration/AC equipment is carried out in line with F-gas requirements. This section is informational, not legal advice.'
-      }
+    <p class="eyebrow">Certyfikaty</p>
+    <h2>Uprawnienia, które możesz sprawdzić</h2>
+    <p>
+      Posiadamy certyfikaty F-gazowe dla personelu i przedsiębiorcy, wymagane przy pracy z
+      urządzeniami chłodniczymi. Na każdy montaż udzielamy {BUSINESS.warrantyYears} lat gwarancji.
     </p>
   </div>
 
-  <div class="container gallery-grid" data-reveal>
+  <div class="container gallery-grid certificate-grid certificate-grid-spaced" data-reveal>
     {certificateImages.map((image) => (
       <figure class="certificate-card">
-        <img src={image.src} alt={image.alt} loading="lazy" />
+        <img src={image.src} alt={image.alt} width="1754" height="1241" loading="lazy" />
       </figure>
     ))}
   </div>

@@ -1,0 +1,91 @@
+---
+import Breadcrumbs from './Breadcrumbs.astro';
+import CTAButton from './CTAButton.astro';
+import Layout from './Layout.astro';
+import { PHONE_TEL, SITE } from '../config/site';
+import { ARTICLES, type Article } from '../config/articles';
+import { labels, routes } from '../i18n/content';
+
+interface Props {
+  article: Article;
+}
+
+const { article } = Astro.props;
+const currentPath = `/porady/${article.slug}`;
+const relatedArticles = ARTICLES.filter((a) => a.slug !== article.slug);
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: article.title,
+  description: article.description,
+  datePublished: article.datePublished,
+  inLanguage: 'pl-PL',
+  author: {
+    '@type': 'Organization',
+    name: SITE.brandName,
+    url: SITE.siteUrl
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: SITE.brandName,
+    url: SITE.siteUrl
+  },
+  mainEntityOfPage: new URL(currentPath, SITE.siteUrl).toString()
+};
+
+const formattedDate = new Date(article.datePublished).toLocaleDateString('pl-PL', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<Layout
+  title={article.metaTitle}
+  description={article.description}
+  keywords={article.keywords}
+  currentPath={currentPath}
+  extraSchema={[articleSchema]}
+>
+  <Breadcrumbs items={[{ label: 'Porady', href: routes.blog }, { label: article.title }]} />
+
+  <article>
+    <section class="page-hero">
+      <div class="container" data-reveal>
+        <p class="eyebrow">Porady · {formattedDate}</p>
+        <h1>{article.title}</h1>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container article-content" data-reveal>
+        <slot />
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container cta-inline" data-reveal>
+        <p class="plain-highlight plain-highlight-sm">
+          Wolisz zapytać wprost? Doradzimy przez telefon.
+        </p>
+        <CTAButton href={`tel:${PHONE_TEL}`} label={labels.callNow} ariaLabel={labels.callNow} />
+      </div>
+    </section>
+
+    {
+      relatedArticles.length > 0 && (
+        <section class="section-sm">
+          <div class="container related-links" data-reveal>
+            <p>Czytaj dalej:</p>
+            {relatedArticles.map((related) => (
+              <a class="text-link" href={`/porady/${related.slug}`}>
+                {related.title}
+              </a>
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </article>
+</Layout>

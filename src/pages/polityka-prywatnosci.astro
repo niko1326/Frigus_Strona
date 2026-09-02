@@ -1,38 +1,81 @@
 ---
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 import Layout from '../components/Layout.astro';
-import { SITE } from '../config/site';
+import { COMPANY, PHONE_DISPLAY, SITE } from '../config/site';
 import { pageMeta } from '../i18n/content';
 
-const meta = pageMeta.pl.privacy;
+const meta = pageMeta.privacy;
 ---
 
 <Layout
-  lang="pl"
   title={meta.title}
   description={meta.description}
-  keywords={meta.keywords}
   currentPath="/polityka-prywatnosci"
 >
+  <Breadcrumbs items={[{ label: 'Polityka prywatności' }]} />
+
   <section class="page-hero">
     <div class="container" data-reveal>
       <p class="eyebrow">Polityka prywatności</p>
-      <h1>Podstawowe informacje o danych</h1>
+      <h1>Jak przetwarzamy Twoje dane</h1>
       <p>
-        Administratorem danych kontaktowych jest {SITE.brandName}. Dane przekazane telefonicznie są używane
-        wyłącznie do kontaktu w sprawie wyceny i realizacji usługi.
+        Szanujemy Twoją prywatność. Poniżej znajdziesz informacje o tym, jakie dane przetwarzamy,
+        w jakim celu i jakie prawa przysługują Ci na podstawie RODO.
       </p>
     </div>
   </section>
 
   <section class="section">
-    <div class="container highlight-card" data-reveal>
+    <div class="container legal-content" data-reveal>
+      <h2>1. Administrator danych</h2>
+      <p>
+        Administratorem danych osobowych jest {COMPANY.legalName}
+        {COMPANY.nip && ` (NIP: ${COMPANY.nip})`}{COMPANY.address && `, ${COMPANY.address}`}.
+        Kontakt w sprawach związanych z danymi osobowymi: telefonicznie pod numerem {PHONE_DISPLAY}.
+      </p>
+
+      <h2>2. Jakie dane przetwarzamy</h2>
       <ul class="bullet-list">
-        <li>Zakres danych: imię, numer telefonu, adres montażu (jeśli podany).</li>
-        <li>Cel: kontakt, ustalenie wyceny i realizacja usługi.</li>
-        <li>Okres przechowywania: nie dłużej niż wymagają tego rozliczenia i kontakt serwisowy.</li>
-        <li>Kontakt w sprawie danych: przez numer telefonu podany na stronie.</li>
+        <li>imię i numer telefonu, gdy kontaktujesz się z nami telefonicznie,</li>
+        <li>adres montażu, jeśli go podasz w celu wyceny lub realizacji usługi,</li>
+        <li>dane niezbędne do wystawienia dokumentu sprzedaży, jeśli o niego poprosisz.</li>
       </ul>
-      <p class="tiny-note">To skrócona wersja informacyjna i może zostać rozszerzona o pełny dokument RODO.</p>
+
+      <h2>3. Cel i podstawa przetwarzania</h2>
+      <p>
+        Dane przetwarzamy w celu przygotowania wyceny, umówienia i realizacji usługi montażu lub
+        serwisu (art. 6 ust. 1 lit. b RODO), wykonania obowiązków podatkowych i księgowych
+        (art. 6 ust. 1 lit. c RODO) oraz kontaktu serwisowego i obsługi gwarancji
+        (art. 6 ust. 1 lit. f RODO, uzasadniony interes administratora).
+      </p>
+
+      <h2>4. Okres przechowywania</h2>
+      <p>
+        Dane kontaktowe przechowujemy przez okres realizacji usługi i obowiązywania gwarancji,
+        a dane rozliczeniowe przez okres wymagany przepisami podatkowymi (co do zasady 5 lat).
+      </p>
+
+      <h2>5. Odbiorcy danych</h2>
+      <p>
+        Danych nie sprzedajemy ani nie przekazujemy podmiotom trzecim w celach marketingowych.
+        Mogą je otrzymać wyłącznie podmioty wspierające naszą działalność (np. biuro rachunkowe)
+        w niezbędnym zakresie.
+      </p>
+
+      <h2>6. Twoje prawa</h2>
+      <ul class="bullet-list">
+        <li>prawo dostępu do danych i otrzymania ich kopii,</li>
+        <li>prawo do sprostowania lub usunięcia danych,</li>
+        <li>prawo do ograniczenia przetwarzania i sprzeciwu,</li>
+        <li>prawo wniesienia skargi do Prezesa Urzędu Ochrony Danych Osobowych.</li>
+      </ul>
+
+      <h2>7. Pliki cookies i statystyki</h2>
+      <p>
+        Serwis {SITE.siteUrl.replace('https://', '')} może korzystać z narzędzi analitycznych
+        (Google Analytics 4) w celu mierzenia ruchu na stronie. Dane te są zbierane w sposób
+        zagregowany i nie służą do identyfikacji konkretnych osób.
+      </p>
     </div>
   </section>
 </Layout>

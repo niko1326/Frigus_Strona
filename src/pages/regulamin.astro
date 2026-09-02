@@ -1,0 +1,79 @@
+---
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Layout from '../components/Layout.astro';
+import { BUSINESS, COMPANY, PHONE_DISPLAY, PRICING } from '../config/site';
+import { pageMeta } from '../i18n/content';
+
+const meta = pageMeta.terms;
+---
+
+<Layout
+  title={meta.title}
+  description={meta.description}
+  currentPath="/regulamin"
+>
+  <Breadcrumbs items={[{ label: 'Regulamin' }]} />
+
+  <section class="page-hero">
+    <div class="container" data-reveal>
+      <p class="eyebrow">Regulamin</p>
+      <h1>Regulamin świadczenia usług</h1>
+      <p>
+        Zasady współpracy z {COMPANY.legalName}: zakres usług, wycena, realizacja montażu,
+        gwarancja i reklamacje.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container legal-content" data-reveal>
+      <h2>1. Usługodawca</h2>
+      <p>
+        Usługi montażu i serwisu klimatyzacji świadczy {COMPANY.legalName}
+        {COMPANY.nip && ` (NIP: ${COMPANY.nip})`}{COMPANY.address && `, ${COMPANY.address}`}.
+        Kontakt: {PHONE_DISPLAY}.
+      </p>
+
+      <h2>2. Zakres usług</h2>
+      <p>
+        Świadczymy usługi doboru, montażu i uruchomienia klimatyzatorów typu split oraz usługi
+        przeglądów i czyszczenia. Szczegółowy zakres montażu jest opisany na podstronie Usługi
+        i każdorazowo potwierdzany podczas wyceny.
+      </p>
+
+      <h2>3. Wycena i cena usługi</h2>
+      <p>
+        Wycena jest bezpłatna i niezobowiązująca. Ceny podawane na stronie (od {PRICING.installFromPLN} zł
+        za urządzenie z montażem) są cenami startowymi. Finalna cena zależy od długości instalacji,
+        miejsca montażu i warunków technicznych i jest potwierdzana przed rozpoczęciem prac.
+      </p>
+
+      <h2>4. Realizacja montażu</h2>
+      <ul class="bullet-list">
+        <li>Termin montażu ustalamy wspólnie z klientem podczas wyceny.</li>
+        <li>Ewentualne zgody wspólnoty, spółdzielni lub administracji budynku pozostają po stronie właściciela lokalu.</li>
+        <li>Klient zapewnia dostęp do lokalu oraz do istniejącej instalacji elektrycznej.</li>
+      </ul>
+
+      <h2>5. Gwarancja</h2>
+      <p>
+        Na wykonany montaż udzielamy {BUSINESS.warrantyYears} lat gwarancji. Urządzenie objęte jest
+        odrębną gwarancją producenta, zgodnie z jego warunkami. Warunkiem utrzymania gwarancji
+        producenta są okresowe przeglądy urządzenia.
+      </p>
+
+      <h2>6. Reklamacje</h2>
+      <p>
+        Reklamacje można zgłaszać telefonicznie pod numerem {PHONE_DISPLAY}. Rozpatrujemy je w
+        terminie 14 dni od zgłoszenia. Konsumentowi przysługują ponadto uprawnienia wynikające z
+        przepisów o rękojmi i ustawy o prawach konsumenta.
+      </p>
+
+      <h2>7. Postanowienia końcowe</h2>
+      <p>
+        W sprawach nieuregulowanych niniejszym regulaminem stosuje się przepisy Kodeksu cywilnego
+        oraz ustawy o prawach konsumenta. Regulamin obowiązuje od dnia publikacji na stronie.
+      </p>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,174 @@
+---
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import CTAButton from '../components/CTAButton.astro';
+import Layout from '../components/Layout.astro';
+import ModelLineup from '../components/ModelLineup.astro';
+import SizingTable from '../components/SizingTable.astro';
+import IconIndoor from '../components/icons/IconIndoor.astro';
+import IconShield from '../components/icons/IconShield.astro';
+import IconWaves from '../components/icons/IconWaves.astro';
+import { GREE_MODELS } from '../config/lineups';
+import { PHONE_TEL, PRICING } from '../config/site';
+import { labels, pageMeta, routes } from '../i18n/content';
+
+const meta = pageMeta.gree;
+
+const highlights = [
+  {
+    Icon: IconWaves,
+    title: 'Cicha praca nocą',
+    description:
+      'Jednostki ścienne Gree w trybie cichym schodzą do poziomu szeptu - nadają się do sypialni i pokoju dziecka.'
+  },
+  {
+    Icon: IconIndoor,
+    title: 'Chłodzi latem, grzeje zimą',
+    description:
+      'Modele Gree pracują jako pompa ciepła powietrze-powietrze i skutecznie dogrzewają dom także przy mrozie.'
+  },
+  {
+    Icon: IconShield,
+    title: 'Sterowanie Wi-Fi w standardzie',
+    description:
+      'Większość serii Gree ma wbudowane Wi-Fi: klimatyzację włączysz z telefonu, zanim wrócisz do domu.'
+  }
+];
+
+const lineupSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Serie klimatyzatorów ściennych Gree montowane przez FRIGAC',
+  itemListElement: GREE_MODELS.map((model, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    item: {
+      '@type': 'Product',
+      name: `Gree ${model.name}`,
+      brand: { '@type': 'Brand', name: 'Gree' },
+      category: 'Klimatyzator ścienny split',
+      description: model.tagline
+    }
+  }))
+};
+---
+
+<Layout
+  title={meta.title}
+  description={meta.description}
+  keywords={meta.keywords}
+  currentPath={routes.gree}
+  extraSchema={[lineupSchema]}
+>
+  <Breadcrumbs items={[{ label: 'Klimatyzatory Gree' }]} />
+
+  <section class="page-hero">
+    <div class="container" data-reveal>
+      <p class="eyebrow">Marki, które montujemy</p>
+      <h1>Klimatyzatory Gree z montażem</h1>
+      <p>
+        Gree to jeden z największych producentów klimatyzacji na świecie - jego sprężarki pracują
+        także w urządzeniach wielu innych marek. Montujemy jednostki split Gree dobrane do metrażu,
+        z pełnym uruchomieniem i 5-letnią gwarancją na montaż.
+      </p>
+      <div class="hero-actions">
+        <CTAButton href={`tel:${PHONE_TEL}`} label={labels.callNow} ariaLabel={labels.callNow} />
+        <CTAButton href={routes.pricing} label={labels.readPricing} variant="secondary" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container card-grid card-grid-3" data-reveal>
+      {
+        highlights.map(({ Icon, title, description }) => (
+          <article class="info-card">
+            <Icon class="service-icon" />
+            <h2 class="card-heading">{title}</h2>
+            <p>{description}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section section-gray">
+    <div class="container" data-reveal>
+      <div class="section-head">
+        <p class="eyebrow">Warianty</p>
+        <h2>Serie ścienne Gree, które montujemy</h2>
+        <p>
+          Każda seria występuje w kilku wariantach mocy - od najmniejszego do sypialni po najmocniejszy
+          na otwarty parter. Poniżej pełna aktualna oferta ścienna Gree wraz z parametrami, które realnie
+          różnicują te urządzenia.
+        </p>
+      </div>
+      <ModelLineup brand="Gree" models={GREE_MODELS} />
+      <p class="tiny-note lineup-note">
+        Dane techniczne i zdjęcia pochodzą z materiałów producenta (stan na wrzesień 2026).
+        Dostępność konkretnego wariantu potwierdzamy przy wycenie.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container" data-reveal>
+      <div class="section-head">
+        <p class="eyebrow">Dobór mocy</p>
+        <h2>Którą moc wybrać do swojego pomieszczenia</h2>
+        <p>
+          To najczęstsze pytanie przy wyborze serii. Poniżej orientacyjne przypisanie mocy do metrażu -
+          dokładny dobór potwierdzamy telefonicznie, bo liczy się też nasłonecznienie, piętro i wysokość
+          pomieszczenia.
+        </p>
+      </div>
+      <SizingTable />
+      <p class="tiny-note lineup-note">
+        Chcesz policzyć samodzielnie? Skorzystaj z naszego
+        <a class="inline-link" href={routes.calcPower}>kalkulatora mocy klimatyzacji</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-gray">
+    <div class="container content-grid" data-reveal>
+      <div class="plain-stack">
+        <h2>Dla kogo polecamy Gree</h2>
+        <ul class="bullet-list">
+          <li>Do mieszkań w bloku: kompaktowe jednostki wewnętrzne i cicha praca.</li>
+          <li>Do domów: modele z wydajnym grzaniem przy ujemnych temperaturach.</li>
+          <li>
+            Dla szukających dobrego stosunku ceny do możliwości - Gree z montażem od {PRICING.installFromPLN} zł.
+          </li>
+        </ul>
+      </div>
+      <div class="plain-stack">
+        <h2>Dobór modelu zostaw nam</h2>
+        <p>
+          Serii jest dziewięć, a każda w kilku wariantach mocy. Zamiast przeklikiwać katalogi - zadzwoń,
+          opisz pomieszczenie, a zaproponujemy konkretny model Gree dopasowany do metrażu, nasłonecznienia
+          i budżetu.
+        </p>
+        <p class="tiny-note">
+          Montujemy także klimatyzatory
+          <a class="inline-link" href={routes.kaisai}>Kaisai</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cta-inline" data-reveal>
+      <p class="plain-highlight plain-highlight-sm">Wyceń klimatyzator Gree z montażem w 5 minut.</p>
+      <CTAButton href={`tel:${PHONE_TEL}`} label={labels.callNow} ariaLabel={labels.callNow} />
+    </div>
+  </section>
+
+  <section class="section-sm">
+    <div class="container related-links" data-reveal>
+      <p>Zobacz też:</p>
+      <a class="text-link" href={routes.kaisai}>Klimatyzatory Kaisai z montażem</a>
+      <a class="text-link" href={routes.services}>Co dokładnie obejmuje montaż</a>
+      <a class="text-link" href={routes.pricing}>Cennik montażu klimatyzacji</a>
+    </div>
+  </section>
+</Layout>

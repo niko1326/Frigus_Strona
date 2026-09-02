@@ -1,0 +1,37 @@
+---
+/**
+ * Orientacyjny dobór mocy klimatyzatora do metrażu.
+ * Wartości zgodne z naszym kalkulatorem mocy - jedno źródło prawdy w opisie,
+ * dokładny dobór zawsze potwierdzamy telefonicznie.
+ */
+const rows = [
+  { power: '2,6 kW', area: 'do 25 m²', use: 'sypialnia, gabinet, pokój dziecka' },
+  { power: '3,5 kW', area: '25-35 m²', use: 'salon w mieszkaniu, duża sypialnia' },
+  { power: '5,0 kW', area: '35-50 m²', use: 'salon z aneksem kuchennym' },
+  { power: '7,0 kW', area: '50-70 m²', use: 'otwarty parter domu, poddasze' }
+];
+---
+
+<div class="sizing-table-wrap">
+  <table class="sizing-table">
+    <caption class="visually-hidden">Dobór mocy klimatyzatora do powierzchni pomieszczenia</caption>
+    <thead>
+      <tr>
+        <th scope="col">Moc chłodnicza</th>
+        <th scope="col">Powierzchnia</th>
+        <th scope="col">Typowe zastosowanie</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        rows.map((row) => (
+          <tr>
+            <th scope="row">{row.power}</th>
+            <td>{row.area}</td>
+            <td>{row.use}</td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>

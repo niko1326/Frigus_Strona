@@ -1,64 +1,108 @@
 ---
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 import CTAButton from '../components/CTAButton.astro';
 import Layout from '../components/Layout.astro';
 import { PHONE_TEL } from '../config/site';
-import { pageMeta } from '../i18n/content';
+import { labels, pageMeta } from '../i18n/content';
 
-const meta = pageMeta.pl.faq;
+const meta = pageMeta.faq;
+
+const faqItems = [
+  {
+    question: 'Ile trwa montaż klimatyzacji?',
+    answer:
+      'Standardowy montaż klimatyzacji split trwa około jednego dnia roboczego. Czas zależy od długości instalacji, rodzaju ściany i miejsca montażu jednostki zewnętrznej.'
+  },
+  {
+    question: 'Ile kosztuje montaż klimatyzacji z urządzeniem?',
+    answer:
+      'Klimatyzator z montażem kosztuje u nas od 3499 zł. Finalna cena zależy od długości instalacji, klasy urządzenia i warunków technicznych. Dokładną wycenę podajemy telefonicznie w kilka minut.'
+  },
+  {
+    question: 'Czy potrzebuję zgody wspólnoty lub spółdzielni na montaż klimatyzacji?',
+    answer:
+      'W bloku zwykle wymagana jest zgoda wspólnoty lub spółdzielni na montaż jednostki zewnętrznej na elewacji lub balkonie. Formalności leżą po stronie właściciela lokalu, ale podpowiemy, jak się do nich zabrać.'
+  },
+  {
+    question: 'Czy dojazd jest dodatkowo płatny?',
+    answer:
+      'Nie. W Bydgoszczy, Toruniu, Trójmieście i okolicach dojazd jest wliczony w cenę montażu.'
+  },
+  {
+    question: 'Czy klimatyzacja może też grzać zimą?',
+    answer:
+      'Tak. Nowoczesne klimatyzatory split pracują jako pompa ciepła powietrze-powietrze i skutecznie dogrzewają pomieszczenia, często taniej niż grzejniki elektryczne.'
+  },
+  {
+    question: 'Czy wykonujecie pełną instalację elektryczną?',
+    answer:
+      'Podłączamy klimatyzację do istniejącej instalacji elektrycznej. Nie wykonujemy złożonych prac elektrycznych ani rozbudowy rozdzielni.'
+  },
+  {
+    question: 'Jaką gwarancję otrzymam?',
+    answer:
+      'Na montaż udzielamy 5 lat gwarancji. Urządzenie jest dodatkowo objęte gwarancją producenta, zgodnie z jego warunkami.'
+  },
+  {
+    question: 'Jak często serwisować klimatyzację?',
+    answer:
+      'Zalecamy przegląd i czyszczenie raz w roku, najlepiej wiosną przed sezonem. Regularny serwis utrzymuje wydajność, higienę i gwarancję producenta.'
+  },
+  {
+    question: 'Jak uzyskać wycenę montażu?',
+    answer:
+      'Najszybciej telefonicznie: opisz mieszkanie lub dom, a orientacyjną cenę podamy od ręki. W nietypowych przypadkach umawiamy krótką wizję lokalną.'
+  }
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqItems.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.answer
+    }
+  }))
+};
 ---
 
 <Layout
-  lang="pl"
   title={meta.title}
   description={meta.description}
   keywords={meta.keywords}
   currentPath="/faq"
+  extraSchema={[faqSchema]}
 >
+  <Breadcrumbs items={[{ label: 'FAQ' }]} />
+
   <section class="page-hero">
     <div class="container" data-reveal>
       <p class="eyebrow">FAQ</p>
-      <h1>Najczęściej zadawane pytania</h1>
-      <p>Krótko i konkretnie: jak wygląda wycena, montaż i serwis.</p>
+      <h1>Najczęstsze pytania o montaż klimatyzacji</h1>
+      <p>Krótko i konkretnie: wycena, czas montażu, formalności, gwarancja i serwis.</p>
     </div>
   </section>
 
   <section class="section">
     <div class="container faq-list" data-reveal>
-      <details class="faq-item">
-        <summary>Ile trwa montaż split?</summary>
-        <p>Zwykle około 1 dnia roboczego. Czas zależy od warunków technicznych i długości instalacji.</p>
-      </details>
-
-      <details class="faq-item">
-        <summary>Czy dojazd jest dodatkowo płatny?</summary>
-        <p>Na naszym obszarze działania dojazd jest wliczony w standardową usługę montażu.</p>
-      </details>
-
-      <details class="faq-item">
-        <summary>Czy wykonujecie pełną elektrykę?</summary>
-        <p>Podłączamy klimatyzację do istniejącej instalacji elektrycznej. Nie wykonujemy złożonych prac elektrycznych.</p>
-      </details>
-
-      <details class="faq-item">
-        <summary>Jaka jest gwarancja?</summary>
-        <p>Na montaż udzielamy 2 lat gwarancji. Gwarancja producenta urządzenia jest zgodna z warunkami producenta.</p>
-      </details>
-
-      <details class="faq-item">
-        <summary>Czy oferujecie przeglądy i czyszczenie?</summary>
-        <p>Tak, wykonujemy serwis podstawowy i czyszczenie urządzeń split.</p>
-      </details>
-
-      <details class="faq-item">
-        <summary>Jak uzyskać wycenę?</summary>
-        <p>Najszybciej telefonicznie. W części przypadków potrzebna jest krótka wizja na miejscu.</p>
-      </details>
+      {
+        faqItems.map((item) => (
+          <details class="faq-item">
+            <summary>{item.question}</summary>
+            <p>{item.answer}</p>
+          </details>
+        ))
+      }
     </div>
   </section>
 
   <section class="section">
-    <div class="container" data-reveal>
-      <CTAButton href={`tel:${PHONE_TEL}`} label="Zadzwoń po darmową wycenę" ariaLabel="Zadzwoń po darmową wycenę" />
+    <div class="container cta-inline" data-reveal>
+      <p class="plain-highlight plain-highlight-sm">Masz inne pytanie? Zadzwoń, odpowiemy od ręki.</p>
+      <CTAButton href={`tel:${PHONE_TEL}`} label={labels.callNow} ariaLabel={labels.callNow} />
     </div>
   </section>
 </Layout>

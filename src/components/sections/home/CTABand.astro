@@ -1,23 +1,23 @@
 ---
 import CTAButton from '../../CTAButton.astro';
-import { PHONE_TEL } from '../../../config/site';
-import type { Locale } from '../../../i18n/content';
-
-interface Props {
-  lang: Locale;
-}
-
-const { lang } = Astro.props;
-const isPL = lang === 'pl';
+import { CONTACTS, PHONE_TEL } from '../../../config/site';
+import { labels } from '../../../i18n/content';
 ---
 
 <section class="section" data-reveal>
-  <div class="container cta-inline">
-    <p class="plain-highlight plain-highlight-sm">{isPL ? 'Zadzwoń i umów wycenę' : 'Call and schedule your quote'}</p>
+  <div class="container cta-band">
+    <div>
+      <h2>Umów darmową wycenę w 5 minut</h2>
+      <p>
+        Zadzwoń: {CONTACTS[0].display} ({CONTACTS[0].name}) lub {CONTACTS[1].display} ({CONTACTS[1].name}).
+        Powiedz nam, jaki masz lokal, a resztą zajmiemy się my.
+      </p>
+    </div>
     <CTAButton
       href={`tel:${PHONE_TEL}`}
-      label={isPL ? 'Zadzwoń po darmową wycenę' : 'Call for a free quote'}
-      ariaLabel={isPL ? 'Zadzwoń po darmową wycenę' : 'Call for a free quote'}
+      label={labels.callNow}
+      ariaLabel={labels.callNow}
+      variant="inverse"
     />
   </div>
 </section>

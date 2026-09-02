@@ -3,29 +3,36 @@ import Layout from '../components/Layout.astro';
 import CTABand from '../components/sections/home/CTABand.astro';
 import CertificationsSection from '../components/sections/home/CertificationsSection.astro';
 import HeroSection from '../components/sections/home/HeroSection.astro';
+import HistoryTimeline from '../components/sections/home/HistoryTimeline.astro';
+import HomeArticleSection from '../components/sections/home/HomeArticleSection.astro';
+import HomeFaqSection from '../components/sections/home/HomeFaqSection.astro';
 import HowItWorksSection from '../components/sections/home/HowItWorksSection.astro';
+import MottoBand from '../components/sections/home/MottoBand.astro';
 import PricingTeaser from '../components/sections/home/PricingTeaser.astro';
 import ServiceAreaSection from '../components/sections/home/ServiceAreaSection.astro';
 import ServicesSection from '../components/sections/home/ServicesSection.astro';
-import TrustStrip from '../components/sections/home/TrustStrip.astro';
+import StatsSection from '../components/sections/home/StatsSection.astro';
 import { pageMeta } from '../i18n/content';
 
-const meta = pageMeta.pl.home;
+const meta = pageMeta.home;
 ---
 
 <Layout
-  lang="pl"
   title={meta.title}
   description={meta.description}
   keywords={meta.keywords}
   currentPath="/"
 >
-  <HeroSection lang="pl" />
-  <TrustStrip lang="pl" />
-  <CertificationsSection lang="pl" />
-  <ServicesSection lang="pl" />
-  <HowItWorksSection lang="pl" />
-  <PricingTeaser lang="pl" />
-  <ServiceAreaSection lang="pl" />
-  <CTABand lang="pl" />
+  <HeroSection />
+  <StatsSection />
+  <ServicesSection />
+  <HowItWorksSection />
+  <PricingTeaser />
+  <ServiceAreaSection />
+  <CertificationsSection />
+  <HomeArticleSection />
+  <HomeFaqSection />
+  <HistoryTimeline />
+  <MottoBand />
+  <CTABand />
 </Layout>

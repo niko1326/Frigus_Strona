@@ -1,0 +1,60 @@
+---
+import { STATS } from '../../../config/site';
+---
+
+<section class="section-sm" data-reveal>
+  <div class="container">
+    <dl class="stats-grid">
+      {
+        STATS.map((stat) => (
+          <div class="stat-item">
+            <dt>{stat.label}</dt>
+            <dd data-countup>{stat.value}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>
+
+<script>
+  // Liczby w statystykach nabijają się od zera przy pierwszym odsłonięciu sekcji.
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const nodes = document.querySelectorAll('[data-countup]');
+
+  if (!prefersReduced && nodes.length > 0 && 'IntersectionObserver' in window) {
+    const ease = (t: number) => 1 - Math.pow(1 - t, 3);
+
+    const animate = (el: HTMLElement) => {
+      const raw = el.textContent ?? '';
+      const match = raw.match(/^(\d+)([\s\S]*)$/);
+      if (!match) return;
+      const target = parseInt(match[1], 10);
+      const suffix = match[2];
+      const duration = 1100;
+      const startTime = performance.now();
+
+      const step = (now: number) => {
+        const k = Math.min((now - startTime) / duration, 1);
+        el.textContent = `${Math.round(ease(k) * target)}${suffix}`;
+        if (k < 1) requestAnimationFrame(step);
+      };
+
+      requestAnimationFrame(step);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.target instanceof HTMLElement) {
+            animate(entry.target);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.6 }
+    );
+
+    nodes.forEach((node) => observer.observe(node));
+  }
+</script>

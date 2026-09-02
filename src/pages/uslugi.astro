@@ -1,31 +1,32 @@
 ---
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 import CTAButton from '../components/CTAButton.astro';
 import Layout from '../components/Layout.astro';
-import PhotoGalleryPlaceholder from '../components/PhotoGalleryPlaceholder.astro';
 import IconDrill from '../components/icons/IconDrill.astro';
 import IconIndoor from '../components/icons/IconIndoor.astro';
 import IconOutdoor from '../components/icons/IconOutdoor.astro';
-import IconSparkle from '../components/icons/IconSparkle.astro';
+import IconWind from '../components/icons/IconWind.astro';
 import { PHONE_TEL } from '../config/site';
-import { pageMeta } from '../i18n/content';
+import { labels, pageMeta } from '../i18n/content';
 
-const meta = pageMeta.pl.services;
+const meta = pageMeta.services;
 ---
 
 <Layout
-  lang="pl"
   title={meta.title}
   description={meta.description}
   keywords={meta.keywords}
   currentPath="/uslugi"
 >
+  <Breadcrumbs items={[{ label: 'Usługi' }]} />
+
   <section class="page-hero">
     <div class="container" data-reveal>
       <p class="eyebrow">Usługi</p>
-      <h1>Montaż split i serwis podstawowy</h1>
+      <h1>Montaż i serwis klimatyzacji</h1>
       <p>
-        Realizujemy pojedyncze instalacje split w mieszkaniach i domach. Skupiamy się na poprawnym
-        montażu, estetyce prowadzenia instalacji i czystym zakończeniu prac.
+        Zajmujemy się instalacjami split w mieszkaniach i domach: od doboru urządzenia, przez czysty
+        montaż, po coroczne przeglądy. Poniżej znajdziesz dokładny zakres każdej usługi.
       </p>
     </div>
   </section>
@@ -34,60 +35,107 @@ const meta = pageMeta.pl.services;
     <div class="container content-grid" data-reveal>
       <article class="highlight-card">
         <IconIndoor class="service-icon" />
-        <h2>Co obejmuje montaż split</h2>
+        <h2>Co obejmuje montaż klimatyzacji</h2>
         <ul class="bullet-list">
+          <li>dobór mocy i modelu urządzenia do metrażu</li>
           <li>montaż jednostki wewnętrznej</li>
           <li>przepust przez ścianę</li>
           <li>montaż jednostki zewnętrznej</li>
-          <li>prowadzenie pełnej instalacji chłodniczej i uruchomienie</li>
+          <li>poprowadzenie instalacji chłodniczej i skroplin</li>
+          <li>próżnia, uruchomienie i test działania</li>
           <li>podłączenie do istniejącej instalacji elektrycznej</li>
         </ul>
         <p class="tiny-note">Nie wykonujemy złożonych prac elektrycznych ani rozbudowy rozdzielni.</p>
       </article>
 
       <article class="highlight-card">
-        <IconSparkle class="service-icon" />
-        <h2>Przegląd i czyszczenie</h2>
+        <IconWind class="service-icon" />
+        <h2>Przegląd i czyszczenie klimatyzacji</h2>
         <p>
-          Oferujemy serwis okresowy: czyszczenie jednostki wewnętrznej, kontrolę podstawowych parametrów
-          i sprawdzenie działania układu.
+          Regularny serwis to dłuższa żywotność urządzenia, niższe rachunki i czyste powietrze bez
+          bakterii i grzybów. Zalecamy przegląd raz w roku, najlepiej przed sezonem letnim.
         </p>
         <ul class="bullet-list">
-          <li>czyszczenie filtrów i elementów dostępnych serwisowo</li>
+          <li>czyszczenie filtrów i parownika</li>
+          <li>dezynfekcja jednostki wewnętrznej</li>
           <li>kontrola odprowadzenia skroplin</li>
-          <li>sprawdzenie pracy urządzenia po czyszczeniu</li>
+          <li>sprawdzenie parametrów pracy układu</li>
         </ul>
       </article>
     </div>
   </section>
 
-  <section class="section section-muted">
+  <section class="section section-gray">
     <div class="container card-grid card-grid-3" data-reveal>
       <article class="info-card">
         <IconDrill class="service-icon" />
-        <h3>Przygotowanie miejsca</h3>
-        <p>Dobieramy trasę instalacji tak, aby była możliwie krótka i estetyczna.</p>
+        <h3>Estetyczne prowadzenie instalacji</h3>
+        <p>Planujemy trasę tak, aby była możliwie krótka i dyskretna, z maskownicami w kolorze ściany.</p>
       </article>
 
       <article class="info-card">
         <IconOutdoor class="service-icon" />
-        <h3>Montaż zewnętrzny</h3>
-        <p>Stabilny montaż jednostki zewnętrznej z myślą o trwałości i dostępie serwisowym.</p>
+        <h3>Bezpieczny montaż zewnętrzny</h3>
+        <p>Jednostkę zewnętrzną montujemy stabilnie, z wibroizolacją i dostępem serwisowym.</p>
       </article>
 
       <article class="info-card">
-        <IconSparkle class="service-icon" />
-        <h3>Porządek po montażu</h3>
-        <p>Po zakończeniu prac zostawiamy miejsce montażu uporządkowane.</p>
+        <IconWind class="service-icon" />
+        <h3>Porządek po pracy</h3>
+        <p>Zabezpieczamy podłogi i meble, a po montażu zostawiamy mieszkanie czyste.</p>
       </article>
     </div>
   </section>
 
-  <PhotoGalleryPlaceholder lang="pl" />
-
   <section class="section">
-    <div class="container" data-reveal>
-      <CTAButton href={`tel:${PHONE_TEL}`} label="Zadzwoń po darmową wycenę" ariaLabel="Zadzwoń po darmową wycenę" />
+    <div class="container content-grid" data-reveal>
+      <div class="plain-stack">
+        <h2>Standard montażu FRIGAC</h2>
+        <p>
+          Każdy montaż klimatyzacji - w Bydgoszczy, Toruniu czy w Trójmieście - wykonujemy według
+          tej samej listy kontrolnej:
+        </p>
+        <ul class="check-list">
+          <li>próżnia przed uruchomieniem układu - warunek trwałości sprężarki,</li>
+          <li>wibroizolacja pod jednostką zewnętrzną - cicha praca bez drgań,</li>
+          <li>maskownice dopasowane kolorem do ściany,</li>
+          <li>test szczelności i parametrów pracy przy odbiorze,</li>
+          <li>instruktaż obsługi pilota i aplikacji Wi-Fi,</li>
+          <li>sprzątanie po pracy - mieszkanie zostaje czyste.</li>
+        </ul>
+      </div>
+      <div class="plain-stack">
+        <h2>Gdzie realizujemy montaże</h2>
+        <p>
+          Klimatyzacje montujemy w dwóch regionach: aglomeracji bydgosko-toruńskiej oraz w
+          Trójmieście. Dojazd w obu obszarach jest wliczony w cenę montażu.
+        </p>
+        <div class="area-links">
+          <a class="text-link" href="/bydgoszcz">Montaż klimatyzacji Bydgoszcz i Toruń</a>
+          <a class="text-link" href="/trojmiasto">Montaż klimatyzacji Gdańsk, Gdynia, Sopot</a>
+        </div>
+        <p class="tiny-note">
+          Montujemy urządzenia sprawdzonych marek - m.in.
+          <a class="inline-link" href="/klimatyzatory-gree">Gree</a> i
+          <a class="inline-link" href="/klimatyzatory-kaisai">Kaisai</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-gray">
+    <div class="container cta-inline" data-reveal>
+      <p class="plain-highlight plain-highlight-sm">Nie wiesz, jakie urządzenie wybrać? Doradzimy.</p>
+      <CTAButton href={`tel:${PHONE_TEL}`} label={labels.callNow} ariaLabel={labels.callNow} />
+    </div>
+  </section>
+
+  <section class="section-sm">
+    <div class="container related-links" data-reveal>
+      <p>Zobacz też:</p>
+      <a class="text-link" href="/cennik">Ile kosztuje montaż klimatyzacji</a>
+      <a class="text-link" href="/porady/jaka-klimatyzacja-do-mieszkania">Jaką klimatyzację wybrać do mieszkania</a>
+      <a class="text-link" href="/porady/jak-czesto-serwisowac-klimatyzacje">Jak często serwisować klimatyzację</a>
     </div>
   </section>
 </Layout>

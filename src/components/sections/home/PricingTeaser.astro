@@ -1,27 +1,20 @@
 ---
 import { PRICING } from '../../../config/site';
-import type { Locale } from '../../../i18n/content';
-
-interface Props {
-  lang: Locale;
-}
-
-const { lang } = Astro.props;
-const isPL = lang === 'pl';
-const pricingPath = isPL ? '/cennik' : '/en/pricing';
+import { routes } from '../../../i18n/content';
 ---
 
-<section class="section" data-reveal>
+<section class="section section-blue" data-reveal>
   <div class="container">
     <div class="plain-stack">
-      <p class="eyebrow">{isPL ? 'Cennik' : 'Pricing'}</p>
+      <p class="eyebrow">Cennik</p>
       <p class="plain-highlight">
-        {isPL
-          ? `Koszt montażu i urządzenia od: ${PRICING.installFromPLN} zł`
-          : `Installation from PLN ${PRICING.installFromPLN}-${PRICING.installToPLN} + unit price`}
+        Klimatyzator z montażem <strong>od {PRICING.installFromPLN} zł</strong>
       </p>
-      <p>{isPL ? 'Dojazd jest wliczony. Finalna cena zależy od układu instalacji.' : 'Travel is included. Final cost depends on installation layout.'}</p>
-      <a class="text-link" href={pricingPath}>{isPL ? 'Sprawdź szczegóły cennika' : 'See pricing details'}</a>
+      <p class="text-bright">
+        Dojazd i podłączenie do istniejącej instalacji elektrycznej są w cenie. Finalna wycena
+        zależy od długości instalacji i warunków technicznych, a poznasz ją podczas krótkiej rozmowy.
+      </p>
+      <a class="text-link" href={routes.pricing}>Sprawdź, co dokładnie obejmuje cena</a>
     </div>
   </div>
 </section>

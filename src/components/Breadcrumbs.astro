@@ -1,0 +1,47 @@
+---
+import { SITE } from '../config/site';
+
+interface Crumb {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  items: Crumb[];
+}
+
+const { items } = Astro.props;
+
+const crumbs: Crumb[] = [{ label: 'Strona główna', href: '/' }, ...items];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: crumbs.map((crumb, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: crumb.label,
+    ...(crumb.href ? { item: new URL(crumb.href, SITE.siteUrl).toString() } : {})
+  }))
+};
+---
+
+<nav class="breadcrumbs container" aria-label="Okruszki nawigacyjne">
+  <ol>
+    {
+      crumbs.map((crumb, index) =>
+        index < crumbs.length - 1 && crumb.href ? (
+          <li>
+            <a href={crumb.href}>{crumb.label}</a>
+          </li>
+        ) : (
+          <li>
+            <span aria-current="page">{crumb.label}</span>
+          </li>
+        )
+      )
+    }
+  </ol>
+</nav>
+
+<script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />

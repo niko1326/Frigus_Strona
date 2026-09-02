@@ -1,0 +1,97 @@
+---
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import CTAButton from '../components/CTAButton.astro';
+import Layout from '../components/Layout.astro';
+import { PHONE_TEL, PRICING } from '../config/site';
+import { labels, pageMeta, routes } from '../i18n/content';
+
+const meta = pageMeta.bydgoszcz;
+
+const districts = [
+  'Fordon',
+  'Osowa Góra',
+  'Szwederowo',
+  'Bartodzieje',
+  'Wyżyny',
+  'Błonie',
+  'Osielsko',
+  'Białe Błota',
+  'Niemcz',
+  'Toruń i okolice'
+];
+---
+
+<Layout
+  title={meta.title}
+  description={meta.description}
+  keywords={meta.keywords}
+  currentPath="/bydgoszcz"
+>
+  <Breadcrumbs items={[{ label: 'Klimatyzacja Bydgoszcz' }]} />
+
+  <section class="page-hero">
+    <div class="container" data-reveal>
+      <p class="eyebrow">Bydgoszcz i okolice</p>
+      <h1>Klimatyzacja Bydgoszcz - montaż w mieszkaniu i domu</h1>
+      <p>
+        Mieszkasz w Bydgoszczy, Toruniu lub okolicach? Jesteśmy lokalną ekipą montażową: przyjedziemy
+        na wycenę bez dodatkowych kosztów, a klimatyzację zamontujemy zwykle w jeden dzień.
+      </p>
+      <div class="hero-actions">
+        <CTAButton href={`tel:${PHONE_TEL}`} label={labels.callNow} ariaLabel={labels.callNow} />
+        <CTAButton href={routes.pricing} label={labels.readPricing} variant="secondary" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container content-grid" data-reveal>
+      <article class="highlight-card">
+        <h2>Klimatyzacja do mieszkania w bloku</h2>
+        <p>
+          Duża część naszych montaży w Bydgoszczy to mieszkania na Fordonie, Wyżynach i Bartodziejach.
+          Wiemy, jak poprowadzić instalację w bloku z wielkiej płyty, gdzie zamontować jednostkę
+          zewnętrzną na balkonie i jak podejść do zgody wspólnoty lub spółdzielni.
+        </p>
+      </article>
+      <article class="highlight-card">
+        <h2>Klimatyzacja do domu pod miastem</h2>
+        <p>
+          W Osielsku, Niemczu i Białych Błotach montujemy głównie w domach jednorodzinnych: dobieramy
+          moc do otwartych przestrzeni i poddaszy, które latem nagrzewają się najmocniej, a zimą
+          klimatyzacja może dogrzewać dom jako pompa ciepła.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section section-gray">
+    <div class="container" data-reveal>
+      <div class="section-head">
+        <p class="eyebrow">Zasięg</p>
+        <h2>Gdzie montujemy w Bydgoszczy i okolicach</h2>
+      </div>
+      <ul class="chip-list">
+        {districts.map((district) => <li>{district}</li>)}
+      </ul>
+      <p class="tiny-note">
+        Twojej dzielnicy nie ma na liście? Zadzwoń, obsługujemy całą aglomerację bydgosko-toruńską.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cta-band" data-reveal>
+      <div>
+        <h2>Klimatyzator z montażem od {PRICING.installFromPLN} zł</h2>
+        <p>Dojazd na terenie Bydgoszczy i okolic w cenie. Wycena telefoniczna w kilka minut.</p>
+      </div>
+      <CTAButton
+        href={`tel:${PHONE_TEL}`}
+        label={labels.callNow}
+        ariaLabel={labels.callNow}
+        variant="inverse"
+      />
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,345 @@
+---
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import CTAButton from '../components/CTAButton.astro';
+import Layout from '../components/Layout.astro';
+import { PHONE_TEL, SITE } from '../config/site';
+import { labels, pageMeta, routes } from '../i18n/content';
+
+const meta = pageMeta.calcCost;
+
+const costTable = [
+  { config: '1 pokój, split 2,5-3,5 kW, standard', cost: '3 499-4 900 zł' },
+  { config: '1 pokój, split premium (cichy, Wi-Fi, filtracja)', cost: '4 400-5 900 zł' },
+  { config: 'Mieszkanie 50 m², 2 pomieszczenia, 2 × split', cost: '7 100-9 800 zł' },
+  { config: 'Mieszkanie 50 m², multisplit (2 jednostki)', cost: '8 500-11 000 zł' },
+  { config: 'Dom, multisplit (3 jednostki)', cost: '11 500-15 500 zł' },
+  { config: 'Dom, multisplit (4 jednostki)', cost: '14 500-19 500 zł' }
+];
+
+const faqItems = [
+  {
+    question: 'Ile kosztuje klimatyzacja do mieszkania 50 m2?',
+    answer:
+      'Dla mieszkania około 50 m2 z jedną strefą chłodzenia (salon z aneksem) koszt klimatyzacji z montażem zaczyna się od 3 499 zł. Przy dwóch pomieszczeniach trzeba liczyć 7 000-11 000 zł, zależnie od tego, czy wybierzesz dwa osobne splity, czy multisplit.'
+  },
+  {
+    question: 'Co najbardziej wpływa na cenę montażu klimatyzacji?',
+    answer:
+      'Trzy rzeczy: długość instalacji chłodniczej (im dłuższa trasa między jednostkami, tym drożej), miejsce montażu jednostki zewnętrznej (balkon i grunt są tańsze niż elewacja z dostępem wysokościowym) oraz klasa urządzenia.'
+  },
+  {
+    question: 'Split czy multisplit - co wychodzi taniej?',
+    answer:
+      'Przy dwóch pomieszczeniach dwa osobne splity są zwykle nieco tańsze i prostsze w serwisie. Multisplit wygrywa, gdy na elewacji lub balkonie jest miejsce tylko na jedną jednostkę zewnętrzną albo gdy chłodzisz 3-4 pomieszczenia.'
+  },
+  {
+    question: 'Czy do ceny trzeba doliczyć coś jeszcze?',
+    answer:
+      'W FRIGAC dojazd, podłączenie do istniejącej instalacji elektrycznej, uruchomienie i 5 lat gwarancji na montaż są w cenie. Dopłaty pojawiają się przy instalacji dłuższej niż standardowa, pracy wysokościowej i nietypowych konstrukcjach wsporczych.'
+  }
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqItems.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: { '@type': 'Answer', text: item.answer }
+  }))
+};
+
+const appSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'Kalkulator kosztów klimatyzacji FRIGAC',
+  url: new URL(routes.calcCost, SITE.siteUrl).toString(),
+  applicationCategory: 'UtilityApplication',
+  operatingSystem: 'Web',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'PLN' },
+  provider: { '@type': 'Organization', name: SITE.brandName, url: SITE.siteUrl }
+};
+---
+
+<Layout
+  title={meta.title}
+  description={meta.description}
+  keywords={meta.keywords}
+  currentPath={routes.calcCost}
+  extraSchema={[appSchema, faqSchema]}
+>
+  <Breadcrumbs items={[{ label: 'Narzędzia', href: routes.tools }, { label: 'Kalkulator kosztów klimatyzacji' }]} />
+
+  <section class="page-hero">
+    <div class="container" data-reveal>
+      <p class="eyebrow">Darmowe narzędzie</p>
+      <h1>Ile kosztuje klimatyzacja? Kalkulator kosztów</h1>
+      <p>
+        Oszacuj koszt klimatyzacji z montażem dla mieszkania lub domu: wybierz liczbę pomieszczeń,
+        system split lub multisplit i standard urządzeń, a policzymy widełki cenowe oraz orientacyjny
+        koszt energii na sezon.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-gray">
+    <div class="container tool-layout" data-reveal>
+      <form class="tool-form" id="cost-form">
+        <div class="tool-step">
+          <p class="tool-step-title"><span class="tool-step-num">1</span>Metraż chłodzonej przestrzeni</p>
+          <div class="range-row">
+            <input type="range" id="carea" min="15" max="200" step="5" value="50" aria-label="Metraż w metrach kwadratowych" />
+            <output class="range-value" id="carea-out" for="carea">50 m²</output>
+          </div>
+        </div>
+
+        <fieldset class="tool-step">
+          <legend><span class="tool-step-num">2</span>Liczba klimatyzowanych pomieszczeń</legend>
+          <div class="seg">
+            <input type="radio" name="rooms" id="rm-1" value="1" checked />
+            <label for="rm-1">1</label>
+            <input type="radio" name="rooms" id="rm-2" value="2" />
+            <label for="rm-2">2</label>
+            <input type="radio" name="rooms" id="rm-3" value="3" />
+            <label for="rm-3">3</label>
+            <input type="radio" name="rooms" id="rm-4" value="4" />
+            <label for="rm-4">4</label>
+          </div>
+        </fieldset>
+
+        <fieldset class="tool-step">
+          <legend><span class="tool-step-num">3</span>System</legend>
+          <div class="seg">
+            <input type="radio" name="system" id="sys-split" value="split" checked />
+            <label for="sys-split">Split (osobne jednostki)</label>
+            <input type="radio" name="system" id="sys-multi" value="multi" />
+            <label for="sys-multi">Multisplit (1 agregat)</label>
+          </div>
+          <p class="tool-hint" id="sys-hint">
+            Multisplit ma sens przy 2+ pomieszczeniach i ograniczonym miejscu na jednostki zewnętrzne.
+          </p>
+        </fieldset>
+
+        <fieldset class="tool-step">
+          <legend><span class="tool-step-num">4</span>Standard urządzeń</legend>
+          <div class="seg">
+            <input type="radio" name="standard" id="std-basic" value="1" checked />
+            <label for="std-basic">Standard</label>
+            <input type="radio" name="standard" id="std-prem" value="1.2" />
+            <label for="std-prem">Premium</label>
+          </div>
+          <p class="tool-hint">
+            Premium: cichsza praca, lepsza filtracja, wyższa klasa energetyczna (np. wyższe serie
+            Gree i Kaisai).
+          </p>
+        </fieldset>
+
+        <div class="tool-step">
+          <p class="tool-step-title"><span class="tool-step-num">5</span>Długość instalacji (na system)</p>
+          <div class="range-row">
+            <input type="range" id="clen" min="3" max="15" step="1" value="5" aria-label="Długość instalacji w metrach" />
+            <output class="range-value" id="clen-out" for="clen">5 m</output>
+          </div>
+          <p class="tool-hint">Trasa między jednostką wewnętrzną a zewnętrzną. Do 5 m w cenie bazowej.</p>
+        </div>
+
+        <fieldset class="tool-step">
+          <legend><span class="tool-step-num">6</span>Piętro / dostęp do jednostki zewnętrznej</legend>
+          <div class="seg">
+            <input type="radio" name="access" id="ac-easy" value="0" checked />
+            <label for="ac-easy">Parter / balkon</label>
+            <input type="radio" name="access" id="ac-mid" value="250" />
+            <label for="ac-mid">Piętro 1-3</label>
+            <input type="radio" name="access" id="ac-hard" value="650" />
+            <label for="ac-hard">4+ / elewacja</label>
+          </div>
+        </fieldset>
+      </form>
+
+      <div class="tool-result-wrap">
+        <div class="tool-result" role="status" aria-live="polite">
+          <p class="eyebrow">Szacunkowy koszt</p>
+          <p class="result-main"><strong id="cres-cost">3 499-4 900 zł</strong></p>
+          <p class="result-sub">z urządzeniami, montażem i uruchomieniem</p>
+          <dl class="result-rows">
+            <div class="result-row">
+              <dt>Konfiguracja</dt>
+              <dd id="cres-config">1 × split, standard</dd>
+            </div>
+            <div class="result-row">
+              <dt>Koszt energii (sezon chłodzenia)</dt>
+              <dd id="cres-energy">250-550 zł</dd>
+            </div>
+            <div class="result-row">
+              <dt>W cenie</dt>
+              <dd>dojazd, uruchomienie, 5 lat gwarancji</dd>
+            </div>
+          </dl>
+          <CTAButton href={`tel:${PHONE_TEL}`} label="Umów bezpłatną wycenę" ariaLabel={labels.phoneAria} />
+          <p class="tool-disclaimer">
+            Widełki orientacyjne dla obszaru Bydgoszcz, Toruń i Trójmiasto. Dokładną cenę podajemy
+            telefonicznie w kilka minut - bezpłatnie.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container article-content" data-reveal>
+      <h2>Ile kosztuje klimatyzacja z montażem w 2026?</h2>
+      <p>
+        Najczęstszy scenariusz - jeden klimatyzator split do salonu lub sypialni - to u nas koszt
+        <strong>od 3 499 zł z urządzeniem i montażem</strong>. Poniżej typowe konfiguracje, które
+        montujemy w Bydgoszczy, Toruniu i Trójmieście:
+      </p>
+      <div class="table-wrap">
+        <table class="tool-table">
+          <caption class="visually-hidden">Orientacyjne koszty klimatyzacji z montażem</caption>
+          <thead>
+            <tr>
+              <th scope="col">Konfiguracja</th>
+              <th scope="col">Orientacyjny koszt</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              costTable.map((row) => (
+                <tr>
+                  <td>{row.config}</td>
+                  <td>{row.cost}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+      <p class="tiny-note">
+        Widełki z dojazdem i uruchomieniem, bez prac nietypowych. Opracowanie własne FRIGAC, 2026.
+      </p>
+      <h2>Koszt zakupu to nie wszystko - policz też prąd</h2>
+      <p>
+        Nowoczesny klimatyzator inwerterowy z SEER powyżej 6 kosztuje w typowym mieszkaniu
+        <strong>200-500 zł za cały sezon chłodzenia</strong>. Dokładny koszt dla swojego urządzenia
+        policzysz w naszym <a class="inline-link" href={routes.calcEnergy}>kalkulatorze zużycia prądu</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-gray">
+    <div class="container" data-reveal>
+      <div class="section-head">
+        <p class="eyebrow">FAQ</p>
+        <h2>Koszt klimatyzacji - pytania</h2>
+      </div>
+      <div class="faq-list">
+        {
+          faqItems.map((item) => (
+            <details class="faq-item">
+              <summary>{item.question}</summary>
+              <p>{item.answer}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm">
+    <div class="container related-links" data-reveal>
+      <p>Zobacz też:</p>
+      <a class="text-link" href={routes.calcPower}>Kalkulator mocy klimatyzacji</a>
+      <a class="text-link" href={routes.pricing}>Pełny cennik montażu</a>
+      <a class="text-link" href="/porady/ile-kosztuje-montaz-klimatyzacji">Artykuł: ile kosztuje montaż klimatyzacji</a>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const nf = new Intl.NumberFormat('pl-PL');
+  const $ = (id: string) => document.getElementById(id);
+
+  const carea = $('carea') as HTMLInputElement;
+  const clen = $('clen') as HTMLInputElement;
+  const form = $('cost-form') as HTMLFormElement;
+
+  const radioVal = (name: string): string => {
+    const el = document.querySelector<HTMLInputElement>(`input[name="${name}"]:checked`);
+    return el ? el.value : '';
+  };
+
+  const UNIT_STD: [number, number] = [3499, 4400];
+  const MULTI_BASE: Record<string, [number, number]> = {
+    '1': [3499, 4400],
+    '2': [8500, 11000],
+    '3': [11500, 15500],
+    '4': [14500, 19500]
+  };
+
+  function compute() {
+    if (!carea || !clen || !form) return;
+    const rooms = parseInt(radioVal('rooms'), 10) || 1;
+    const system = radioVal('system');
+    const std = parseFloat(radioVal('standard')) || 1;
+    const access = parseFloat(radioVal('access')) || 0;
+    const len = parseInt(clen.value, 10) || 5;
+    const areaV = parseInt(carea.value, 10) || 50;
+
+    let low: number;
+    let high: number;
+
+    if (system === 'multi' && rooms > 1) {
+      [low, high] = MULTI_BASE[String(rooms)];
+    } else {
+      low = UNIT_STD[0] * rooms;
+      high = UNIT_STD[1] * rooms;
+    }
+
+    low = Math.round(low * std);
+    high = Math.round(high * std);
+
+    const extraLen = Math.max(len - 5, 0);
+    const systems = system === 'multi' ? 1 : rooms;
+    low += extraLen * 150 * systems;
+    high += extraLen * 220 * systems;
+
+    low += access * systems * 0.6;
+    high += access * systems;
+
+    low = Math.round(low / 50) * 50;
+    high = Math.round(high / 50) * 50;
+
+    const eLow = Math.round((rooms * 250 * (std > 1 ? 0.85 : 1)) / 10) * 10;
+    const eHigh = Math.round((rooms * 550 * (std > 1 ? 0.85 : 1)) / 10) * 10;
+
+    ($('cres-cost') as HTMLElement).textContent = `${nf.format(low)}-${nf.format(high)} zł`;
+    ($('cres-config') as HTMLElement).textContent =
+      system === 'multi' && rooms > 1
+        ? `multisplit, ${rooms} jednostki, ${std > 1 ? 'premium' : 'standard'}`
+        : `${rooms} × split, ${std > 1 ? 'premium' : 'standard'}`;
+    ($('cres-energy') as HTMLElement).textContent = `${nf.format(eLow)}-${nf.format(eHigh)} zł`;
+    ($('carea-out') as HTMLElement).textContent = `${areaV} m²`;
+    ($('clen-out') as HTMLElement).textContent = `${len} m`;
+
+    const hint = $('sys-hint') as HTMLElement;
+    if (system === 'multi' && rooms === 1) {
+      hint.textContent = 'Przy jednym pomieszczeniu multisplit nie ma uzasadnienia - liczymy jak dla pojedynczego splitu.';
+    } else {
+      hint.textContent = 'Multisplit ma sens przy 2+ pomieszczeniach i ograniczonym miejscu na jednostki zewnętrzne.';
+    }
+  }
+
+  form?.addEventListener('input', compute);
+  compute();
+
+  document.querySelectorAll<HTMLInputElement>('.range-row input[type="range"]').forEach((r) => {
+    const setFill = () => {
+      const min = parseFloat(r.min) || 0;
+      const max = parseFloat(r.max) || 100;
+      const pct = ((parseFloat(r.value) - min) / (max - min)) * 100;
+      r.style.setProperty('--fill', `${pct.toFixed(1)}%`);
+    };
+    r.addEventListener('input', setFill);
+    setFill();
+  });
+</script>

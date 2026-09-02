@@ -1,5 +1,5 @@
 {
-  "name": "clim-pro-website",
+  "name": "frigus-website",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.6",
-    "astro": "^7.2.0"
+    "astro": "^7.2.0",
+    "three": "^0.185.1"
   },
   "devDependencies": {
     "typescript": "^5.9.3"

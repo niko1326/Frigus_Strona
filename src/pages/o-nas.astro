@@ -1,0 +1,110 @@
+---
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import CTAButton from '../components/CTAButton.astro';
+import Layout from '../components/Layout.astro';
+import { BUSINESS, PHONE_TEL, STATS } from '../config/site';
+import { labels, pageMeta } from '../i18n/content';
+
+const meta = pageMeta.about;
+---
+
+<Layout
+  title={meta.title}
+  description={meta.description}
+  keywords={meta.keywords}
+  currentPath="/o-nas"
+>
+  <Breadcrumbs items={[{ label: 'O nas' }]} />
+
+  <section class="page-hero">
+    <div class="container" data-reveal>
+      <p class="eyebrow">O nas</p>
+      <h1>Dwóch instalatorów, jedna zasada: porządna robota</h1>
+      <p>
+        FRIGAC to {BUSINESS.teamSize}-osobowy zespół certyfikowanych instalatorów klimatyzacji.
+        Działamy w Bydgoszczy, Toruniu i Trójmieście. Sami odbieramy telefony, sami wyceniamy
+        i sami montujemy, dlatego wiesz dokładnie, kto przyjedzie do Twojego domu.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container content-grid" data-reveal>
+      <figure class="about-photo">
+        <img
+          src="/photos/montaz-klimatyzacji-frigac.jpg"
+          alt="Instalator FRIGAC podczas montażu ściennego klimatyzatora split w mieszkaniu"
+          width="2048"
+          height="1330"
+          loading="lazy"
+        />
+        <figcaption class="tiny-note">
+          Montaż jednostki wewnętrznej podczas jednej z naszych realizacji.
+        </figcaption>
+      </figure>
+      <div class="plain-stack">
+        <h2>Dlaczego klienci nas polecają</h2>
+        <ul class="bullet-list">
+          <li>Certyfikaty F-gazowe dla personelu i przedsiębiorcy, wymagane przy pracy z czynnikiem chłodniczym.</li>
+          <li>{BUSINESS.warrantyYears} lat gwarancji na każdy montaż, potwierdzone na piśmie.</li>
+          <li>Czysty montaż: zabezpieczamy podłogi i meble, a po pracy sprzątamy.</li>
+          <li>Uczciwe doradztwo: proponujemy urządzenie dopasowane do metrażu i budżetu, a nie najdroższe z oferty.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm section-gray">
+    <div class="container" data-reveal>
+      <dl class="stats-grid">
+        {
+          STATS.map((stat) => (
+            <div class="stat-item">
+              <dt>{stat.label}</dt>
+              <dd>{stat.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container" data-reveal>
+      <div class="section-head">
+        <p class="eyebrow">Zasady pracy</p>
+        <h2>Trzy rzeczy, których się trzymamy</h2>
+      </div>
+      <div class="card-grid card-grid-3">
+        <article class="info-card">
+          <h3>Mówimy wprost</h3>
+          <p>
+            Jeśli klimatyzacja w danym miejscu nie ma sensu albo tańsze urządzenie wystarczy -
+            powiemy to od razu, jeszcze przy telefonie.
+          </p>
+        </article>
+        <article class="info-card">
+          <h3>Terminy, które się trzymają</h3>
+          <p>
+            Umówiony montaż to umówiony montaż. Przyjeżdżamy z kompletem materiałów, więc nie ma
+            „dokończymy w przyszłym tygodniu”.
+          </p>
+        </article>
+        <article class="info-card">
+          <h3>Po nas nie trzeba sprzątać</h3>
+          <p>
+            Folia na meblach, odkurzacz przy wierceniu i wyniesione kartony. Zostaje chłód, nie
+            bałagan.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-gray">
+    <div class="container cta-inline" data-reveal>
+      <p class="plain-highlight plain-highlight-sm">Porozmawiajmy o klimatyzacji dla Ciebie.</p>
+      <CTAButton href={`tel:${PHONE_TEL}`} label={labels.callNow} ariaLabel={labels.callNow} />
+    </div>
+  </section>
+</Layout>
