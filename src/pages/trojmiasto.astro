@@ -1,0 +1,97 @@
+---
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import CTAButton from '../components/CTAButton.astro';
+import Layout from '../components/Layout.astro';
+import { PHONE_TEL, PRICING } from '../config/site';
+import { labels, pageMeta, routes } from '../i18n/content';
+
+const meta = pageMeta.trojmiasto;
+
+const districts = [
+  'Gdańsk Wrzeszcz',
+  'Gdańsk Przymorze',
+  'Gdańsk Ujeścisko',
+  'Gdańsk Osowa',
+  'Gdynia Śródmieście',
+  'Gdynia Witomino',
+  'Sopot',
+  'Rumia',
+  'Reda',
+  'Pruszcz Gdański'
+];
+---
+
+<Layout
+  title={meta.title}
+  description={meta.description}
+  keywords={meta.keywords}
+  currentPath="/trojmiasto"
+>
+  <Breadcrumbs items={[{ label: 'Klimatyzacja Trójmiasto' }]} />
+
+  <section class="page-hero">
+    <div class="container" data-reveal>
+      <p class="eyebrow">Gdańsk · Gdynia · Sopot</p>
+      <h1>Klimatyzacja Gdańsk, Gdynia i Sopot - montaż</h1>
+      <p>
+        Gdańsk, Gdynia, Sopot i okolice: montujemy klimatyzacje w nowych apartamentach, kamienicach
+        i domach jednorodzinnych. Czysto, zwykle w jeden dzień, z 5-letnią gwarancją na montaż.
+      </p>
+      <div class="hero-actions">
+        <CTAButton href={`tel:${PHONE_TEL}`} label={labels.callNow} ariaLabel={labels.callNow} />
+        <CTAButton href={routes.pricing} label={labels.readPricing} variant="secondary" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container content-grid" data-reveal>
+      <article class="highlight-card">
+        <h2>Klimatyzacja w nowym apartamencie</h2>
+        <p>
+          W nowym budownictwie na Przymorzu, Ujeścisku czy w gdyńskim Śródmieściu deweloperzy często
+          przygotowują instalację pod klimatyzację. Sprawdzimy, czy Twój lokal ma takie przygotowanie,
+          i wykorzystamy je, aby montaż był szybszy i tańszy.
+        </p>
+      </article>
+      <article class="highlight-card">
+        <h2>Kamienice i domy z klimatem</h2>
+        <p>
+          W starszym budownictwie Wrzeszcza czy Sopotu liczy się dyskrecja: prowadzimy instalację tak,
+          aby nie oszpecić elewacji, a jednostkę zewnętrzną montujemy w miejscu uzgodnionym ze
+          wspólnotą. Doradzimy też przy formalnościach.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section section-gray">
+    <div class="container" data-reveal>
+      <div class="section-head">
+        <p class="eyebrow">Zasięg</p>
+        <h2>Gdzie montujemy w Trójmieście i okolicach</h2>
+      </div>
+      <ul class="chip-list">
+        {districts.map((district) => <li>{district}</li>)}
+      </ul>
+      <p class="tiny-note">
+        Obsługujemy całą aglomerację trójmiejską. Jeśli Twojej miejscowości nie ma na liście, zadzwoń.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cta-band" data-reveal>
+      <div>
+        <h2>Klimatyzator z montażem od {PRICING.installFromPLN} zł</h2>
+        <p>Dojazd na terenie Trójmiasta w cenie. Wycena telefoniczna w kilka minut.</p>
+      </div>
+      <CTAButton
+        href={`tel:${PHONE_TEL}`}
+        label={labels.callNow}
+        ariaLabel={labels.callNow}
+        variant="inverse"
+      />
+    </div>
+  </section>
+</Layout>

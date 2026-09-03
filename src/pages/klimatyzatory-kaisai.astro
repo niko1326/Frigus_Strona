@@ -1,0 +1,173 @@
+---
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import CTAButton from '../components/CTAButton.astro';
+import Layout from '../components/Layout.astro';
+import ModelLineup from '../components/ModelLineup.astro';
+import SizingTable from '../components/SizingTable.astro';
+import IconIndoor from '../components/icons/IconIndoor.astro';
+import IconShield from '../components/icons/IconShield.astro';
+import IconWind from '../components/icons/IconWind.astro';
+import { KAISAI_MODELS } from '../config/lineups';
+import { PHONE_TEL, PRICING } from '../config/site';
+import { labels, pageMeta, routes } from '../i18n/content';
+
+const meta = pageMeta.kaisai;
+
+const highlights = [
+  {
+    Icon: IconIndoor,
+    title: 'Grzanie także przy mrozie',
+    description:
+      'Serie PRO HEAT+ i NORDIC projektowano pod polską zimę - NORDIC pracuje grzewczo nawet przy -35°C.'
+  },
+  {
+    Icon: IconWind,
+    title: 'Filtracja i sterylizacja',
+    description:
+      'W zależności od serii: lampa UVC, filtr Bio HEPA, jony srebra i samoczyszczenie parownika.'
+  },
+  {
+    Icon: IconShield,
+    title: 'Marka z polskim zapleczem',
+    description:
+      'Kaisai należy do grupy Klima-Therm z Warszawy, więc serwis i części są dostępne od ręki w kraju.'
+  }
+];
+
+const lineupSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Serie klimatyzatorów ściennych Kaisai montowane przez FRIGAC',
+  itemListElement: KAISAI_MODELS.map((model, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    item: {
+      '@type': 'Product',
+      name: `Kaisai ${model.name}`,
+      brand: { '@type': 'Brand', name: 'Kaisai' },
+      category: 'Klimatyzator ścienny split',
+      description: model.tagline
+    }
+  }))
+};
+---
+
+<Layout
+  title={meta.title}
+  description={meta.description}
+  keywords={meta.keywords}
+  currentPath={routes.kaisai}
+  extraSchema={[lineupSchema]}
+>
+  <Breadcrumbs items={[{ label: 'Klimatyzatory Kaisai' }]} />
+
+  <section class="page-hero">
+    <div class="container" data-reveal>
+      <p class="eyebrow">Marki, które montujemy</p>
+      <h1>Klimatyzatory Kaisai z montażem</h1>
+      <p>
+        Kaisai to marka stworzona w 2011 roku przez warszawską grupę Klima-Therm, obecna dziś
+        w ponad dwudziestu krajach Europy. Montujemy ścienne jednostki split Kaisai na czynniku R32,
+        z pełnym uruchomieniem układu i 5-letnią gwarancją na montaż.
+      </p>
+      <div class="hero-actions">
+        <CTAButton href={`tel:${PHONE_TEL}`} label={labels.callNow} ariaLabel={labels.callNow} />
+        <CTAButton href={routes.pricing} label={labels.readPricing} variant="secondary" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container card-grid card-grid-3" data-reveal>
+      {
+        highlights.map(({ Icon, title, description }) => (
+          <article class="info-card">
+            <Icon class="service-icon" />
+            <h2 class="card-heading">{title}</h2>
+            <p>{description}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section section-gray">
+    <div class="container" data-reveal>
+      <div class="section-head">
+        <p class="eyebrow">Warianty</p>
+        <h2>Serie ścienne Kaisai, które montujemy</h2>
+        <p>
+          Kaisai dzieli ofertę ścienną na serie o wyraźnie różnych zadaniach: od budżetowych po
+          designerskie i mocno grzewcze. Każda występuje w kilku wariantach mocy, więc dobierzemy
+          urządzenie zarówno do sypialni, jak i do otwartego parteru.
+        </p>
+      </div>
+      <ModelLineup brand="Kaisai" models={KAISAI_MODELS} />
+      <p class="tiny-note lineup-note">
+        Dane techniczne i zdjęcia pochodzą z materiałów producenta (stan na wrzesień 2026).
+        Producent nie publikuje poziomów hałasu dla tych serii - podamy je z karty katalogowej przy wycenie.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container" data-reveal>
+      <div class="section-head">
+        <p class="eyebrow">Dobór mocy</p>
+        <h2>Którą moc wybrać do swojego pomieszczenia</h2>
+        <p>
+          Moce w seriach Kaisai układają się w cztery typowe wielkości. Poniżej orientacyjne przypisanie
+          do metrażu - dokładny dobór potwierdzamy telefonicznie, bo liczy się też nasłonecznienie,
+          piętro i wysokość pomieszczenia.
+        </p>
+      </div>
+      <SizingTable />
+      <p class="tiny-note lineup-note">
+        Chcesz policzyć samodzielnie? Skorzystaj z naszego
+        <a class="inline-link" href={routes.calcPower}>kalkulatora mocy klimatyzacji</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-gray">
+    <div class="container content-grid" data-reveal>
+      <div class="plain-stack">
+        <h2>Dla kogo polecamy Kaisai</h2>
+        <ul class="bullet-list">
+          <li>Do domów, gdzie klimatyzacja ma realnie dogrzewać zimą: serie PRO HEAT+ i NORDIC.</li>
+          <li>Do wnętrz, w których jednostka ma być ozdobą: seria ART w bieli lub czerni.</li>
+          <li>Dla alergików: serie z lampą UVC, filtrem Bio HEPA i sterylizacją.</li>
+          <li>Kaisai z montażem od {PRICING.installFromPLN} zł - dojazd i uruchomienie w cenie.</li>
+        </ul>
+      </div>
+      <div class="plain-stack">
+        <h2>Czym Kaisai różni się od Gree</h2>
+        <p>
+          Gree produkuje własne sprężarki i ma szerszą ofertę wariantów kolorystycznych. Kaisai mocniej
+          stawia na serie grzewcze i filtrację, a zaplecze serwisowe ma w Polsce. W praktyce obie marki
+          montujemy równie często i przy wycenie proponujemy tę, która lepiej pasuje do pomieszczenia
+          i budżetu.
+        </p>
+        <p class="tiny-note">
+          Zobacz również ofertę <a class="inline-link" href={routes.gree}>Gree</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cta-inline" data-reveal>
+      <p class="plain-highlight plain-highlight-sm">Wyceń klimatyzator Kaisai z montażem w 5 minut.</p>
+      <CTAButton href={`tel:${PHONE_TEL}`} label={labels.callNow} ariaLabel={labels.callNow} />
+    </div>
+  </section>
+
+  <section class="section-sm">
+    <div class="container related-links" data-reveal>
+      <p>Zobacz też:</p>
+      <a class="text-link" href={routes.gree}>Klimatyzatory Gree z montażem</a>
+      <a class="text-link" href={routes.services}>Co dokładnie obejmuje montaż</a>
+      <a class="text-link" href={routes.pricing}>Cennik montażu klimatyzacji</a>
+    </div>
+  </section>
+</Layout>

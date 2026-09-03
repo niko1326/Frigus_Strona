@@ -1,40 +1,42 @@
 ---
-import type { Locale } from '../../../i18n/content';
-
-interface Props {
-  lang: Locale;
-}
-
-const { lang } = Astro.props;
-const isPL = lang === 'pl';
-
-const steps = isPL
-  ? [
-      { title: 'Telefon', description: 'Krótka rozmowa, orientacyjny zakres i termin wizji lub montażu.' },
-      { title: 'Wycena', description: 'Wycena telefoniczna lub na miejscu, zależnie od układu mieszkania.' },
-      { title: 'Montaż', description: 'Montaż zwykle trwa około 1 dnia, z zachowaniem porządku.' }
-    ]
-  : [
-      { title: 'Call', description: 'Short call to understand scope and propose a timeline.' },
-      { title: 'Quote', description: 'Phone quote or on-site quote depending on layout complexity.' },
-      { title: 'Install', description: 'Installation usually takes about one day with a clean finish.' }
-    ];
+const steps = [
+  {
+    title: 'Rozmowa i wycena',
+    description:
+      'Dzwonisz, opisujesz mieszkanie lub dom, a my w kilka minut podajemy orientacyjną cenę i proponujemy termin.'
+  },
+  {
+    title: 'Dobór urządzenia',
+    description:
+      'Dobieramy moc i model klimatyzatora do metrażu, nasłonecznienia i budżetu. Doradzamy, nie sprzedajemy na siłę.'
+  },
+  {
+    title: 'Montaż w 1 dzień',
+    description:
+      'Montujemy jednostkę wewnętrzną i zewnętrzną, wykonujemy próżnię, uruchamiamy układ i sprzątamy po pracy.'
+  },
+  {
+    title: 'Gwarancja i serwis',
+    description:
+      'Otrzymujesz 5 lat gwarancji na montaż. W kolejnych sezonach zadbamy też o przeglądy i czyszczenie.'
+  }
+];
 ---
 
-<section class="section" data-reveal>
+<section class="section section-gray" data-reveal>
   <div class="container">
     <div class="section-head">
-      <p class="eyebrow">{isPL ? 'Jak to działa' : 'How it works'}</p>
-      <h2>{isPL ? 'Prosto: 3 kroki do gotowej klimatyzacji' : 'Simple: 3 steps to working AC'}</h2>
+      <p class="eyebrow">Jak działamy</p>
+      <h2>Od telefonu do chłodu w 4 krokach</h2>
     </div>
 
-    <ol class="steps-plain-list">
+    <ol class="timeline">
       {
         steps.map((step, index) => (
-          <li>
-            <span class="step-index">0{index + 1}</span>
-            <div>
-              <h3 class="plain-list-title">{step.title}</h3>
+          <li class="timeline-item">
+            <span class="timeline-marker">{index + 1}</span>
+            <div class="timeline-body">
+              <h3>{step.title}</h3>
               <p>{step.description}</p>
             </div>
           </li>

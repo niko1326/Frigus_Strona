@@ -2,7 +2,7 @@
 interface Props {
   href: string;
   label: string;
-  variant?: 'primary' | 'secondary' | 'ghost';
+  variant?: 'primary' | 'secondary' | 'ghost' | 'inverse';
   ariaLabel?: string;
   fullWidth?: boolean;
   size?: 'sm' | 'md' | 'lg';
@@ -13,8 +13,7 @@ const {
   label,
   variant = 'primary',
   ariaLabel,
-  fullWidth = false
-  ,
+  fullWidth = false,
   size = 'md'
 } = Astro.props;
 

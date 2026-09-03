@@ -1,12 +1,12 @@
-# CLIM-PRO Astro Website
+# FRIGAC - strona firmowa
 
-Minimalistyczna, szybka strona dla CLIM-PRO (Bydgoszcz + Trójmiasto), z naciskiem na konwersję telefoniczną.
+Minimalistyczna, szybka strona dla FRIGAC (montaż klimatyzacji: Bydgoszcz, Toruń, Trójmiasto), z naciskiem na konwersję telefoniczną i SEO lokalne.
 
 ## Tech stack
 
 - Astro + TypeScript
-- Czyste CSS (bez ciężkiego JS)
-- Statyczne strony PL/EN
+- Czyste CSS (bez ciężkiego JS, bez frameworków)
+- Strona w pełni statyczna, tylko PL
 
 ## Local development
 
@@ -22,71 +22,71 @@ npm run build
 npm run preview
 ```
 
-## Edycja telefonu, cen i godzin
+## Edycja danych biznesowych
 
-Wszystkie główne dane biznesowe są w jednym pliku:
+Wszystkie główne dane są w jednym pliku: `src/config/site.ts`
 
-- `src/config/site.ts`
+- `PHONE_DISPLAY`, `PHONE_TEL` - telefon
+- `SERVICE_AREAS` - obszar działania
+- `COMPANY` - dane do stopki i regulaminu (NIP i adres: uzupełnij, gdy będą znane; puste pola nie są renderowane)
+- `PRICING` - cena startowa i notka cenowa
+- `HOURS` - godziny pracy
+- `STATS` - liczby pokazywane na stronie głównej i "O nas"
+- `ANALYTICS.ga4` - Google Analytics 4
+- `VERIFICATION.googleSiteVerification` - Google Search Console
 
-Kluczowe pola:
+Metadane SEO (title/description/keywords) każdej podstrony: `src/i18n/content.ts`.
+Artykuły blogowe (lista + metadane): `src/config/articles.ts`, treści w `src/pages/porady/`.
 
-- `PHONE_DISPLAY`, `PHONE_TEL`
-- `SERVICE_AREAS`, `SERVICE_AREAS_EN`
-- `PRICING.installFromPLN`, `PRICING.installToPLN`
-- `PRICING.pricingNotePL`, `PRICING.pricingNoteEN`
-- `HOURS`
-- `ANALYTICS.cloudflare`
+## Google Analytics 4
 
-Telefon i ceny nie są hardcode'owane w komponentach.
-
-## Struktura językowa
-
-- Polski: `/`, `/uslugi`, `/cennik`, `/faq`, `/kontakt`
-- English: `/en/`, `/en/services`, `/en/pricing`, `/en/faq`, `/en/contact`
-
-Mapowanie tras i metadata SEO:
-
-- `src/i18n/content.ts`
-
-## Jak dodać zdjęcia później
-
-Aktualnie używany jest placeholder galerii:
-
-- `src/components/PhotoGalleryPlaceholder.astro`
-
-Sugerowany workflow:
-
-1. Dodaj zdjęcia do `public/photos/`.
-2. Podmień placeholdery na `<img src="/photos/nazwa.jpg" ... />` w `src/components/PhotoGalleryPlaceholder.astro`.
-3. Zachowaj rozmiary i kompresję (WebP/AVIF), żeby utrzymać wydajność.
-
-## Cloudflare Web Analytics (privacy-friendly)
-
-Konfiguracja w `src/config/site.ts`:
+1. Utwórz usługę GA4 i skopiuj identyfikator pomiaru (`G-XXXXXXXXXX`).
+2. W `src/config/site.ts` ustaw:
 
 ```ts
 export const ANALYTICS = {
-  cloudflare: {
+  ga4: {
     enabled: true,
-    token: 'YOUR_CLOUDFLARE_WEB_ANALYTICS_TOKEN'
+    measurementId: 'G-XXXXXXXXXX'
   }
 } as const;
 ```
 
-Po ustawieniu `enabled: true` i tokena, snippet Cloudflare jest automatycznie dodawany w `src/components/Layout.astro`.
+## Google Search Console
 
-## Deploy na Cloudflare Pages (rekomendowane)
+1. Dodaj usługę (domena lub prefiks URL) w Search Console.
+2. Przy weryfikacji meta tagiem skopiuj wartość `content` i wklej do `VERIFICATION.googleSiteVerification` w `src/config/site.ts`.
+3. Po weryfikacji prześlij sitemapę: `https://frigac.pl/sitemap.xml`.
+
+## SEO wbudowane w projekt
+
+- `sitemap.xml` generowany z listy tras (`src/pages/sitemap.xml.ts`)
+- `public/robots.txt`
+- schema.org: HVACBusiness (każda strona), FAQPage (`/faq`), Article (artykuły)
+- Open Graph + canonical na każdej stronie
+- Podstrony lokalne: `/bydgoszcz`, `/trojmiasto`
+
+## Zmiana domeny
+
+Domena jest ustawiona na `https://frigac.pl` w trzech miejscach:
+
+- `astro.config.mjs` (`site`)
+- `src/config/site.ts` (`SITE.siteUrl`)
+- `public/robots.txt` (link do sitemapy)
+
+## Jak dodać zdjęcia
+
+1. Dodaj zdjęcia do `public/photos/` (skompresowane, najlepiej WebP).
+2. Galeria realizacji: podmień placeholdery w `src/components/PhotoGalleryPlaceholder.astro`.
+3. Zdjęcie zespołu na "O nas": podmień placeholder w `src/pages/o-nas.astro`.
+
+## Mapa Polski
+
+`src/components/PolandMap.astro` - geometria województw z simplemaps.com (bezpłatna licencja komercyjna). Podświetlone regiony mają klasę `is-active`.
+
+## Deploy na Cloudflare Pages
 
 1. Wypchnij repo do GitHub.
-2. W Cloudflare Dashboard: Pages -> Create a project -> Connect to Git.
-3. Build settings:
-   - Framework preset: `Astro`
-   - Build command: `npm run build`
-   - Build output directory: `dist`
-4. Deploy.
-
-Opcjonalnie ustaw własną domenę i zaktualizuj `site` w `astro.config.mjs` oraz `SITE.siteUrl` w `src/config/site.ts`.
-
-## Alternatywa: GitHub Pages
-
-Możesz też wdrożyć statyczny build `dist/` przez GitHub Pages (np. workflow Actions), ale domyślnie projekt jest przygotowany pod Cloudflare Pages.
+2. Cloudflare Dashboard: Pages -> Create a project -> Connect to Git.
+3. Build settings: preset `Astro`, build `npm run build`, output `dist`.
+4. Podepnij domenę `frigac.pl`.

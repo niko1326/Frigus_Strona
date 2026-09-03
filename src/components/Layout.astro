@@ -5,86 +5,132 @@ import StickyCallBar from './StickyCallBar.astro';
 import {
   ANALYTICS,
   BUSINESS,
+  EMAIL,
   PHONE_TEL,
   SERVICE_AREAS,
-  SERVICE_AREAS_EN,
-  SITE
+  SITE,
+  VERIFICATION
 } from '../config/site';
-import { commonLabels, getAlternatePath, type Locale } from '../i18n/content';
+import { labels } from '../i18n/content';
 import '../styles/global.css';
 
 interface Props {
-  lang: Locale;
   title: string;
   description: string;
   currentPath: string;
   keywords?: string[];
+  /** Dodatkowe obiekty schema.org wstrzykiwane obok LocalBusiness (np. FAQPage, Article). */
+  extraSchema?: Record<string, unknown>[];
 }
 
-const { lang, title, description, currentPath, keywords = [] } = Astro.props;
+const { title, description, currentPath, keywords = [], extraSchema = [] } = Astro.props;
 
 const canonicalUrl = new URL(currentPath, SITE.siteUrl).toString();
-const alternatePath = getAlternatePath(currentPath, lang);
-const alternateUrl = new URL(alternatePath, SITE.siteUrl).toString();
-const homeUrl = new URL('/', SITE.siteUrl).toString();
-const labels = commonLabels[lang];
-const areaServed = lang === 'pl' ? [...SERVICE_AREAS] : [...SERVICE_AREAS_EN];
+const ogImageUrl = new URL('/og/frigac-og.png', SITE.siteUrl).toString();
 
 const localBusinessSchema = {
   '@context': 'https://schema.org',
-  '@type': 'LocalBusiness',
+  '@type': 'HVACBusiness',
+  '@id': `${SITE.siteUrl}/#firma`,
   name: SITE.brandName,
   description,
   telephone: PHONE_TEL,
-  areaServed,
-  serviceType: lang === 'pl' ? BUSINESS.serviceTypePL : BUSINESS.serviceTypeEN,
-  url: canonicalUrl,
-  availableLanguage: ['pl', 'en']
+  email: EMAIL,
+  url: SITE.siteUrl,
+  image: ogImageUrl,
+  priceRange: 'od 3499 zł',
+  areaServed: SERVICE_AREAS.map((name) => ({ '@type': 'City', name })),
+  serviceType: BUSINESS.serviceType,
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: [
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+        'Sunday'
+      ],
+      opens: '08:00',
+      closes: '18:00'
+    }
+  ]
 };
 
-const cloudflareBeaconData = JSON.stringify({ token: ANALYTICS.cloudflare.token });
+const schemaBlocks = [localBusinessSchema, ...extraSchema];
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html lang="pl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     {keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
     <meta name="format-detection" content="telephone=no" />
+    {
+      VERIFICATION.googleSiteVerification && (
+        <meta name="google-site-verification" content={VERIFICATION.googleSiteVerification} />
+      )
+    }
     <title>{title}</title>
 
     <link rel="canonical" href={canonicalUrl} />
-    <link rel="alternate" hreflang={lang === 'pl' ? 'en' : 'pl'} href={alternateUrl} />
-    <link rel="alternate" hreflang="x-default" href={homeUrl} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap.xml" />
+    <meta name="theme-color" content="#0d1117" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.brandName} />
+    <meta property="og:locale" content="pl_PL" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="FRIGAC - montaż klimatyzacji, Bydgoszcz, Toruń i Trójmiasto" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
 
-    <script is:inline type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)}></script>
+    {schemaBlocks.map((block) => (
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(block)} />
+    ))}
+
     {
-      ANALYTICS.cloudflare.enabled && ANALYTICS.cloudflare.token && (
-        <script
-          is:inline
-          defer
-          src="https://static.cloudflareinsights.com/beacon.min.js"
-          data-cf-beacon={cloudflareBeaconData}
-        ></script>
+      ANALYTICS.ga4.enabled && ANALYTICS.ga4.measurementId && (
+        <>
+          <script
+            is:inline
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=${ANALYTICS.ga4.measurementId}`}
+          />
+          <script
+            is:inline
+            set:html={`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${ANALYTICS.ga4.measurementId}');`}
+          />
+        </>
       )
     }
   </head>
   <body>
-    <Header lang={lang} currentPath={currentPath} />
+    <Header currentPath={currentPath} />
     <main id="main">
       <slot />
     </main>
-    <Footer lang={lang} currentPath={currentPath} />
+    <Footer />
     <StickyCallBar phoneTel={PHONE_TEL} label={labels.stickyCall} ariaLabel={labels.phoneAria} />
 
     <script is:inline>

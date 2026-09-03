@@ -1,0 +1,102 @@
+---
+const milestones = [
+  {
+    year: 'Starożytność',
+    title: 'Pierwsze koncepty chłodzenia',
+    text: 'Egipcjanie zawieszali w oknach mokre maty z trzciny - parująca woda chłodziła wiatr wpadający do domu. Persowie budowali badgiry, wieże łapiące wiatr, a Rzymianie prowadzili w ścianach willi wodę z akweduktów.'
+  },
+  {
+    year: '1758',
+    title: 'Eksperymenty Franklina',
+    text: 'Benjamin Franklin i John Hadley wykazali, że parowanie alkoholu i eteru potrafi schłodzić przedmiot poniżej zera - pierwszy naukowy opis chłodzenia przez odparowanie, czyli zasady, na której działa każda dzisiejsza klimatyzacja.'
+  },
+  {
+    year: '1820',
+    title: 'Faraday skrapla amoniak',
+    text: 'Michael Faraday odkrył, że sprężony i skroplony amoniak, gwałtownie parując, mocno obniża temperaturę otoczenia. To fundament obiegu chłodniczego wykorzystywanego w każdym klimatyzatorze.'
+  },
+  {
+    year: '1851',
+    title: 'Maszyna lodowa Gorriego',
+    text: 'Lekarz John Gorrie opatentował maszynę wytwarzającą lód przez sprężanie powietrza - chciał nią chłodzić sale szpitalne na Florydzie. Wyprzedził epokę o pół wieku, ale nie znalazł inwestorów.'
+  },
+  {
+    year: '1902',
+    title: 'Willis Carrier - narodziny AC',
+    text: 'Młody inżynier Willis Carrier zaprojektował dla drukarni w Brooklynie pierwsze urządzenie kontrolujące jednocześnie temperaturę i wilgotność powietrza. Ta data uchodzi za początek nowoczesnej klimatyzacji.'
+  },
+  {
+    year: '1906',
+    title: 'Termin „air conditioning”',
+    text: 'Stuart Cramer, inżynier z przędzalni w Karolinie Północnej, po raz pierwszy użył określenia „air conditioning”, opisując nawilżanie i uzdatnianie powietrza w zakładach tekstylnych.'
+  },
+  {
+    year: '1914',
+    title: 'Pierwsza klimatyzacja w domu',
+    text: 'W rezydencji Charlesa Gatesa w Minneapolis stanęła pierwsza domowa instalacja klimatyzacji - wysoka na 2 metry i długa na 6. Komfort chłodzenia był wtedy luksusem dostępnym dla nielicznych.'
+  },
+  {
+    year: '1928',
+    title: 'Freon i boom kin',
+    text: 'Thomas Midgley opracował freon - pierwszy „bezpieczny” czynnik chłodniczy, niepalny i nietoksyczny dla ludzi. Klimatyzowane kina i domy towarowe uczyniły z chłodu atrakcję, na którą ustawiały się kolejki.'
+  },
+  {
+    year: '1931',
+    title: 'Klimatyzator okienny',
+    text: 'H.H. Schultz i J.Q. Sherman skonstruowali klimatyzator montowany na parapecie okna. Rok później trafił do sprzedaży - kosztował równowartość dzisiejszych kilkuset tysięcy złotych.'
+  },
+  {
+    year: '1957',
+    title: 'Sprężarka rotacyjna',
+    text: 'Pierwsza sprężarka rotacyjna pozwoliła budować mniejsze, lżejsze i cichsze jednostki. Klimatyzacja przestała być przemysłową machiną, a zaczęła mieścić się w oknie i na ścianie.'
+  },
+  {
+    year: 'Lata 70.–80.',
+    title: 'Split i normy sprawności',
+    text: 'Japońscy producenci spopularyzowali klimatyzatory typu split - cichą jednostkę wewnętrzną połączoną z zewnętrzną sprężarką. Kryzys energetyczny wymusił pierwsze normy efektywności energetycznej.'
+  },
+  {
+    year: '1987',
+    title: 'Protokół montrealski',
+    text: 'Świat zobowiązał się wycofać freony CFC niszczące warstwę ozonową. Rozpoczęła się era nowych czynników chłodniczych i szybkiego postępu w ekologii chłodnictwa.'
+  },
+  {
+    year: 'Lata 90.',
+    title: 'Technologia inwerterowa',
+    text: 'Inwerter pozwolił płynnie regulować moc sprężarki zamiast ciągłego włączania i wyłączania. Klimatyzacja stała się znacznie cichsza, trwalsza i nawet o połowę oszczędniejsza.'
+  },
+  {
+    year: 'Dziś',
+    title: 'Pompa ciepła w każdym split-cie',
+    text: 'Nowoczesny klimatyzator z czynnikiem R32 chłodzi latem, a zimą grzeje jako pompa ciepła powietrze-powietrze - sterowany z telefonu przez Wi-Fi. Dokładnie takie urządzenia montujemy w Bydgoszczy, Toruniu i Trójmieście.'
+  }
+];
+---
+
+<section class="section history" aria-labelledby="history-heading">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">Od konceptu do komfortu</p>
+      <h2 id="history-heading">Krótka historia klimatyzacji</h2>
+      <p>
+        Zanim klimatyzator trafił na ścianę Twojego salonu, minęło kilka tysięcy lat eksperymentów
+        z chłodzeniem powietrza. Oto najważniejsze kamienie milowe.
+      </p>
+    </div>
+
+    <ol class="history-list">
+      {
+        milestones.map((item, index) => (
+          <li class="history-item" data-reveal={index % 2 === 0 ? 'left' : 'right'}>
+            <span class="history-dot" aria-hidden="true" />
+            <article class="history-card">
+              <span class="history-year">{item.year}</span>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </article>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

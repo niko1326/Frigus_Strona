@@ -1,0 +1,48 @@
+---
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Layout from '../../components/Layout.astro';
+import { ARTICLES } from '../../config/articles';
+import { pageMeta } from '../../i18n/content';
+
+const meta = pageMeta.blog;
+
+const formatDate = (iso: string): string =>
+  new Date(iso).toLocaleDateString('pl-PL', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<Layout
+  title={meta.title}
+  description={meta.description}
+  keywords={meta.keywords}
+  currentPath="/porady"
+>
+  <Breadcrumbs items={[{ label: 'Porady' }]} />
+
+  <section class="page-hero">
+    <div class="container" data-reveal>
+      <p class="eyebrow">Porady</p>
+      <h1>Wiedza o klimatyzacji bez ściemy</h1>
+      <p>
+        Piszemy o tym, o co klienci pytają nas najczęściej: jak dobrać urządzenie, ile kosztuje
+        montaż i jak dbać o klimatyzację, żeby służyła latami.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container card-grid card-grid-3" data-reveal>
+      {
+        ARTICLES.map((article) => (
+          <article class="info-card article-card">
+            <p class="article-date">{formatDate(article.datePublished)}</p>
+            <h2 class="article-card-title">
+              <a href={`/porady/${article.slug}`}>{article.title}</a>
+            </h2>
+            <p>{article.excerpt}</p>
+            <a class="text-link" href={`/porady/${article.slug}`}>Czytaj dalej</a>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</Layout>

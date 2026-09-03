@@ -1,0 +1,299 @@
+---
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import CTAButton from '../components/CTAButton.astro';
+import Layout from '../components/Layout.astro';
+import { PHONE_TEL, SITE } from '../config/site';
+import { labels, pageMeta, routes } from '../i18n/content';
+
+const meta = pageMeta.calcEnergy;
+
+const seerTable = [
+  { seer: 'SEER 4,0 (stare urządzenia)', season: '≈ 570-760 zł' },
+  { seer: 'SEER 5,5 (klasa A)', season: '≈ 410-550 zł' },
+  { seer: 'SEER 6,5 (klasa A++)', season: '≈ 350-470 zł' },
+  { seer: 'SEER 8,0 (klasa A+++)', season: '≈ 280-380 zł' }
+];
+
+const faqItems = [
+  {
+    question: 'Ile prądu zużywa klimatyzacja 3,5 kW?',
+    answer:
+      'Klimatyzator 3,5 kW z SEER 6,5 pobiera średnio około 0,5-0,6 kWh na godzinę chłodzenia. Przy 8 godzinach pracy dziennie i cenie prądu 1,20 zł/kWh to około 5-6 zł dziennie i 350-470 zł za cały sezon.'
+  },
+  {
+    question: 'Co to jest SEER?',
+    answer:
+      'SEER (Seasonal Energy Efficiency Ratio) to sezonowa sprawność chłodzenia: mówi, ile kWh chłodu urządzenie wytwarza z 1 kWh prądu w typowym sezonie. Im wyższy SEER, tym niższe rachunki - urządzenie z SEER 8 zużywa o około 40% mniej energii niż to z SEER 5.'
+  },
+  {
+    question: 'Czy klimatyzacja mocno podnosi rachunki za prąd?',
+    answer:
+      'Mniej, niż się powszechnie sądzi. Nowoczesny klimatyzator inwerterowy w mieszkaniu to zwykle 200-500 zł za cały sezon chłodzenia - porównywalnie z lodówką w skali roku. Duże koszty generują głównie stare urządzenia on/off i chłodzenie przy otwartych oknach.'
+  },
+  {
+    question: 'Jak obniżyć koszt pracy klimatyzacji?',
+    answer:
+      'Ustaw temperaturę 24-26°C zamiast 20°C (każdy stopień niżej to ok. 5-7% więcej energii), zamykaj okna i zasłaniaj je w słońcu, czyść filtry co 2-4 tygodnie i rób coroczny przegląd - zabrudzony wymiennik potrafi zauważalnie zwiększyć zużycie prądu.'
+  }
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqItems.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: { '@type': 'Answer', text: item.answer }
+  }))
+};
+
+const appSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'Kalkulator zużycia prądu przez klimatyzację FRIGAC',
+  url: new URL(routes.calcEnergy, SITE.siteUrl).toString(),
+  applicationCategory: 'UtilityApplication',
+  operatingSystem: 'Web',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'PLN' },
+  provider: { '@type': 'Organization', name: SITE.brandName, url: SITE.siteUrl }
+};
+---
+
+<Layout
+  title={meta.title}
+  description={meta.description}
+  keywords={meta.keywords}
+  currentPath={routes.calcEnergy}
+  extraSchema={[appSchema, faqSchema]}
+>
+  <Breadcrumbs items={[{ label: 'Narzędzia', href: routes.tools }, { label: 'Ile prądu zużywa klimatyzacja' }]} />
+
+  <section class="page-hero">
+    <div class="container" data-reveal>
+      <p class="eyebrow">Darmowe narzędzie</p>
+      <h1>Ile prądu zużywa klimatyzacja? Kalkulator</h1>
+      <p>
+        Podaj moc urządzenia, klasę SEER, godziny pracy i cenę prądu z faktury, a policzymy koszt
+        chłodzenia na dzień, miesiąc i cały sezon - wraz z zużyciem w kWh.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-gray">
+    <div class="container tool-layout" data-reveal>
+      <form class="tool-form" id="energy-form">
+        <fieldset class="tool-step">
+          <legend><span class="tool-step-num">1</span>Moc chłodnicza klimatyzatora</legend>
+          <div class="seg">
+            <input type="radio" name="ekw" id="ekw-25" value="2.5" />
+            <label for="ekw-25">2,5 kW</label>
+            <input type="radio" name="ekw" id="ekw-35" value="3.5" checked />
+            <label for="ekw-35">3,5 kW</label>
+            <input type="radio" name="ekw" id="ekw-50" value="5" />
+            <label for="ekw-50">5,0 kW</label>
+            <input type="radio" name="ekw" id="ekw-70" value="7" />
+            <label for="ekw-70">7,0 kW</label>
+          </div>
+        </fieldset>
+
+        <div class="tool-step">
+          <p class="tool-step-title"><span class="tool-step-num">2</span>Klasa SEER (sprawność chłodzenia)</p>
+          <div class="range-row">
+            <input type="range" id="seer" min="4" max="8.5" step="0.1" value="6.5" aria-label="Współczynnik SEER" />
+            <output class="range-value" id="seer-out" for="seer">6,5</output>
+          </div>
+          <p class="tool-hint">Znajdziesz go na etykiecie energetycznej. Nowe jednostki split mają zwykle 6,1-8,5.</p>
+        </div>
+
+        <div class="tool-step">
+          <p class="tool-step-title"><span class="tool-step-num">3</span>Ustawiona temperatura</p>
+          <div class="range-row">
+            <input type="range" id="etemp" min="20" max="26" step="1" value="23" aria-label="Ustawiona temperatura w stopniach Celsjusza" />
+            <output class="range-value" id="etemp-out" for="etemp">23°C</output>
+          </div>
+          <p class="tool-hint">Każdy stopień niżej to około 6% więcej energii.</p>
+        </div>
+
+        <div class="tool-step">
+          <p class="tool-step-title"><span class="tool-step-num">4</span>Praca dziennie</p>
+          <div class="range-row">
+            <input type="range" id="ehours" min="1" max="24" step="1" value="8" aria-label="Godziny pracy dziennie" />
+            <output class="range-value" id="ehours-out" for="ehours">8 h</output>
+          </div>
+        </div>
+
+        <div class="tool-step">
+          <p class="tool-step-title"><span class="tool-step-num">5</span>Cena prądu</p>
+          <div class="range-row">
+            <input type="range" id="eprice" min="0.8" max="2" step="0.05" value="1.2" aria-label="Cena prądu w złotych za kilowatogodzinę" />
+            <output class="range-value" id="eprice-out" for="eprice">1,20 zł/kWh</output>
+          </div>
+          <p class="tool-hint">Cenę brutto za kWh znajdziesz na fakturze od sprzedawcy energii.</p>
+        </div>
+
+        <div class="tool-step">
+          <p class="tool-step-title"><span class="tool-step-num">6</span>Długość sezonu chłodzenia</p>
+          <div class="range-row">
+            <input type="range" id="edays" min="30" max="150" step="5" value="90" aria-label="Liczba dni sezonu chłodzenia" />
+            <output class="range-value" id="edays-out" for="edays">90 dni</output>
+          </div>
+        </div>
+      </form>
+
+      <div class="tool-result-wrap">
+        <div class="tool-result" role="status" aria-live="polite">
+          <p class="eyebrow">Twój koszt chłodzenia</p>
+          <p class="result-main"><strong id="eres-day">5,17 zł / dzień</strong></p>
+          <p class="result-sub" id="eres-kwh">≈ 4,3 kWh dziennie</p>
+          <dl class="result-rows">
+            <div class="result-row">
+              <dt>Miesiąc (30 dni)</dt>
+              <dd id="eres-month">155 zł</dd>
+            </div>
+            <div class="result-row">
+              <dt>Cały sezon</dt>
+              <dd id="eres-season">465 zł</dd>
+            </div>
+            <div class="result-row">
+              <dt>Zużycie w sezonie</dt>
+              <dd id="eres-skwh">388 kWh</dd>
+            </div>
+          </dl>
+          <CTAButton href={`tel:${PHONE_TEL}`} label="Dobierz oszczędny model" ariaLabel={labels.phoneAria} />
+          <p class="tool-disclaimer">
+            Model uproszczony: średni pobór = moc chłodnicza / SEER, z korektą temperatury. Realne
+            zużycie zależy od izolacji, nasłonecznienia i pogody.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container article-content" data-reveal>
+      <h2>Ile prądu bierze klimatyzacja - na czym opiera się kalkulator?</h2>
+      <p>
+        Klimatyzator o mocy chłodniczej 3,5 kW nie pobiera 3,5 kW prądu. Energię elektryczną dzieli
+        przez sprawność: przy SEER 6,5 średni pobór to około <strong>0,54 kW</strong>, a w trybie
+        podtrzymania temperatury inwerter schodzi jeszcze niżej. Dlatego realny koszt chłodzenia
+        mieszkania jest zwykle niższy, niż się powszechnie zakłada.
+      </p>
+      <h2>SEER a koszt sezonu (klimatyzator 3,5 kW, 8 h dziennie)</h2>
+      <div class="table-wrap">
+        <table class="tool-table">
+          <caption class="visually-hidden">Koszt sezonu chłodzenia według klasy SEER</caption>
+          <thead>
+            <tr>
+              <th scope="col">Sprawność urządzenia</th>
+              <th scope="col">Koszt sezonu (90 dni)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              seerTable.map((row) => (
+                <tr>
+                  <td>{row.seer}</td>
+                  <td>{row.season}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+      <p class="tiny-note">
+        Założenia: 3,5 kW, 8 h/dzień, 23°C, cena energii 1,10-1,30 zł/kWh brutto (typowe taryfy
+        gospodarstw domowych w Polsce w 2025 r. - dokładną stawkę sprawdź na własnej fakturze).
+        Opracowanie własne FRIGAC.
+      </p>
+      <h2>Czy warto dopłacić do wyższego SEER?</h2>
+      <p>
+        Różnica między SEER 5,5 a 8,0 to w typowym mieszkaniu 100-200 zł na sezonie chłodzenia -
+        a jeśli klimatyzacja zimą również grzeje jako pompa ciepła, oszczędności rosną kilkukrotnie.
+        Przy urządzeniu kupowanym na 10-15 lat wyższa klasa energetyczna zwykle się zwraca.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-gray">
+    <div class="container" data-reveal>
+      <div class="section-head">
+        <p class="eyebrow">FAQ</p>
+        <h2>Zużycie prądu przez klimatyzację - pytania</h2>
+      </div>
+      <div class="faq-list">
+        {
+          faqItems.map((item) => (
+            <details class="faq-item">
+              <summary>{item.question}</summary>
+              <p>{item.answer}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm">
+    <div class="container related-links" data-reveal>
+      <p>Zobacz też:</p>
+      <a class="text-link" href={routes.calcPower}>Kalkulator mocy klimatyzacji</a>
+      <a class="text-link" href={routes.calcCost}>Kalkulator kosztów montażu</a>
+      <a class="text-link" href="/porady/jak-czesto-serwisowac-klimatyzacje">Jak serwis wpływa na zużycie energii</a>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const $ = (id: string) => document.getElementById(id);
+
+  const seer = $('seer') as HTMLInputElement;
+  const etemp = $('etemp') as HTMLInputElement;
+  const ehours = $('ehours') as HTMLInputElement;
+  const eprice = $('eprice') as HTMLInputElement;
+  const edays = $('edays') as HTMLInputElement;
+  const form = $('energy-form') as HTMLFormElement;
+
+  const money = (v: number) =>
+    v.toLocaleString('pl-PL', { minimumFractionDigits: v < 100 ? 2 : 0, maximumFractionDigits: v < 100 ? 2 : 0 });
+
+  function compute() {
+    if (!form) return;
+    const kwEl = document.querySelector<HTMLInputElement>('input[name="ekw"]:checked');
+    const kw = kwEl ? parseFloat(kwEl.value) : 3.5;
+    const s = Math.min(Math.max(parseFloat(seer.value) || 6.5, 4), 8.5);
+    const t = parseInt(etemp.value, 10) || 23;
+    const h = Math.min(Math.max(parseInt(ehours.value, 10) || 8, 1), 24);
+    const p = parseFloat(eprice.value) || 1.2;
+    const d = parseInt(edays.value, 10) || 90;
+
+    const tempFactor = Math.min(Math.max(1 + (24 - t) * 0.06, 0.8), 1.3);
+    const kwhDay = (kw / s) * h * tempFactor;
+    const costDay = kwhDay * p;
+
+    ($('eres-day') as HTMLElement).textContent = `${money(costDay)} zł / dzień`;
+    ($('eres-kwh') as HTMLElement).textContent = `≈ ${kwhDay.toFixed(1).replace('.', ',')} kWh dziennie`;
+    ($('eres-month') as HTMLElement).textContent = `${money(costDay * 30)} zł`;
+    ($('eres-season') as HTMLElement).textContent = `${money(costDay * d)} zł`;
+    ($('eres-skwh') as HTMLElement).textContent = `${Math.round(kwhDay * d).toLocaleString('pl-PL')} kWh`;
+
+    ($('seer-out') as HTMLElement).textContent = s.toFixed(1).replace('.', ',');
+    ($('etemp-out') as HTMLElement).textContent = `${t}°C`;
+    ($('ehours-out') as HTMLElement).textContent = `${h} h`;
+    ($('eprice-out') as HTMLElement).textContent = `${p.toFixed(2).replace('.', ',')} zł/kWh`;
+    ($('edays-out') as HTMLElement).textContent = `${d} dni`;
+  }
+
+  form?.addEventListener('input', compute);
+  compute();
+
+  document.querySelectorAll<HTMLInputElement>('.range-row input[type="range"]').forEach((r) => {
+    const setFill = () => {
+      const min = parseFloat(r.min) || 0;
+      const max = parseFloat(r.max) || 100;
+      const pct = ((parseFloat(r.value) - min) / (max - min)) * 100;
+      r.style.setProperty('--fill', `${pct.toFixed(1)}%`);
+    };
+    r.addEventListener('input', setFill);
+    setFill();
+  });
+</script>

@@ -1,40 +1,118 @@
 ---
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 import CTAButton from '../components/CTAButton.astro';
 import Layout from '../components/Layout.astro';
 import { PHONE_TEL, PRICING } from '../config/site';
-import { pageMeta } from '../i18n/content';
+import { labels, pageMeta } from '../i18n/content';
 
-const meta = pageMeta.pl.pricing;
+const meta = pageMeta.pricing;
+
+const priceFactors = [
+  {
+    title: 'Długość instalacji',
+    description: 'Im krótsza trasa między jednostką wewnętrzną a zewnętrzną, tym niższy koszt montażu.'
+  },
+  {
+    title: 'Miejsce montażu jednostki zewnętrznej',
+    description: 'Montaż na balkonie lub przy gruncie jest tańszy niż praca na elewacji z technikami alpinistycznymi.'
+  },
+  {
+    title: 'Klasa urządzenia',
+    description: 'Cena zależy od wybranej mocy i producenta. Doradzimy urządzenie dopasowane do budżetu.'
+  }
+];
 ---
 
 <Layout
-  lang="pl"
   title={meta.title}
   description={meta.description}
   keywords={meta.keywords}
   currentPath="/cennik"
 >
+  <Breadcrumbs items={[{ label: 'Cennik' }]} />
+
   <section class="page-hero">
     <div class="container" data-reveal>
       <p class="eyebrow">Cennik</p>
-      <h1>Przejrzysta wycena startowa</h1>
+      <h1>Ile kosztuje montaż klimatyzacji?</h1>
       <p>
-        Pokazujemy widełki startowe, bo finalna cena zależy od długości instalacji, miejsca montażu i
-        warunków technicznych.
+        Gramy w otwarte karty: podajemy cenę startową i tłumaczymy, co wpływa na finalną wycenę.
+        Dokładną cenę poznasz podczas krótkiej rozmowy telefonicznej.
       </p>
     </div>
   </section>
 
   <section class="section">
     <div class="container pricing-panel" data-reveal>
-      <p class="price-main">Montaż od {PRICING.installFromPLN}-{PRICING.installToPLN} zł + cena urządzenia</p>
+      <p class="price-main">
+        Klimatyzator z montażem od {PRICING.installFromPLN} zł
+        <span class="price-note">brutto</span>
+      </p>
       <ul class="bullet-list">
-        <li>{PRICING.travelIncludedPL}</li>
+        <li>{PRICING.travelIncluded}</li>
         <li>Podłączenie do istniejącej instalacji elektrycznej w cenie montażu.</li>
-        <li>Brak formularzy: najkrótsza droga do wyceny to telefon.</li>
+        <li>Bez formularzy i czekania: wycena telefoniczna w kilka minut.</li>
+        <li>5 lat gwarancji na montaż.</li>
       </ul>
-      <p class="tiny-note">{PRICING.pricingNotePL}</p>
-      <CTAButton href={`tel:${PHONE_TEL}`} label="Zadzwoń po darmową wycenę" ariaLabel="Zadzwoń po darmową wycenę" />
+      <p class="tiny-note">{PRICING.pricingNote}</p>
+      <CTAButton href={`tel:${PHONE_TEL}`} label={labels.callNow} ariaLabel={labels.callNow} />
+    </div>
+  </section>
+
+  <section class="section section-gray">
+    <div class="container" data-reveal>
+      <div class="section-head">
+        <p class="eyebrow">Wycena</p>
+        <h2>Co wpływa na cenę montażu klimatyzacji</h2>
+      </div>
+      <div class="card-grid card-grid-3">
+        {
+          priceFactors.map((factor) => (
+            <article class="info-card">
+              <h3>{factor.title}</h3>
+              <p>{factor.description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container content-grid" data-reveal>
+      <div class="plain-stack">
+        <h2>W cenie bazowej</h2>
+        <ul class="check-list">
+          <li>klimatyzator split z jednostką wewnętrzną i zewnętrzną,</li>
+          <li>standardowa instalacja chłodnicza z maskownicą,</li>
+          <li>przepust przez ścianę i odpływ skroplin,</li>
+          <li>próżnia, uruchomienie i test działania,</li>
+          <li>dojazd w Bydgoszczy, Toruniu i Trójmieście,</li>
+          <li>5 lat gwarancji na montaż.</li>
+        </ul>
+      </div>
+      <div class="plain-stack">
+        <h2>Wyceniane indywidualnie</h2>
+        <ul class="bullet-list">
+          <li>instalacja dłuższa niż standardowa (każdy dodatkowy metr),</li>
+          <li>montaż jednostki zewnętrznej na elewacji z dostępem wysokościowym,</li>
+          <li>konstrukcje wsporcze i nietypowe mocowania,</li>
+          <li>urządzenia wyższych serii - np. <a class="inline-link" href="/klimatyzatory-gree">Gree</a> lub <a class="inline-link" href="/klimatyzatory-kaisai">Kaisai</a> z rozszerzoną filtracją.</li>
+        </ul>
+        <p class="tiny-note">
+          Dokładną cenę montażu klimatyzacji podajemy telefonicznie w kilka minut - bez wizji
+          lokalnej w typowych przypadkach.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm">
+    <div class="container related-links" data-reveal>
+      <p>Zobacz też:</p>
+      <a class="text-link" href="/uslugi">Co dokładnie obejmuje montaż</a>
+      <a class="text-link" href="/porady/ile-kosztuje-montaz-klimatyzacji">Ile kosztuje montaż klimatyzacji w 2026 - pełny poradnik</a>
+      <a class="text-link" href="/faq">Najczęstsze pytania o montaż</a>
     </div>
   </section>
 </Layout>

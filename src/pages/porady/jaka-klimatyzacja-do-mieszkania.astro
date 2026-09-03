@@ -1,0 +1,113 @@
+---
+import ArticleLayout from '../../components/ArticleLayout.astro';
+import { ARTICLES } from '../../config/articles';
+
+const article = ARTICLES.find((entry) => entry.slug === 'jaka-klimatyzacja-do-mieszkania')!;
+---
+
+<ArticleLayout article={article}>
+  <p>
+    Wybór klimatyzacji do mieszkania sprowadza się do trzech decyzji: jaka moc, jakie urządzenie
+    i gdzie zamontować jednostki. Poniżej przechodzimy przez każdą z nich tak, jak robimy to
+    podczas rozmowy z klientem.
+  </p>
+
+  <h2>Jaka moc klimatyzacji do mieszkania?</h2>
+  <p>
+    Najprostsza reguła: około 100 W mocy chłodniczej na 1 m² pomieszczenia o standardowej wysokości.
+    W praktyce oznacza to:
+  </p>
+  <ul class="bullet-list">
+    <li>pokój do 25 m²: urządzenie 2,5 kW,</li>
+    <li>salon z aneksem 25-35 m²: urządzenie 3,5 kW,</li>
+    <li>duży salon lub otwarta przestrzeń 35-50 m²: urządzenie 5 kW.</li>
+  </ul>
+  <p>
+    Do metrażu doliczamy poprawkę na nasłonecznienie: mieszkanie na ostatnim piętrze z oknami na
+    południe potrzebuje więcej mocy niż takie samo mieszkanie od północy. Zbyt słabe urządzenie
+    będzie pracowało bez przerwy, a zbyt mocne będzie się często wyłączać i gorzej osuszać powietrze.
+  </p>
+
+  <figure class="chart-figure">
+    <svg viewBox="0 0 640 300" role="img" aria-label="Wykres słupkowy: orientacyjna moc chłodnicza klimatyzacji w kilowatach dla metraży od 20 do 70 metrów kwadratowych. Wartości: 20 m² - 2,2 kW; 30 m² - 3,0 kW; 40 m² - 3,5 kW; 50 m² - 3,9 kW; 60 m² - 4,6 kW; 70 m² - 5,5 kW.">
+      <g class="chart-grid">
+        <line class="chart-grid-line" x1="50" y1="255" x2="630" y2="255" />
+        <line class="chart-grid-line" x1="50" y1="175" x2="630" y2="175" />
+        <line class="chart-grid-line" x1="50" y1="95" x2="630" y2="95" />
+        <line class="chart-grid-line" x1="50" y1="15" x2="630" y2="15" />
+        <text class="chart-label" x="42" y="259" text-anchor="end">0</text>
+        <text class="chart-label" x="42" y="179" text-anchor="end">2</text>
+        <text class="chart-label" x="42" y="99" text-anchor="end">4</text>
+        <text class="chart-label" x="42" y="19" text-anchor="end">6 kW</text>
+      </g>
+      <g>
+        <rect class="chart-bar" x="81" y="167" width="34" height="88" rx="4"><title>20 m² → ok. 2,2 kW</title></rect>
+        <rect class="chart-bar" x="178" y="135" width="34" height="120" rx="4"><title>30 m² → ok. 3,0 kW</title></rect>
+        <rect class="chart-bar" x="275" y="115" width="34" height="140" rx="4"><title>40 m² → ok. 3,5 kW</title></rect>
+        <rect class="chart-bar" x="371" y="99" width="34" height="156" rx="4"><title>50 m² → ok. 3,9 kW</title></rect>
+        <rect class="chart-bar" x="468" y="71" width="34" height="184" rx="4"><title>60 m² → ok. 4,6 kW</title></rect>
+        <rect class="chart-bar" x="565" y="35" width="34" height="220" rx="4"><title>70 m² → ok. 5,5 kW</title></rect>
+      </g>
+      <g>
+        <text class="chart-value" x="98" y="157" text-anchor="middle">2,2</text>
+        <text class="chart-value" x="195" y="125" text-anchor="middle">3,0</text>
+        <text class="chart-value" x="292" y="105" text-anchor="middle">3,5</text>
+        <text class="chart-value" x="388" y="89" text-anchor="middle">3,9</text>
+        <text class="chart-value" x="485" y="61" text-anchor="middle">4,6</text>
+        <text class="chart-value" x="582" y="25" text-anchor="middle">5,5</text>
+      </g>
+      <g>
+        <text class="chart-label" x="98" y="277" text-anchor="middle">20 m²</text>
+        <text class="chart-label" x="195" y="277" text-anchor="middle">30 m²</text>
+        <text class="chart-label" x="292" y="277" text-anchor="middle">40 m²</text>
+        <text class="chart-label" x="388" y="277" text-anchor="middle">50 m²</text>
+        <text class="chart-label" x="485" y="277" text-anchor="middle">60 m²</text>
+        <text class="chart-label" x="582" y="277" text-anchor="middle">70 m²</text>
+      </g>
+    </svg>
+    <figcaption>
+      Orientacyjna moc chłodnicza (kW) dla jednej strefy chłodzenia o standardowej wysokości i
+      przeciętnym nasłonecznieniu. Opracowanie własne FRIGAC. Dokładny wynik dla swojego mieszkania
+      policzysz w naszym <a class="inline-link" href="/kalkulator-klimatyzacji">kalkulatorze mocy klimatyzacji</a>.
+    </figcaption>
+  </figure>
+
+  <p>
+    Klimatyzacja w mieszkaniach przestaje być zresztą luksusem: według raportu Międzynarodowej
+    Agencji Energetycznej <em>The Future of Cooling</em> liczba klimatyzatorów na świecie ma
+    wzrosnąć z około 1,6 miliarda w 2018 roku do około 5,6 miliarda w 2050 roku (źródło:
+    IEA, iea.org). W Polsce ten trend widać z każdym kolejnym upalnym latem.
+  </p>
+
+  <h2>Na co zwrócić uwagę przy wyborze urządzenia</h2>
+  <h3>Głośność jednostki wewnętrznej</h3>
+  <p>
+    W sypialni liczy się cicha praca: dobre urządzenia w trybie nocnym schodzą do 19-22 dB, czyli
+    poziomu szeptu. Zwróć uwagę na wartość podawaną dla najniższego biegu wentylatora.
+  </p>
+  <h3>Grzanie zimą</h3>
+  <p>
+    Nowoczesny klimatyzator split to jednocześnie pompa ciepła powietrze-powietrze. W przejściowych
+    miesiącach potrafi ogrzewać mieszkanie taniej niż grzejniki elektryczne, warto więc wybrać model
+    z dobrą sprawnością grzania (współczynnik SCOP).
+  </p>
+  <h3>Wi-Fi i sterowanie</h3>
+  <p>
+    Moduł Wi-Fi pozwala schłodzić mieszkanie przed powrotem do domu i kontrolować pracę urządzenia
+    z telefonu. W większości modeli to niedrogi dodatek, który realnie podnosi komfort.
+  </p>
+
+  <h2>Formalności w bloku: zgoda wspólnoty</h2>
+  <p>
+    Jednostka zewnętrzna na balkonie lub elewacji zwykle wymaga zgody wspólnoty albo spółdzielni.
+    To formalność po stronie właściciela mieszkania, ale podpowiemy, jak napisać wniosek i jakie
+    miejsce montażu ma największą szansę na akceptację.
+  </p>
+
+  <h2>Podsumowanie</h2>
+  <p>
+    Dobrze dobrana klimatyzacja do mieszkania to moc dopasowana do metrażu i nasłonecznienia, cicha
+    jednostka wewnętrzna i przemyślane miejsce montażu. Jeśli podasz nam metraż i układ mieszkania,
+    zaproponujemy konkretne urządzenie i podamy cenę z montażem podczas jednej rozmowy.
+  </p>
+</ArticleLayout>

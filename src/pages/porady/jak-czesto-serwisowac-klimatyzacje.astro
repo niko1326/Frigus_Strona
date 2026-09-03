@@ -1,0 +1,62 @@
+---
+import ArticleLayout from '../../components/ArticleLayout.astro';
+import { ARTICLES } from '../../config/articles';
+
+const article = ARTICLES.find((entry) => entry.slug === 'jak-czesto-serwisowac-klimatyzacje')!;
+---
+
+<ArticleLayout article={article}>
+  <p>
+    Klimatyzacja pracuje w kurzu, wilgoci i zmiennych temperaturach, dlatego wymaga regularnej
+    opieki jak każde urządzenie mechaniczne. Dobra wiadomość: wystarczy jeden przegląd w roku,
+    żeby służyła bezawaryjnie przez wiele sezonów.
+  </p>
+
+  <h2>Jak często robić przegląd klimatyzacji</h2>
+  <p>
+    Rozsądne minimum to jeden pełny przegląd rocznie, najlepiej wiosną, przed sezonem letnim.
+    Jeśli urządzenie pracuje intensywnie przez cały rok, na przykład dogrzewa mieszkanie zimą,
+    warto rozważyć dwa przeglądy: przed latem i przed zimą. Filtry jednostki wewnętrznej możesz
+    dodatkowo płukać samodzielnie co kilka tygodni w sezonie.
+  </p>
+
+  <h2>Co obejmuje profesjonalny serwis</h2>
+  <ul class="bullet-list">
+    <li>czyszczenie i dezynfekcję parownika oraz filtrów jednostki wewnętrznej,</li>
+    <li>czyszczenie skraplacza w jednostce zewnętrznej,</li>
+    <li>udrożnienie i kontrolę odprowadzenia skroplin,</li>
+    <li>kontrolę szczelności układu i parametrów pracy,</li>
+    <li>test działania chłodzenia i grzania.</li>
+  </ul>
+
+  <h2>Po czym poznać, że klimatyzacja wymaga serwisu</h2>
+  <h3>Nieprzyjemny zapach po włączeniu</h3>
+  <p>
+    Zapach stęchlizny to znak, że na parowniku rozwijają się bakterie lub grzyby. To najczęstszy
+    i najważniejszy powód, żeby nie odkładać czyszczenia: tym powietrzem oddychasz.
+  </p>
+  <h3>Słabsze chłodzenie i głośniejsza praca</h3>
+  <p>
+    Zabrudzony wymiennik oddaje mniej chłodu, więc urządzenie pracuje dłużej i głośniej, zużywając
+    więcej prądu. Po czyszczeniu wydajność zwykle wraca do poziomu z pierwszego sezonu.
+  </p>
+  <h3>Woda kapiąca z jednostki wewnętrznej</h3>
+  <p>
+    Kapanie oznacza najczęściej zatkany odpływ skroplin. To drobiazg, jeśli zareagujesz szybko,
+    a poważny problem dla ściany i mebli, jeśli poczekasz.
+  </p>
+
+  <h2>Serwis a gwarancja producenta</h2>
+  <p>
+    Większość producentów uzależnia utrzymanie gwarancji od udokumentowanych corocznych przeglądów.
+    Brak wpisu w karcie gwarancyjnej może oznaczać odmowę naprawy, dlatego przegląd raz w roku to
+    nie tylko higiena, ale i ochrona inwestycji.
+  </p>
+
+  <h2>Podsumowanie</h2>
+  <p>
+    Przegląd klimatyzacji raz w roku utrzymuje czyste powietrze, niskie rachunki i ważną gwarancję.
+    Wykonujemy serwis urządzeń również tych montowanych przez inne firmy: zadzwoń i umów termin
+    przed sezonem.
+  </p>
+</ArticleLayout>

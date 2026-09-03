@@ -1,0 +1,74 @@
+---
+import { PRICING } from '../../../config/site';
+import { routes } from '../../../i18n/content';
+
+const faqItems = [
+  {
+    question: 'Ile kosztuje montaż klimatyzacji w Bydgoszczy?',
+    answer: `Montaż klimatyzacji w Bydgoszczy z urządzeniem zaczyna się od ${PRICING.installFromPLN} zł. W cenie jest klimatyzator split, dojazd na terenie Bydgoszczy, Torunia i okolic, uruchomienie układu oraz 5 lat gwarancji na montaż.`
+  },
+  {
+    question: 'Czy montujecie klimatyzację w Trójmieście: Gdańsku, Gdyni i Sopocie?',
+    answer:
+      'Tak, montaż klimatyzacji w Trójmieście to nasz drugi główny obszar działania. Regularnie montujemy klimatyzatory w Gdańsku, Gdyni, Sopocie oraz w Rumi, Redzie i Pruszczu Gdańskim - dojazd jest wliczony w cenę.'
+  },
+  {
+    question: 'Jak szybko może odbyć się montaż klimatyzacji w Toruniu?',
+    answer:
+      'Montaż klimatyzacji w Toruniu umawiamy zwykle w ciągu kilku dni od wyceny telefonicznej. Sama instalacja klimatyzatora split w mieszkaniu lub domu trwa najczęściej jeden dzień roboczy.'
+  },
+  {
+    question: 'Jaka klimatyzacja do mieszkania 50m2?',
+    answer:
+      'Do mieszkania o powierzchni około 50 m2 zwykle najlepiej sprawdza się klimatyzacja 3.5 kW - jeden ścienny klimatyzator split zamontowany w salonie z aneksem. Przy dwóch oddzielnych pokojach częściej proponujemy dwie mniejsze jednostki 2,5 kW.'
+  },
+  {
+    question: 'Czy wykonujecie montaż klimatyzacji w bloku?',
+    answer:
+      'Tak, montaż klimatyzacji w bloku to duża część naszych realizacji - m.in. Gree i Kaisai na Fordonie w Bydgoszczy czy na gdańskim Przymorzu. Jednostkę zewnętrzną montujemy najczęściej na balkonie, a przed montażem podpowiadamy, jak uzyskać zgodę wspólnoty lub spółdzielni.'
+  },
+  {
+    question: 'Czy klimatyzacja może grzać dom zimą?',
+    answer:
+      'Tak. Nowoczesna klimatyzacja pracuje jako pompa ciepła powietrze-powietrze: latem chłodzi, a zimą efektywnie dogrzewa pomieszczenia - często taniej niż grzejniki elektryczne.'
+  }
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqItems.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: { '@type': 'Answer', text: item.answer }
+  }))
+};
+---
+
+<section class="section section-gray" data-reveal>
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Najczęstsze pytania</p>
+      <h2>Montaż klimatyzacji bez znaków zapytania</h2>
+      <p>
+        Bydgoszcz, Toruń czy Trójmiasto - pytania klientów są podobne. Oto najkrótsze odpowiedzi;
+        pełną listę znajdziesz w naszym FAQ.
+      </p>
+    </div>
+
+    <div class="faq-list">
+      {
+        faqItems.map((item) => (
+          <details class="faq-item">
+            <summary>{item.question}</summary>
+            <p>{item.answer}</p>
+          </details>
+        ))
+      }
+    </div>
+
+    <a class="text-link" href={routes.faq}>Zobacz wszystkie pytania i odpowiedzi</a>
+  </div>
+</section>
+
+<script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />

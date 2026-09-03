@@ -1,0 +1,33 @@
+---
+import CTAButton from '../components/CTAButton.astro';
+import Layout from '../components/Layout.astro';
+import { PHONE_TEL } from '../config/site';
+import { labels, routes } from '../i18n/content';
+---
+
+<Layout
+  title="Nie znaleziono strony (404) | FRIGAC"
+  description="Ta strona nie istnieje lub została przeniesiona. Wróć na stronę główną FRIGAC albo zadzwoń po darmową wycenę montażu klimatyzacji."
+  currentPath="/404"
+>
+  <section class="section">
+    <div class="container error-hero">
+      <p class="error-code" aria-hidden="true">404</p>
+      <h1>Ta strona wyparowała jak ciepłe powietrze</h1>
+      <p style="max-width: 52ch;">
+        Adres nie istnieje albo został przeniesiony. Sprawdź nasze usługi i cennik, poczytaj porady
+        o klimatyzacji - albo po prostu zadzwoń.
+      </p>
+      <div class="hero-actions">
+        <CTAButton href="/" label="Wróć na stronę główną" variant="secondary" />
+        <CTAButton href={`tel:${PHONE_TEL}`} label={labels.callShort} ariaLabel={labels.phoneAria} />
+      </div>
+      <nav class="related-links" aria-label="Przydatne strony">
+        <p>Najczęściej odwiedzane:</p>
+        <a class="text-link" href={routes.services}>Usługi: montaż i serwis</a>
+        <a class="text-link" href={routes.pricing}>Cennik montażu</a>
+        <a class="text-link" href={routes.blog}>Porady o klimatyzacji</a>
+      </nav>
+    </div>
+  </section>
+</Layout>

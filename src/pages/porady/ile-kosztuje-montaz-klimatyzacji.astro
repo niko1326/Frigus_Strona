@@ -1,0 +1,83 @@
+---
+import ArticleLayout from '../../components/ArticleLayout.astro';
+import { ARTICLES } from '../../config/articles';
+import { PRICING } from '../../config/site';
+
+const article = ARTICLES.find((entry) => entry.slug === 'ile-kosztuje-montaz-klimatyzacji')!;
+---
+
+<ArticleLayout article={article}>
+  <p>
+    "Ile to kosztuje?" to pierwsze pytanie w niemal każdej rozmowie. Odpowiedź w skrócie: kompletna
+    klimatyzacja z montażem w mieszkaniu zaczyna się od około {PRICING.installFromPLN} zł. Poniżej
+    rozkładamy tę cenę na części, żebyś wiedział, za co dokładnie płacisz.
+  </p>
+
+  <h2>Z czego składa się cena klimatyzacji z montażem</h2>
+  <ul class="bullet-list">
+    <li><strong>Urządzenie</strong>: klimatyzator split renomowanego producenta to wydatek od około 2000 zł za model 2,5 kW.</li>
+    <li><strong>Materiały instalacyjne</strong>: rury chłodnicze, przewody, wspornik, maskownice i drobne materiały montażowe.</li>
+    <li><strong>Robocizna</strong>: montaż obu jednostek, przepust przez ścianę, próżnia, uruchomienie i test układu.</li>
+    <li><strong>Dojazd</strong>: u nas wliczony w cenę na terenie Bydgoszczy, Torunia i Trójmiasta.</li>
+  </ul>
+
+  <figure class="chart-figure">
+    <svg viewBox="0 0 640 210" role="img" aria-label="Wykres poziomy: typowa struktura ceny klimatyzacji z montażem. Urządzenie około 55 procent, materiały instalacyjne około 20 procent, robocizna około 20 procent, uruchomienie i testy około 5 procent.">
+      <g>
+        <text class="chart-label" x="150" y="38" text-anchor="end">Urządzenie</text>
+        <rect class="chart-bar" x="162" y="24" width="237" height="18" rx="4"><title>Urządzenie: ok. 55% ceny</title></rect>
+        <text class="chart-value" x="407" y="38">≈ 55%</text>
+
+        <text class="chart-label" x="150" y="86" text-anchor="end">Materiały instalacyjne</text>
+        <rect class="chart-bar" x="162" y="72" width="86" height="18" rx="4"><title>Materiały: ok. 20% ceny</title></rect>
+        <text class="chart-value" x="256" y="86">≈ 20%</text>
+
+        <text class="chart-label" x="150" y="134" text-anchor="end">Robocizna</text>
+        <rect class="chart-bar" x="162" y="120" width="86" height="18" rx="4"><title>Robocizna: ok. 20% ceny</title></rect>
+        <text class="chart-value" x="256" y="134">≈ 20%</text>
+
+        <text class="chart-label" x="150" y="182" text-anchor="end">Uruchomienie i testy</text>
+        <rect class="chart-bar" x="162" y="168" width="22" height="18" rx="4"><title>Uruchomienie i testy: ok. 5% ceny</title></rect>
+        <text class="chart-value" x="192" y="182">≈ 5%</text>
+      </g>
+    </svg>
+    <figcaption>
+      Typowa struktura ceny kompletnej klimatyzacji z montażem w mieszkaniu (montaż standardowy,
+      2,5-3,5 kW). Opracowanie własne FRIGAC na podstawie realizacji z lat 2025-2026.
+    </figcaption>
+  </figure>
+
+  <h2>Co może podnieść cenę montażu</h2>
+  <h3>Długa trasa instalacji</h3>
+  <p>
+    Standardowa wycena zakłada kilka metrów instalacji między jednostkami. Każdy dodatkowy metr to
+    koszt materiałów i pracy, dlatego jednostki warto planować możliwie blisko siebie.
+  </p>
+  <h3>Trudny dostęp do miejsca montażu</h3>
+  <p>
+    Montaż jednostki zewnętrznej na elewacji wysokiego piętra może wymagać podnośnika lub technik
+    alpinistycznych. To najczęstszy powód wyższej wyceny w blokach.
+  </p>
+  <h3>Prace dodatkowe</h3>
+  <p>
+    Przeniesienie gniazdka, dłuższe prowadzenie skroplin czy nietypowe maskownice to drobne prace,
+    które doliczamy po ustaleniu zakresu, zawsze przed rozpoczęciem montażu.
+  </p>
+
+  <h2>Czy da się zamontować klimatyzację taniej?</h2>
+  <p>
+    Przestrzegamy przed oszczędzaniem na montażu: brak próżni w układzie czy źle poprowadzone
+    skropliny to najczęstsze przyczyny awarii i utraty gwarancji producenta. Realna oszczędność to
+    dobre zaplanowanie miejsca montażu, krótka trasa instalacji i wybór urządzenia dopasowanego do
+    metrażu, a nie na wyrost.
+  </p>
+
+  <h2>Podsumowanie</h2>
+  <p>
+    W 2026 roku za kompletną, porządnie zamontowaną klimatyzację do pokoju lub salonu zapłacisz od
+    około {PRICING.installFromPLN} zł. Widełki dla swojej konfiguracji policzysz w naszym
+    <a class="inline-link" href="/kalkulator-kosztow-klimatyzacji">kalkulatorze kosztów klimatyzacji</a>,
+    a dokładną cenę poznasz podczas kilkuminutowej rozmowy telefonicznej, bez wizji lokalnej
+    i bez zobowiązań.
+  </p>
+</ArticleLayout>

@@ -1,0 +1,123 @@
+---
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import CTAButton from '../components/CTAButton.astro';
+import Layout from '../components/Layout.astro';
+import { PHONE_TEL, SITE } from '../config/site';
+import { labels, pageMeta, routes } from '../i18n/content';
+
+const meta = pageMeta.tools;
+
+const tools = [
+  {
+    href: routes.calcPower,
+    title: 'Kalkulator mocy klimatyzacji',
+    description:
+      'Jaka moc klimatyzacji na Twój metraż? Policz kW i BTU z poprawką na nasłonecznienie, piętro i okna - z rekomendacją urządzenia.',
+    icon: 'power'
+  },
+  {
+    href: routes.calcCost,
+    title: 'Kalkulator kosztów klimatyzacji',
+    description:
+      'Ile kosztuje klimatyzacja z montażem? Oszacuj koszt dla mieszkania lub domu: split i multisplit, standard i premium.',
+    icon: 'cost'
+  },
+  {
+    href: routes.calcEnergy,
+    title: 'Ile prądu zużywa klimatyzacja?',
+    description:
+      'Policz koszt chłodzenia na dzień, miesiąc i sezon na podstawie mocy, klasy SEER, godzin pracy i ceny prądu.',
+    icon: 'energy'
+  }
+];
+
+const itemListSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Darmowe kalkulatory klimatyzacji FRIGAC',
+  itemListElement: tools.map((tool, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: tool.title,
+    url: new URL(tool.href, SITE.siteUrl).toString()
+  }))
+};
+---
+
+<Layout
+  title={meta.title}
+  description={meta.description}
+  keywords={meta.keywords}
+  currentPath={routes.tools}
+  extraSchema={[itemListSchema]}
+>
+  <Breadcrumbs items={[{ label: 'Narzędzia' }]} />
+
+  <section class="page-hero">
+    <div class="container" data-reveal>
+      <p class="eyebrow">Darmowe narzędzia</p>
+      <h1>Kalkulatory klimatyzacji online</h1>
+      <p>
+        Trzy bezpłatne narzędzia, których używamy także podczas wycen: dobór mocy klimatyzacji do
+        metrażu, szacunkowy koszt montażu i realny koszt prądu. Bez rejestracji, z wynikiem od razu.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container tool-cards" data-reveal>
+      {
+        tools.map((tool) => (
+          <a class="tool-card" href={tool.href}>
+            <span class="tool-card-icon" aria-hidden="true">
+              {tool.icon === 'power' && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12L13 2Z" />
+                </svg>
+              )}
+              {tool.icon === 'cost' && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M12 7v10M9.5 9.2c0-1 1.1-1.7 2.5-1.7s2.5.7 2.5 1.7c0 2.6-5 1.9-5 4.6 0 1 1.1 1.7 2.5 1.7s2.5-.7 2.5-1.7" />
+                </svg>
+              )}
+              {tool.icon === 'energy' && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 18h16M6 18v-6m4 6V8m4 10v-8m4 8V5" />
+                </svg>
+              )}
+            </span>
+            <h2>{tool.title}</h2>
+            <p>{tool.description}</p>
+            <span class="tool-card-cta">Uruchom kalkulator</span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section section-gray">
+    <div class="container content-grid" data-reveal>
+      <div class="plain-stack">
+        <h2>Po co te kalkulatory?</h2>
+        <p>
+          Dobór klimatyzacji zaczyna się od liczb: mocy chłodniczej w kW, metrażu, nasłonecznienia
+          i realnych kosztów energii. Nasze kalkulatory liczą to samo, co my podczas telefonicznej
+          wyceny - dzięki temu do rozmowy przychodzisz już z konkretem.
+        </p>
+        <p>
+          Pamiętaj, że wynik każdego kalkulatora jest orientacyjny. Ostateczny dobór mocy i wycenę
+          montażu zawsze potwierdzamy indywidualnie - bezpłatnie i bez zobowiązań.
+        </p>
+      </div>
+      <div class="plain-stack">
+        <h2>Wolisz porozmawiać?</h2>
+        <p>
+          Podaj metraż i miasto, a orientacyjną cenę klimatyzacji z montażem podamy w kilka minut -
+          działamy w Bydgoszczy, Toruniu i całym Trójmieście.
+        </p>
+        <CTAButton href={`tel:${PHONE_TEL}`} label={labels.callNow} ariaLabel={labels.callNow} />
+      </div>
+    </div>
+  </section>
+</Layout>
