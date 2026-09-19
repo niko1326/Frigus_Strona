@@ -45,15 +45,14 @@ export const HOURS = {
 
 export const BUSINESS = {
   teamSize: 2,
-  warrantyYears: 5,
   serviceType: 'Montaż klimatyzacji typu split',
   certifications: 'Certyfikaty F-gazowe: personel i przedsiębiorca'
 } as const;
 
 export const STATS = [
-  { value: '50+', label: 'zamontowanych klimatyzacji' },
+  { value: '20+', label: 'modeli do wyboru' },
   { value: '100%', label: 'zadowolonych klientów' },
-  { value: '5 lat', label: 'gwarancji na montaż' },
+  { value: '5 lat', label: 'gwarancji producenta na urządzenie' },
   { value: '30+', label: 'miejscowości w zasięgu realizacji' }
 ] as const;
 

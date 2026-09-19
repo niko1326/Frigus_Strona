@@ -14,7 +14,7 @@ export const ARTICLES: Article[] = [
     title: 'Jaką klimatyzację wybrać do mieszkania?',
     metaTitle: 'Jaka klimatyzacja do mieszkania? Poradnik | FRIGAC',
     description:
-      'Jaką klimatyzację wybrać do mieszkania w bloku? Podpowiadamy, jak dobrać moc do metrażu, na co zwrócić uwagę przy wyborze urządzenia i o jakich formalnościach pamiętać.',
+      'Jaką klimatyzację wybrać do mieszkania w bloku? Podpowiadamy, jak dobrać moc do metrażu, na co zwrócić uwagę przy wyborze urządzenia i jak zaplanować miejsce montażu.',
     keywords: [
       'jaka klimatyzacja do mieszkania',
       'klimatyzacja do mieszkania w bloku',
@@ -23,7 +23,7 @@ export const ARTICLES: Article[] = [
     ],
     datePublished: '2026-08-20',
     excerpt:
-      'Moc dopasowana do metrażu, cicha praca i zgoda wspólnoty: trzy rzeczy, od których warto zacząć wybór klimatyzacji do mieszkania.'
+      'Moc dopasowana do warunków mieszkania, cicha praca i miejsce montażu: trzy rzeczy, od których warto zacząć wybór klimatyzacji do mieszkania.'
   },
   {
     slug: 'ile-kosztuje-montaz-klimatyzacji',
@@ -55,6 +55,6 @@ export const ARTICLES: Article[] = [
     ],
     datePublished: '2026-09-01',
     excerpt:
-      'Raz w roku to rozsądne minimum. Zobacz, co dokładnie dzieje się podczas przeglądu i po czym poznać, że klimatyzacja wymaga czyszczenia.'
+      'Przy typowym użytkowaniu coroczny przegląd jest rozsądnym punktem wyjścia. Sprawdź, jak dopasować częstotliwość do pracy urządzenia i warunków gwarancji producenta.'
   }
 ];

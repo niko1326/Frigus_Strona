@@ -51,7 +51,6 @@ export const routes: Record<PageKey, string> = {
 export const navLinks: NavLink[] = [
   { href: routes.services, label: 'Usługi' },
   { href: routes.pricing, label: 'Cennik' },
-  { href: routes.tools, label: 'Narzędzia' },
   { href: routes.about, label: 'O nas' },
   { href: routes.blog, label: 'Porady' },
   { href: routes.faq, label: 'FAQ' },
@@ -77,7 +76,7 @@ export const pageMeta: Record<PageKey, PageMeta> = {
   home: {
     title: 'Klimatyzacja Bydgoszcz i Gdańsk - montaż od 3499 zł | FRIGAC',
     description:
-      'Klimatyzacja Bydgoszcz, Gdańsk, Gdynia, Sopot i Toruń. Montaż klimatyzacji z urządzeniem od 3499 zł, także w bloku. Czysty montaż w 1 dzień, 5 lat gwarancji. Zadzwoń po darmową wycenę.',
+      'Klimatyzacja Bydgoszcz, Gdańsk, Gdynia, Sopot i Toruń. Montaż klimatyzacji z urządzeniem od 3499 zł, także w bloku. Standardowy montaż w 1 dzień, 5 lat gwarancji producenta. Zadzwoń po darmową wycenę.',
     keywords: [
       'klimatyzacja Bydgoszcz',
       'montaż klimatyzacji Bydgoszcz',
@@ -116,12 +115,12 @@ export const pageMeta: Record<PageKey, PageMeta> = {
   faq: {
     title: 'Montaż klimatyzacji: najczęstsze pytania | FRIGAC',
     description:
-      'Ile trwa montaż klimatyzacji? Czy potrzebna jest zgoda wspólnoty? Jaka jest gwarancja? Odpowiadamy na najczęstsze pytania o montaż i serwis klimatyzacji w mieszkaniu i domu.',
+      'Ile trwa montaż klimatyzacji? Jak dobieramy miejsce montażu? Jaka jest gwarancja? Odpowiadamy na najczęstsze pytania o montaż i serwis klimatyzacji w mieszkaniu i domu.',
     keywords: [
       'montaż klimatyzacji pytania',
       'ile trwa montaż klimatyzacji',
-      'zgoda wspólnoty klimatyzacja',
-      'gwarancja na montaż klimatyzacji'
+      'miejsce montażu klimatyzacji',
+      'gwarancja producenta klimatyzacji'
     ]
   },
   contact: {
@@ -138,7 +137,7 @@ export const pageMeta: Record<PageKey, PageMeta> = {
   about: {
     title: 'O nas: certyfikowani instalatorzy klimatyzacji | FRIGAC',
     description:
-      'Poznaj zespół FRIGAC: certyfikowani instalatorzy klimatyzacji (F-gazy) z Bydgoszczy i Trójmiasta. Ponad 50 zamontowanych klimatyzacji, czysty montaż i 5 lat gwarancji.',
+      'Poznaj zespół FRIGAC: certyfikowani instalatorzy klimatyzacji (F-gazy) z Bydgoszczy i Trójmiasta. Ponad 20 modeli do wyboru, czysty montaż i 5 lat gwarancji producenta.',
     keywords: [
       'instalator klimatyzacji Bydgoszcz',
       'firma klimatyzacyjna Trójmiasto',
@@ -159,7 +158,7 @@ export const pageMeta: Record<PageKey, PageMeta> = {
   bydgoszcz: {
     title: 'Klimatyzacja Bydgoszcz - montaż klimatyzacji od 3499 zł | FRIGAC',
     description:
-      'Klimatyzacja Bydgoszcz: montaż klimatyzacji w mieszkaniu, bloku i domu - Fordon, Osowa Góra, Szwederowo, Osielsko, Białe Błota, Toruń. Klimatyzator z montażem od 3499 zł, 5 lat gwarancji.',
+      'Klimatyzacja Bydgoszcz: montaż klimatyzacji w mieszkaniu, bloku i domu - Fordon, Osowa Góra, Szwederowo, Osielsko, Białe Błota, Toruń. Klimatyzator z montażem od 3499 zł, 5 lat gwarancji producenta.',
     keywords: [
       'klimatyzacja Bydgoszcz',
       'montaż klimatyzacji Bydgoszcz',
@@ -172,7 +171,7 @@ export const pageMeta: Record<PageKey, PageMeta> = {
   trojmiasto: {
     title: 'Klimatyzacja Gdańsk, Gdynia, Sopot - montaż | FRIGAC',
     description:
-      'Klimatyzacja Gdańsk, Gdynia i Sopot: montaż klimatyzacji w apartamentach, mieszkaniach w bloku i domach. Klimatyzator z montażem od 3499 zł, czysty montaż w 1 dzień, 5 lat gwarancji.',
+      'Klimatyzacja Gdańsk, Gdynia i Sopot: montaż klimatyzacji w apartamentach, mieszkaniach w bloku i domach. Klimatyzator z montażem od 3499 zł, standardowy montaż w 1 dzień, 5 lat gwarancji producenta.',
     keywords: [
       'klimatyzacja Gdańsk',
       'montaż klimatyzacji Gdańsk',
@@ -185,7 +184,7 @@ export const pageMeta: Record<PageKey, PageMeta> = {
   gree: {
     title: 'Klimatyzatory Gree z montażem od 3499 zł | FRIGAC',
     description:
-      'Klimatyzacja Gree Bydgoszcz, Toruń i Trójmiasto: montujemy ciche jednostki split Gree z Wi-Fi, grzaniem zimą i wysoką klasą energetyczną. Gree z montażem od 3499 zł, 5 lat gwarancji na montaż.',
+      'Klimatyzacja Gree Bydgoszcz, Toruń i Trójmiasto: montujemy ciche jednostki split Gree z Wi-Fi, grzaniem zimą i wysoką klasą energetyczną. Gree z montażem od 3499 zł, 5 lat gwarancji producenta.',
     keywords: [
       'klimatyzacja Gree Bydgoszcz',
       'klimatyzator Gree montaż',
@@ -197,7 +196,7 @@ export const pageMeta: Record<PageKey, PageMeta> = {
   kaisai: {
     title: 'Klimatyzatory Kaisai z montażem od 3499 zł | FRIGAC',
     description:
-      'Klimatyzacja Kaisai Bydgoszcz, Toruń i Trójmiasto: montujemy ścienne jednostki split Kaisai ze sterowaniem Wi-Fi i grzaniem zimą. Kaisai z montażem od 3499 zł, 5 lat gwarancji na montaż.',
+      'Klimatyzacja Kaisai Bydgoszcz, Toruń i Trójmiasto: montujemy ścienne jednostki split Kaisai ze sterowaniem Wi-Fi i grzaniem zimą. Kaisai z montażem od 3499 zł, 5 lat gwarancji producenta.',
     keywords: [
       'klimatyzator Kaisai montaż',
       'klimatyzacja Kaisai Bydgoszcz',
@@ -220,7 +219,7 @@ export const pageMeta: Record<PageKey, PageMeta> = {
   calcPower: {
     title: 'Kalkulator mocy klimatyzacji - jaka moc na m2? | FRIGAC',
     description:
-      'Kalkulator klimatyzacji online: policz, jaka moc klimatyzacji do mieszkania, domu lub biura. Ile kW i BTU na m2, poprawka na nasłonecznienie i piętro, rekomendowane urządzenie i koszt montażu.',
+      'Kalkulator mocy klimatyzacji online: orientacyjny dobór kW i BTU dla jednej strefy z korektą wysokości, nasłonecznienia, położenia i dużych przeszkleń.',
     keywords: [
       'kalkulator klimatyzacji',
       'kalkulator mocy klimatyzacji',
@@ -235,7 +234,7 @@ export const pageMeta: Record<PageKey, PageMeta> = {
   calcCost: {
     title: 'Ile kosztuje klimatyzacja? Kalkulator kosztów | FRIGAC',
     description:
-      'Kalkulator kosztów klimatyzacji: policz orientacyjny koszt klimatyzacji z montażem dla mieszkania lub domu - split i multisplit, standard i premium - oraz szacunkowy koszt energii na sezon.',
+      'Kalkulator kosztów klimatyzacji: poznaj orientacyjne widełki ceny urządzenia ze standardowym montażem. Podaj liczbę pomieszczeń, ich metraż, priorytet i długość instalacji.',
     keywords: [
       'ile kosztuje klimatyzacja',
       'kalkulator kosztów klimatyzacji',

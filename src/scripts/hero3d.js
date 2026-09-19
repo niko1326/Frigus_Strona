@@ -9,11 +9,14 @@ import {
   ACESFilmicToneMapping,
   AdditiveBlending,
   AmbientLight,
+  Box3,
   CanvasTexture,
   DirectionalLight,
   DoubleSide,
   ExtrudeGeometry,
   Group,
+  HemisphereLight,
+  MathUtils,
   Mesh,
   MeshBasicMaterial,
   MeshPhysicalMaterial,
@@ -26,8 +29,10 @@ import {
   Shape,
   SRGBColorSpace,
   Vector2,
+  Vector3,
   WebGLRenderer
 } from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 const BG = 0x0d1117;
 
@@ -132,8 +137,9 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
   // "szklany" napis FRIGAC (.hero-ghost).
   const renderer = new WebGLRenderer({ antialias: true, alpha: true });
   renderer.setClearColor(BG, 0);
+  renderer.outputColorSpace = SRGBColorSpace;
   renderer.toneMapping = ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.5;
+  renderer.toneMappingExposure = 1.35;
   stage.appendChild(renderer.domElement);
 
   const scene = new Scene();
@@ -141,26 +147,29 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
   const camera = new PerspectiveCamera(34, 1, 0.1, 60);
 
   // ---------- światła ----------
-  scene.add(new AmbientLight(0xffffff, 0.55));
+  scene.add(new AmbientLight(0xffffff, 1.05));
+  scene.add(new HemisphereLight(0xffffff, 0x17212c, 1.25));
 
-  const key = new DirectionalLight(0xffffff, 3.6);
+  const key = new DirectionalLight(0xffffff, 4.4);
   key.position.set(3, 5, 6);
   scene.add(key);
 
-  const rim = new DirectionalLight(0x56b7ff, 1.7);
+  const rim = new DirectionalLight(0x8fd0ff, 0.8);
   rim.position.set(-6, 2, -4);
   scene.add(rim);
 
-  const fill = new DirectionalLight(0xd4e4f7, 0.9);
+  const fill = new DirectionalLight(0xf2f7ff, 1.8);
   fill.position.set(-2, -3, 5);
   scene.add(fill);
 
-  const glow = new PointLight(0x2f9dff, 14, 18, 2);
+  const glow = new PointLight(0x2f9dff, 9, 18, 2);
   glow.position.set(0, -2.4, 1.6);
   scene.add(glow);
 
   // ---------- jednostka ----------
   const unit = new Group();
+  const proceduralUnit = new Group();
+  unit.add(proceduralUnit);
 
   const bodyMat = new MeshPhysicalMaterial({
     color: 0xf9fbfd,
@@ -171,31 +180,31 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
   });
 
   const body = new Mesh(roundedBox(4.6, 1.5, 1.0, 0.34), bodyMat);
-  unit.add(body);
+  proceduralUnit.add(body);
 
   // zaokrąglony front (panel)
   const panel = new Mesh(roundedBox(4.44, 1.34, 0.16, 0.3), bodyMat.clone());
   panel.material.color.set(0xffffff);
   panel.position.z = 0.52;
-  unit.add(panel);
+  proceduralUnit.add(panel);
 
   // szczelina wylotu powietrza
   const ventMat = new MeshStandardMaterial({ color: 0x2a3038, roughness: 0.7, metalness: 0.1 });
   const vent = new Mesh(roundedBox(3.9, 0.24, 0.1, 0.1), ventMat);
   vent.position.set(0, -0.56, 0.58);
-  unit.add(vent);
+  proceduralUnit.add(vent);
 
   // żaluzja — otwiera się w intro
   const louver = new Mesh(roundedBox(3.86, 0.2, 0.05, 0.08), bodyMat.clone());
   louver.position.set(0, -0.56, 0.62);
   louver.geometry.translate(0, 0.1, 0);
-  unit.add(louver);
+  proceduralUnit.add(louver);
 
   // pasek LED + wyświetlacz temperatury
   const ledMat = new MeshBasicMaterial({ color: 0x56b7ff });
   const led = new Mesh(roundedBox(0.5, 0.05, 0.02, 0.02), ledMat);
   led.position.set(-1.7, 0.42, 0.62);
-  unit.add(led);
+  proceduralUnit.add(led);
 
   const tempTex = labelTexture('21°', { size: 78, color: '#56b7ff', weight: 600, tracking: 0 });
   const temp = new Mesh(
@@ -203,7 +212,7 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
     new MeshBasicMaterial({ map: tempTex, transparent: true })
   );
   temp.position.set(1.55, 0.42, 0.625);
-  unit.add(temp);
+  proceduralUnit.add(temp);
 
   const brandTex = labelTexture(brand, { size: 60, color: '#9aa7b3', weight: 700, tracking: 16 });
   const brandLabel = new Mesh(
@@ -211,11 +220,67 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
     new MeshBasicMaterial({ map: brandTex, transparent: true, opacity: 0.95 })
   );
   brandLabel.position.set(0, -0.18, 0.625);
-  unit.add(brandLabel);
+  proceduralUnit.add(brandLabel);
 
   scene.add(unit);
 
+  // Dla marki GREE podmieniamy model proceduralny na właściwy model Pular PRO.
+  // Model jest normalizowany do tej samej szerokości, dzięki czemu zachowuje
+  // dotychczasową responsywną kompozycję HERO.
+  if (brand.toUpperCase() === 'GREE') {
+    const loader = new GLTFLoader();
+    loader.load(
+      '/modele3d/pular_pro2.glb',
+      (gltf) => {
+        const model = gltf.scene;
+        const whiteShellMaterial = new MeshPhysicalMaterial({
+          color: 0xffffff,
+          roughness: 0.32,
+          metalness: 0.02,
+          clearcoat: 0.5,
+          clearcoatRoughness: 0.3
+        });
+        const initialBox = new Box3().setFromObject(model);
+        const size = initialBox.getSize(new Vector3());
+        const modelScale = size.x > 0 ? 4.7 / size.x : 1;
+        model.scale.setScalar(modelScale);
+        model.updateMatrixWorld(true);
+
+        const normalizedBox = new Box3().setFromObject(model);
+        const center = normalizedBox.getCenter(new Vector3());
+        model.position.sub(center);
+        model.updateMatrixWorld(true);
+
+        model.traverse((object) => {
+          if (!object.isMesh) return;
+          if (object.material?.name === 'Spray') {
+            // Plik ma ciemną teksturę demonstracyjną „SprayDark2”, choć
+            // obudowa wariantu Pular PRO jest biała. Pozostałe materiały
+            // (logo, szczeliny, wyświetlacz) zachowujemy bez zmian.
+            object.material = whiteShellMaterial;
+          }
+          object.castShadow = false;
+          object.receiveShadow = false;
+        });
+
+        unit.add(model);
+        proceduralUnit.visible = false;
+
+        // Przy ograniczonym ruchu nie działa pętla renderująca, więc po
+        // załadowaniu modelu trzeba jawnie odświeżyć gotową klatkę.
+        if (prefersReduced || userPaused) renderer.render(scene, camera);
+      },
+      undefined,
+      () => {
+        // W razie problemu z plikiem pozostaje dotychczasowy model zapasowy.
+      }
+    );
+  }
+
   // ---------- strumień powietrza: świetlny stożek + miękkie kłęby mgły ----------
+  const airProfile = brand.toUpperCase() === 'GREE'
+    ? { outletY: -0.64, outletZ: 0.59, spread: 1.08 }
+    : { outletY: -0.62, outletZ: 0.62, spread: 1 };
   const beam = new Mesh(
     new PlaneGeometry(3.6, 3.0),
     new MeshBasicMaterial({
@@ -228,7 +293,7 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
     })
   );
   beam.geometry.translate(0, -1.5, 0);
-  beam.position.set(0, -0.62, 0.62);
+  beam.position.set(0, airProfile.outletY, airProfile.outletZ);
   beam.rotation.x = -0.85;
   unit.add(beam);
 
@@ -270,9 +335,9 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
         const u = i / SEG;
         // fala wędrująca w dół strumienia + poszerzanie się nawiewu
         const wave = Math.sin(u * 7.5 - t * def.speed + def.phase) * def.amp * (0.25 + u);
-        const px = def.x0 + def.drift * u + wave;
-        const py = -0.66 - 2.7 * u * u + Math.sin(u * 11 - t * def.speed * 1.35 + def.phase) * 0.04;
-        const pz = 0.62 + 2.3 * u;
+        const px = (def.x0 + def.drift * u + wave) * airProfile.spread;
+        const py = airProfile.outletY - 0.04 - 2.7 * u * u + Math.sin(u * 11 - t * def.speed * 1.35 + def.phase) * 0.04;
+        const pz = airProfile.outletZ + 2.3 * u;
         const w = def.width * (0.45 + u * 1.1);
         // górna i dolna krawędź wstęgi
         pos[i * 3] = px - w / 2;
@@ -295,7 +360,7 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
   // zawsze miał zapas co najmniej GAP_PX.
   const GAP_PX = 44;
   const UNIT_EFFECTIVE_W = 5.2; // szerokość jednostki w świecie, z zapasem na obrót
-  let comp = { unitX: 2.6, unitY: 0.35, rotY: -0.38, camY: 0.1, camZ: 8.6, lookX: 0, scale: 0.88 };
+  let comp = { unitX: 2.6, unitY: 0.35, rotY: -0.18, camY: 0.1, camZ: 8.6, lookX: 0, scale: 0.88 };
 
   function layout() {
     const w = stage.clientWidth;
@@ -305,7 +370,25 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
     camera.aspect = w / h;
 
     if (w < 900) {
-      comp = { unitX: 0, unitY: -2.45, rotY: -0.15, camY: -0.5, camZ: 11.5, lookX: 0, scale: 0.62 };
+      const camZ = 11.5;
+      const camY = -0.5;
+      const worldH = 2 * camZ * Math.tan(((34 / 2) * Math.PI) / 180);
+      const stageRect = stage.getBoundingClientRect();
+      const trustRect = document.querySelector('.hero-trust')?.getBoundingClientRect();
+      const chipRect = document.querySelector('.brand-chip')?.getBoundingClientRect();
+      const availableTop = trustRect ? trustRect.bottom - stageRect.top + 18 : h * 0.62;
+      const availableBottom = chipRect ? chipRect.top - stageRect.top - 18 : h - 90;
+      const scale = Math.min(0.62, 0.34 + w * 0.0005);
+      const modelHalfPx = (0.9 * scale * h) / worldH;
+      const idealCenter = (availableTop + availableBottom) / 2;
+      const minCenter = availableTop + modelHalfPx;
+      const maxCenter = availableBottom - modelHalfPx;
+      const centerPx = minCenter <= maxCenter
+        ? Math.min(Math.max(idealCenter, minCenter), maxCenter)
+        : idealCenter;
+      const unitY = camY - ((centerPx - h / 2) / h) * worldH - 0.18;
+
+      comp = { unitX: 0, unitY, rotY: -0.06, camY, camZ, lookX: 0, scale };
     } else {
       const camZ = 8.6;
       const camY = 0.1;
@@ -337,7 +420,7 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
       const unitRightWorld = (bandRightPx - w / 2) * worldPerPx;
       const unitX = unitRightWorld - (UNIT_EFFECTIVE_W / 2) * scale;
 
-      comp = { unitX, unitY: 0.35, rotY: -0.38, camY, camZ, lookX: 0, scale };
+      comp = { unitX, unitY: 0.35, rotY: -0.18, camY, camZ, lookX: 0, scale };
     }
 
     unit.scale.setScalar(comp.scale);
@@ -355,8 +438,8 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
     const r = stage.getBoundingClientRect();
     const nx = ((e.clientX - r.left) / r.width) * 2 - 1;
     const ny = ((e.clientY - r.top) / r.height) * 2 - 1;
-    targetRY = nx * 0.16;
-    targetRX = ny * 0.08;
+    targetRY = nx * 0.34;
+    targetRX = ny * 0.16;
   };
   if (!prefersReduced) {
     window.addEventListener('pointermove', onPointer, { passive: true });
@@ -388,7 +471,7 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
 
     // intro: 0-2.2 s — kamera dolatuje, jednostka obraca się do pozycji
     const intro = easeOut(Math.min(t / 2.2, 1));
-    const spin = (1 - intro) * -1.3;
+    const spin = (1 - intro) * -0.25;
 
     camera.position.set(
       (1 - intro) * 2.2,
@@ -397,8 +480,18 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
     );
     camera.lookAt(comp.lookX, comp.camY, 0);
 
-    unit.rotation.y = comp.rotY + spin + targetRY * intro + Math.sin(t * 0.4) * 0.02;
-    unit.rotation.x = targetRX * intro + Math.cos(t * 0.55) * 0.012;
+    // Urządzenie pozostaje zwrócone frontem do użytkownika. Ograniczenie
+    // obejmuje intro, parallax kursora i delikatny ruch spoczynkowy.
+    unit.rotation.y = MathUtils.clamp(
+      comp.rotY + spin + targetRY * intro + Math.sin(t * 0.4) * 0.035,
+      -0.58,
+      0.38
+    );
+    unit.rotation.x = MathUtils.clamp(
+      targetRX * intro + Math.cos(t * 0.55) * 0.02,
+      -0.18,
+      0.18
+    );
     unit.position.x = comp.unitX;
     unit.position.y = comp.unitY + Math.sin(t * 0.8) * 0.02;
 

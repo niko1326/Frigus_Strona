@@ -1,44 +1,24 @@
 ---
-import { BRANDS } from '../config/brands';
 import { SITE, PHONE_TEL } from '../config/site';
 import { labels, navLinks, routes } from '../i18n/content';
 import IconPhone from './icons/IconPhone.astro';
-import IconWrench from './icons/IconWrench.astro';
 
-interface Props {
-  currentPath: string;
-}
-
+interface Props { currentPath: string }
 const { currentPath } = Astro.props;
-
-const normalize = (path: string): string => {
-  if (path !== '/' && path.endsWith('/')) {
-    return path.slice(0, -1);
-  }
-
-  return path;
-};
-
-const current = normalize(currentPath);
-
-// Pozycja "Narzędzia" rozwija panel z markami i samą stroną narzędzi.
-const menuItems = [
-  ...BRANDS.map((brand) => ({
-    href: brand.href,
-    wordmark: brand.name,
-    label: brand.linkLabel,
-    icon: false
-  })),
-  {
-    href: routes.tools,
-    wordmark: null,
-    label: 'Narzędzia',
-    icon: true
-  }
+const current = currentPath.replace(/\/$/, '') || '/';
+type Item = { label: string; href?: string; id?: string; children?: { label: string; href: string }[] };
+const items: Item[] = [
+  ...navLinks.slice(0, 2),
+  { label: 'Klimatyzatory', id: 'air-conditioners', children: [
+    { label: 'Klimatyzatory GREE', href: routes.gree },
+    { label: 'Klimatyzatory KAISAI', href: routes.kaisai }
+  ] },
+  { label: 'Kalkulatory', id: 'calculators', children: [
+    { label: 'Kalkulator mocy klimatyzacji', href: routes.calcPower },
+    { label: 'Kalkulator kosztu klimatyzacji', href: routes.calcCost }
+  ] },
+  ...navLinks.slice(2)
 ];
-
-const menuPaths = menuItems.map((item) => normalize(item.href));
-const menuActive = menuPaths.includes(current);
 ---
 
 <header class="site-header">
@@ -47,192 +27,109 @@ const menuActive = menuPaths.includes(current);
     <a class="brand" href="/" aria-label={`${SITE.brandName} - strona główna`}>
       {SITE.brandName}<span class="brand-dot" aria-hidden="true"></span>
     </a>
-    <nav class="site-nav" aria-label={labels.navAria}>
-      <ul>
-        {
-          navLinks.map((link) => {
-            const active = current === normalize(link.href);
-
-            if (link.href === routes.tools) {
-              return (
-                <li class="nav-has-menu">
-                  <button
-                    type="button"
-                    class={`nav-trigger${menuActive ? ' is-active' : ''}`}
-                    id="nav-tools-trigger"
-                    aria-expanded="false"
-                    aria-controls="nav-tools-menu"
-                    aria-haspopup="true"
-                    data-nav-trigger
-                  >
-                    {link.label}
-                    <svg class="nav-caret" viewBox="0 0 16 16" aria-hidden="true">
-                      <path
-                        d="M4 6.5 8 10.5 12 6.5"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
-                  </button>
-                </li>
-              );
-            }
-
-            return (
-              <li>
-                <a class={active ? 'is-active' : ''} href={link.href}>
-                  {link.label}
-                </a>
-              </li>
-            );
-          })
-        }
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="Otwórz menu">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path class="hamburger" d="M4 6h16M4 12h16M4 18h16" /><path class="close-icon" d="m6 6 12 12M6 18 18 6" /></svg>
+    </button>
+    <nav class="site-nav" id="primary-navigation" aria-label={labels.navAria}>
+      <ul class="nav-list">
+        {items.map((item) => (
+          <li class={item.children ? 'nav-has-menu' : undefined}>
+            {item.children ? <>
+              <button type="button" class:list={['nav-trigger', { 'is-active': item.children.some(link => link.href === current) }]}
+                id={`nav-${item.id}-trigger`} aria-expanded="false" aria-controls={`nav-${item.id}-menu`} aria-haspopup="true">
+                {item.label}
+                <svg class="nav-caret" viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              </button>
+              <div class="nav-menu" id={`nav-${item.id}-menu`} hidden>
+                <ul>
+                  {item.children.map(link => <li><a href={link.href} class:list={{ 'is-active': current === link.href }} aria-current={current === link.href ? 'page' : undefined}>{link.label}</a></li>)}
+                </ul>
+              </div>
+            </> : <a href={item.href} class:list={{ 'is-active': current === item.href }} aria-current={current === item.href ? 'page' : undefined}>{item.label}</a>}
+          </li>
+        ))}
       </ul>
     </nav>
     <div class="header-actions">
       <a class="header-cta" href={`tel:${PHONE_TEL}`} aria-label={labels.phoneAria}>
-        <IconPhone class="icon" />
-        <span>{labels.freeQuote}</span>
+        <IconPhone class="icon" /><span>{labels.freeQuote}</span>
       </a>
     </div>
-  </div>
-
-  <div
-    class="nav-menu"
-    id="nav-tools-menu"
-    role="group"
-    aria-labelledby="nav-tools-trigger"
-    data-nav-menu
-    hidden
-  >
-    <ul>
-      {
-        menuItems.map((item) => (
-          <li>
-            <a
-              href={item.href}
-              class={`nav-menu-link${current === normalize(item.href) ? ' is-active' : ''}`}
-              aria-label={item.label}
-            >
-              <span class="nav-menu-mark">
-                {item.icon ? (
-                  <>
-                    <IconWrench class="nav-menu-icon" />
-                    <span class="nav-menu-text">{item.label}</span>
-                  </>
-                ) : (
-                  <span class="nav-menu-wordmark">{item.wordmark}</span>
-                )}
-              </span>
-              <svg class="nav-menu-arrow" viewBox="0 0 24 24" aria-hidden="true">
-                <path
-                  d="M4 12h15M13 6l6 6-6 6"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.8"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
   </div>
 </header>
 
 <script>
-  const trigger = document.querySelector<HTMLButtonElement>('[data-nav-trigger]');
-  const menu = document.querySelector<HTMLElement>('[data-nav-menu]');
-
-  if (trigger && menu) {
-    const links = Array.from(menu.querySelectorAll<HTMLAnchorElement>('a'));
-
-    /*
-      Pasek nawigacji przewija się poziomo (overflow-x), więc panel osadzony
-      w środku byłby przycięty. Trzymamy go poza paskiem i pozycjonujemy
-      na sztywno względem okna, przyklejony do przycisku.
-    */
-    const place = () => {
-      const box = trigger.getBoundingClientRect();
-      const width = menu.offsetWidth;
-      const margin = 12;
-      const maxLeft = window.innerWidth - width - margin;
-      const left = Math.max(margin, Math.min(box.left, maxLeft));
-
-      menu.style.top = `${box.bottom + 8}px`;
-      menu.style.left = `${left}px`;
-    };
-
-    const isOpen = () => trigger.getAttribute('aria-expanded') === 'true';
-
-    const open = () => {
-      menu.hidden = false;
-      place();
-      // klasa dopiero po ustawieniu pozycji, żeby animacja startowała w miejscu
-      requestAnimationFrame(() => menu.classList.add('is-open'));
-      trigger.setAttribute('aria-expanded', 'true');
-    };
-
-    const close = (returnFocus = false) => {
-      menu.classList.remove('is-open');
-      trigger.setAttribute('aria-expanded', 'false');
-      window.setTimeout(() => {
-        if (!isOpen()) menu.hidden = true;
-      }, 160);
-      if (returnFocus) trigger.focus();
-    };
-
-    trigger.addEventListener('click', (event) => {
-      event.stopPropagation();
-      if (isOpen()) close();
+  const header = document.querySelector<HTMLElement>('.site-header')!;
+  const nav = header.querySelector<HTMLElement>('.site-nav')!;
+  const toggle = header.querySelector<HTMLButtonElement>('.nav-toggle')!;
+  const mobile = window.matchMedia('(max-width: 1199.98px)');
+  const groups = Array.from(header.querySelectorAll<HTMLElement>('.nav-has-menu')).map(element => ({
+    element,
+    button: element.querySelector<HTMLButtonElement>('.nav-trigger')!,
+    panel: element.querySelector<HTMLElement>('.nav-menu')!
+  }));
+  const setGroup = (group: typeof groups[number], open: boolean) => {
+    group.button.setAttribute('aria-expanded', String(open));
+    group.panel.hidden = !open;
+  };
+  const closeGroups = () => groups.forEach(group => setGroup(group, false));
+  const setMobile = (open: boolean, restoreFocus = false) => {
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Zamknij menu' : 'Otwórz menu');
+    nav.classList.toggle('is-open', open);
+    nav.hidden = mobile.matches && !open;
+    if (!open) closeGroups();
+    if (restoreFocus) toggle.focus();
+  };
+  toggle.addEventListener('click', () => setMobile(toggle.getAttribute('aria-expanded') !== 'true'));
+  groups.forEach(group => {
+    const open = () => { closeGroups(); setGroup(group, true); };
+    group.button.addEventListener('click', () => {
+      if (group.button.getAttribute('aria-expanded') === 'true') setGroup(group, false);
       else open();
     });
-
-    trigger.addEventListener('keydown', (event) => {
-      if (event.key === 'ArrowDown') {
-        event.preventDefault();
-        if (!isOpen()) open();
-        links[0]?.focus();
+    group.element.addEventListener('pointerenter', event => {
+      if (!mobile.matches && event.pointerType === 'mouse') open();
+    });
+    group.element.addEventListener('pointerleave', () => {
+      if (!mobile.matches && !group.element.contains(document.activeElement)) setGroup(group, false);
+    });
+    group.button.addEventListener('keydown', event => {
+      if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+        event.preventDefault(); open();
+        const links = group.panel.querySelectorAll<HTMLAnchorElement>('a');
+        links[event.key === 'ArrowDown' ? 0 : links.length - 1]?.focus();
       }
     });
-
-    menu.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') {
-        event.preventDefault();
-        close(true);
-        return;
-      }
-
-      if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
+    group.panel.addEventListener('keydown', event => {
+      if (!['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) return;
       event.preventDefault();
+      const links = Array.from(group.panel.querySelectorAll<HTMLAnchorElement>('a'));
       const index = links.indexOf(document.activeElement as HTMLAnchorElement);
-      const next =
-        event.key === 'ArrowDown'
-          ? (index + 1) % links.length
-          : (index - 1 + links.length) % links.length;
+      const next = event.key === 'Home' ? 0 : event.key === 'End' ? links.length - 1 : (index + (event.key === 'ArrowDown' ? 1 : -1) + links.length) % links.length;
       links[next]?.focus();
     });
-
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && isOpen()) close(true);
+    group.element.addEventListener('focusout', event => {
+      if (!group.element.contains(event.relatedTarget as Node | null)) setGroup(group, false);
     });
-
-    document.addEventListener('click', (event) => {
-      if (!isOpen()) return;
-      const target = event.target as Node;
-      if (!menu.contains(target) && !trigger.contains(target)) close();
-    });
-
-    // Panel jest przyklejony do przycisku, więc musi nadążać za układem.
-    window.addEventListener('resize', () => (isOpen() ? place() : undefined));
-    window.addEventListener('scroll', () => (isOpen() ? place() : undefined), { passive: true });
-    document
-      .querySelector('.site-nav ul')
-      ?.addEventListener('scroll', () => (isOpen() ? place() : undefined), { passive: true });
-  }
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key !== 'Escape') return;
+    const opened = groups.find(group => group.button.getAttribute('aria-expanded') === 'true');
+    if (opened) { event.preventDefault(); setGroup(opened, false); opened.button.focus(); }
+    else if (mobile.matches && toggle.getAttribute('aria-expanded') === 'true') { event.preventDefault(); setMobile(false, true); }
+  });
+  document.addEventListener('click', event => {
+    if (!header.contains(event.target as Node)) setMobile(false);
+  });
+  header.addEventListener('focusout', event => {
+    if (!header.contains(event.relatedTarget as Node | null)) setMobile(false);
+  });
+  nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setMobile(false)));
+  mobile.addEventListener('change', () => {
+    const focusInNav = nav.contains(document.activeElement);
+    setMobile(false, mobile.matches && focusInNav);
+  });
+  window.addEventListener('pageshow', () => setMobile(false));
+  setMobile(false);
 </script>

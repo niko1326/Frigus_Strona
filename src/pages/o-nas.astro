@@ -45,8 +45,8 @@ const meta = pageMeta.about;
       <div class="plain-stack">
         <h2>Dlaczego klienci nas polecają</h2>
         <ul class="bullet-list">
-          <li>Certyfikaty F-gazowe dla personelu i przedsiębiorcy, wymagane przy pracy z czynnikiem chłodniczym.</li>
-          <li>{BUSINESS.warrantyYears} lat gwarancji na każdy montaż, potwierdzone na piśmie.</li>
+          <li>Certyfikaty F-gazowe dla personelu i przedsiębiorcy, wymagane przy pracy z czynnikiem chłodniczym. <a class="qualifications-link" href="/certyfikaty">Zobacz nasze certyfikaty i <span>uprawnienia →</span></a></li>
+          <li>5 lat gwarancji producenta na urządzenie, zgodnie z jego warunkami.</li>
           <li>Czysty montaż: zabezpieczamy podłogi i meble, a po pracy sprzątamy.</li>
           <li>Uczciwe doradztwo: proponujemy urządzenie dopasowane do metrażu i budżetu, a nie najdroższe z oferty.</li>
         </ul>
@@ -108,3 +108,10 @@ const meta = pageMeta.about;
     </div>
   </section>
 </Layout>
+
+<style>
+  .qualifications-link { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+  .qualifications-link span { white-space: nowrap; }
+  .qualifications-link:hover { color: var(--ink); }
+  .qualifications-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+</style>

@@ -14,8 +14,8 @@ const article = ARTICLES.find((entry) => entry.slug === 'jaka-klimatyzacja-do-mi
 
   <h2>Jaka moc klimatyzacji do mieszkania?</h2>
   <p>
-    Najprostsza reguła: około 100 W mocy chłodniczej na 1 m² pomieszczenia o standardowej wysokości.
-    W praktyce oznacza to:
+    Orientacyjny przelicznik to około 100 W mocy chłodniczej na 1 m² pomieszczenia o standardowej wysokości.
+    Poniższe przykłady są punktem wyjścia, a nie gotowym doborem urządzenia:
   </p>
   <ul class="bullet-list">
     <li>pokój do 25 m²: urządzenie 2,5 kW,</li>
@@ -23,38 +23,39 @@ const article = ARTICLES.find((entry) => entry.slug === 'jaka-klimatyzacja-do-mi
     <li>duży salon lub otwarta przestrzeń 35-50 m²: urządzenie 5 kW.</li>
   </ul>
   <p>
-    Do metrażu doliczamy poprawkę na nasłonecznienie: mieszkanie na ostatnim piętrze z oknami na
+    Moc i liczbę jednostek dobieramy indywidualnie, uwzględniając układ pomieszczeń, przeszklenia,
+    izolację, wysokość i nasłonecznienie: mieszkanie na ostatnim piętrze z oknami na
     południe potrzebuje więcej mocy niż takie samo mieszkanie od północy. Zbyt słabe urządzenie
     będzie pracowało bez przerwy, a zbyt mocne będzie się często wyłączać i gorzej osuszać powietrze.
   </p>
 
   <figure class="chart-figure">
-    <svg viewBox="0 0 640 300" role="img" aria-label="Wykres słupkowy: orientacyjna moc chłodnicza klimatyzacji w kilowatach dla metraży od 20 do 70 metrów kwadratowych. Wartości: 20 m² - 2,2 kW; 30 m² - 3,0 kW; 40 m² - 3,5 kW; 50 m² - 3,9 kW; 60 m² - 4,6 kW; 70 m² - 5,5 kW.">
+    <svg viewBox="0 0 640 300" role="img" aria-label="Wykres słupkowy: orientacyjne zapotrzebowanie na moc chłodniczą dla metraży od 20 do 70 metrów kwadratowych przy założeniu około 100 watów na metr kwadratowy.">
       <g class="chart-grid">
         <line class="chart-grid-line" x1="50" y1="255" x2="630" y2="255" />
-        <line class="chart-grid-line" x1="50" y1="175" x2="630" y2="175" />
-        <line class="chart-grid-line" x1="50" y1="95" x2="630" y2="95" />
-        <line class="chart-grid-line" x1="50" y1="15" x2="630" y2="15" />
+        <line class="chart-grid-line" x1="50" y1="195" x2="630" y2="195" />
+        <line class="chart-grid-line" x1="50" y1="135" x2="630" y2="135" />
+        <line class="chart-grid-line" x1="50" y1="75" x2="630" y2="75" />
         <text class="chart-label" x="42" y="259" text-anchor="end">0</text>
-        <text class="chart-label" x="42" y="179" text-anchor="end">2</text>
-        <text class="chart-label" x="42" y="99" text-anchor="end">4</text>
-        <text class="chart-label" x="42" y="19" text-anchor="end">6 kW</text>
+        <text class="chart-label" x="42" y="199" text-anchor="end">2</text>
+        <text class="chart-label" x="42" y="139" text-anchor="end">4</text>
+        <text class="chart-label" x="42" y="79" text-anchor="end">6 kW</text>
       </g>
       <g>
-        <rect class="chart-bar" x="81" y="167" width="34" height="88" rx="4"><title>20 m² → ok. 2,2 kW</title></rect>
-        <rect class="chart-bar" x="178" y="135" width="34" height="120" rx="4"><title>30 m² → ok. 3,0 kW</title></rect>
-        <rect class="chart-bar" x="275" y="115" width="34" height="140" rx="4"><title>40 m² → ok. 3,5 kW</title></rect>
-        <rect class="chart-bar" x="371" y="99" width="34" height="156" rx="4"><title>50 m² → ok. 3,9 kW</title></rect>
-        <rect class="chart-bar" x="468" y="71" width="34" height="184" rx="4"><title>60 m² → ok. 4,6 kW</title></rect>
-        <rect class="chart-bar" x="565" y="35" width="34" height="220" rx="4"><title>70 m² → ok. 5,5 kW</title></rect>
+        <rect class="chart-bar" x="81" y="195" width="34" height="60" rx="4"><title>20 m² → ok. 2,0 kW zapotrzebowania</title></rect>
+        <rect class="chart-bar" x="178" y="165" width="34" height="90" rx="4"><title>30 m² → ok. 3,0 kW zapotrzebowania</title></rect>
+        <rect class="chart-bar" x="275" y="135" width="34" height="120" rx="4"><title>40 m² → ok. 4,0 kW zapotrzebowania</title></rect>
+        <rect class="chart-bar" x="371" y="105" width="34" height="150" rx="4"><title>50 m² → ok. 5,0 kW zapotrzebowania</title></rect>
+        <rect class="chart-bar" x="468" y="75" width="34" height="180" rx="4"><title>60 m² → ok. 6,0 kW zapotrzebowania</title></rect>
+        <rect class="chart-bar" x="565" y="45" width="34" height="210" rx="4"><title>70 m² → ok. 7,0 kW zapotrzebowania</title></rect>
       </g>
       <g>
-        <text class="chart-value" x="98" y="157" text-anchor="middle">2,2</text>
-        <text class="chart-value" x="195" y="125" text-anchor="middle">3,0</text>
-        <text class="chart-value" x="292" y="105" text-anchor="middle">3,5</text>
-        <text class="chart-value" x="388" y="89" text-anchor="middle">3,9</text>
-        <text class="chart-value" x="485" y="61" text-anchor="middle">4,6</text>
-        <text class="chart-value" x="582" y="25" text-anchor="middle">5,5</text>
+        <text class="chart-value" x="98" y="185" text-anchor="middle">2,0</text>
+        <text class="chart-value" x="195" y="155" text-anchor="middle">3,0</text>
+        <text class="chart-value" x="292" y="125" text-anchor="middle">4,0</text>
+        <text class="chart-value" x="388" y="95" text-anchor="middle">5,0</text>
+        <text class="chart-value" x="485" y="65" text-anchor="middle">6,0</text>
+        <text class="chart-value" x="582" y="35" text-anchor="middle">7,0</text>
       </g>
       <g>
         <text class="chart-label" x="98" y="277" text-anchor="middle">20 m²</text>
@@ -97,11 +98,11 @@ const article = ARTICLES.find((entry) => entry.slug === 'jaka-klimatyzacja-do-mi
     z telefonu. W większości modeli to niedrogi dodatek, który realnie podnosi komfort.
   </p>
 
-  <h2>Formalności w bloku: zgoda wspólnoty</h2>
+  <h2>Miejsce montażu klimatyzacji w bloku</h2>
   <p>
-    Jednostka zewnętrzna na balkonie lub elewacji zwykle wymaga zgody wspólnoty albo spółdzielni.
-    To formalność po stronie właściciela mieszkania, ale podpowiemy, jak napisać wniosek i jakie
-    miejsce montażu ma największą szansę na akceptację.
+    Miejsce jednostki zewnętrznej dobieramy do warunków technicznych budynku, przepływu powietrza
+    i dostępu serwisowego. Położenie jednostki wewnętrznej dopasowujemy do układu pomieszczeń,
+    tak aby nawiew nie był skierowany bezpośrednio na miejsce odpoczynku lub pracy.
   </p>
 
   <h2>Podsumowanie</h2>

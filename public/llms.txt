@@ -1,13 +1,13 @@
 # FRIGAC
 
-> FRIGAC to lokalna firma montująca i serwisująca klimatyzacje typu split w mieszkaniach i domach. Obszar działania: Bydgoszcz, Toruń, Gdańsk, Gdynia, Sopot i okolice (Polska). Klimatyzator z montażem od 3499 zł, dojazd w cenie, 5 lat gwarancji na montaż, certyfikaty F-gazowe (personel i przedsiębiorca). Kontakt wyłącznie telefoniczny: +48 735 400 610, codziennie 08:00-18:00.
+> FRIGAC to lokalna firma montująca i serwisująca klimatyzacje typu split w mieszkaniach i domach. Obszar działania: Bydgoszcz, Toruń, Gdańsk, Gdynia, Sopot i okolice (Polska). Klimatyzator z montażem od 3499 zł, dojazd w cenie, 5 lat gwarancji producenta, certyfikaty F-gazowe (personel i przedsiębiorca). Kontakt wyłącznie telefoniczny: +48 735 400 610, codziennie 08:00-18:00.
 
 ## Strony główne
 
 - [Strona główna](https://frigac.pl/): oferta montażu klimatyzacji, cena startowa, obszar działania
 - [Usługi](https://frigac.pl/uslugi): dokładny zakres montażu i serwisu klimatyzacji
 - [Cennik](https://frigac.pl/cennik): ile kosztuje montaż klimatyzacji i co wpływa na cenę
-- [FAQ](https://frigac.pl/faq): najczęstsze pytania o montaż, formalności, gwarancję i serwis
+- [FAQ](https://frigac.pl/faq): najczęstsze pytania o montaż, dobór miejsca, gwarancję i serwis
 - [Kontakt](https://frigac.pl/kontakt): telefon i godziny pracy
 - [O nas](https://frigac.pl/o-nas): zespół i certyfikaty
 

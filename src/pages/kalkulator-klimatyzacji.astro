@@ -2,36 +2,35 @@
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import CTAButton from '../components/CTAButton.astro';
 import Layout from '../components/Layout.astro';
+import { POWER_CALCULATOR_CONFIG } from '../config/powerCalculator';
 import { PHONE_DISPLAY, PHONE_TEL, SITE } from '../config/site';
 import { labels, pageMeta, routes } from '../i18n/content';
 
 const meta = pageMeta.calcPower;
 
 const powerTable = [
-  { area: '20 m²', kw: '2,0-2,5 kW', btu: '7 000-9 000 BTU' },
-  { area: '30 m²', kw: '2,5-3,5 kW', btu: '9 000-12 000 BTU' },
-  { area: '40 m²', kw: '3,5 kW', btu: '12 000 BTU' },
-  { area: '50 m²', kw: '3,5-4,2 kW', btu: '12 000-14 000 BTU' },
-  { area: '60 m²', kw: '4,2-5,0 kW', btu: '14 000-17 000 BTU' },
-  { area: '70 m²', kw: '5,0-6,0 kW', btu: '17 000-20 000 BTU' },
-  { area: '100 m²', kw: 'multisplit 2 × 3,5 kW', btu: '2 × 12 000 BTU' }
+  { area: 'do 25 m²', kw: 'około 2,5 kW', btu: 'około 9 000 BTU' },
+  { area: '26-35 m²', kw: 'około 3,5 kW', btu: 'około 12 000 BTU' },
+  { area: '36-50 m²', kw: 'około 5,0 kW', btu: 'około 18 000 BTU' },
+  { area: '51-70 m²', kw: 'około 7,0 kW', btu: 'około 24 000 BTU' },
+  { area: 'powyżej 70 m²', kw: 'indywidualny dobór', btu: 'możliwe zastosowanie kilku jednostek' }
 ];
 
 const faqItems = [
   {
     question: 'Ile kW klimatyzacji potrzeba na m2?',
     answer:
-      'Przyjmuje się około 100 W (0,1 kW) mocy chłodniczej na 1 m2 pomieszczenia o standardowej wysokości 2,5-2,7 m. Do mieszkania 35 m2 potrzeba więc około 3,5 kW. Przy dużym nasłonecznieniu, poddaszu lub dużych przeszkleniach zapotrzebowanie rośnie nawet o 20-30%.'
+      'Przyjmuje się około 100 W (0,1 kW) mocy chłodniczej na 1 m2 pomieszczenia o standardowej wysokości. To tylko punkt wyjścia: ostateczny dobór zależy również od nasłonecznienia, przeszkleń, izolacji, położenia i układu pomieszczeń.'
   },
   {
     question: 'Ile BTU na m2 pomieszczenia?',
     answer:
-      '1 kW mocy chłodniczej to około 3 412 BTU/h. Reguła 100 W na m2 przekłada się więc na około 340 BTU na 1 m2. Pokój 25 m2 potrzebuje około 8 500 BTU, a salon 40 m2 - około 12 000 BTU.'
+      '1 kW mocy chłodniczej to około 3 412 BTU/h. Reguła 100 W na m2 przekłada się więc na około 340 BTU na 1 m2. To przelicznik orientacyjny, a nie dobór urządzenia. Moc dobieramy indywidualnie do nasłonecznienia, przeszkleń, izolacji i układu pomieszczeń.'
   },
   {
     question: 'Jaki klimatyzator do 50 m2?',
     answer:
-      'Do otwartej przestrzeni około 50 m2 zwykle rekomendujemy klimatyzator 3,5-4,2 kW (12 000-14 000 BTU), np. jednostkę Gree lub Kaisai o mocy nominalnej 3,5 kW przy przeciętnym nasłonecznieniu. Jeśli 50 m2 to dwa oddzielne pokoje, lepszym wyborem są dwie mniejsze jednostki lub multisplit.'
+      'Wynik dla 50 m2 jest orientacyjny i nie przesądza o mocy ani liczbie jednostek. Dobieramy je indywidualnie, uwzględniając nasłonecznienie, przeszklenia, izolację, wysokość i układ pomieszczeń. Jedna otwarta przestrzeń wymaga innego podejścia niż kilka oddzielnych pokoi.'
   },
   {
     question: 'Czy wynik kalkulatora wystarczy do zakupu klimatyzacji?',
@@ -41,7 +40,7 @@ const faqItems = [
   {
     question: 'Jaka moc klimatyzacji do domu z poddaszem?',
     answer:
-      'Poddasze nagrzewa się najmocniej - przez dach dociera do niego znacznie więcej ciepła niż przez strop. W kalkulatorze wybierz "ostatnie piętro / poddasze", a zapotrzebowanie zostanie powiększone o około 25%. Dla poddasza 30 m2 zamiast 2,5 kW zwykle potrzebne będzie 3,5 kW.'
+      'Poddasze zwykle nagrzewa się mocniej niż pomieszczenie na środkowym piętrze. Kalkulator stosuje umiarkowaną korektę, ale rzeczywisty dobór nadal zależy od izolacji dachu, przeszkleń i nasłonecznienia.'
   }
 ];
 
@@ -81,9 +80,9 @@ const appSchema = {
       <p class="eyebrow">Darmowe narzędzie</p>
       <h1>Kalkulator mocy klimatyzacji</h1>
       <p>
-        Policz, jaka moc klimatyzacji pasuje do Twojego pomieszczenia: w kW i BTU, z poprawką na
-        nasłonecznienie, piętro, okna i liczbę osób. Na końcu dostaniesz rekomendację urządzenia,
-        orientacyjny koszt montażu i raport do pobrania.
+        Oszacuj moc klimatyzatora dla jednej strefy na podstawie powierzchni, wysokości,
+        nasłonecznienia, położenia i przeszkleń. Wynik jest wstępną wskazówką, a nie projektem
+        obciążenia cieplnego.
       </p>
     </div>
   </section>
@@ -91,139 +90,92 @@ const appSchema = {
   <section class="section section-gray">
     <div class="container tool-layout" data-reveal>
       <form class="tool-form" id="power-form">
-        <fieldset class="tool-step">
-          <legend><span class="tool-step-num">1</span>Co chcesz klimatyzować?</legend>
-          <div class="seg">
-            <input type="radio" name="ptype" id="pt-flat" value="1" checked />
-            <label for="pt-flat">Mieszkanie</label>
-            <input type="radio" name="ptype" id="pt-house" value="1.05" />
-            <label for="pt-house">Dom</label>
-            <input type="radio" name="ptype" id="pt-office" value="1.15" />
-            <label for="pt-office">Biuro</label>
-            <input type="radio" name="ptype" id="pt-shop" value="1.25" />
-            <label for="pt-shop">Lokal usługowy</label>
-          </div>
-        </fieldset>
-
         <div class="tool-step">
-          <p class="tool-step-title"><span class="tool-step-num">2</span>Powierzchnia pomieszczenia</p>
+          <p class="tool-step-title"><span class="tool-step-num">1</span>Powierzchnia pomieszczenia</p>
           <div class="range-row">
-            <input type="range" id="area" min="10" max="120" step="1" value="52" aria-label="Powierzchnia w metrach kwadratowych" />
-            <output class="range-value" id="area-out" for="area">52 m²</output>
+            <input type="range" id="area" min={POWER_CALCULATOR_CONFIG.area.min} max={POWER_CALCULATOR_CONFIG.area.max} step="1" value={POWER_CALCULATOR_CONFIG.area.default} aria-label="Powierzchnia w metrach kwadratowych" />
+            <output class="range-value" id="area-out" for="area">{POWER_CALCULATOR_CONFIG.area.default} m²</output>
           </div>
           <p class="tool-hint">Metraż jednej strefy chłodzenia (np. salon z aneksem), nie całego domu.</p>
         </div>
 
-        <div class="tool-step">
-          <p class="tool-step-title"><span class="tool-step-num">3</span>Wysokość pomieszczenia</p>
-          <div class="range-row">
-            <input type="range" id="height" min="2.4" max="4" step="0.1" value="2.7" aria-label="Wysokość pomieszczenia w metrach" />
-            <output class="range-value" id="height-out" for="height">2,7 m</output>
-          </div>
-        </div>
-
         <fieldset class="tool-step">
-          <legend><span class="tool-step-num">4</span>Nasłonecznienie</legend>
+          <legend><span class="tool-step-num">2</span>Wysokość pomieszczenia</legend>
           <div class="seg">
-            <input type="radio" name="sun" id="sun-low" value="0.9" />
-            <label for="sun-low">Małe</label>
-            <input type="radio" name="sun" id="sun-mid" value="1" checked />
-            <label for="sun-mid">Średnie</label>
-            <input type="radio" name="sun" id="sun-high" value="1.2" />
-            <label for="sun-high">Duże</label>
+            {Object.entries(POWER_CALCULATOR_CONFIG.height).map(([value, item], index) => (
+              <>
+                <input type="radio" name="height" id={`height-${value}`} value={value} checked={index === 0} />
+                <label for={`height-${value}`}>{item.label}</label>
+              </>
+            ))}
           </div>
         </fieldset>
 
         <fieldset class="tool-step">
-          <legend><span class="tool-step-num">5</span>Które piętro?</legend>
+          <legend><span class="tool-step-num">3</span>Nasłonecznienie</legend>
           <div class="seg">
-            <input type="radio" name="floor" id="fl-ground" value="0.95" />
-            <label for="fl-ground">Parter</label>
-            <input type="radio" name="floor" id="fl-mid" value="1" checked />
-            <label for="fl-mid">Piętro</label>
-            <input type="radio" name="floor" id="fl-top" value="1.25" />
-            <label for="fl-top">Ostatnie piętro / poddasze</label>
+            {Object.entries(POWER_CALCULATOR_CONFIG.sun).map(([value, item]) => (
+              <>
+                <input type="radio" name="sun" id={`sun-${value}`} value={value} checked={value === 'standard'} />
+                <label for={`sun-${value}`}>{item.label}</label>
+              </>
+            ))}
+          </div>
+          <p class="tool-hint">Duże oznacza pomieszczenie mocno nagrzewające się od słońca przez znaczną część dnia.</p>
+        </fieldset>
+
+        <fieldset class="tool-step">
+          <legend><span class="tool-step-num">4</span>Położenie pomieszczenia</legend>
+          <div class="seg">
+            {Object.entries(POWER_CALCULATOR_CONFIG.location).map(([value, item], index) => (
+              <>
+                <input type="radio" name="location" id={`location-${value}`} value={value} checked={index === 0} />
+                <label for={`location-${value}`}>{item.label}</label>
+              </>
+            ))}
           </div>
         </fieldset>
 
         <fieldset class="tool-step">
-          <legend><span class="tool-step-num">6</span>Okna</legend>
+          <legend><span class="tool-step-num">5</span>Czy pomieszczenie ma duże przeszklenia?</legend>
           <div class="seg">
-            <input type="radio" name="win" id="win-s" value="0.95" />
-            <label for="win-s">Małe</label>
-            <input type="radio" name="win" id="win-m" value="1" checked />
-            <label for="win-m">Standardowe</label>
-            <input type="radio" name="win" id="win-l" value="1.15" />
-            <label for="win-l">Duże przeszklenia</label>
+            {Object.entries(POWER_CALCULATOR_CONFIG.glazing).map(([value, item], index) => (
+              <>
+                <input type="radio" name="glazing" id={`glazing-${value}`} value={value} checked={index === 0} />
+                <label for={`glazing-${value}`}>{item.label}</label>
+              </>
+            ))}
           </div>
-        </fieldset>
-
-        <fieldset class="tool-step">
-          <legend><span class="tool-step-num">7</span>Strona świata (główne okna)</legend>
-          <div class="seg">
-            <input type="radio" name="dir" id="dir-n" value="0.9" />
-            <label for="dir-n">Północ</label>
-            <input type="radio" name="dir" id="dir-e" value="1" checked />
-            <label for="dir-e">Wschód</label>
-            <input type="radio" name="dir" id="dir-w" value="1.05" />
-            <label for="dir-w">Zachód</label>
-            <input type="radio" name="dir" id="dir-s" value="1.15" />
-            <label for="dir-s">Południe</label>
-          </div>
-        </fieldset>
-
-        <fieldset class="tool-step">
-          <legend><span class="tool-step-num">8</span>Ile osób zwykle przebywa w pomieszczeniu?</legend>
-          <div class="seg">
-            <input type="radio" name="people" id="pp-1" value="0" checked />
-            <label for="pp-1">1-2</label>
-            <input type="radio" name="people" id="pp-3" value="0.3" />
-            <label for="pp-3">3-4</label>
-            <input type="radio" name="people" id="pp-5" value="0.6" />
-            <label for="pp-5">5+</label>
-          </div>
-        </fieldset>
-
-        <fieldset class="tool-step">
-          <legend><span class="tool-step-num">9</span>Czy klimatyzacja ma również grzać zimą?</legend>
-          <div class="seg">
-            <input type="radio" name="heat" id="heat-yes" value="1.05" />
-            <label for="heat-yes">Tak</label>
-            <input type="radio" name="heat" id="heat-no" value="1" checked />
-            <label for="heat-no">Nie</label>
-          </div>
-          <p class="tool-hint">
-            Przy grzaniu zimą warto wybrać model o dobrej sprawności w niskich temperaturach (SCOP).
-          </p>
+          <p class="tool-hint">Chodzi o szerokie okna, przeszklenia od podłogi lub dużą przeszkloną część ściany.</p>
         </fieldset>
       </form>
 
       <div class="tool-result-wrap">
         <div class="tool-result" role="status" aria-live="polite">
-          <p class="eyebrow">Twoje zapotrzebowanie</p>
-          <p class="result-main"><strong id="res-kw">3,5-4,0 kW</strong></p>
-          <p class="result-sub" id="res-btu">≈ 12 000-14 000 BTU/h</p>
+          <p class="eyebrow">Orientacyjny dobór</p>
+          <p class="result-main"><strong id="res-kw">około 3,5 kW</strong></p>
+          <p class="result-sub" id="res-btu">typowy wariant około 12 000 BTU/h</p>
           <dl class="result-rows">
             <div class="result-row">
-              <dt>Rekomendowany system</dt>
-              <dd id="res-system">Split (1 jednostka)</dd>
+              <dt>Szacunkowe zapotrzebowanie</dt>
+              <dd id="res-need">około 3,5 kW</dd>
+            </div>
+            <div class="result-row" id="res-devices-row">
+              <dt>Przykładowe urządzenia</dt>
+              <dd><a href={routes.gree} id="res-gree">GREE około 3,5 kW</a>{' lub '}<a href={routes.kaisai} id="res-kaisai">KAISAI około 3,5 kW</a></dd>
             </div>
             <div class="result-row">
-              <dt>FRIGAC rekomenduje</dt>
-              <dd><a href={routes.gree} id="res-gree">GREE 3,5 kW</a>{' lub '}<a href={routes.kaisai} id="res-kaisai">KAISAI 3,5 kW</a></dd>
-            </div>
-            <div class="result-row">
-              <dt>Koszt z montażem</dt>
-              <dd id="res-cost">3 599-4 900 zł</dd>
+              <dt>Co dalej</dt>
+              <dd id="res-system">Potwierdzimy moc i model po sprawdzeniu warunków montażu.</dd>
             </div>
           </dl>
-          <CTAButton href={`tel:${PHONE_TEL}`} label="Umów bezpłatną wycenę" ariaLabel={labels.phoneAria} />
+          <CTAButton href={`tel:${PHONE_TEL}`} label="Potwierdź bezpłatny dobór" ariaLabel={labels.phoneAria} />
           <button type="button" class="btn-report" id="btn-report">
             Pobierz raport (PDF)
           </button>
           <p class="tool-disclaimer">
-            Wynik jest orientacyjny i nie stanowi oferty handlowej. Dokładny dobór mocy i wycenę
-            potwierdzamy bezpłatnie podczas rozmowy telefonicznej.
+            To wstępny dobór. Ostateczna moc zależy również od układu pomieszczeń, przeszkleń,
+            nasłonecznienia i warunków na miejscu.
           </p>
         </div>
       </div>
@@ -236,8 +188,8 @@ const appSchema = {
       <p>
         Podstawowa reguła doboru mocy klimatyzacji jest prosta: <strong>około 100 W (0,1 kW) mocy
         chłodniczej na 1 m²</strong> pomieszczenia o wysokości 2,5-2,7 m. To punkt wyjścia, który
-        nasz kalkulator koryguje o nasłonecznienie, piętro, wielkość przeszkleń, stronę świata
-        i liczbę osób - dokładnie tak, jak robimy to przy telefonicznej wycenie montażu.
+        kalkulator umiarkowanie koryguje o wysokość, nasłonecznienie, duże przeszklenia oraz położenie
+        na ostatnim piętrze lub poddaszu. Nie zastępuje to obliczeń obciążenia cieplnego.
       </p>
 
       <h2>Jaka moc klimatyzacji na 20, 30, 50 czy 100 m²?</h2>
@@ -265,8 +217,10 @@ const appSchema = {
         </table>
       </div>
       <p class="tiny-note">
-        Wartości dla standardowej wysokości 2,5-2,7 m i przeciętnego nasłonecznienia. Opracowanie
-        własne FRIGAC na podstawie praktyki montażowej.
+        Wartości orientacyjne dla pojedynczej, otwartej strefy o standardowej wysokości i przeciętnym
+        nasłonecznieniu. Powyżej 70 m² nie zakładamy automatycznie jednego klimatyzatora. Ostateczną
+        moc i liczbę jednostek dobieramy do przeszkleń, izolacji i układu pomieszczeń.
+        Opracowanie własne FRIGAC na podstawie praktyki montażowej.
       </p>
 
       <h2>Ile BTU na m²?</h2>
@@ -320,16 +274,15 @@ const appSchema = {
     <p>frigac.pl · tel. {PHONE_DISPLAY} · raport orientacyjny wygenerowany przez kalkulator online</p>
     <table>
       <tbody>
-        <tr><th>Typ pomieszczenia</th><td id="rp-type">-</td></tr>
         <tr><th>Powierzchnia</th><td id="rp-area">-</td></tr>
         <tr><th>Wysokość</th><td id="rp-height">-</td></tr>
         <tr><th>Nasłonecznienie</th><td id="rp-sun">-</td></tr>
+        <tr><th>Położenie</th><td id="rp-location">-</td></tr>
+        <tr><th>Duże przeszklenia</th><td id="rp-glazing">-</td></tr>
         <tr><th>Szacowane zapotrzebowanie</th><td id="rp-need">-</td></tr>
         <tr><th>Rekomendowana moc</th><td id="rp-kw">-</td></tr>
         <tr><th>Ile BTU</th><td id="rp-btu">-</td></tr>
-        <tr><th>Rekomendowany system</th><td id="rp-system">-</td></tr>
         <tr><th>Proponowane urządzenia</th><td id="rp-devices">-</td></tr>
-        <tr><th>Szacowany koszt z montażem</th><td id="rp-cost">-</td></tr>
       </tbody>
     </table>
     <p>
@@ -341,16 +294,19 @@ const appSchema = {
 </Layout>
 
 <script>
-  const nf = new Intl.NumberFormat('pl-PL');
-  const $ = (id: string) => document.getElementById(id);
+  import {
+    POWER_CALCULATOR_CONFIG,
+    calculatePowerEstimate,
+    type PowerCalculatorInput
+  } from '../config/powerCalculator';
 
+  const $ = (id: string) => document.getElementById(id);
   const area = $('area') as HTMLInputElement;
-  const height = $('height') as HTMLInputElement;
   const form = $('power-form') as HTMLFormElement;
 
-  const radioVal = (name: string): number => {
+  const radioVal = (name: string): string => {
     const el = document.querySelector<HTMLInputElement>(`input[name="${name}"]:checked`);
-    return el ? parseFloat(el.value) : 1;
+    return el?.value ?? '';
   };
 
   const radioLabel = (name: string): string => {
@@ -360,95 +316,61 @@ const appSchema = {
     return label ? label.textContent!.trim() : '-';
   };
 
-  const fmt1 = (v: number) => v.toFixed(1).replace('.', ',');
-
-  const COSTS: Record<string, [number, number]> = {
-    '2.5': [3499, 4400],
-    '3.5': [3599, 4900],
-    '5': [4600, 6500],
-    '7': [6200, 8900]
-  };
-
-  const MULTI_COSTS: Record<number, [number, number]> = {
-    2: [8500, 11500],
-    3: [11500, 15500],
-    4: [14500, 19500]
-  };
+  const fmt1 = (value: number) => value.toFixed(1).replace('.', ',');
 
   let last = {
-    needLow: 0,
-    needHigh: 0,
-    nominal: '3.5',
-    system: '',
-    kwText: '',
-    btuText: '',
-    costText: '',
-    devices: ''
+    needKw: 3.5,
+    kwText: 'około 3,5 kW',
+    btuText: 'około 12 000 BTU/h',
+    devices: 'GREE lub KAISAI około 3,5 kW'
   };
 
   function compute() {
-    if (!area || !height || !form) return;
-    const a = Math.min(Math.max(parseFloat(area.value) || 10, 10), 120);
-    const h = Math.min(Math.max(parseFloat(height.value) || 2.4, 2.4), 4);
+    if (!area || !form) return;
+    const a = Math.min(
+      Math.max(parseFloat(area.value) || POWER_CALCULATOR_CONFIG.area.min, POWER_CALCULATOR_CONFIG.area.min),
+      POWER_CALCULATOR_CONFIG.area.max
+    );
+    const input: PowerCalculatorInput = {
+      area: a,
+      height: radioVal('height') as PowerCalculatorInput['height'],
+      sun: radioVal('sun') as PowerCalculatorInput['sun'],
+      location: radioVal('location') as PowerCalculatorInput['location'],
+      glazing: radioVal('glazing') as PowerCalculatorInput['glazing']
+    };
+    const estimate = calculatePowerEstimate(input);
+    ($('area-out') as HTMLElement).textContent = `${a} m²`;
+    ($('res-need') as HTMLElement).textContent = `około ${fmt1(estimate.needKw)} kW`;
 
-    const base = a * 0.1 * (h / 2.6);
-    const mult =
-      radioVal('ptype') * radioVal('sun') * radioVal('floor') * radioVal('win') * radioVal('dir');
-    const need = (base * mult + radioVal('people')) * radioVal('heat');
-
-    const low = Math.round(need * 0.95 * 10) / 10;
-    const high = Math.round(need * 1.15 * 10) / 10;
-
-    let nominal = '';
-    for (const n of [2.5, 3.5, 5, 7]) {
-      if (need <= n + 0.2) {
-        nominal = String(n);
-        break;
-      }
+    if (estimate.kind === 'individual') {
+      ($('res-kw') as HTMLElement).textContent = 'Indywidualny dobór';
+      ($('res-btu') as HTMLElement).textContent = estimate.reason === 'area'
+        ? 'Ta przestrzeń wymaga indywidualnego doboru lub zastosowania kilku jednostek.'
+        : 'W tej przestrzeni warto rozważyć kilka jednostek lub indywidualny dobór instalacji.';
+      ($('res-system') as HTMLElement).textContent = 'Sprawdzimy układ pomieszczeń i dobierzemy liczbę oraz moc jednostek.';
+      ($('res-devices-row') as HTMLElement).hidden = true;
+      last = {
+        needKw: estimate.needKw,
+        kwText: 'indywidualny dobór',
+        btuText: 'dobór po sprawdzeniu układu pomieszczeń',
+        devices: 'dobór indywidualny lub kilka jednostek'
+      };
+      return;
     }
 
-    const isMulti = nominal === '';
-    let system: string;
-    let devName: string;
-    let cLow: number;
-    let cHigh: number;
-
-    if (isMulti) {
-      // duże zapotrzebowanie: multisplit z jednostkami ~3,5 kW
-      const units = Math.min(Math.max(Math.ceil(need / 3.5), 2), 4);
-      const unitWord = units === 2 ? 'jednostki' : 'jednostki';
-      system = `Multisplit (${units} ${unitWord} wewnętrzne)`;
-      devName = `multisplit ${units} × 3,5 kW`;
-      [cLow, cHigh] = MULTI_COSTS[units];
-      nominal = 'multi';
-    } else {
-      system = 'Split (1 jednostka)';
-      devName = `${nominal.replace('.', ',')} kW`;
-      [cLow, cHigh] = COSTS[nominal];
-    }
-    const kwText = `${fmt1(low)}-${fmt1(high)} kW`;
-    const btuText = `≈ ${nf.format(Math.round((low * 3412) / 500) * 500)}-${nf.format(Math.round((high * 3412) / 500) * 500)} BTU/h`;
-    const costText = `${nf.format(cLow)}-${nf.format(cHigh)} zł`;
-
+    const kwText = `około ${estimate.powerKw} kW`;
+    const btuText = `typowy wariant około ${estimate.btu} BTU/h`;
     ($('res-kw') as HTMLElement).textContent = kwText;
     ($('res-btu') as HTMLElement).textContent = btuText;
-    ($('res-system') as HTMLElement).textContent = system;
-    ($('res-gree') as HTMLElement).textContent = `GREE ${devName}`;
-    ($('res-kaisai') as HTMLElement).textContent = `KAISAI ${devName}`;
-    ($('res-cost') as HTMLElement).textContent = costText;
-
-    ($('area-out') as HTMLElement).textContent = `${a} m²`;
-    ($('height-out') as HTMLElement).textContent = `${fmt1(h)} m`;
-
+    ($('res-system') as HTMLElement).textContent = 'Potwierdzimy moc i model po sprawdzeniu warunków montażu.';
+    ($('res-devices-row') as HTMLElement).hidden = false;
+    ($('res-gree') as HTMLElement).textContent = `GREE około ${estimate.powerKw} kW`;
+    ($('res-kaisai') as HTMLElement).textContent = `KAISAI około ${estimate.powerKw} kW`;
     last = {
-      needLow: low,
-      needHigh: high,
-      nominal,
-      system,
+      needKw: estimate.needKw,
       kwText,
-      btuText,
-      costText,
-      devices: `GREE ${devName} lub KAISAI ${devName}`
+      btuText: `około ${estimate.btu} BTU/h`,
+      devices: `GREE lub KAISAI około ${estimate.powerKw} kW`
     };
   }
 
@@ -468,16 +390,15 @@ const appSchema = {
   });
 
   $('btn-report')?.addEventListener('click', () => {
-    ($('rp-type') as HTMLElement).textContent = radioLabel('ptype');
     ($('rp-area') as HTMLElement).textContent = `${area.value} m²`;
-    ($('rp-height') as HTMLElement).textContent = `${fmt1(parseFloat(height.value))} m`;
-    ($('rp-sun') as HTMLElement).textContent = radioLabel('sun').replace(/☀️/g, '').trim();
-    ($('rp-need') as HTMLElement).textContent = `${fmt1((last.needLow + last.needHigh) / 2)} kW`;
+    ($('rp-height') as HTMLElement).textContent = radioLabel('height');
+    ($('rp-sun') as HTMLElement).textContent = radioLabel('sun');
+    ($('rp-location') as HTMLElement).textContent = radioLabel('location');
+    ($('rp-glazing') as HTMLElement).textContent = radioLabel('glazing');
+    ($('rp-need') as HTMLElement).textContent = `około ${fmt1(last.needKw)} kW`;
     ($('rp-kw') as HTMLElement).textContent = last.kwText;
     ($('rp-btu') as HTMLElement).textContent = last.btuText;
-    ($('rp-system') as HTMLElement).textContent = last.system;
     ($('rp-devices') as HTMLElement).textContent = last.devices;
-    ($('rp-cost') as HTMLElement).textContent = last.costText;
 
     document.documentElement.classList.add('printing-report');
     const cleanup = () => {

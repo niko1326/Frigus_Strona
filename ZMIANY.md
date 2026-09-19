@@ -14,7 +14,7 @@ biznesowo do kosmetycznych.
 4. Cała ścieżka konwersji opiera się na darmowej wycenie telefonicznej udzielanej w kilka minut.
 5. Ofertą wyjściową jest klimatyzator z montażem od 3499 zł brutto, z dojazdem i uruchomieniem w cenie.
 6. Firma montuje urządzenia marek Gree i Kaisai, a każda z nich ma własną podstronę z pełną listą serii.
-7. Wyróżnikami są certyfikaty F-gazowe, pięcioletnia gwarancja na montaż i realizacja zwykle w jeden dzień.
+7. Wyróżnikami są certyfikaty F-gazowe, pięcioletnia gwarancja producenta na urządzenie i standardowy montaż w 1 dzień.
 8. Strona jest statyczna, zbudowana w Astro, i generuje 21 podstron bez żadnego backendu.
 9. Poza treścią sprzedażową serwis pełni funkcję poradnika: trzy kalkulatory i artykuły odpowiadające na najczęstsze pytania klientów.
 10. Całość jest zoptymalizowana pod wyszukiwarki i pod lokalne zapytania w rodzaju "klimatyzacja Bydgoszcz" czy "montaż klimatyzacji Gdańsk".

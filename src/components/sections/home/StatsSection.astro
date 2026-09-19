@@ -1,5 +1,6 @@
 ---
 import { STATS } from '../../../config/site';
+
 ---
 
 <section class="section-sm" data-reveal>
@@ -16,6 +17,19 @@ import { STATS } from '../../../config/site';
     </dl>
   </div>
 </section>
+
+<style>
+  .stat-item:first-child {
+    container: home-stat / inline-size;
+  }
+
+  /* Zachowaj miejsce po dwuwierszowym podpisie w wąskich kafelkach. */
+  @container home-stat (max-width: 12.25rem) {
+    dt {
+      min-block-size: 2lh;
+    }
+  }
+</style>
 
 <script>
   // Liczby w statystykach nabijają się od zera przy pierwszym odsłonięciu sekcji.

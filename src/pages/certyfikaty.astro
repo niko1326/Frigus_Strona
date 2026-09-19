@@ -1,0 +1,174 @@
+---
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import CertificateCard from '../components/CertificateCard.astro';
+import CTAButton from '../components/CTAButton.astro';
+import Layout from '../components/Layout.astro';
+import { GREE_CERTIFICATES, KAISAI_CERTIFICATE, FGAS_CERTIFICATES } from '../config/certificates';
+import { PHONE_TEL } from '../config/site';
+import { labels, routes } from '../i18n/content';
+---
+
+<Layout
+  title="Certyfikaty i uprawnienia FrigAC – GREE, KAISAI i F-gazy"
+  description="Sprawdź certyfikaty GREE i KAISAI oraz kwalifikacje F-gazowe instalatorów FrigAC. Montaż klimatyzacji w Bydgoszczy, Toruniu i Trójmieście."
+  currentPath="/certyfikaty"
+>
+  <Breadcrumbs items={[{ label: 'Certyfikaty i uprawnienia' }]} />
+  <section class="page-hero">
+    <div class="container" data-reveal>
+      <p class="eyebrow">Wiedza i praktyka</p>
+      <h1>Certyfikaty i uprawnienia FrigAC</h1>
+      <p>
+        Dobry montaż klimatyzacji zaczyna się od przygotowania instalatora. Liczą się zarówno
+        wymagane prawem kwalifikacje, jak i wiedza techniczna oraz szkolenia dotyczące urządzeń,
+        na których pracujemy. Tutaj możesz sprawdzić dokumenty i poznać kwalifikacje naszego zespołu.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-gray" aria-labelledby="gree-title">
+    <div class="container plain-stack" data-reveal>
+      <p class="eyebrow">GREE</p>
+      <h2 id="gree-title">Szkolenia i certyfikaty GREE</h2>
+      <p>
+        Certyfikaty Huberta i Nikodema potwierdzają status Autoryzowanego Instalatora urządzeń
+        klimatyzacyjnych i chłodniczych GREE serii RAC, U-Match i Free Match. Wskazany w dokumentach
+        zakres obejmuje projektowanie, sprzedaż, montaż, uruchamianie i serwisowanie tych urządzeń.
+      </p>
+      <p>
+        Szkolenia dotyczące urządzeń pomagają nam łączyć dobór klimatyzatora z prawidłowym wykonaniem
+        instalacji i uruchomieniem systemu. Jeśli planujesz <a href={routes.gree}>montaż klimatyzacji GREE</a>,
+        zobacz również modele dostępne w naszej ofercie.
+      </p>
+      <div class="documents-grid">
+        {GREE_CERTIFICATES.map((certificate) => <CertificateCard certificate={certificate} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="kaisai-title">
+    <div class="container plain-stack" data-reveal>
+      <p class="eyebrow">KAISAI</p>
+      <h2 id="kaisai-title">Certyfikat Autoryzowanego Partnera Serwisowego KAISAI</h2>
+      <div class="documents-grid kaisai-layout">
+        <CertificateCard certificate={KAISAI_CERTIFICATE} />
+        <div class="plain-stack">
+          <h3>Urządzenia SPLIT/MULTI</h3>
+          <p>
+            Certyfikat został przyznany firmie Frigus Hubert Maciejewski. Potwierdza status
+            Autoryzowanego Partnera Serwisowego KAISAI w zakresie sprzedaży, montażu i serwisu
+            urządzeń klimatyzacyjnych SPLIT/MULTI. Uczestnikami szkolenia wskazanymi w dokumencie
+            są Hubert Maciejewski i Nikodem Hirsch.
+          </p>
+          <p>
+            Wiedza produktowa pomaga dobrać rozwiązanie do pomieszczeń i przygotować instalację
+            zgodnie z wymaganiami danego urządzenia. Poznaj <a href={routes.kaisai}>klimatyzatory KAISAI</a>
+            i naszą ofertę montażu klimatyzacji KAISAI.
+          </p>
+          <p class="tiny-note">
+            Zgodnie z treścią dokumentu certyfikat KAISAI jest ważny tylko wraz z wymaganym
+            certyfikatem dla przedsiębiorców dotyczącym F-gazów.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-gray" aria-labelledby="fgazy-title">
+    <div class="container plain-stack" data-reveal>
+      <p class="eyebrow">F-gazy</p>
+      <h2 id="fgazy-title">Certyfikaty F-gazowe instalatorów FrigAC</h2>
+      <p>
+        Hubert Maciejewski i Nikodem Hirsch posiadają certyfikaty dla personelu wydane przez Urząd
+        Dozoru Technicznego. Prace takie jak instalowanie i serwisowanie urządzeń klimatyzacyjnych
+        zawierających fluorowane gazy cieplarniane wymagają odpowiednich kwalifikacji.
+        Certyfikat F-gazowy potwierdza kwalifikacje w tym obszarze; nie zastępuje autoryzacji producenta.
+      </p>
+      <div class="documents-grid fgaz-documents">
+        {FGAS_CERTIFICATES.map((certificate) => <CertificateCard certificate={certificate} />)}
+      </div>
+      <p class="tiny-note">Na podglądach certyfikatów F-gazowych zamaskowaliśmy daty urodzenia.</p>
+      <p>
+        Firma posiada również wymagany certyfikat przedsiębiorcy do prowadzenia działalności
+        związanej z F-gazami.{' '}
+        <a href="https://www.udt.gov.pl/uslugi-udt/szwo-i-f-gazy/certyfikat-dla-personelu">Informacje UDT o certyfikacji personelu</a>{' '}
+        wyjaśniają, kiedy takie kwalifikacje są wymagane.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="technical-title">
+    <div class="container plain-stack" data-reveal>
+      <p class="eyebrow">Przygotowanie techniczne</p>
+      <h2 id="technical-title">Dodatkowe kwalifikacje techniczne</h2>
+      <p>
+        Wiedzę dotyczącą urządzeń uzupełniają kwalifikacje i szkolenia zespołu związane z pracami
+        technicznymi. Każde z nich ma własny zakres i inne zastosowanie.
+      </p>
+      <div class="card-grid card-grid-3">
+        <article class="info-card">
+          <h3>G1 – Eksploatacja (E)</h3>
+          <p>W zespole posiadamy świadectwo kwalifikacyjne G1 – Eksploatacja (E), związane z eksploatacją urządzeń i instalacji elektroenergetycznych, w zakresie określonym w świadectwie.</p>
+        </article>
+        <article class="info-card">
+          <h3>Napełnianie butli</h3>
+          <p>W zespole ukończyliśmy szkolenie z zakresu napełniania butli. To dodatkowe przygotowanie do czynności objętych szkoleniem.</p>
+        </article>
+        <article class="info-card">
+          <h3>Lutowanie metodą 918</h3>
+          <p>Zespół posiada przygotowanie szkoleniowe dotyczące lutowania metodą 918, przydatne przy wykonywaniu połączeń w instalacjach chłodniczych.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-gray" aria-labelledby="why-title">
+    <div class="container plain-stack qualifications-copy" data-reveal>
+      <h2 id="why-title">Dlaczego kwalifikacje instalatora klimatyzacji mają znaczenie?</h2>
+      <p>
+        Klimatyzator powinien nie tylko chłodzić, ale też pracować cicho i niezawodnie.
+        Profesjonalny montaż klimatyzacji obejmuje dobór miejsca jednostek, wykonanie połączeń
+        chłodniczych, odprowadzenie skroplin oraz prawidłowe uruchomienie urządzenia.
+        Kwalifikacje instalatora i znajomość konkretnego modelu pomagają przeprowadzić te prace starannie.
+      </p>
+      <h3>Szczelność, próżnia i uruchomienie</h3>
+      <p>
+        Połączenia chłodnicze muszą być wykonane zgodnie z wymaganiami urządzenia, a szczelność
+        instalacji sprawdzona przed uruchomieniem. Wykonanie próżni pozwala usunąć z układu powietrze
+        i wilgoć. Na końcu instalator sprawdza działanie klimatyzacji i odpływ skroplin oraz wyjaśnia
+        użytkownikowi podstawy obsługi i potrzebę regularnych przeglądów.
+      </p>
+      <h3>Uprawnienia i znajomość urządzeń</h3>
+      <p>
+        Montaż klimatyzacji przez instalatora z uprawnieniami F-gazowymi oraz szkolenia dotyczące
+        urządzeń GREE i KAISAI to dwa uzupełniające się elementy przygotowania.
+        Pierwszy dotyczy prac z czynnikami chłodniczymi, drugi pomaga stosować rozwiązania i procedury
+        przewidziane dla konkretnej marki. Przy wyborze wykonawcy warto sprawdzić oba obszary.
+      </p>
+      <h3>Lokalny zespół, sprawdzalne kwalifikacje</h3>
+      <p>
+        Wykonujemy <a href={routes.bydgoszcz}>montaż klimatyzacji w Bydgoszczy</a>, Toruniu i okolicach
+        oraz <a href={routes.trojmiasto}>montaż klimatyzacji w Trójmieście</a> — Gdańsku, Gdyni i Sopocie.
+        Niezależnie od lokalizacji dobieramy urządzenie do mieszkania lub domu i ustalamy sposób
+        prowadzenia instalacji. Dokumenty na tej stronie pozwalają poznać kwalifikacje osób,
+        które zajmą się Twoją klimatyzacją.
+      </p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container cta-inline" data-reveal>
+      <p class="plain-highlight plain-highlight-sm">Porozmawiajmy o klimatyzacji dla Ciebie.</p>
+      <CTAButton href={`tel:${PHONE_TEL}`} label={labels.callNow} />
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .documents-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; margin-top: 1rem; }
+  .kaisai-layout { align-items: start; }
+  .qualifications-copy p { max-width: 80ch; }
+  .qualifications-copy h3 { margin-top: 1rem; }
+  @media (max-width: 759.98px) {
+    .documents-grid { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,33 +1,33 @@
 ---
-import { BUSINESS } from '../../../config/site';
+import CertificateCard from '../../CertificateCard.astro';
+import CTAButton from '../../CTAButton.astro';
+import { GREE_CERTIFICATES, KAISAI_CERTIFICATE } from '../../../config/certificates';
 
-const certificateImages = [
-  {
-    src: '/photos/certyfikat-1.jpg',
-    alt: 'Certyfikat F-gazowy dla personelu FRIGAC'
-  },
-  {
-    src: '/photos/certyfikat-2.jpg',
-    alt: 'Certyfikat F-gazowy dla przedsiębiorcy FRIGAC'
-  }
+const featuredCertificates = [
+  ...GREE_CERTIFICATES.filter((certificate) => certificate.id === 'gree-nikodem'),
+  KAISAI_CERTIFICATE
 ];
 ---
 
-<section class="section section-gray" data-reveal>
+<section class="section section-gray" data-reveal aria-labelledby="home-certificates-title">
   <div class="container plain-stack">
     <p class="eyebrow">Certyfikaty</p>
-    <h2>Uprawnienia, które możesz sprawdzić</h2>
+    <h2 id="home-certificates-title">Uprawnienia, które możesz sprawdzić</h2>
     <p>
-      Posiadamy certyfikaty F-gazowe dla personelu i przedsiębiorcy, wymagane przy pracy z
-      urządzeniami chłodniczymi. Na każdy montaż udzielamy {BUSINESS.warrantyYears} lat gwarancji.
+      Posiadamy certyfikaty autoryzacyjne GREE oraz certyfikat Autoryzowanego Partnera Serwisowego KAISAI.
+      Poznaj nasze kwalifikacje i dokumenty potwierdzające przygotowanie do montażu klimatyzacji.
     </p>
   </div>
-
-  <div class="container gallery-grid certificate-grid certificate-grid-spaced" data-reveal>
-    {certificateImages.map((image) => (
-      <figure class="certificate-card">
-        <img src={image.src} alt={image.alt} width="1754" height="1241" loading="lazy" />
-      </figure>
-    ))}
+  <div class="container gallery-grid certificate-grid certificate-grid-spaced">
+    {featuredCertificates.map((certificate) => <CertificateCard certificate={certificate} />)}
+  </div>
+  <div class="container certificates-action">
+    <CTAButton href="/certyfikaty" label="Zobacz wszystkie certyfikaty i uprawnienia" variant="secondary" />
   </div>
 </section>
+
+<style>
+  .certificate-grid :global(.document-preview) { aspect-ratio: 1.414; }
+  .certificates-action { margin-top: 1.5rem; }
+  .certificates-action :global(.cta-button) { white-space: normal; text-align: center; max-width: 100%; }
+</style>
