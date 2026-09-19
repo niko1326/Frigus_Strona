@@ -60,8 +60,8 @@ export const ANALYTICS = {
   // Google Analytics 4: wklej identyfikator pomiaru (G-XXXXXXXXXX)
   // i ustaw enabled: true.
   ga4: {
-    enabled: false,
-    measurementId: ''
+    enabled: true,
+    measurementId: 'G-LHYC8S5TBY'
   }
 } as const;
 

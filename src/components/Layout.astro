@@ -158,5 +158,19 @@ const schemaBlocks = [localBusinessSchema, ...extraSchema];
         revealNodes.forEach((node) => observer.observe(node));
       })();
     </script>
+    <script is:inline>
+      document.addEventListener('click', (event) => {
+        const target = event.target;
+        if (!(target instanceof Element)) return;
+
+        const phoneLink = target.closest('a[href^="tel:"]');
+        if (!phoneLink || typeof window.gtag !== 'function') return;
+
+        window.gtag('event', 'phone_click', {
+          event_category: 'contact',
+          phone_number: phoneLink.getAttribute('href')?.replace('tel:', '')
+        });
+      });
+    </script>
   </body>
 </html>
