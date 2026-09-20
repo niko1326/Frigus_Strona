@@ -28,6 +28,7 @@ import {
   Scene,
   Shape,
   SRGBColorSpace,
+  TextureLoader,
   Vector2,
   Vector3,
   WebGLRenderer
@@ -132,6 +133,8 @@ function beamTexture() {
 
 export function initHero3D(stage, { brand = 'GREE' } = {}) {
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const brandName = brand.toUpperCase();
+  const isKaisai = brandName === 'KAISAI';
 
   // Przezroczysta kanwa: tło daje CSS sekcji, a POD kanwą prześwituje
   // "szklany" napis FRIGAC (.hero-ghost).
@@ -139,7 +142,7 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
   renderer.setClearColor(BG, 0);
   renderer.outputColorSpace = SRGBColorSpace;
   renderer.toneMapping = ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.35;
+  renderer.toneMappingExposure = isKaisai ? 1.05 : 1.35;
   stage.appendChild(renderer.domElement);
 
   const scene = new Scene();
@@ -147,18 +150,18 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
   const camera = new PerspectiveCamera(34, 1, 0.1, 60);
 
   // ---------- światła ----------
-  scene.add(new AmbientLight(0xffffff, 1.05));
-  scene.add(new HemisphereLight(0xffffff, 0x17212c, 1.25));
+  scene.add(new AmbientLight(0xffffff, isKaisai ? 0.8 : 1.05));
+  scene.add(new HemisphereLight(0xffffff, 0x17212c, isKaisai ? 1 : 1.25));
 
-  const key = new DirectionalLight(0xffffff, 4.4);
+  const key = new DirectionalLight(0xffffff, isKaisai ? 3.6 : 4.4);
   key.position.set(3, 5, 6);
   scene.add(key);
 
-  const rim = new DirectionalLight(0x8fd0ff, 0.8);
+  const rim = new DirectionalLight(0x8fd0ff, isKaisai ? 0.65 : 0.8);
   rim.position.set(-6, 2, -4);
   scene.add(rim);
 
-  const fill = new DirectionalLight(0xf2f7ff, 1.8);
+  const fill = new DirectionalLight(0xf2f7ff, isKaisai ? 1.35 : 1.8);
   fill.position.set(-2, -3, 5);
   scene.add(fill);
 
@@ -224,13 +227,18 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
 
   scene.add(unit);
 
-  // Dla marki GREE podmieniamy model proceduralny na właściwy model Pular PRO.
-  // Model jest normalizowany do tej samej szerokości, dzięki czemu zachowuje
-  // dotychczasową responsywną kompozycję HERO.
-  if (brand.toUpperCase() === 'GREE') {
+  // Modele producentów są normalizowane do tej samej szerokości, dzięki czemu
+  // zachowują wspólną responsywną kompozycję HERO.
+  const modelConfig = brandName === 'GREE'
+    ? { path: '/modele3d/pular_pro2.glb', rotationY: 0 }
+    : brandName === 'KAISAI'
+      ? { path: '/modele3d/kaisai aktualne-to-3d-texture.glb', rotationY: Math.PI }
+      : null;
+
+  if (modelConfig) {
     const loader = new GLTFLoader();
     loader.load(
-      '/modele3d/pular_pro2.glb',
+      modelConfig.path,
       (gltf) => {
         const model = gltf.scene;
         const whiteShellMaterial = new MeshPhysicalMaterial({
@@ -240,6 +248,7 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
           clearcoat: 0.5,
           clearcoatRoughness: 0.3
         });
+        model.rotation.y = modelConfig.rotationY;
         const initialBox = new Box3().setFromObject(model);
         const size = initialBox.getSize(new Vector3());
         const modelScale = size.x > 0 ? 4.7 / size.x : 1;
@@ -253,17 +262,41 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
 
         model.traverse((object) => {
           if (!object.isMesh) return;
-          if (object.material?.name === 'Spray') {
+          if (brandName === 'GREE' && object.material?.name === 'Spray') {
             // Plik ma ciemną teksturę demonstracyjną „SprayDark2”, choć
             // obudowa wariantu Pular PRO jest biała. Pozostałe materiały
             // (logo, szczeliny, wyświetlacz) zachowujemy bez zmian.
             object.material = whiteShellMaterial;
+          }
+          if (brandName === 'KAISAI' && object.material) {
+            object.material = object.material.clone();
+            object.material.metalness = 0;
+            object.material.roughness = 0.58;
+            object.material.envMapIntensity = 0.2;
           }
           object.castShadow = false;
           object.receiveShadow = false;
         });
 
         unit.add(model);
+
+        if (brandName === 'KAISAI') {
+          const logoTexture = new TextureLoader().load('/modele3d/kaisai-logo.png');
+          logoTexture.colorSpace = SRGBColorSpace;
+          const logo = new Mesh(
+            new PlaneGeometry(0.43, 0.108),
+            new MeshBasicMaterial({
+              map: logoTexture,
+              transparent: true,
+              depthWrite: false,
+              toneMapped: false
+            })
+          );
+          logo.position.set(0, -0.365, 0.613);
+          logo.renderOrder = 1;
+          unit.add(logo);
+        }
+
         proceduralUnit.visible = false;
 
         // Przy ograniczonym ruchu nie działa pętla renderująca, więc po
@@ -278,9 +311,11 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
   }
 
   // ---------- strumień powietrza: świetlny stożek + miękkie kłęby mgły ----------
-  const airProfile = brand.toUpperCase() === 'GREE'
+  const airProfile = brandName === 'GREE'
     ? { outletY: -0.64, outletZ: 0.59, spread: 1.08 }
-    : { outletY: -0.62, outletZ: 0.62, spread: 1 };
+    : brandName === 'KAISAI'
+      ? { outletY: -0.79, outletZ: 0.61, spread: 1.05 }
+      : { outletY: -0.62, outletZ: 0.62, spread: 1 };
   const beam = new Mesh(
     new PlaneGeometry(3.6, 3.0),
     new MeshBasicMaterial({

@@ -18,7 +18,7 @@ export const COST_CALCULATOR_CONFIG = {
   priorities: {
     price: { label: 'Najlepsza cena', adjustment: { low: 0, high: 0 } },
     comfort: { label: 'Komfort i cisza', adjustment: { low: 400, high: 1200 } },
-    heating: { label: 'Głównie do grzania', adjustment: { low: 700, high: 1800 } },
+    heating: { label: 'Głównie do grzania', adjustment: { low: 0, high: 800 } },
     unsure: { label: 'Nie wiem', adjustment: { low: 0, high: 600 } }
   }
 } as const;

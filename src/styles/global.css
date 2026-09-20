@@ -706,6 +706,12 @@ strong {
   animation-play-state: paused;
 }
 
+@media (min-width: 900px) {
+  .city-marquee {
+    margin-top: -2.7rem;
+  }
+}
+
 /* Plakietka marki przy jednostce 3D */
 
 .brand-chip {
@@ -2004,6 +2010,12 @@ summary:focus-visible {
   align-items: start;
 }
 
+.tool-layout > *,
+.tool-result-wrap,
+.tool-result {
+  min-width: 0;
+}
+
 @media (min-width: 1000px) {
   .tool-layout {
     grid-template-columns: minmax(0, 1fr) 360px;
@@ -2227,8 +2239,11 @@ summary:focus-visible {
 }
 
 .result-main strong {
+  display: block;
+  max-width: 100%;
   font-weight: 600;
   color: inherit;
+  overflow-wrap: anywhere;
 }
 
 .result-sub {
@@ -2264,6 +2279,7 @@ summary:focus-visible {
   font-size: 0.98rem;
   font-variant-numeric: tabular-nums;
   line-height: 1.4;
+  overflow-wrap: anywhere;
 }
 
 .result-row dd a {
@@ -2280,6 +2296,12 @@ summary:focus-visible {
 
 .tool-result .cta-button {
   width: 100%;
+  min-width: 0;
+  padding-inline: 1rem;
+  line-height: 1.2;
+  text-align: center;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .tool-disclaimer {
