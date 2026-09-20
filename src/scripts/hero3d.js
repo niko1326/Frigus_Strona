@@ -310,6 +310,7 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
     { x0: 1.0, drift: -0.2, phase: 5.6, speed: 2.5, amp: 0.17, width: 0.32 },
     { x0: 1.55, drift: 0.35, phase: 0.9, speed: 2.1, amp: 0.12, width: 0.24 }
   ];
+  let airflowLength = 1;
 
   for (const def of streamDefs) {
     const geo = new PlaneGeometry(1, 1, SEG, 1);
@@ -333,11 +334,12 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
       const pos = mesh.geometry.attributes.position.array;
       for (let i = 0; i <= SEG; i++) {
         const u = i / SEG;
+        const travel = u * airflowLength;
         // fala wędrująca w dół strumienia + poszerzanie się nawiewu
-        const wave = Math.sin(u * 7.5 - t * def.speed + def.phase) * def.amp * (0.25 + u);
-        const px = (def.x0 + def.drift * u + wave) * airProfile.spread;
-        const py = airProfile.outletY - 0.04 - 2.7 * u * u + Math.sin(u * 11 - t * def.speed * 1.35 + def.phase) * 0.04;
-        const pz = airProfile.outletZ + 2.3 * u;
+        const wave = Math.sin(travel * 7.5 - t * def.speed + def.phase) * def.amp * (0.25 + travel);
+        const px = (def.x0 + def.drift * travel + wave) * airProfile.spread;
+        const py = airProfile.outletY - 0.04 - 2.7 * travel * travel + Math.sin(travel * 11 - t * def.speed * 1.35 + def.phase) * 0.04;
+        const pz = airProfile.outletZ + 2.3 * travel;
         const w = def.width * (0.45 + u * 1.1);
         // górna i dolna krawędź wstęgi
         pos[i * 3] = px - w / 2;
@@ -360,7 +362,7 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
   // zawsze miał zapas co najmniej GAP_PX.
   const GAP_PX = 44;
   const UNIT_EFFECTIVE_W = 5.2; // szerokość jednostki w świecie, z zapasem na obrót
-  let comp = { unitX: 2.6, unitY: 0.35, rotY: -0.18, camY: 0.1, camZ: 8.6, lookX: 0, scale: 0.88 };
+  let comp = { unitX: 2.6, unitY: 0.35, rotX: 0, rotY: -0.18, camY: 0.1, camZ: 8.6, lookX: 0, scale: 0.88 };
 
   function layout() {
     const w = stage.clientWidth;
@@ -370,6 +372,8 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
     camera.aspect = w / h;
 
     if (w < 900) {
+      airflowLength = 0.48;
+      beam.scale.y = airflowLength;
       const camZ = 11.5;
       const camY = -0.5;
       const worldH = 2 * camZ * Math.tan(((34 / 2) * Math.PI) / 180);
@@ -380,16 +384,18 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
       const availableBottom = chipRect ? chipRect.top - stageRect.top - 18 : h - 90;
       const scale = Math.min(0.62, 0.34 + w * 0.0005);
       const modelHalfPx = (0.9 * scale * h) / worldH;
-      const idealCenter = (availableTop + availableBottom) / 2;
+      const idealCenter = availableTop + (availableBottom - availableTop) * 0.42;
       const minCenter = availableTop + modelHalfPx;
       const maxCenter = availableBottom - modelHalfPx;
       const centerPx = minCenter <= maxCenter
         ? Math.min(Math.max(idealCenter, minCenter), maxCenter)
         : idealCenter;
-      const unitY = camY - ((centerPx - h / 2) / h) * worldH - 0.18;
+      const unitY = camY - ((centerPx - h / 2) / h) * worldH + 0.08;
 
-      comp = { unitX: 0, unitY, rotY: -0.06, camY, camZ, lookX: 0, scale };
+      comp = { unitX: 0, unitY, rotX: -0.1, rotY: -0.06, camY, camZ, lookX: 0, scale };
     } else {
+      airflowLength = 1;
+      beam.scale.y = 1;
       const camZ = 8.6;
       const camY = 0.1;
       // wymiary świata w płaszczyźnie jednostki (z = 0), kamera patrzy na wprost
@@ -420,7 +426,7 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
       const unitRightWorld = (bandRightPx - w / 2) * worldPerPx;
       const unitX = unitRightWorld - (UNIT_EFFECTIVE_W / 2) * scale;
 
-      comp = { unitX, unitY: 0.35, rotY: -0.18, camY, camZ, lookX: 0, scale };
+      comp = { unitX, unitY: 0.35, rotX: 0, rotY: -0.18, camY, camZ, lookX: 0, scale };
     }
 
     unit.scale.setScalar(comp.scale);
@@ -488,7 +494,7 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
       0.38
     );
     unit.rotation.x = MathUtils.clamp(
-      targetRX * intro + Math.cos(t * 0.55) * 0.02,
+      comp.rotX + targetRX * intro + Math.cos(t * 0.55) * 0.02,
       -0.18,
       0.18
     );

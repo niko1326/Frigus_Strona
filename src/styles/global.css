@@ -2977,19 +2977,33 @@ summary:focus-visible {
   }
 
   .hero-trust {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.45rem 1rem;
-    margin-top: 0.45rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.4rem;
+    margin-top: 0.55rem;
+    width: min(100%, 390px);
   }
 
   .hero-trust li {
     white-space: normal;
+    width: fit-content;
+    min-height: 2rem;
+    padding: 0.34rem 0.56rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-pill);
+    background: rgba(255, 255, 255, 0.035);
+    font-size: 0.78rem;
+    line-height: 1.25;
+    gap: 0.35rem;
+  }
+
+  .hero-trust li:first-child {
+    grid-column: 1 / -1;
   }
 
   .hero-inner {
     padding-block: clamp(2.6rem, 10vw, 4rem);
-    padding-bottom: clamp(15rem, 55vw, 21rem);
+    padding-bottom: clamp(18rem, 72vw, 22rem);
   }
 
   .hero-veil {
@@ -3006,6 +3020,17 @@ summary:focus-visible {
 
   .fallback-unit {
     width: min(84vw, 380px);
+  }
+
+  /*
+    Wysoka, jednokolumnowa lista modeli nie osiągała 18% widoczności wymaganej
+    przez wspólny IntersectionObserver. Na małych ekranach katalog jest od razu
+    widoczny; desktop zachowuje dotychczasowe wejście sekcji.
+  */
+  [data-reveal].lineup-container {
+    opacity: 1;
+    transform: none;
+    will-change: auto;
   }
 }
 
