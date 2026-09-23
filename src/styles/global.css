@@ -539,6 +539,11 @@ strong {
   letter-spacing: -0.02em;
 }
 
+.hero-model-slot,
+.brand-chip-mobile {
+  display: none;
+}
+
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
@@ -607,62 +612,6 @@ strong {
     radial-gradient(95% 90% at 16% 40%, rgba(13, 17, 23, 0.92) 0%, rgba(13, 17, 23, 0.5) 36%, transparent 58%),
     linear-gradient(to top, rgba(13, 17, 23, 0.8), transparent 26%);
   pointer-events: none;
-}
-
-/* Zapasowa scena — pojawia się DOPIERO, gdy WebGL nie wystartuje
-   (opóźniona animacja), więc nie miga przed intrem 3D. */
-
-.hero-fallback {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding-right: 6%;
-  opacity: 0;
-  animation: fallback-in 0.9s ease 2.8s forwards;
-  pointer-events: none;
-}
-
-.hero.is-3d .hero-fallback {
-  animation: none;
-  opacity: 0;
-}
-
-@keyframes fallback-in {
-  to {
-    opacity: 1;
-  }
-}
-
-.fallback-unit {
-  position: relative;
-  width: min(46vw, 520px);
-  aspect-ratio: 3 / 1;
-  border-radius: 22px;
-  background: linear-gradient(175deg, #fdfeff 0%, #e9edf2 78%, #d7dde5 100%);
-  box-shadow: var(--shadow-product), inset 0 -14px 30px rgba(13, 17, 23, 0.08);
-}
-
-.fallback-unit::after {
-  content: '';
-  position: absolute;
-  left: 5%;
-  right: 5%;
-  bottom: 9%;
-  height: 12%;
-  border-radius: 999px;
-  background: linear-gradient(to bottom, #cfd6de, #eef1f5);
-}
-
-.fallback-glow {
-  position: absolute;
-  left: 10%;
-  right: 10%;
-  top: 100%;
-  height: 140px;
-  background: radial-gradient(ellipse at 50% 0%, rgba(86, 183, 255, 0.35), transparent 70%);
-  filter: blur(12px);
 }
 
 /* Marquee miast pod hero */
@@ -2991,7 +2940,7 @@ summary:focus-visible {
 
 /* ---------- Responsywność ---------- */
 
-/* Poniżej 900 px model 3D schodzi pod tekst — zero ryzyka nachodzenia. */
+/* Poniżej 900 px model 3D ma własny slot między ceną a opisem. */
 
 @media (max-width: 899.98px) {
   .hero {
@@ -3024,24 +2973,66 @@ summary:focus-visible {
   }
 
   .hero-inner {
+    grid-template-areas:
+      'eyebrow'
+      'title'
+      'price'
+      'model'
+      'lead'
+      'actions'
+      'trust';
+    gap: 1rem;
     padding-block: clamp(2.6rem, 10vw, 4rem);
-    padding-bottom: clamp(18rem, 72vw, 22rem);
+    max-width: 100%;
+  }
+
+  .hero .eyebrow { grid-area: eyebrow; }
+  .hero h1 { grid-area: title; }
+  .hero-price {
+    grid-area: price;
+    gap: 0.45rem;
+    margin-top: 0.15rem;
+  }
+
+  .hero-price strong {
+    white-space: nowrap;
+  }
+  .hero-model-slot {
+    grid-area: model;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    height: clamp(17.5rem, 78vw, 20.5rem);
+    padding-bottom: 0.2rem;
+    pointer-events: none;
+  }
+  .hero-lead { grid-area: lead; }
+  .hero-actions { grid-area: actions; }
+  .hero-trust { grid-area: trust; }
+
+  .brand-chip-desktop {
+    display: none;
+  }
+
+  .brand-chip-mobile {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    display: inline-flex;
+    margin: 0;
+    transform: none;
+    pointer-events: auto;
+  }
+
+  .brand-chip-mobile:hover {
+    transform: translateY(-2px);
   }
 
   .hero-veil {
     background:
-      linear-gradient(to bottom, rgba(13, 17, 23, 0.9) 34%, rgba(13, 17, 23, 0.35) 60%, transparent 78%),
-      linear-gradient(to top, rgba(13, 17, 23, 0.8), transparent 26%);
-  }
-
-  .hero-fallback {
-    align-items: flex-end;
-    justify-content: center;
-    padding: 0 1.5rem 4.5rem;
-  }
-
-  .fallback-unit {
-    width: min(84vw, 380px);
+      linear-gradient(to bottom, rgba(13, 17, 23, 0.9) 24%, rgba(13, 17, 23, 0.2) 44%, transparent 62%),
+      linear-gradient(to top, rgba(13, 17, 23, 0.72), transparent 24%);
   }
 
   /*
@@ -3060,6 +3051,19 @@ summary:focus-visible {
   body:has(.tool-layout) .sticky-call,
   body:has(.contact-panel) .sticky-call {
     display: none;
+  }
+}
+
+@media (max-width: 375px) {
+  .hero-price {
+    display: grid;
+    grid-template-columns: auto auto;
+    row-gap: 0.1rem;
+    width: fit-content;
+  }
+
+  .hero-price > span:first-child {
+    grid-column: 1 / -1;
   }
 }
 

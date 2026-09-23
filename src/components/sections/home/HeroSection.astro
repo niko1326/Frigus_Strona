@@ -23,12 +23,6 @@ const marqueeCities = [
 <section class="hero" data-hero>
   <div class="hero-stage" data-hero-stage aria-hidden="true"></div>
 
-  <div class="hero-fallback" aria-hidden="true">
-    <div class="fallback-unit">
-      <div class="fallback-glow"></div>
-    </div>
-  </div>
-
   <div class="hero-veil" aria-hidden="true"></div>
 
   <div class="container hero-content">
@@ -47,6 +41,14 @@ const marqueeCities = [
         <span class="hero-price-note">brutto</span>
       </div>
 
+      <div class="hero-model-slot" data-hero-model-slot>
+        <a class="brand-chip brand-chip-mobile" data-brand-link href={BRANDS[0].href} data-brands={JSON.stringify(BRANDS)}>
+          <span class="brand-chip-label">Na ścianie:</span>
+          <strong data-brand-name>{BRANDS[0].name}</strong>
+          <span class="brand-chip-cta">zobacz modele</span>
+        </a>
+      </div>
+
       <div class="hero-actions">
         <CTAButton href={`tel:${PHONE_TEL}`} label={labels.callNow} ariaLabel={labels.callNow} />
         <CTAButton href={routes.pricing} label={labels.readPricing} variant="secondary" />
@@ -60,7 +62,7 @@ const marqueeCities = [
     </div>
   </div>
 
-  <a class="brand-chip" data-brand-link href={BRANDS[0].href} data-brands={JSON.stringify(BRANDS)}>
+  <a class="brand-chip brand-chip-desktop" data-brand-link href={BRANDS[0].href} data-brands={JSON.stringify(BRANDS)}>
     <span class="brand-chip-label">Na ścianie:</span>
     <strong data-brand-name>{BRANDS[0].name}</strong>
     <span class="brand-chip-cta">zobacz modele</span>
@@ -100,10 +102,10 @@ const marqueeCities = [
 
   // Naprzemienny branding jednostki: co odświeżenie inna marka z naszej oferty.
   type HeroBrand = { name: string; href: string };
-  const chip = document.querySelector('[data-brand-link]');
+  const chips = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-brand-link]'));
   const brandList: HeroBrand[] = (() => {
     try {
-      return JSON.parse(chip?.getAttribute('data-brands') ?? '[]');
+      return JSON.parse(chips[0]?.getAttribute('data-brands') ?? '[]');
     } catch {
       return [];
     }
@@ -122,18 +124,17 @@ const marqueeCities = [
     activeBrand = brandList[index];
   }
 
-  if (chip instanceof HTMLAnchorElement) {
+  chips.forEach((chip) => {
     chip.href = activeBrand.href;
     const nameEl = chip.querySelector('[data-brand-name]');
     if (nameEl) nameEl.textContent = activeBrand.name;
-  }
+  });
 
   if (hero instanceof HTMLElement && stage instanceof HTMLElement) {
     const start = () => {
       import('../../../scripts/hero3d.js')
         .then(({ initHero3D }) => {
           const scene = initHero3D(stage, { brand: activeBrand.name });
-          hero.classList.add('is-3d');
 
           /*
             Kliknięcie w samą jednostkę prowadzi na podstronę marki,
@@ -150,31 +151,33 @@ const marqueeCities = [
             }
           });
 
-          if (toggle instanceof HTMLButtonElement && !prefersReduced) {
-            toggle.hidden = false;
-            toggle.addEventListener('click', () => {
-              const paused = toggle.getAttribute('aria-pressed') !== 'true';
-              toggle.setAttribute('aria-pressed', String(paused));
-              toggle.setAttribute(
-                'aria-label',
-                paused ? 'Wznów animacje' : 'Wstrzymaj animacje'
-              );
-              scene.setPaused(paused);
-              document
-                .querySelectorAll('.city-track')
-                .forEach((track) => track.classList.toggle('is-paused', paused));
-            });
-          }
+          scene.ready
+            .then(() => {
+              hero.classList.add('is-3d');
+
+              if (toggle instanceof HTMLButtonElement && !prefersReduced) {
+                toggle.hidden = false;
+                toggle.addEventListener('click', () => {
+                  const paused = toggle.getAttribute('aria-pressed') !== 'true';
+                  toggle.setAttribute('aria-pressed', String(paused));
+                  toggle.setAttribute(
+                    'aria-label',
+                    paused ? 'Wznów animacje' : 'Wstrzymaj animacje'
+                  );
+                  scene.setPaused(paused);
+                  document
+                    .querySelectorAll('.city-track')
+                    .forEach((track) => track.classList.toggle('is-paused', paused));
+                });
+              }
+            })
+            .catch(() => scene.dispose());
         })
         .catch(() => {
-          /* WebGL niedostępny - zostaje statyczny fallback */
+          /* WebGL niedostępny - zostaje neutralne tło HERO. */
         });
     };
 
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(start, { timeout: 1200 });
-    } else {
-      setTimeout(start, 200);
-    }
+    requestAnimationFrame(start);
   }
 </script>
