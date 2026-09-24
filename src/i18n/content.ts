@@ -246,7 +246,7 @@ export const pageMeta: Record<PageKey, PageMeta> = {
   calcEnergy: {
     title: 'Ile prądu zużywa klimatyzacja? Kalkulator | FRIGAC',
     description:
-      'Kalkulator zużycia prądu przez klimatyzację: podaj moc, SEER, godziny pracy i cenę prądu, a policzymy koszt chłodzenia na dzień, miesiąc i cały sezon. Sprawdź, ile naprawdę kosztuje klimatyzacja.',
+      'Sprawdź orientacyjne zużycie prądu i koszt chłodzenia klimatyzacją. Kalkulator uwzględnia moc urządzenia, SEER, cenę energii i sposób użytkowania.',
     keywords: [
       'ile prądu zużywa klimatyzacja',
       'klimatyzacja koszt prądu',
