@@ -34,7 +34,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 const BG = 0x0d1117;
 
-function streamTexture() {
+function streamTexture(isMobile = false) {
   const canvas = document.createElement('canvas');
   canvas.width = 256;
   canvas.height = 64;
@@ -42,8 +42,16 @@ function streamTexture() {
   // jasność wzdłuż wstęgi: rodzi się przy wylocie, wygasa na końcu
   const h = ctx.createLinearGradient(0, 0, 256, 0);
   h.addColorStop(0, 'rgba(255,255,255,0)');
-  h.addColorStop(0.15, 'rgba(255,255,255,0.9)');
-  h.addColorStop(0.55, 'rgba(255,255,255,0.4)');
+  if (isMobile) {
+    // Najjaśniejsza część poza obudową; wygaszenie dopiero przy końcu.
+    h.addColorStop(0.15, 'rgba(255,255,255,0.55)');
+    h.addColorStop(0.38, 'rgba(255,255,255,0.95)');
+    h.addColorStop(0.7, 'rgba(255,255,255,0.85)');
+    h.addColorStop(0.87, 'rgba(255,255,255,0.4)');
+  } else {
+    h.addColorStop(0.15, 'rgba(255,255,255,0.9)');
+    h.addColorStop(0.55, 'rgba(255,255,255,0.4)');
+  }
   h.addColorStop(1, 'rgba(255,255,255,0)');
   ctx.fillStyle = h;
   ctx.fillRect(0, 0, 256, 64);
@@ -60,14 +68,14 @@ function streamTexture() {
   return tex;
 }
 
-function beamTexture() {
+function beamTexture(isMobile = false) {
   const canvas = document.createElement('canvas');
   canvas.width = 256;
   canvas.height = 256;
   const ctx = canvas.getContext('2d');
   const g = ctx.createRadialGradient(128, 0, 10, 128, 0, 250);
   g.addColorStop(0, 'rgba(190,225,255,0.55)');
-  g.addColorStop(0.5, 'rgba(150,205,255,0.18)');
+  g.addColorStop(0.5, isMobile ? 'rgba(175,220,255,0.36)' : 'rgba(150,205,255,0.18)');
   g.addColorStop(1, 'rgba(150,205,255,0)');
   ctx.fillStyle = g;
   ctx.fillRect(0, 0, 256, 256);
@@ -178,7 +186,7 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
   const beam = new Mesh(
     new PlaneGeometry(3.6, 3.0),
     new MeshBasicMaterial({
-      map: beamTexture(),
+      map: beamTexture(initialMobile),
       transparent: true,
       opacity: 0,
       blending: AdditiveBlending,
@@ -196,7 +204,7 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
   // Na małym ekranie 28 segmentów zachowuje miękki kształt wstęg, a istotnie
   // ogranicza liczbę pozycji przeliczanych podczas każdej klatki.
   const SEG = initialMobile ? 28 : 44;
-  const streamTex = streamTexture();
+  const streamTex = streamTexture(initialMobile);
   const STREAMS = [];
   const streamDefs = [
     { x0: -1.5, drift: -0.35, phase: 0.0, speed: 2.4, amp: 0.16, width: 0.34 },
@@ -207,6 +215,8 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
     { x0: 1.55, drift: 0.35, phase: 0.9, speed: 2.1, amp: 0.12, width: 0.24 }
   ];
   let airflowLength = 1;
+  let airflowBottomNdc = -1;
+  const airflowProbe = new Vector3();
 
   for (const def of streamDefs) {
     const geo = new PlaneGeometry(1, 1, SEG, 1);
@@ -226,6 +236,27 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
   }
 
   function updateStreams(t, flow) {
+    if (isMobileLayout) {
+      // Dopasuj koniec nawiewu do kapsuły także podczas obrotu urządzenia.
+      // Pozycja kapsuły jest mierzona w layout(), bez odczytów DOM w animacji.
+      camera.updateMatrixWorld();
+      unit.updateMatrixWorld(true);
+      let low = 0;
+      let high = 1.8;
+      for (let i = 0; i < 12; i++) {
+        const length = (low + high) / 2;
+        let bottom = 1;
+        for (const x of [-2.3, 0, 2.3]) {
+          airflowProbe.set(x, airProfile.outletY - 0.08 - 2.7 * length * length,
+            airProfile.outletZ + 2.3 * length);
+          airflowProbe.applyMatrix4(unit.matrixWorld).project(camera);
+          bottom = Math.min(bottom, airflowProbe.y);
+        }
+        if (bottom >= airflowBottomNdc) low = length;
+        else high = length;
+      }
+      airflowLength = low;
+    }
     for (const { def, mesh } of STREAMS) {
       const pos = mesh.geometry.attributes.position.array;
       for (let i = 0; i <= SEG; i++) {
@@ -247,7 +278,7 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
         pos[j + 2] = pz;
       }
       mesh.geometry.attributes.position.needsUpdate = true;
-      mesh.material.opacity = 0.26 * flow;
+      mesh.material.opacity = (isMobileLayout ? 0.65 : 0.26) * flow;
     }
   }
 
@@ -286,6 +317,9 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
       stageDocumentTop = stageRect.top + window.scrollY;
       scrollTravel = Math.max(h * 0.46, 1);
       const slotRect = document.querySelector('[data-hero-model-slot]')?.getBoundingClientRect();
+      const chipRect = stage.closest('.hero')?.querySelector('.brand-chip-mobile')?.getBoundingClientRect();
+      const airflowBottomPx = (chipRect?.top ?? slotRect?.bottom ?? stageRect.bottom) - stageRect.top - 14;
+      airflowBottomNdc = 1 - (airflowBottomPx / h) * 2;
       const slotTop = slotRect ? slotRect.top - stageRect.top : h * 0.38;
       // Stała szerokość wizualna względem viewportu zachowuje obecną skalę
       // również na 320 px, mimo że HERO jest teraz wyższe.
@@ -458,19 +492,18 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
 
     layout();
     if (prefersReduced) {
-      beam.material.opacity = 0.1;
-      updateStreams(0, 0.8);
+      beam.material.opacity = isMobileLayout ? 0.15 : 0.1;
       unit.rotation.set(comp.rotX, comp.rotY, 0);
       unit.position.set(comp.unitX, comp.unitY, 0);
       camera.position.set(0, comp.camY, comp.camZ);
     } else {
       beam.material.opacity = 0;
-      updateStreams(0, 0);
       unit.rotation.set(comp.rotX, comp.rotY - 0.25, 0);
       unit.position.set(comp.unitX, comp.unitY, 0);
       camera.position.set(2.2, comp.camY + 1.4, comp.camZ + 4);
     }
     camera.lookAt(comp.lookX, comp.camY, 0);
+    updateStreams(0, prefersReduced ? 0.8 : 0);
     // Przygotuj shadery i pierwsze bufory/tekstury, gdy canvas jest jeszcze
     // ukryty. Koszt pierwszego renderu nie może zużywać czasu intro.
     await renderer.compileAsync(scene, camera);
@@ -554,7 +587,9 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
     glow.intensity = 10 + open * 6 + Math.sin(t * 1.8) * 2;
 
     // strumień powietrza: stożek pulsuje, faliste wstęgi płyną z wylotu
-    beam.material.opacity = open * (0.12 + Math.sin(t * 1.9) * 0.03);
+    beam.material.opacity = open * (isMobile
+      ? 0.18 + Math.sin(t * 1.9) * 0.04
+      : 0.12 + Math.sin(t * 1.9) * 0.03);
     updateStreams(t, open);
 
     renderer.render(scene, camera);
