@@ -2551,6 +2551,10 @@ summary:focus-visible {
   min-width: 0;
 }
 
+.lineup-summary {
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
 .lineup-card {
   color: inherit;
   background: var(--canvas);

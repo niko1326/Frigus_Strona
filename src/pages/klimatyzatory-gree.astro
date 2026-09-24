@@ -63,37 +63,14 @@ const lineupSchema = {
 
   <section class="page-hero">
     <div class="container" data-reveal>
-      <p class="eyebrow">Marki, które montujemy</p>
       <h1>Klimatyzatory Gree z montażem</h1>
-      <p>
-        Gree to jeden z największych producentów klimatyzacji na świecie - jego sprężarki pracują
-        także w urządzeniach wielu innych marek. Montujemy jednostki split Gree dobrane do metrażu,
-        z pełnym uruchomieniem i 5-letnią gwarancją producenta.
-      </p>
-      <div class="hero-actions">
-        <CTAButton href={`tel:${PHONE_TEL}`} label={labels.callNow} ariaLabel={labels.callNow} />
-        <CTAButton href={routes.pricing} label={labels.readPricing} variant="secondary" />
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container card-grid card-grid-3" data-reveal>
-      {
-        highlights.map(({ Icon, title, description }) => (
-          <article class="info-card">
-            <Icon class="service-icon" />
-            <h2 class="card-heading">{title}</h2>
-            <p>{description}</p>
-          </article>
-        ))
-      }
     </div>
   </section>
 
   <section class="section section-gray">
     <div class="container lineup-container" data-reveal>
-      <div class="section-head">
+      <ModelLineup brand="Gree" models={GREE_MODELS} />
+      <div class="section-head lineup-summary">
         <p class="eyebrow">Warianty</p>
         <h2>Serie ścienne Gree, które montujemy</h2>
         <p>
@@ -102,7 +79,6 @@ const lineupSchema = {
           różnicują te urządzenia.
         </p>
       </div>
-      <ModelLineup brand="Gree" models={GREE_MODELS} />
       <p class="tiny-note lineup-note">
         Dane techniczne i zdjęcia pochodzą z materiałów producenta (stan na wrzesień 2026).
         Dostępność konkretnego wariantu potwierdzamy przy wycenie.
@@ -157,9 +133,31 @@ const lineupSchema = {
   </section>
 
   <section class="section">
-    <div class="container cta-inline" data-reveal>
-      <p class="plain-highlight plain-highlight-sm">Wyceń klimatyzator Gree z montażem w 5 minut.</p>
-      <CTAButton href={`tel:${PHONE_TEL}`} label={labels.callNow} ariaLabel={labels.callNow} />
+    <div class="container card-grid card-grid-3" data-reveal>
+      {
+        highlights.map(({ Icon, title, description }) => (
+          <article class="info-card">
+            <Icon class="service-icon" />
+            <h2 class="card-heading">{title}</h2>
+            <p>{description}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container plain-stack" data-reveal>
+      <p>
+        Gree to jeden z największych producentów klimatyzacji na świecie - jego sprężarki pracują
+        także w urządzeniach wielu innych marek. Montujemy jednostki split Gree dobrane do metrażu,
+        z pełnym uruchomieniem i 5-letnią gwarancją producenta.
+      </p>
+      <div class="cta-inline">
+        <p class="plain-highlight plain-highlight-sm">Wyceń klimatyzator Gree z montażem w 5 minut.</p>
+        <CTAButton href={`tel:${PHONE_TEL}`} label={labels.callNow} ariaLabel={labels.callNow} />
+        <CTAButton href={routes.pricing} label={labels.readPricing} variant="secondary" />
+      </div>
     </div>
   </section>
 

@@ -1,26 +1,6 @@
 ---
 import { routes } from '../i18n/content';
-
-export type LineupModel = {
-  /** Nazwa serii tak, jak nazywa ją producent. */
-  name: string;
-  /** Jednozdaniowy opis: dla kogo i po co ta seria. */
-  tagline: string;
-  /** Plik zdjęcia w /photos/modele/. */
-  image: string;
-  /** Tekst alternatywny obrazu. */
-  alt: string;
-  /** Warianty mocy chłodniczej w kW, np. ['2,6', '3,5', '5,3']. */
-  capacities: string[];
-  /** Klasa energetyczna, np. 'A+++ / A++'. */
-  energyClass?: string;
-  /** Poziom hałasu jednostki wewnętrznej, np. 'od 19 dB(A)'. */
-  noise?: string;
-  /** Krótkie cechy wyróżniające serię. */
-  features: string[];
-  /** Etykieta wyróżnienia, np. 'Najczęściej wybierana'. */
-  badge?: string;
-};
+import type { LineupModel } from '../config/lineups';
 
 interface Props {
   brand: string;
@@ -60,7 +40,7 @@ const { brand, models } = Astro.props;
             <span class="lineup-specs">
               <span class="lineup-spec">
                 <span class="lineup-spec-key">Warianty mocy</span>
-                <span class="lineup-spec-val">{model.capacities.join(' / ')} kW</span>
+                <span class="lineup-spec-val">{model.variants.map((variant) => variant.label).join(' / ')} kW</span>
               </span>
               {model.energyClass && (
                 <span class="lineup-spec">

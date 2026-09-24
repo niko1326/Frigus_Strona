@@ -6,7 +6,6 @@ import { PHONE_TEL, SITE } from '../config/site';
 import { labels, pageMeta, routes } from '../i18n/content';
 import {
   calculateEnergyEstimate,
-  calculateHeatingEstimate,
   formatEnergyNumber as fmt,
   HEATING_ASSUMPTIONS,
   USAGE_PROFILES
@@ -14,18 +13,9 @@ import {
 
 const meta = pageMeta.calcEnergy;
 
-const defaultEstimate = calculateEnergyEstimate({ power: 3.5, seer: 6.5, price: 1.2, usage: 'standard' });
-const defaultHeatingEstimate = calculateHeatingEstimate({
-  area: 35,
-  height: 'low',
-  insulation: 'standard',
-  winter: 'standard',
-  scop: 4.6,
-  price: 1.2
-});
 const seerTable = [4, 5.5, 6.5, 8, 8.5].map((seer) => ({
   seer: seer.toLocaleString('pl-PL'),
-  ...calculateEnergyEstimate({ power: 3.5, seer, price: 1.2, usage: 'standard' })
+  ...calculateEnergyEstimate({ power: 3.5, seer, area: 35, price: 1.2, usage: 'standard', insulation: 'standard' })
 }));
 const faqItems = [
   {
@@ -46,7 +36,7 @@ const faqItems = [
   },
   {
     question: 'Ile prądu zużywa klimatyzacja podczas grzania?',
-    answer: 'Zużycie zależy od zapotrzebowania cieplnego ogrzewanej strefy i SCOP urządzenia. Kalkulator szacuje widełki na podstawie powierzchni, wysokości, izolacji i warunków zimowych. Wynik jest orientacyjny i nie zastępuje obliczenia OZC.'
+    answer: 'Zużycie zależy od zapotrzebowania cieplnego ogrzewanej strefy i SCOP urządzenia. Kalkulator szacuje widełki na podstawie powierzchni, izolacji oraz tego, czy klimatyzator służy do dogrzewania, regularnego ogrzewania czy jako główne źródło ciepła. Wynik jest orientacyjny i nie zastępuje obliczenia OZC.'
   },
   {
     question: 'Co oznacza SCOP?',
@@ -107,100 +97,93 @@ const appSchema = {
           <label for="mode-heating">Grzanie</label>
         </fieldset>
 
+        <div class="tool-step">
+          <label class="tool-step-title" for="energy-model"><span class="tool-step-num">1</span>Wybierz klimatyzator</label>
+          <div class="seg brand-switch" aria-label="Marka klimatyzatora">
+            <input type="radio" name="energy-brand" id="brand-gree" value="gree" checked />
+            <label for="brand-gree">GREE</label>
+            <input type="radio" name="energy-brand" id="brand-kaisai" value="kaisai" />
+            <label for="brand-kaisai">KAISAI</label>
+          </div>
+          <select class="energy-input" id="energy-model" required>
+            <option value="">Wybierz model GREE</option>
+          </select>
+        </div>
+
+        <fieldset class="tool-step" id="variant-step">
+          <legend><span class="tool-step-num">2</span>Wybierz wariant mocy</legend>
+          <div class="seg" id="variant-options" aria-live="polite"></div>
+          <p class="tool-hint" id="variant-hint">Najpierw wybierz model klimatyzatora.</p>
+        </fieldset>
+
+        <div class="tool-step">
+          <label class="tool-step-title" for="energy-area"><span class="tool-step-num">3</span>Powierzchnia pomieszczenia</label>
+          <div class="energy-input-unit">
+            <input class="energy-input" type="number" id="energy-area" min="10" max="200" step="1" value="30" required inputmode="numeric" />
+            <span>m²</span>
+          </div>
+        </div>
+
+        <fieldset class="tool-step">
+          <legend><span class="tool-step-num">4</span>Jak dobrze pomieszczenie jest izolowane?</legend>
+          <div class="seg energy-choice-grid">
+            {Object.entries(HEATING_ASSUMPTIONS.heatLoadWm2).map(([key, profile]) => <>
+              <input type="radio" name="insulation" id={`insulation-${key}`} value={key} checked={key === 'standard'} />
+              <label for={`insulation-${key}`}><span>{profile.label}</span><small>{profile.description}</small></label>
+            </>)}
+          </div>
+        </fieldset>
+
         <div class="mode-panel" id="cooling-panel" data-mode-panel="cooling" role="region" aria-labelledby="mode-cooling">
           <fieldset class="tool-step">
-            <legend><span class="tool-step-num">1</span>Moc chłodnicza</legend>
-            <div class="seg">
-              <input type="radio" name="ekw" id="ekw-25" value="2.5" />
-              <label for="ekw-25">2,5 kW</label>
-              <input type="radio" name="ekw" id="ekw-35" value="3.5" checked />
-              <label for="ekw-35">3,5 kW</label>
-              <input type="radio" name="ekw" id="ekw-50" value="5" />
-              <label for="ekw-50">5,0 kW</label>
-              <input type="radio" name="ekw" id="ekw-70" value="7" />
-              <label for="ekw-70">7,0 kW</label>
-            </div>
-          </fieldset>
-          <div class="tool-step">
-            <label class="tool-step-title" for="seer"><span class="tool-step-num">2</span>SEER</label>
-            <input class="energy-input" type="number" id="seer" min="0.1" max="30" step="any" value="6.5" required inputmode="decimal" aria-describedby="seer-hint" />
-            <p class="tool-hint" id="seer-hint">Sezonowa efektywność chłodzenia z danych technicznych urządzenia.</p>
-          </div>
-          <div class="tool-step">
-            <label class="tool-step-title" for="cool-price"><span class="tool-step-num">3</span>Cena energii (zł/kWh)</label>
-            <input class="energy-input" type="number" id="cool-price" min="0" max="100" step="any" value="1.2" required inputmode="decimal" aria-describedby="cool-price-hint" />
-            <p class="tool-hint" id="cool-price-hint">Wpisz stawkę brutto z faktury, wraz z opłatami zależnymi od zużycia.</p>
-          </div>
-          <fieldset class="tool-step">
-            <legend><span class="tool-step-num">4</span>Jak intensywnie korzystasz z klimatyzacji?</legend>
+            <legend><span class="tool-step-num">5</span>Jak intensywnie korzystasz z klimatyzacji?</legend>
             <div class="seg energy-choice-grid">
               {Object.entries(USAGE_PROFILES).map(([key, profile]) => <>
-                <input type="radio" name="usage" id={`usage-${key}`} value={key} checked={key === 'standard'} />
-                <label for={`usage-${key}`}><span>{profile.label}</span><small>{profile.description}</small></label>
+                <input type="radio" name="cooling-usage" id={`cooling-usage-${key}`} value={key} checked={key === 'standard'} />
+                <label for={`cooling-usage-${key}`}><span>{profile.label}</span><small>{profile.description}</small></label>
               </>)}
             </div>
           </fieldset>
         </div>
 
         <div class="mode-panel" id="heating-panel" data-mode-panel="heating" role="region" aria-labelledby="mode-heating" hidden>
-          <div class="tool-step">
-            <label class="tool-step-title" for="heat-area"><span class="tool-step-num">1</span>Powierzchnia ogrzewanej strefy</label>
-            <div class="energy-input-unit"><input class="energy-input" type="number" id="heat-area" min="10" max="100" step="1" value="35" required inputmode="numeric" /><span>m²</span></div>
-          </div>
           <fieldset class="tool-step">
-            <legend><span class="tool-step-num">2</span>Wysokość pomieszczenia</legend>
-            <div class="seg energy-choice-grid energy-choice-compact">
-              {Object.entries(HEATING_ASSUMPTIONS.heights).map(([key, profile]) => <>
-                <input type="radio" name="heat-height" id={`heat-height-${key}`} value={key} checked={key === 'low'} />
-                <label for={`heat-height-${key}`}><span>{profile.label}</span></label>
-              </>)}
-            </div>
-          </fieldset>
-          <fieldset class="tool-step">
-            <legend><span class="tool-step-num">3</span>Jak dobrze budynek trzyma ciepło?</legend>
+            <legend><span class="tool-step-num">5</span>Jak intensywnie chcesz ogrzewać klimatyzacją?</legend>
             <div class="seg energy-choice-grid">
-              {Object.entries(HEATING_ASSUMPTIONS.heatLoadWm2).map(([key, profile]) => <>
-                <input type="radio" name="heat-insulation" id={`heat-insulation-${key}`} value={key} checked={key === 'standard'} />
-                <label for={`heat-insulation-${key}`}><span>{profile.label}</span><small>{profile.description}</small></label>
+              {Object.entries(HEATING_ASSUMPTIONS.usage).map(([key, profile]) => <>
+                <input type="radio" name="heating-usage" id={`heating-usage-${key}`} value={key} checked={key === 'regular'} />
+                <label for={`heating-usage-${key}`}><span>{profile.label}</span><small>{profile.description}</small></label>
               </>)}
             </div>
           </fieldset>
-          <fieldset class="tool-step">
-            <legend><span class="tool-step-num">4</span>Jak zimne są warunki zimą?</legend>
-            <div class="seg energy-choice-grid">
-              {Object.entries(HEATING_ASSUMPTIONS.winters).map(([key, profile]) => <>
-                <input type="radio" name="heat-winter" id={`heat-winter-${key}`} value={key} checked={key === 'standard'} />
-                <label for={`heat-winter-${key}`}><span>{profile.label}</span><small>{profile.description}</small></label>
-              </>)}
-            </div>
-          </fieldset>
-          <div class="tool-step">
-            <label class="tool-step-title" for="scop"><span class="tool-step-num">5</span>SCOP urządzenia</label>
-            <input class="energy-input" type="number" id="scop" min="0.1" max="20" step="any" value="4.6" required inputmode="decimal" aria-describedby="scop-hint" />
-            <p class="tool-hint" id="scop-hint">Znajdziesz go w danych technicznych klimatyzatora. Wyższy SCOP oznacza mniejsze zużycie energii przy tej samej ilości dostarczonego ciepła.</p>
-          </div>
-          <div class="tool-step">
-            <label class="tool-step-title" for="heat-price"><span class="tool-step-num">6</span>Cena energii (zł/kWh)</label>
-            <input class="energy-input" type="number" id="heat-price" min="0" max="100" step="any" value="1.2" required inputmode="decimal" />
-          </div>
         </div>
-        <noscript><p class="tool-hint">Włącz JavaScript, aby zmieniać wynik. Poniżej pokazujemy przykład: 3,5 kW, SEER 6,5, 1,20 zł/kWh, użytkowanie standardowe.</p></noscript>
+
+        <div class="tool-step">
+          <label class="tool-step-title" for="energy-price"><span class="tool-step-num">6</span>Cena energii (zł/kWh)</label>
+          <input class="energy-input" type="number" id="energy-price" min="0" max="100" step="any" value="1.2" required inputmode="decimal" aria-describedby="energy-price-hint" />
+          <p class="tool-hint" id="energy-price-hint">Wpisz stawkę brutto z faktury, wraz z opłatami zależnymi od zużycia.</p>
+        </div>
+        <noscript><p class="tool-hint">Włącz JavaScript, aby wybrać model i zobaczyć wynik.</p></noscript>
       </form>
 
       <div class="tool-result-wrap">
         <div class="tool-result" role="status" aria-live="polite">
-          <p class="eyebrow" id="result-eyebrow">Orientacyjne sezonowe zużycie energii</p>
-          <p class="result-main"><strong id="eres-kwh">≈ {fmt(defaultEstimate.referenceKwh)} kWh</strong></p>
-          <p class="result-sub" id="eres-source">Szacunek dla sezonu chłodzenia</p>
-          <dl class="result-rows">
-            <div class="result-row"><dt id="eres-cost-label">Orientacyjny koszt sezonu</dt><dd id="eres-season">≈ {fmt(defaultEstimate.seasonCost)} zł / sezon</dd></div>
-            <div class="result-row" id="eres-usage-row"><dt>Przy wybranym sposobie użytkowania</dt><dd id="eres-usage">Standardowo</dd></div>
-            <div class="result-row" id="eres-range-kwh-row"><dt>Orientacyjne zużycie</dt><dd id="eres-range-kwh">≈ {defaultEstimate.usageKwh.map(fmt).join('–')} kWh / sezon</dd></div>
-            <div class="result-row" id="eres-range-cost-row"><dt>Orientacyjny koszt</dt><dd id="eres-range-cost">≈ {defaultEstimate.usageCost.map(fmt).join('–')} zł / sezon</dd></div>
-            <div class="result-row" id="eres-peak-row" hidden><dt>Orientacyjne zapotrzebowanie na moc grzewczą</dt><dd id="eres-peak">≈ {defaultHeatingEstimate.peakHeatKw.map((value) => value.toLocaleString('pl-PL', { minimumFractionDigits: 1, maximumFractionDigits: 1 })).join('–')} kW</dd></div>
+          <p class="eyebrow" id="result-eyebrow">Chłodzenie</p>
+          <dl class="result-selection">
+            <div><dt>Model</dt><dd id="eres-model">Wybierz model</dd></div>
+            <div><dt>Moc</dt><dd id="eres-power">—</dd></div>
+            <div><dt>Metraż</dt><dd id="eres-area">30 m²</dd></div>
           </dl>
-          <p id="energy-error" hidden>Uzupełnij poprawnie zaznaczone pola, aby zobaczyć wynik.</p>
-          <p class="selection-warning" id="eres-selection-warning" hidden>Wymaga indywidualnego doboru.</p>
+          <p class="result-main"><strong id="eres-kwh">—</strong></p>
+          <p class="result-sub" id="eres-source">Wybierz model i wariant mocy</p>
+          <dl class="result-rows">
+            <div class="result-row"><dt>Orientacyjny koszt</dt><dd id="eres-season">—</dd></div>
+            <div class="result-row"><dt>Założenia</dt><dd id="eres-usage">—</dd></div>
+            <div class="result-row"><dt id="eres-peak-label">Orientacyjne obciążenie chłodnicze</dt><dd id="eres-peak">—</dd></div>
+            <div class="result-row"><dt>Parametr urządzenia</dt><dd id="eres-efficiency">—</dd></div>
+          </dl>
+          <p id="energy-error">Wybierz model i wariant mocy, aby zobaczyć wynik.</p>
+          <p class="selection-warning" id="eres-selection-warning" hidden>Wybrana moc wymaga sprawdzenia dla tego metrażu.</p>
           <CTAButton href={`tel:${PHONE_TEL}`} label="Dobierz oszczędny model" ariaLabel={labels.phoneAria} />
           <p class="tool-disclaimer" id="result-disclaimer">To orientacyjne wyliczenie. SEER jest sezonowym wskaźnikiem efektywności. Rzeczywiste zużycie zależy od temperatury zewnętrznej, nastawy, izolacji, nasłonecznienia, wielkości pomieszczenia oraz sposobu użytkowania i modulacji sprężarki.</p>
         </div>
@@ -227,12 +210,12 @@ const appSchema = {
       </div>
       <p class="tiny-note">Założenia: moc 3,5 kW jako przybliżenie Pdesign, 350 godzin równoważnych, przykładowa cena 1,20 zł/kWh. Koszt liczymy z niezaokrąglonego zużycia; wyniki pokazujemy w pełnych kWh i złotych.</p>
       <h2>Jak rozumieć sposób użytkowania?</h2>
-      <p>Przyjmujemy orientacyjne mnożniki: sporadycznie 0,6–0,9, standardowo 0,9–1,3, intensywnie 1,3–2,0 wartości referencyjnej. To założenia kalkulatora FRIGAC, a nie współczynniki z metodologii UE. Faktyczne zużycie może znaleźć się poza tymi widełkami. Liczba godzin włączonego urządzenia nie jest równa liczbie godzin pracy z pełnym obciążeniem.</p>
+      <p>Przyjmujemy orientacyjne mnożniki: sporadycznie 0,6–0,9, standardowo 0,9–1,3, intensywnie 1,3–2,0 wartości referencyjnej. Kalkulator koryguje widełki także na podstawie metrażu, izolacji i relacji mocy wybranego wariantu do orientacyjnego obciążenia 80–120 W/m². To założenia kalkulatora FRIGAC, a nie współczynniki z metodologii UE. Faktyczne zużycie może znaleźć się poza tymi widełkami.</p>
       <h2>Jak kalkulator szacuje ogrzewanie klimatyzacją?</h2>
-      <p>Tryb grzania najpierw szacuje przedział zapotrzebowania cieplnego ogrzewanej strefy na podstawie powierzchni, wysokości, jakości izolacji i warunków zimowych. Następnie przelicza zapotrzebowanie sezonowe na energię elektryczną, dzieląc je przez SCOP urządzenia. SCOP jest sezonowym współczynnikiem efektywności ogrzewania, dlatego lepiej nadaje się do takiego porównania niż chwilowy COP.</p>
-      <p>Przyjęte przedziały obciążenia wynoszą 35–55 W/m² dla dobrej izolacji, 55–80 W/m² dla standardowej i 80–120 W/m² dla słabej. Kalkulator koryguje je proporcjonalnie do reprezentatywnej wysokości pomieszczenia, stosuje mnożnik zimy 0,8, 1,0 lub 1,25 oraz zakres 900–1300 równoważnych godzin pełnego obciążenia. Są to jawne założenia modelu orientacyjnego, a nie wartości z normy ani pełne obliczenie projektowe.</p>
-      <p>W europejskiej metodologii SCOP opisuje efektywność sezonową i rozróżnia cieplejszy, umiarkowany oraz chłodniejszy sezon grzewczy. Kategorie w tym kalkulatorze pomagają opisać warunki użytkownika, ale nie odtwarzają profili badawczych jeden do jednego. Więcej informacji zawiera <a class="inline-link" href="https://eur-lex.europa.eu/legal-content/PL/TXT/?uri=CELEX:32012R0206">rozporządzenie Komisji (UE) nr 206/2012</a>.</p>
-      <p class="tiny-note">Wynik ogrzewania nie zastępuje obliczenia OZC ani doboru mocy przy temperaturze projektowej. Gdy górna granica zapotrzebowania przekracza 7 kW, kalkulator sygnalizuje potrzebę indywidualnego doboru.</p>
+      <p>Tryb grzania najpierw szacuje przedział sezonowego zapotrzebowania na ciepło na podstawie powierzchni, jakości izolacji i planowanego sposobu ogrzewania. Następnie dzieli tę wartość przez SCOP konkretnego wariantu urządzenia. SCOP jest sezonowym współczynnikiem efektywności ogrzewania, dlatego lepiej nadaje się do takiego porównania niż chwilowy COP.</p>
+      <p>Do orientacyjnej kontroli mocy przyjmujemy 35–55 W/m² dla dobrej izolacji, 55–80 W/m² dla standardowej i 80–120 W/m² dla słabej. Osobne mnożniki rozróżniają dogrzewanie, regularną pracę i użycie klimatyzatora jako głównego ogrzewania. Są to jawne założenia modelu orientacyjnego, a nie wartości z normy ani pełne obliczenie projektowe.</p>
+      <p>SCOP opisuje efektywność sezonową urządzenia w warunkach badawczych. Kalkulator korzysta wyłącznie ze zweryfikowanego SCOP wybranego wariantu i nie zastępuje go maksymalnym parametrem całej serii. Więcej informacji o metodologii zawiera <a class="inline-link" href="https://eur-lex.europa.eu/legal-content/PL/TXT/?uri=CELEX:32012R0206">rozporządzenie Komisji (UE) nr 206/2012</a>.</p>
+      <p class="tiny-note">Wynik ogrzewania nie zastępuje obliczenia OZC ani doboru mocy przy temperaturze projektowej. Kalkulator sygnalizuje, gdy moc grzewcza wariantu nie pokrywa górnej granicy orientacyjnego obciążenia.</p>
       <h2>Czy warto dopłacić do wyższego SEER?</h2>
       <p>Wyższy SEER oznacza niższe referencyjne zużycie przy takim samym zapotrzebowaniu na chłodzenie. Opłacalność dopłaty zależy od różnicy cen urządzeń, warunków pracy i ceny energii. Porównaj deklarowane roczne zużycie na etykietach konkretnych modeli. SEER dotyczy chłodzenia; do porównania efektywności ogrzewania służy SCOP.</p>
     </div>
@@ -269,114 +252,238 @@ const appSchema = {
 </Layout>
 
 <script>
+  import { ENERGY_MODELS } from '../config/lineups';
   import {
     calculateEnergyEstimate,
     calculateHeatingEstimate,
     formatEnergyNumber as fmt,
+    HEATING_ASSUMPTIONS,
     USAGE_PROFILES
   } from '../utils/energy-estimate.mjs';
+  import {
+    changeCalculatorMode,
+    createCalculatorState,
+    selectCalculatorModel,
+    stateFromQuery
+  } from '../utils/energy-calculator-state.mjs';
+
   const form = document.getElementById('energy-form') as HTMLFormElement;
-  const seer = document.getElementById('seer') as HTMLInputElement;
-  const coolPrice = document.getElementById('cool-price') as HTMLInputElement;
-  const area = document.getElementById('heat-area') as HTMLInputElement;
-  const scop = document.getElementById('scop') as HTMLInputElement;
-  const heatPrice = document.getElementById('heat-price') as HTMLInputElement;
-  const powers = Array.from(form.querySelectorAll<HTMLInputElement>('[name="ekw"]'));
+  const modelSelect = document.getElementById('energy-model') as HTMLSelectElement;
+  const variantOptions = document.getElementById('variant-options') as HTMLDivElement;
+  const variantHint = document.getElementById('variant-hint') as HTMLParagraphElement;
+  const areaInput = document.getElementById('energy-area') as HTMLInputElement;
+  const priceInput = document.getElementById('energy-price') as HTMLInputElement;
   const panels = Array.from(form.querySelectorAll<HTMLElement>('[data-mode-panel]'));
-  const resultIds = ['eres-kwh', 'eres-season', 'eres-range-kwh', 'eres-range-cost', 'eres-peak'];
   const set = (id: string, value: string) => { document.getElementById(id)!.textContent = value; };
   const show = (id: string, visible: boolean) => { (document.getElementById(id) as HTMLElement).hidden = !visible; };
-  const checked = (name: string) => form.querySelector<HTMLInputElement>(`[name="${name}"]:checked`)!.value;
   const formatDecimal = (value: number) => value.toLocaleString('pl-PL', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  let state = stateFromQuery(window.location.search, ENERGY_MODELS, createCalculatorState());
 
-  function setValidity(inputs: HTMLInputElement[]) {
-    const valid = inputs.every((input) => input.validity.valid);
-    inputs.forEach((input) => input.setAttribute('aria-invalid', String(!input.validity.valid)));
-    document.getElementById('energy-error')!.hidden = valid;
-    if (!valid) {
-      resultIds.forEach(id => set(id, '—'));
-      set('eres-source', 'Uzupełnij dane formularza');
+  function selectedModel() {
+    return ENERGY_MODELS.find((model) => model.slug === state.selectedModel);
+  }
+
+  function selectedVariant() {
+    return selectedModel()?.variants.find((variant) => variant.powerKw === state.selectedVariant);
+  }
+
+  function updateUrl() {
+    const url = new URL(window.location.href);
+    state.selectedModel ? url.searchParams.set('model', state.selectedModel) : url.searchParams.delete('model');
+    state.selectedVariant !== null
+      ? url.searchParams.set('power', String(state.selectedVariant))
+      : url.searchParams.delete('power');
+    url.searchParams.set('mode', state.mode);
+    window.history.replaceState({}, '', url);
+  }
+
+  function renderModelOptions() {
+    const models = ENERGY_MODELS.filter((model) => model.brand === state.selectedBrand);
+    const placeholder = document.createElement('option');
+    placeholder.value = '';
+    placeholder.textContent = `Wybierz model ${state.selectedBrand.toUpperCase()}`;
+    modelSelect.replaceChildren(placeholder);
+    models.forEach((model) => {
+      const option = document.createElement('option');
+      option.value = model.slug;
+      option.textContent = model.name;
+      modelSelect.append(option);
+    });
+    modelSelect.value = state.selectedModel;
+  }
+
+  function renderVariants() {
+    const model = selectedModel();
+    variantOptions.replaceChildren();
+    if (!model) {
+      variantHint.textContent = 'Najpierw wybierz model klimatyzatora.';
+      return;
     }
-    return valid;
+    variantHint.textContent = model.variants.length === 1
+      ? 'Ten model występuje w jednym wariancie mocy.'
+      : 'Wybierz wariant dostępny dla tego modelu.';
+    model.variants.forEach((variant, index) => {
+      const input = document.createElement('input');
+      input.type = 'radio';
+      input.name = 'energy-variant';
+      input.id = `energy-variant-${index}`;
+      input.value = String(variant.powerKw);
+      input.checked = variant.powerKw === state.selectedVariant;
+      const label = document.createElement('label');
+      label.htmlFor = input.id;
+      label.textContent = `${variant.label} kW`;
+      variantOptions.append(input, label);
+    });
+  }
+
+  function renderIdentity() {
+    const model = selectedModel();
+    const variant = selectedVariant();
+    set('eres-model', model ? `${model.brandLabel} ${model.name}` : 'Wybierz model');
+    set('eres-power', variant ? `${variant.label} kW` : '—');
+    set('eres-area', areaInput.validity.valid ? `${formatDecimal(areaInput.valueAsNumber)} m²` : '—');
+  }
+
+  function resultUnavailable(message: string) {
+    set('eres-kwh', '—');
+    set('eres-season', '—');
+    set('eres-usage', '—');
+    set('eres-peak', '—');
+    set('eres-efficiency', '—');
+    set('eres-source', message);
+    set('energy-error', message);
+    show('energy-error', true);
+    show('eres-selection-warning', false);
+  }
+
+  function validSharedInputs() {
+    const inputs = [areaInput, priceInput];
+    inputs.forEach((input) => input.setAttribute('aria-invalid', String(!input.validity.valid)));
+    return inputs.every((input) => input.validity.valid);
   }
 
   function renderCooling() {
-    show('eres-usage-row', true);
-    show('eres-range-kwh-row', true);
-    show('eres-range-cost-row', true);
-    show('eres-peak-row', false);
-    show('eres-selection-warning', false);
-    set('result-eyebrow', 'Orientacyjne sezonowe zużycie energii');
-    set('eres-cost-label', 'Orientacyjny koszt sezonu');
-    set('result-disclaimer', 'To orientacyjne wyliczenie. SEER jest sezonowym wskaźnikiem efektywności. Rzeczywiste zużycie zależy od temperatury zewnętrznej, nastawy, izolacji, nasłonecznienia, wielkości pomieszczenia oraz sposobu użytkowania i modulacji sprężarki.');
-    if (!setValidity([seer, coolPrice])) return;
-    const usage = checked('usage') as keyof typeof USAGE_PROFILES;
+    set('result-eyebrow', 'Chłodzenie');
+    set('eres-peak-label', 'Orientacyjne obciążenie chłodnicze');
+    set('result-disclaimer', 'To orientacyjne widełki. Uwzględniają SEER konkretnego wariantu, metraż, relację mocy urządzenia do szacowanego obciążenia i sposób użytkowania. Rzeczywiste zużycie zależy też od pogody, nastawy, izolacji, nasłonecznienia i modulacji sprężarki.');
+    const variant = selectedVariant();
+    if (!selectedModel() || !variant) return resultUnavailable('Wybierz model i wariant mocy.');
+    if (!validSharedInputs()) return resultUnavailable('Uzupełnij poprawnie metraż i cenę energii.');
+    if (!variant.coolingCapacityKw || !variant.seer) {
+      return resultUnavailable('Brak zweryfikowanych danych SEER dla tego wariantu. Wybierz inny model lub moc.');
+    }
+    const usage = state.coolingUsage as keyof typeof USAGE_PROFILES;
     const result = calculateEnergyEstimate({
-      power: Number(powers.find(input => input.checked)!.value),
-      seer: seer.valueAsNumber,
-      price: coolPrice.valueAsNumber,
-      usage
+      power: variant.coolingCapacityKw,
+      seer: variant.seer,
+      area: state.area,
+      price: state.electricityPrice,
+      usage,
+      insulation: state.insulation as keyof typeof HEATING_ASSUMPTIONS.heatLoadWm2
     });
-    set('eres-kwh', `≈ ${fmt(result.referenceKwh)} kWh`);
-    set('eres-season', `≈ ${fmt(result.seasonCost)} zł / sezon`);
-    set('eres-range-kwh', `≈ ${result.usageKwh.map(fmt).join('–')} kWh / sezon`);
-    set('eres-range-cost', `≈ ${result.usageCost.map(fmt).join('–')} zł / sezon`);
-    set('eres-usage', USAGE_PROFILES[usage].label);
+    set('eres-kwh', `≈ ${result.usageKwh.map(fmt).join('–')} kWh / sezon`);
+    set('eres-season', `≈ ${result.usageCost.map(fmt).join('–')} zł / sezon`);
+    set('eres-usage', `${HEATING_ASSUMPTIONS.heatLoadWm2[state.insulation as keyof typeof HEATING_ASSUMPTIONS.heatLoadWm2].label} · ${USAGE_PROFILES[usage].label}`);
+    set('eres-peak', `≈ ${result.roomLoadKw.map(formatDecimal).join('–')} kW`);
+    set('eres-efficiency', `SEER ${formatDecimal(variant.seer)}`);
     set('eres-source', 'Szacunek dla sezonu chłodzenia');
+    show('energy-error', false);
+    show('eres-selection-warning', result.capacityStatus !== 'adequate');
   }
 
   function renderHeating() {
-    show('eres-usage-row', false);
-    show('eres-range-kwh-row', false);
-    show('eres-range-cost-row', false);
-    show('eres-peak-row', true);
-    set('result-eyebrow', 'Orientacyjne zużycie energii na ogrzewanie');
-    set('eres-cost-label', 'Orientacyjny koszt ogrzewania');
-    set('result-disclaimer', 'To uproszczone oszacowanie. Rzeczywiste zużycie zależy m.in. od izolacji budynku, temperatur zewnętrznych, nastawy temperatury, wentylacji i charakterystyki konkretnego urządzenia. Nie zastępuje obliczenia OZC ani doboru urządzenia.');
-    if (!setValidity([area, scop, heatPrice])) {
-      show('eres-selection-warning', false);
-      return;
+    set('result-eyebrow', 'Grzanie');
+    set('eres-peak-label', 'Orientacyjne zapotrzebowanie na moc grzewczą');
+    set('result-disclaimer', 'To uproszczone oszacowanie na podstawie metrażu, izolacji i sposobu ogrzewania. Zużycie energii wynika z sezonowego zapotrzebowania na ciepło podzielonego przez SCOP konkretnego wariantu. Wynik nie zastępuje OZC ani doboru mocy przy temperaturze projektowej.');
+    const variant = selectedVariant();
+    if (!selectedModel() || !variant) return resultUnavailable('Wybierz model i wariant mocy.');
+    if (!validSharedInputs()) return resultUnavailable('Uzupełnij poprawnie metraż i cenę energii.');
+    if (!variant.heatingCapacityKw || !variant.scop) {
+      return resultUnavailable('Brak zweryfikowanych danych SCOP dla tego wariantu. Wybierz inny model lub moc.');
     }
+    const insulation = state.insulation as keyof typeof HEATING_ASSUMPTIONS.heatLoadWm2;
+    const usage = state.heatingUsage as keyof typeof HEATING_ASSUMPTIONS.usage;
     const result = calculateHeatingEstimate({
-      area: area.valueAsNumber,
-      height: checked('heat-height') as 'low' | 'standard' | 'high',
-      insulation: checked('heat-insulation') as 'good' | 'standard' | 'poor',
-      winter: checked('heat-winter') as 'mild' | 'standard' | 'cold',
-      scop: scop.valueAsNumber,
-      price: heatPrice.valueAsNumber
+      area: state.area,
+      insulation,
+      usage,
+      scop: variant.scop,
+      heatingCapacityKw: variant.heatingCapacityKw,
+      price: state.electricityPrice
     });
     set('eres-kwh', `≈ ${result.electricityKwh.map(fmt).join('–')} kWh / sezon`);
     set('eres-season', `≈ ${result.cost.map(fmt).join('–')} zł / sezon`);
+    set('eres-usage', `${HEATING_ASSUMPTIONS.heatLoadWm2[insulation].label} · ${HEATING_ASSUMPTIONS.usage[usage].label}`);
     set('eres-peak', `≈ ${result.peakHeatKw.map(formatDecimal).join('–')} kW`);
-    set('eres-source', 'Uproszczony szacunek dla ogrzewanej strefy');
+    set('eres-efficiency', `SCOP ${formatDecimal(variant.scop)}`);
+    set('eres-source', 'Uproszczony szacunek dla sezonu grzewczego');
+    show('energy-error', false);
     show('eres-selection-warning', result.requiresIndividualSelection);
   }
 
-  function activeMode() {
-    return checked('energy-mode');
-  }
-
   function compute() {
-    if (activeMode() === 'heating') renderHeating();
-    else renderCooling();
+    renderIdentity();
+    state.mode === 'heating' ? renderHeating() : renderCooling();
   }
 
   function syncMode() {
-    const mode = activeMode();
+    form.querySelector<HTMLInputElement>(`[name="energy-mode"][value="${state.mode}"]`)!.checked = true;
     panels.forEach((panel) => {
-      const active = panel.dataset.modePanel === mode;
+      const active = panel.dataset.modePanel === state.mode;
       panel.hidden = !active;
       panel.setAttribute('aria-hidden', String(!active));
-      panel.querySelectorAll<HTMLInputElement>('input').forEach((input) => { input.disabled = !active; });
     });
     compute();
   }
 
   form.addEventListener('input', (event) => {
-    if ((event.target as HTMLInputElement).name === 'energy-mode') syncMode();
-    else compute();
+    const target = event.target as HTMLInputElement | HTMLSelectElement;
+    if (target.name === 'energy-mode') {
+      state = changeCalculatorMode(state, target.value);
+      syncMode();
+    } else if (target.name === 'energy-brand') {
+      state = { ...state, selectedBrand: target.value, selectedModel: '' };
+      renderModelOptions();
+      renderVariants();
+      compute();
+    } else if (target.id === 'energy-model') {
+      const model = ENERGY_MODELS.find((item) => item.slug === target.value);
+      state = model
+        ? selectCalculatorModel(state, model)
+        : { ...state, selectedModel: '', selectedVariant: null };
+      renderVariants();
+      compute();
+    } else if (target.name === 'energy-variant') {
+      state = { ...state, selectedVariant: Number(target.value) };
+      compute();
+    } else if (target.id === 'energy-area') {
+      state = { ...state, area: areaInput.valueAsNumber };
+      compute();
+    } else if (target.id === 'energy-price') {
+      state = { ...state, electricityPrice: priceInput.valueAsNumber };
+      compute();
+    } else if (target.name === 'cooling-usage') {
+      state = { ...state, coolingUsage: target.value };
+      compute();
+    } else if (target.name === 'insulation') {
+      state = { ...state, insulation: target.value };
+      compute();
+    } else if (target.name === 'heating-usage') {
+      state = { ...state, heatingUsage: target.value };
+      compute();
+    }
+    updateUrl();
   });
   form.addEventListener('submit', event => event.preventDefault());
+
+  form.querySelector<HTMLInputElement>(`[name="energy-brand"][value="${state.selectedBrand}"]`)!.checked = true;
+  areaInput.value = String(state.area);
+  priceInput.value = String(state.electricityPrice);
+  form.querySelector<HTMLInputElement>(`[name="cooling-usage"][value="${state.coolingUsage}"]`)!.checked = true;
+  form.querySelector<HTMLInputElement>(`[name="insulation"][value="${state.insulation}"]`)!.checked = true;
+  form.querySelector<HTMLInputElement>(`[name="heating-usage"][value="${state.heatingUsage}"]`)!.checked = true;
+  renderModelOptions();
+  renderVariants();
   syncMode();
 </script>
 
@@ -395,7 +502,8 @@ const appSchema = {
   .mode-panel[hidden], .result-row[hidden], [hidden] { display: none !important; }
   .mode-panel { animation: mode-panel-in 0.18s ease-out; }
   @keyframes mode-panel-in { from { opacity: 0.4; transform: translateY(3px); } to { opacity: 1; transform: translateY(0); } }
-  .mode-panel > .tool-step:first-child { border-top: 0; }
+  .brand-switch { gap: 0.4rem; }
+  .brand-switch label { min-width: 6.5rem; }
   .energy-choice-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.45rem; }
   .energy-choice-grid label { display: grid; align-content: center; justify-content: start; gap: 0.1rem; width: 100%; min-height: 58px; padding: 0.55rem 0.7rem; white-space: normal; border-radius: 10px; text-align: left; }
   .energy-choice-grid small { font-size: 0.78rem; line-height: 1.35; font-weight: 400; }
@@ -403,8 +511,17 @@ const appSchema = {
   .selection-warning { margin: -0.25rem 0 0; padding: 0.7rem 0.8rem; border: 1px solid rgba(255, 255, 255, 0.38); border-radius: 10px; background: rgba(255, 255, 255, 0.1); color: #fff; font-weight: 700; }
   #energy-error { color: white; }
   #energy-form fieldset { min-width: 0; }
+  .result-selection { display: grid; grid-template-columns: minmax(0, 1.5fr) repeat(2, minmax(0, 0.7fr)); gap: 0.8rem; margin: -0.2rem 0 0; padding: 0 0 1rem; border-bottom: 1px solid rgba(255, 255, 255, 0.22); }
+  .result-selection div { min-width: 0; }
+  .result-selection dt { color: #bfe0f7; font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; }
+  .result-selection dd { margin: 0.2rem 0 0; color: #fff; font-size: 0.9rem; font-weight: 600; line-height: 1.3; overflow-wrap: anywhere; }
   @media (min-width: 900px) {
     .energy-choice-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  @media (max-width: 359px) {
+    .mode-switch label { min-height: 42px; padding-inline: 0.45rem; font-size: 0.9rem; }
+    .result-selection { grid-template-columns: 1fr 1fr; }
+    .result-selection div:first-child { grid-column: 1 / -1; }
   }
   @media (prefers-reduced-motion: reduce) {
     .mode-panel { animation: none; }
