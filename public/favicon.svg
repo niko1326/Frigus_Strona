@@ -1,6 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-  <rect x="10" y="14" width="44" height="16" rx="5" stroke="#0f1720" stroke-width="3"/>
-  <path d="M20 40c4 5 4 9 0 14" stroke="#7ccfbe" stroke-width="3" stroke-linecap="round"/>
-  <path d="M32 40c4 5 4 9 0 14" stroke="#86c5df" stroke-width="3" stroke-linecap="round"/>
-  <path d="M44 40c4 5 4 9 0 14" stroke="#7ccfbe" stroke-width="3" stroke-linecap="round"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64"><g transform="translate(0 2)" fill="none"><rect x="5" y="5" width="54" height="20" rx="7" stroke="#101820" stroke-width="4"/><g fill="none" stroke-width="4" stroke-linecap="round"><path d="M18 36Q25 45 18 54" stroke="#83cbbb"/><path d="M32 36Q39 45 32 54" stroke="#85c7da"/><path d="M46 36Q53 45 46 54" stroke="#83cbbb"/></g></g></svg>

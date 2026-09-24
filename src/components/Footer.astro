@@ -10,7 +10,9 @@ const areasLine = SERVICE_AREAS.join(', ');
 <footer class="site-footer">
   <div class="container footer-grid">
     <div class="footer-col">
-      <p class="footer-brand">{SITE.brandName}</p>
+      <a class="brand" href="/" aria-label={`${SITE.brandName} - strona główna`}>
+        <img class="brand-lockup" src="/brand/frigac-logo.svg" width="144" height="44" alt={SITE.brandName} />
+      </a>
       <p>{labels.footerInfo}</p>
       <div class="footer-phones">
         {
