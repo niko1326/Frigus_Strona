@@ -80,10 +80,15 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const brandName = brand.toUpperCase();
   const isKaisai = brandName === 'KAISAI';
+  const initialMobile = stage.clientWidth < 900;
 
   // Przezroczysta kanwa: tło daje CSS sekcji, a POD kanwą prześwituje
   // "szklany" napis FRIGAC (.hero-ghost).
-  const renderer = new WebGLRenderer({ antialias: true, alpha: true });
+  const renderer = new WebGLRenderer({
+    antialias: true,
+    alpha: true,
+    powerPreference: 'high-performance'
+  });
   renderer.setClearColor(BG, 0);
   renderer.outputColorSpace = SRGBColorSpace;
   renderer.toneMapping = ACESFilmicToneMapping;
@@ -95,8 +100,9 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
   const camera = new PerspectiveCamera(34, 1, 0.1, 60);
 
   // ---------- światła ----------
-  scene.add(new AmbientLight(0xffffff, isKaisai ? 0.8 : 1.05));
-  scene.add(new HemisphereLight(0xffffff, 0x17212c, isKaisai ? 1 : 1.25));
+  const ambient = new AmbientLight(0xffffff, isKaisai ? 0.8 : 1.05);
+  const hemisphere = new HemisphereLight(0xffffff, 0x17212c, isKaisai ? 1 : 1.25);
+  scene.add(ambient, hemisphere);
 
   const key = new DirectionalLight(0xffffff, isKaisai ? 3.6 : 4.4);
   key.position.set(3, 5, 6);
@@ -110,6 +116,35 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
   fill.position.set(-2, -3, 5);
   scene.add(fill);
 
+  // Osobne światło od góry i od strony kamery wyrównuje jasność górnej
+  // powierzchni na mobile. Na desktopie pozostaje wyłączone.
+  const mobileTopFill = new DirectionalLight(0xffffff, 0);
+  mobileTopFill.position.set(0, 8, 2);
+  scene.add(mobileTopFill);
+
+  function applyLightingProfile(isMobile) {
+    if (!isMobile) {
+      renderer.toneMappingExposure = isKaisai ? 1.05 : 1.35;
+      ambient.intensity = isKaisai ? 0.8 : 1.05;
+      hemisphere.intensity = isKaisai ? 1 : 1.25;
+      key.intensity = isKaisai ? 3.6 : 4.4;
+      rim.intensity = isKaisai ? 0.65 : 0.8;
+      fill.intensity = isKaisai ? 1.35 : 1.8;
+      mobileTopFill.intensity = 0;
+      return;
+    }
+
+    // Na mobile canvas znajduje się w węższym, ciemnym pasie HERO. Nieco
+    // mocniejsze światło rozproszone przywraca naturalną biel bez przepaleń.
+    renderer.toneMappingExposure = isKaisai ? 1.14 : 1.42;
+    ambient.intensity = isKaisai ? 1 : 1.18;
+    hemisphere.intensity = isKaisai ? 1.16 : 1.38;
+    key.intensity = isKaisai ? 3.9 : 4.65;
+    rim.intensity = isKaisai ? 0.72 : 0.85;
+    fill.intensity = isKaisai ? 1.55 : 2;
+    mobileTopFill.intensity = isKaisai ? 1.65 : 1.5;
+  }
+
   const glow = new PointLight(0x2f9dff, 9, 18, 2);
   glow.position.set(0, -2.4, 1.6);
   scene.add(glow);
@@ -119,14 +154,19 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
   scene.add(unit);
   let loadedModel = null;
   let modelLoaded = false;
-  let introStartedAt = performance.now();
+  let introStartedAt = null;
 
   // Modele producentów są normalizowane do tej samej szerokości, dzięki czemu
   // zachowują wspólną responsywną kompozycję HERO.
   const modelConfig = brandName === 'GREE'
     ? { path: '/modele3d/pular_pro2.glb', rotationY: 0 }
     : brandName === 'KAISAI'
-      ? { path: '/modele3d/kaisai aktualne-to-3d-texture.glb', rotationY: Math.PI }
+      ? {
+          path: initialMobile
+            ? '/modele3d/kaisai-mobile.glb'
+            : '/modele3d/kaisai aktualne-to-3d-texture.glb',
+          rotationY: Math.PI
+        }
       : null;
 
   // ---------- strumień powietrza: świetlny stożek + miękkie kłęby mgły ----------
@@ -153,7 +193,9 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
 
   // Faliste wstęgi powietrza płynące z wylotu — fala wędruje wzdłuż wstęgi,
   // co daje wrażenie ciągłego nawiewu.
-  const SEG = 44;
+  // Na małym ekranie 28 segmentów zachowuje miękki kształt wstęg, a istotnie
+  // ogranicza liczbę pozycji przeliczanych podczas każdej klatki.
+  const SEG = initialMobile ? 28 : 44;
   const streamTex = streamTexture();
   const STREAMS = [];
   const streamDefs = [
@@ -217,15 +259,23 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
   const GAP_PX = 44;
   const UNIT_EFFECTIVE_W = 5.2; // szerokość jednostki w świecie, z zapasem na obrót
   let comp = { unitX: 2.6, unitY: 0.35, rotX: 0, rotY: -0.18, camY: 0.1, camZ: 8.6, lookX: 0, scale: 0.88 };
+  let isMobileLayout = false;
+  let stageDocumentTop = 0;
+  let scrollTravel = 1;
 
   function layout() {
     const w = stage.clientWidth;
     const h = stage.clientHeight;
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    const isMobile = w < 900;
+    isMobileLayout = isMobile;
+    // DPR 1.25 zachowuje czytelny produkt na małym ekranie, a zmniejsza
+    // liczbę renderowanych pikseli o około 61% względem DPR 2.
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.25 : 2));
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
+    applyLightingProfile(isMobile);
 
-    if (w < 900) {
+    if (isMobile) {
       airflowLength = 0.48;
       beam.scale.y = airflowLength;
       const camZ = 11.5;
@@ -233,13 +283,15 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
       const worldH = 2 * camZ * Math.tan(((34 / 2) * Math.PI) / 180);
       const worldW = worldH * (w / h);
       const stageRect = stage.getBoundingClientRect();
+      stageDocumentTop = stageRect.top + window.scrollY;
+      scrollTravel = Math.max(h * 0.46, 1);
       const slotRect = document.querySelector('[data-hero-model-slot]')?.getBoundingClientRect();
       const slotTop = slotRect ? slotRect.top - stageRect.top : h * 0.38;
       // Stała szerokość wizualna względem viewportu zachowuje obecną skalę
       // również na 320 px, mimo że HERO jest teraz wyższe.
       const scale = Math.min(0.62, (worldW * 0.9) / 4.7);
       const modelHalfPx = (0.9 * scale * h) / worldH;
-      const centerPx = slotTop + modelHalfPx + 10;
+      const centerPx = slotTop + modelHalfPx + 22;
       const unitY = camY - ((centerPx - h / 2) / h) * worldH + 0.08;
 
       comp = { unitX: 0, unitY, rotX: -0.08, rotY: -0.04, camY, camZ, lookX: 0, scale };
@@ -290,6 +342,12 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
   // ---------- interakcja ----------
   let targetRX = 0;
   let targetRY = 0;
+  let scrollTargetX = 0;
+  let scrollTargetY = 0;
+  let scrollTargetZ = 0;
+  let scrollRotationX = 0;
+  let scrollRotationY = 0;
+  let scrollRotationZ = 0;
   const onPointer = (e) => {
     const r = stage.getBoundingClientRect();
     const nx = ((e.clientX - r.left) / r.width) * 2 - 1;
@@ -297,17 +355,44 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
     targetRY = nx * 0.34;
     targetRX = ny * 0.16;
   };
-  if (!prefersReduced) {
+
+  const onScroll = () => {
+    if (!isMobileLayout) {
+      scrollTargetX = 0;
+      scrollTargetY = 0;
+      scrollTargetZ = 0;
+      return;
+    }
+
+    // W czasie scrolla korzystamy z wartości zapisanych podczas layoutu.
+    // Brak getBoundingClientRect() eliminuje wymuszane pomiary DOM.
+    const progress = MathUtils.clamp((window.scrollY - stageDocumentTop + 60) / scrollTravel, 0, 1);
+    // W układzie grupy jednostki oś Y daje wizualny ruch front → bok.
+    // Pozostałe osie tylko wspierają wrażenie głębi.
+    scrollTargetY = progress * 0.52;
+    scrollTargetX = progress * 0.14;
+    scrollTargetZ = progress * 0.018;
+  };
+
+  if (!prefersReduced && window.matchMedia('(pointer: fine)').matches) {
     window.addEventListener('pointermove', onPointer, { passive: true });
   }
+  if (!prefersReduced) {
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
 
-  const resize = () => layout();
+  const resize = () => {
+    layout();
+    onScroll();
+  };
   window.addEventListener('resize', resize);
 
   // ---------- animacja ----------
   const easeOut = (t) => 1 - Math.pow(1 - t, 3);
   let rafId = 0;
   let running = true;
+  let lastRenderedAt = 0;
 
   let userPaused = false;
 
@@ -372,9 +457,6 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
     }
 
     layout();
-    introStartedAt = performance.now();
-    modelLoaded = true;
-
     if (prefersReduced) {
       beam.material.opacity = 0.1;
       updateStreams(0, 0.8);
@@ -389,7 +471,11 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
       camera.position.set(2.2, comp.camY + 1.4, comp.camZ + 4);
     }
     camera.lookAt(comp.lookX, comp.camY, 0);
+    // Przygotuj shadery i pierwsze bufory/tekstury, gdy canvas jest jeszcze
+    // ukryty. Koszt pierwszego renderu nie może zużywać czasu intro.
+    await renderer.compileAsync(scene, camera);
     renderer.render(scene, camera);
+    modelLoaded = true;
   })();
 
   // Pauza renderu, gdy hero poza ekranem
@@ -407,14 +493,34 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
     }
   }
 
-  function tick() {
+  function tick(now = performance.now()) {
     rafId = 0;
     if (!running || userPaused) return;
     if (!modelLoaded) {
       requestTick();
       return;
     }
-    const t = (performance.now() - introStartedAt) / 1000;
+    const isMobile = isMobileLayout;
+    // Zegar startuje dopiero w pierwszej klatce gotowej, odsłoniętej sceny.
+    if (introStartedAt === null) introStartedAt = now;
+    const t = (now - introStartedAt) / 1000;
+    // Dolot kamery i uruchomienie nawiewu korzystają z każdej klatki ekranu.
+    // Limit oszczędzający GPU obowiązuje dopiero po całym intro. Zachowanie
+    // reszty czasu zapobiega spadaniu do 20 FPS przy odświeżaniu 60 Hz.
+    if (isMobile && t >= 2.6 && lastRenderedAt) {
+      const interval = 1000 / 30;
+      const elapsed = now - lastRenderedAt;
+      if (elapsed < interval - 0.5) {
+        requestTick();
+        return;
+      }
+      lastRenderedAt = now - (Math.max(0, elapsed - interval) % interval);
+    } else {
+      lastRenderedAt = now;
+    }
+    scrollRotationY = MathUtils.lerp(scrollRotationY, isMobile ? scrollTargetY : 0, 0.13);
+    scrollRotationX = MathUtils.lerp(scrollRotationX, isMobile ? scrollTargetX : 0, 0.11);
+    scrollRotationZ = MathUtils.lerp(scrollRotationZ, isMobile ? scrollTargetZ : 0, 0.09);
 
     // intro: 0-2.2 s — kamera dolatuje, jednostka obraca się do pozycji
     const intro = easeOut(Math.min(t / 2.2, 1));
@@ -430,15 +536,16 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
     // Urządzenie pozostaje zwrócone frontem do użytkownika. Ograniczenie
     // obejmuje intro, parallax kursora i delikatny ruch spoczynkowy.
     unit.rotation.y = MathUtils.clamp(
-      comp.rotY + spin + targetRY * intro + Math.sin(t * 0.4) * 0.035,
+      comp.rotY + spin + targetRY * intro + scrollRotationY * intro + Math.sin(t * 0.4) * 0.035,
       -0.58,
-      0.38
+      isMobile ? 0.52 : 0.38
     );
     unit.rotation.x = MathUtils.clamp(
-      comp.rotX + targetRX * intro + Math.cos(t * 0.55) * 0.02,
+      comp.rotX + targetRX * intro + scrollRotationX * intro + Math.cos(t * 0.55) * 0.02,
       -0.18,
-      0.18
+      isMobile ? 0.38 : 0.18
     );
+    unit.rotation.z = MathUtils.clamp(scrollRotationZ * intro, -0.025, 0.025);
     unit.position.x = comp.unitX;
     unit.position.y = comp.unitY + Math.sin(t * 0.8) * 0.02;
 
@@ -482,6 +589,7 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
       window.removeEventListener('resize', resize);
       window.removeEventListener('load', layout);
       window.removeEventListener('pointermove', onPointer);
+      window.removeEventListener('scroll', onScroll);
       renderer.dispose();
     }
   };
