@@ -8,6 +8,9 @@ const meta = pageMeta.blog;
 
 const formatDate = (iso: string): string =>
   new Date(iso).toLocaleDateString('pl-PL', { year: 'numeric', month: 'long', day: 'numeric' });
+
+// Najnowszy artykuł zawsze pierwszy na liście.
+const sortedArticles = [...ARTICLES].sort((a, b) => b.datePublished.localeCompare(a.datePublished));
 ---
 
 <Layout
@@ -32,7 +35,7 @@ const formatDate = (iso: string): string =>
   <section class="section">
     <div class="container card-grid card-grid-3" data-reveal>
       {
-        ARTICLES.map((article) => (
+        sortedArticles.map((article) => (
           <article class="info-card article-card">
             <p class="article-date">{formatDate(article.datePublished)}</p>
             <h2 class="article-card-title">

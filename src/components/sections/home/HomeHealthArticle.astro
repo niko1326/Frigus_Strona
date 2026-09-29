@@ -1,0 +1,114 @@
+---
+/*
+  Najnowszy artykuł pokazany pod osią czasu: widoczne jest tylko ok. 30% treści,
+  reszta rozwija się po kliknięciu strzałki „Czytaj dalej” na poziomej linii.
+*/
+import HealthImpactArticle from '../../articles/HealthImpactArticle.astro';
+import { ARTICLES } from '../../../config/articles';
+
+const article = ARTICLES.find((entry) => entry.slug === 'wplyw-klimatyzacji-na-czlowieka')!;
+const articleHref = `/porady/${article.slug}`;
+const formattedDate = new Date(article.datePublished).toLocaleDateString('pl-PL', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<section class="section home-health" aria-labelledby="home-health-heading" data-reveal>
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Najnowszy artykuł · {formattedDate}</p>
+      <h2 id="home-health-heading">{article.title}</h2>
+      {article.author && <p class="article-byline">Autor: <strong>{article.author}</strong>, instalator FRIGAC</p>}
+    </div>
+
+    <div class="health-teaser" data-health-teaser>
+      <div class="health-teaser-window article-content" id="home-health-article" data-health-window>
+        <HealthImpactArticle />
+      </div>
+
+      <div class="readmore-divider">
+        <button
+          type="button"
+          class="readmore-toggle"
+          data-health-toggle
+          aria-expanded="false"
+          aria-controls="home-health-article"
+        >
+          <span class="readmore-toggle-icon" aria-hidden="true">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3.5 6.5 8 11l4.5-4.5" />
+            </svg>
+          </span>
+          <span data-health-label>Czytaj dalej: cały artykuł</span>
+        </button>
+      </div>
+
+      <div class="health-teaser-footer">
+        <a class="text-link" href={articleHref}>Otwórz artykuł na osobnej stronie</a>
+        <a class="text-link" href="/porady">Wszystkie porady</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const teaser = document.querySelector<HTMLElement>('[data-health-teaser]');
+  const windowEl = teaser?.querySelector<HTMLElement>('[data-health-window]');
+  const toggle = teaser?.querySelector<HTMLButtonElement>('[data-health-toggle]');
+  const label = teaser?.querySelector<HTMLElement>('[data-health-label]');
+
+  if (teaser && windowEl && toggle && label) {
+    const COLLAPSED = 440; // musi odpowiadać max-height w CSS
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const setLabel = (expanded: boolean) => {
+      toggle.setAttribute('aria-expanded', String(expanded));
+      label.textContent = expanded ? 'Zwiń artykuł' : 'Czytaj dalej: cały artykuł';
+    };
+
+    toggle.addEventListener('click', () => {
+      const expand = toggle.getAttribute('aria-expanded') !== 'true';
+
+      if (reduced) {
+        teaser.classList.toggle('is-expanded', expand);
+        setLabel(expand);
+        if (!expand) teaser.scrollIntoView({ block: 'start' });
+        return;
+      }
+
+      if (expand) {
+        // animacja od stałej wysokości do pełnej treści
+        windowEl.style.maxHeight = `${COLLAPSED}px`;
+        requestAnimationFrame(() => {
+          teaser.classList.add('is-expanded');
+          windowEl.style.maxHeight = `${windowEl.scrollHeight}px`;
+        });
+        windowEl.addEventListener(
+          'transitionend',
+          () => {
+            windowEl.style.maxHeight = '';
+          },
+          { once: true }
+        );
+      } else {
+        windowEl.style.maxHeight = `${windowEl.scrollHeight}px`;
+        requestAnimationFrame(() => {
+          windowEl.style.maxHeight = `${COLLAPSED}px`;
+          teaser.classList.remove('is-expanded');
+        });
+        windowEl.addEventListener(
+          'transitionend',
+          () => {
+            windowEl.style.maxHeight = '';
+          },
+          { once: true }
+        );
+        teaser.scrollIntoView({ block: 'start', behavior: 'smooth' });
+      }
+
+      setLabel(expand);
+    });
+  }
+</script>

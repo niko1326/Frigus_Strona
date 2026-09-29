@@ -15,11 +15,12 @@ export const CONTACTS = [
 ] as const;
 
 export const SERVICE_AREAS = [
-  'Bydgoszcz',
-  'Toruń',
   'Gdańsk',
   'Gdynia',
   'Sopot',
+  'Trójmiasto',
+  'Bydgoszcz',
+  'Toruń',
   'okolice'
 ] as const;
 

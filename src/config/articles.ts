@@ -6,6 +6,8 @@ export type Article = {
   keywords: string[];
   datePublished: string;
   excerpt: string;
+  /** Autor wpisu; brak = artykuł firmowy (FRIGAC). */
+  author?: string;
 };
 
 export const ARTICLES: Article[] = [
@@ -56,5 +58,25 @@ export const ARTICLES: Article[] = [
     datePublished: '2026-09-01',
     excerpt:
       'Przy typowym użytkowaniu coroczny przegląd jest rozsądnym punktem wyjścia. Sprawdź, jak dopasować częstotliwość do pracy urządzenia i warunków gwarancji producenta.'
+  },
+  {
+    slug: 'wplyw-klimatyzacji-na-czlowieka',
+    title: 'Jaki wpływ może mieć klimatyzacja na człowieka?',
+    metaTitle: 'Wpływ klimatyzacji na zdrowie człowieka | FRIGAC',
+    description:
+      'Jak klimatyzacja wpływa na sen, koncentrację, alergie i serce? Co daje dobrze serwisowana klima, a czym grozi zaniedbana? Przegląd badań o wpływie klimatyzacji na organizm człowieka - z wykresami i źródłami.',
+    keywords: [
+      'wpływ klimatyzacji na zdrowie',
+      'czy klimatyzacja jest zdrowa',
+      'klimatyzacja a zdrowie człowieka',
+      'klimatyzacja a sen',
+      'klimatyzacja a alergia',
+      'klimatyzacja Gdańsk',
+      'montaż klimatyzacji Gdańsk'
+    ],
+    datePublished: '2026-09-26',
+    excerpt:
+      'Dobrze dobrana i serwisowana klimatyzacja chroni przed upałem, poprawia sen i koncentrację. Zaniedbana - wysusza powietrze i dmucha bakteriami. Sprawdzamy, co mówią badania.',
+    author: 'Hubert Maciejewski'
   }
 ];

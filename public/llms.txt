@@ -1,6 +1,6 @@
 # FRIGAC
 
-> FRIGAC to lokalna firma montująca i serwisująca klimatyzacje typu split w mieszkaniach i domach. Obszar działania: Bydgoszcz, Toruń, Gdańsk, Gdynia, Sopot i okolice (Polska). Klimatyzator z montażem od 3499 zł, dojazd w cenie, 5 lat gwarancji producenta, certyfikaty F-gazowe (personel i przedsiębiorca). Kontakt wyłącznie telefoniczny: +48 735 400 610, codziennie 08:00-18:00.
+> FRIGAC to lokalna firma montująca i serwisująca klimatyzacje typu split w mieszkaniach i domach. Główny obszar działania: Gdańsk (m.in. Wrzeszcz, Przymorze, Zaspa, Oliwa, Jasień, Ujeścisko), Gdynia, Sopot i całe Trójmiasto; działamy też w Bydgoszczy, Toruniu i okolicach (Polska). Klimatyzator z montażem od 3499 zł, dojazd w cenie, 5 lat gwarancji producenta, certyfikaty F-gazowe (personel i przedsiębiorca). Kontakt wyłącznie telefoniczny: +48 735 400 610, codziennie 08:00-18:00.
 
 ## Strony główne
 
@@ -13,8 +13,8 @@
 
 ## Strony lokalne
 
+- [Montaż klimatyzacji Trójmiasto](https://frigac.pl/trojmiasto): Gdańsk (Wrzeszcz, Przymorze, Zaspa, Oliwa i inne osiedla), Gdynia, Sopot i okolice
 - [Montaż klimatyzacji Bydgoszcz](https://frigac.pl/bydgoszcz): Bydgoszcz, Toruń, Osielsko, Białe Błota i okolice
-- [Montaż klimatyzacji Trójmiasto](https://frigac.pl/trojmiasto): Gdańsk, Gdynia, Sopot i okolice
 
 ## Darmowe narzędzia
 
@@ -30,6 +30,7 @@
 
 ## Porady
 
+- [Wpływ klimatyzacji na człowieka](https://frigac.pl/porady/wplyw-klimatyzacji-na-czlowieka): zdrowie, sen, koncentracja, alergie - przegląd badań
 - [Jaka klimatyzacja do mieszkania](https://frigac.pl/porady/jaka-klimatyzacja-do-mieszkania): dobór mocy i urządzenia
 - [Ile kosztuje montaż klimatyzacji](https://frigac.pl/porady/ile-kosztuje-montaz-klimatyzacji): realne widełki cen 2026
 - [Jak często serwisować klimatyzację](https://frigac.pl/porady/jak-czesto-serwisowac-klimatyzacje): przeglądy i czyszczenie

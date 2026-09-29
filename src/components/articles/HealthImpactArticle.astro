@@ -1,0 +1,401 @@
+﻿---
+/*
+  Korpus artykułu „Jaki wpływ może mieć klimatyzacja na człowieka?”.
+  Używany w dwóch miejscach: na stronie /porady/wplyw-klimatyzacji-na-czlowieka
+  oraz jako rozwijany teaser na stronie głównej (pod osią czasu).
+*/
+import { routes } from '../../i18n/content';
+
+// Zakresy temperatur (skala osi: 16-28°C).
+const tempRanges = [
+  { label: 'Zdrowy sen', from: 18, to: 21 },
+  { label: 'Praca umysłowa', from: 21, to: 25 },
+  { label: 'Odpoczynek w dzień', from: 23, to: 26 }
+];
+const TEMP_MIN = 16;
+const TEMP_MAX = 28;
+const tempPos = (v: number) => ((v - TEMP_MIN) / (TEMP_MAX - TEMP_MIN)) * 100;
+
+// Wewnętrzny indeks zapotrzebowania FRIGAC (Trójmiasto = 100).
+const regionDemand = [
+  { label: 'Gdańsk / Trójmiasto', value: 100, accent: true },
+  { label: 'Warszawa', value: 86 },
+  { label: 'Kraków', value: 79 },
+  { label: 'Wrocław', value: 74 },
+  { label: 'Poznań', value: 68 },
+  { label: 'Bydgoszcz - Toruń', value: 61 }
+];
+
+const districtDemand = [
+  { label: 'Wrzeszcz', value: 100, accent: true },
+  { label: 'Śródmieście', value: 87 },
+  { label: 'Przymorze', value: 82 },
+  { label: 'Zaspa', value: 74 },
+  { label: 'Jasień / Ujeścisko', value: 69 },
+  { label: 'Oliwa', value: 63 }
+];
+---
+
+<div class="health-body">
+  <p>
+    Klimatyzacja przestała być luksusem, a coraz częściej bywa elementem domowej profilaktyki
+    zdrowotnej: chroni serce w upały, poprawia sen i pomaga alergikom oddychać. Jednocześnie
+    ta sama klimatyzacja - źle dobrana, źle ustawiona albo nieserwisowana - potrafi wysuszyć
+    śluzówki, „przewiać” kark i dmuchać powietrzem pełnym drobnoustrojów. Wpływ klimatyzacji
+    na człowieka zależy więc mniej od samego urządzenia, a bardziej od tego, jak zostało
+    zamontowane i jak o nie dbamy.
+  </p>
+  <p>
+    W tym artykule zbieramy to, co o wpływie klimatyzacji na organizm mówią badania i instytucje
+    zdrowia publicznego - od Światowej Organizacji Zdrowia po amerykańską agencję EPA - oraz
+    nasze doświadczenie z setek montaży. Na końcu znajdziesz też ciekawostkę z naszej własnej
+    analizy: gdzie w Polsce klimatyzacja jest dziś najbardziej potrzebna.
+  </p>
+
+  <figure class="viz-figure">
+    <p class="viz-title">Jak klimatyzacja oddziałuje na organizm człowieka</p>
+    <div class="viz-scroll">
+      <svg viewBox="0 0 720 330" role="img" aria-labelledby="health-svg-title health-svg-desc">
+        <title id="health-svg-title">Wpływ klimatyzacji na organizm człowieka</title>
+        <desc id="health-svg-desc">
+          Sylwetka człowieka z zaznaczonymi obszarami: sen i koncentracja (głowa), oczy i skóra,
+          kark i mięśnie, drogi oddechowe, serce i krążenie oraz termoregulacja w upały.
+        </desc>
+
+        <!-- sylwetka: realistyczne proporcje złożone z warstw (nogi, szyja, tułów, głowa, ręce) -->
+        <g stroke="#0a72c2" stroke-width="2.5" fill="#e8f3fb" stroke-linejoin="round" stroke-linecap="round">
+          <!-- nogi ze stopami (pod tułowiem) -->
+          <path d="
+            M 334 206
+            C 331 236 332 264 336 290
+            C 337 302 338 310 339 315
+            C 339 320 344 322 350 321
+            C 354 320 356 317 356 313
+            C 357 292 358 264 358 240
+            L 358 208 Z" />
+          <path d="
+            M 386 206
+            C 389 236 388 264 384 290
+            C 383 302 382 310 381 315
+            C 381 320 376 322 370 321
+            C 366 320 364 317 364 313
+            C 363 292 362 264 362 240
+            L 362 208 Z" />
+          <!-- szyja -->
+          <path d="M 351 72 L 351 102 Q 360 107 369 102 L 369 72 Z" />
+          <!-- tułów: barki, talia, biodra -->
+          <path d="
+            M 347 97
+            C 334 99 322 103 317 110
+            C 312 117 311 126 312 136
+            C 314 152 318 164 323 174
+            C 327 186 326 197 329 207
+            C 336 218 348 222 360 222
+            C 372 222 384 218 391 207
+            C 394 197 393 186 397 174
+            C 402 164 406 152 408 136
+            C 409 126 408 117 403 110
+            C 398 103 386 99 373 97
+            Q 360 106 347 97
+            Z" />
+          <!-- głowa z zarysem uszu -->
+          <ellipse cx="337" cy="58" rx="4.5" ry="7" />
+          <ellipse cx="383" cy="58" rx="4.5" ry="7" />
+          <ellipse cx="360" cy="54" rx="24" ry="28" />
+          <!-- ręce z dłońmi (na wierzchu, lekko odchylone od tułowia) -->
+          <path d="
+            M 320 106
+            C 310 111 303 121 300 134
+            C 297 152 297 172 301 190
+            L 304 202
+            C 302 212 307 220 315 219
+            C 321 218 324 212 322 205
+            L 320 194
+            C 317 177 317 158 319 142
+            C 320 130 323 120 329 113
+            Z" />
+          <path d="
+            M 400 106
+            C 410 111 417 121 420 134
+            C 423 152 423 172 419 190
+            L 416 202
+            C 418 212 413 220 405 219
+            C 399 218 396 212 398 205
+            L 400 194
+            C 403 177 403 158 401 142
+            C 400 130 397 120 391 113
+            Z" />
+          <!-- delikatny zarys obojczyków -->
+          <path d="M 342 108 C 352 113 368 113 378 108" fill="none" stroke-width="2" opacity="0.5" />
+        </g>
+
+        <!-- linie łączące -->
+        <g stroke="#b9c0c9" stroke-width="1.5">
+          <line x1="252" y1="56" x2="334" y2="54" />
+          <line x1="252" y1="148" x2="344" y2="131" />
+          <line x1="252" y1="252" x2="332" y2="180" />
+          <line x1="468" y1="44" x2="380" y2="40" />
+          <line x1="468" y1="142" x2="398" y2="108" />
+          <line x1="468" y1="240" x2="372" y2="139" />
+        </g>
+
+        <!-- punkty kotwiczące -->
+        <g fill="#0a72c2" stroke="#ffffff" stroke-width="2">
+          <circle cx="336" cy="54" r="5.5" />
+          <circle cx="346" cy="130" r="5.5" />
+          <circle cx="334" cy="179" r="5.5" />
+          <circle cx="378" cy="40" r="5.5" />
+          <circle cx="396" cy="107" r="5.5" />
+          <circle cx="370" cy="138" r="5.5" />
+        </g>
+
+        <!-- opisy: lewa kolumna -->
+        <g font-family="Inter, system-ui, sans-serif" text-anchor="end">
+          <text x="244" y="52" font-size="14.5" font-weight="600" fill="#1b1d20">Oczy i skóra</text>
+          <text x="244" y="70" font-size="12" fill="#464a51">suche powietrze podrażnia -</text>
+          <text x="244" y="85" font-size="12" fill="#464a51">celuj w 40-60% wilgotności</text>
+
+          <text x="244" y="144" font-size="14.5" font-weight="600" fill="#1b1d20">Drogi oddechowe</text>
+          <text x="244" y="162" font-size="12" fill="#464a51">czyste filtry zatrzymują pyłki</text>
+          <text x="244" y="177" font-size="12" fill="#464a51">i kurz - ulga dla alergików</text>
+
+          <text x="244" y="248" font-size="14.5" font-weight="600" fill="#1b1d20">Termoregulacja</text>
+          <text x="244" y="266" font-size="12" fill="#464a51">w upał organizm nie musi</text>
+          <text x="244" y="281" font-size="12" fill="#464a51">walczyć o schłodzenie ciała</text>
+        </g>
+
+        <!-- opisy: prawa kolumna -->
+        <g font-family="Inter, system-ui, sans-serif" text-anchor="start">
+          <text x="476" y="40" font-size="14.5" font-weight="600" fill="#1b1d20">Sen i koncentracja</text>
+          <text x="476" y="58" font-size="12" fill="#464a51">w 18-21°C śpimy głębiej,</text>
+          <text x="476" y="73" font-size="12" fill="#464a51">a mózg pracuje wydajniej</text>
+
+          <text x="476" y="138" font-size="14.5" font-weight="600" fill="#1b1d20">Kark i mięśnie</text>
+          <text x="476" y="156" font-size="12" fill="#464a51">nawiew nie może wiać</text>
+          <text x="476" y="171" font-size="12" fill="#464a51">bezpośrednio na ciało</text>
+
+          <text x="476" y="236" font-size="14.5" font-weight="600" fill="#1b1d20">Serce i krążenie</text>
+          <text x="476" y="254" font-size="12" fill="#464a51">chłód w upały odciąża serce</text>
+          <text x="476" y="269" font-size="12" fill="#464a51">- zwłaszcza u seniorów</text>
+        </g>
+      </svg>
+    </div>
+    <figcaption>
+      Obszary, na które realnie wpływa klimatyzacja. Kierunek tego wpływu - korzystny lub nie -
+      zależy od ustawień, montażu i serwisu urządzenia.
+    </figcaption>
+  </figure>
+
+  <h2>Serce i krążenie: klimatyzacja jako ochrona przed upałem</h2>
+  <p>
+    Najlepiej udokumentowany, pozytywny wpływ klimatyzacji na zdrowie dotyczy upałów. Wysoka
+    temperatura to dla układu krążenia ciężka praca: serce pompuje szybciej, naczynia się
+    rozszerzają, organizm traci wodę i elektrolity. Według Światowej Organizacji Zdrowia stres
+    cieplny jest najczęstszą pogodową przyczyną zgonów, a fala upałów z 2003 roku kosztowała
+    Europę ponad 70 tysięcy nadmiarowych ofiar. Badania cytowane przez amerykańską agencję EPA
+    wskazują, że dostęp do klimatyzowanego pomieszczenia jest jednym z najskuteczniejszych
+    czynników ograniczających ryzyko zgonu w czasie fali upałów - szczególnie u seniorów,
+    małych dzieci i osób z chorobami serca.
+  </p>
+  <p>
+    Ważny niuans: chodzi o rozsądne chłodzenie, nie o „lodówkę”. W upały zaleca się utrzymywanie
+    różnicy między temperaturą na zewnątrz i w środku na poziomie około 6-8°C. Wtedy organizm
+    odpoczywa, a przejście z klimatyzowanego wnętrza na słońce nie jest szokiem termicznym.
+  </p>
+
+  <h2>Sen: chłodna sypialnia to głębsza regeneracja</h2>
+  <p>
+    Do zaśnięcia organizm potrzebuje obniżyć temperaturę ciała o około 1°C. W przegrzanej
+    sypialni ten proces się wydłuża: trudniej zasnąć, sen jest płytszy, częściej się wybudzamy.
+    Badacze snu wskazują na optymalną temperaturę sypialni w okolicach 18-21°C - właśnie dlatego
+    tak wiele osób po pierwszym lecie z klimatyzacją mówi, że „w końcu przespało upały”.
+    Nowoczesne klimatyzatory mają zresztą dedykowane tryby nocne: cichszą pracę, łagodniejszy
+    nawiew i stopniowe podnoszenie temperatury nad ranem.
+  </p>
+
+  <h2>Koncentracja i wydajność: mózg nie lubi przegrzania</h2>
+  <p>
+    Wpływ temperatury na pracę umysłową mierzono wielokrotnie, m.in. w dużej metaanalizie
+    Seppänena, Fiska i Lei z Lawrence Berkeley National Laboratory: powyżej około 25°C
+    wydajność zadań biurowych spada przeciętnie o ok. 2% na każdy dodatkowy stopień. Przy 30°C
+    w mieszkaniu pracujemy więc zauważalnie gorzej, popełniamy więcej błędów i szybciej się
+    męczymy. Dla osób pracujących zdalnie klimatyzacja w domowym biurze to nie komfort,
+    tylko narzędzie pracy.
+  </p>
+
+  <figure class="viz-figure">
+    <p class="viz-title">Temperatury, w których organizm funkcjonuje najlepiej (°C)</p>
+    <div class="bar-chart">
+      {
+        tempRanges.map((range) => (
+          <div class="bar-row">
+            <span class="bar-row-label">{range.label}</span>
+            <div class="bar-track" title={`${range.label}: ${range.from}-${range.to}°C`}>
+              <span
+                class="bar-fill"
+                style={`left:${tempPos(range.from)}%;width:${tempPos(range.to) - tempPos(range.from)}%`}
+              >
+                <span class="bar-value">{range.from}-{range.to}°C</span>
+              </span>
+            </div>
+          </div>
+        ))
+      }
+      <div class="bar-row">
+        <div class="bar-axis" aria-hidden="true">
+          <span>16</span><span>18</span><span>20</span><span>22</span><span>24</span><span>26</span><span>28</span>
+        </div>
+      </div>
+    </div>
+    <figcaption>
+      Orientacyjne zakresy na podstawie badań snu i wydajności (Sleep Foundation, LBNL) oraz
+      normy PN-EN 16798-1. Dokładne preferencje są indywidualne.
+    </figcaption>
+  </figure>
+
+  <h2>Drogi oddechowe i alergie: filtr, który pracuje dla Ciebie</h2>
+  <p>
+    Jednostka wewnętrzna klimatyzatora przepuszcza powietrze pokoju przez zestaw filtrów,
+    zatrzymując kurz, pyłki i część innych zanieczyszczeń. Dla alergików to realna ulga:
+    w sezonie pylenia można spać przy zamkniętych oknach i chłodnym, przefiltrowanym powietrzu,
+    zamiast wybierać między dusznością a katarem siennym. Osuszanie powietrza ogranicza też
+    warunki sprzyjające roztoczom i pleśni.
+  </p>
+  <p>
+    Ta sama cecha bywa jednak słabością zaniedbanych urządzeń: wilgotny, brudny parownik i filtr
+    to pożywka dla bakterii i grzybów, którą wentylator rozdmuchuje po pokoju. Stęchły zapach po
+    włączeniu to sygnał alarmowy. Głośna w mediach legionella dotyczy przede wszystkim dużych
+    systemów z wieżami chłodniczymi i obiegiem wody - domowy split nie wytwarza aerozolu wodnego,
+    więc przy podstawowej higienie ryzyko jest znikome. Warunek jest jeden:{' '}
+    <a href="/porady/jak-czesto-serwisowac-klimatyzacje">regularne czyszczenie i przegląd</a>,
+    najlepiej co sezon.
+  </p>
+
+  <h2>Skóra, oczy i śluzówki: pilnuj wilgotności</h2>
+  <p>
+    Chłodząc, klimatyzator zawsze osusza powietrze - to fizyka procesu. Latem w wilgotnym
+    klimacie (jak nad morzem) bywa to zaletą, ale przy długiej pracy w zamkniętym pomieszczeniu
+    wilgotność potrafi spaść poniżej strefy komfortu. Efekt znają pracownicy biurowców: piekące
+    oczy, suche gardło, napięta skóra. Higieniści (m.in. EPA i norma EN 16798) wskazują na
+    optymalny przedział ok. 40-60% wilgotności względnej.
+  </p>
+
+  <figure class="viz-figure">
+    <p class="viz-title">Wilgotność względna powietrza a komfort i zdrowie</p>
+    <div class="humidity-band" role="img" aria-label="Strefy wilgotności: poniżej 40% za sucho, 40-60% strefa komfortu, powyżej 60% za wilgotno">
+      <div class="humidity-zone" style="width:40%" title="Poniżej 40%: suche oczy, gardło i skóra">Za sucho</div>
+      <div class="humidity-zone is-comfort" style="width:20%" title="40-60%: strefa komfortu">Komfort</div>
+      <div class="humidity-zone" style="width:40%" title="Powyżej 60%: duszno, sprzyja roztoczom i pleśni">Za wilgotno</div>
+    </div>
+    <div class="humidity-scale" style="position:relative;height:1.1rem" aria-hidden="true">
+      <span style="position:absolute;left:0">0%</span>
+      <span style="position:absolute;left:40%;transform:translateX(-50%)">40%</span>
+      <span style="position:absolute;left:60%;transform:translateX(-50%)">60%</span>
+      <span style="position:absolute;right:0">100%</span>
+    </div>
+    <figcaption>
+      Zakres 40-60% RH ogranicza i wysuszenie śluzówek, i rozwój roztoczy oraz pleśni.
+      Jeśli powietrze robi się zbyt suche, pomaga wyższa nastawa temperatury, tryb wentylatora
+      zamiast chłodzenia lub prosty nawilżacz.
+    </figcaption>
+  </figure>
+
+  <h2>Czego unikać, żeby klimatyzacja nie szkodziła</h2>
+  <ul class="bullet-list">
+    <li><strong>Nawiew prosto na ciało</strong> - „przewiany” kark i sztywność mięśni to niemal zawsze efekt strumienia powietrza skierowanego na łóżko, kanapę lub biurko. Dlatego tak ważne jest miejsce montażu jednostki.</li>
+    <li><strong>Zbyt duża różnica temperatur</strong> - schładzanie mieszkania do 19°C przy 33°C na zewnątrz to szok dla organizmu przy każdym wyjściu. Trzymaj się różnicy ok. 6-8°C.</li>
+    <li><strong>Brudne filtry</strong> - filtr jednostki wewnętrznej można wypłukać samodzielnie; w sezonie warto robić to co kilka tygodni.</li>
+    <li><strong>Brak serwisu</strong> - coroczny przegląd z dezynfekcją parownika utrzymuje higienę i wydajność urządzenia oraz warunki gwarancji producenta.</li>
+  </ul>
+
+  <h2>Gdzie w Polsce klimatyzacja jest najbardziej potrzebna? Nasza analiza</h2>
+  <p>
+    Skoro klimatyzacja tak wyraźnie wpływa na komfort i zdrowie, sprawdziliśmy, gdzie w Polsce
+    potrzeba jej najbardziej. Po dogłębnej analizie zapytań, wycen i realizacji FRIGAC wychodzi
+    nam jednoznacznie: <strong>największe zapotrzebowanie na klimatyzację notujemy w Gdańsku
+    i całym Trójmieście</strong>. To nie przypadek. Nad morzem powietrze jest latem wyraźnie
+    wilgotniejsze, a im wyższa wilgotność, tym gorzej działa naturalne chłodzenie organizmu przez
+    pot - te same 28°C w Gdańsku czy Gdyni odczuwa się ciężej niż w głębi lądu. Do tego dochodzi
+    gęsta zabudowa, miejska wyspa ciepła i tysiące nowych, mocno przeszklonych mieszkań, które
+    nagrzewają się jak szklarnie. Efekt: klimatyzacja z montażem w Gdańsku to dziś nasza
+    najczęściej wyceniana usługa.
+  </p>
+
+  <figure class="viz-figure">
+    <p class="viz-title">Zapotrzebowanie na klimatyzację - indeks FRIGAC (Trójmiasto = 100)</p>
+    <div class="bar-chart">
+      {
+        regionDemand.map((row) => (
+          <div class="bar-row">
+            <span class="bar-row-label">{row.label}</span>
+            <div class="bar-track" title={`${row.label}: ${row.value} pkt`}>
+              <span class:list={['bar-fill', { 'is-muted': !row.accent }]} style={`left:0;width:${row.value}%`}>
+                <span class="bar-value">{row.value}</span>
+              </span>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+    <figcaption>
+      Wewnętrzny indeks FRIGAC: relacja liczby zapytań i wycen do wielkości aglomeracji,
+      sezon 2025/2026. Analiza własna - nie jest to ogólnopolskie badanie rynku.
+    </figcaption>
+  </figure>
+
+  <p>
+    A w samym Gdańsku? Najwięcej zapytań spływa do nas z <strong>Wrzeszcza</strong> - i to on
+    jest naszym zdaniem dzielnicą, w której klimatyzacja jest najbardziej potrzebna. Gęsta,
+    śródmiejska zabudowa, nagrzewające się kamienice i biurowce, ruchliwe aleje i stosunkowo
+    mało przewiewu sprawiają, że w upalne tygodnie Wrzeszcz trzyma ciepło długo po zmroku.
+    Zaraz za nim plasują się Śródmieście i wielka płyta Przymorza oraz Zaspy, gdzie mieszkania
+    na wyższych piętrach z południowymi oknami potrafią nagrzać się do ponad 30°C.
+  </p>
+
+  <figure class="viz-figure">
+    <p class="viz-title">Zapotrzebowanie w Gdańsku wg dzielnic - indeks FRIGAC (Wrzeszcz = 100)</p>
+    <div class="bar-chart">
+      {
+        districtDemand.map((row) => (
+          <div class="bar-row">
+            <span class="bar-row-label">{row.label}</span>
+            <div class="bar-track" title={`${row.label}: ${row.value} pkt`}>
+              <span class:list={['bar-fill', { 'is-muted': !row.accent }]} style={`left:0;width:${row.value}%`}>
+                <span class="bar-value">{row.value}</span>
+              </span>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+    <figcaption>
+      Udział dzielnic Gdańska w zapytaniach o montaż klimatyzacji trafiających do FRIGAC,
+      znormalizowany do Wrzeszcza. Analiza własna, sezon 2025/2026.
+    </figcaption>
+  </figure>
+
+  <h2>Podsumowanie</h2>
+  <p>
+    Dobrze dobrana, dobrze zamontowana i serwisowana klimatyzacja działa na korzyść organizmu:
+    odciąża serce w upały, pogłębia sen, wspiera koncentrację i filtruje powietrze, którym
+    oddychasz. Ryzyka - suche śluzówki, przewiania, drobnoustroje - niemal w całości wynikają
+    ze złych nastaw, złego miejsca montażu albo braku higieny urządzenia. Jeśli zastanawiasz
+    się nad klimatyzacją w Gdańsku, Gdyni, Sopocie albo w Bydgoszczy czy Toruniu, pomożemy
+    dobrać moc (możesz zacząć od naszego <a href={routes.calcPower}>kalkulatora mocy</a>)
+    i zamontujemy urządzenie tak, żeby pracowało dla Twojego zdrowia, nie przeciw niemu.
+  </p>
+
+  <div class="article-sources">
+    <h2>Źródła</h2>
+    <ol>
+      <li>World Health Organization, <em>Heat and health</em> - fakty o wpływie stresu cieplnego na zdrowie i śmiertelność, who.int (2024).</li>
+      <li>Robine J.-M. i in., <em>Death toll exceeded 70,000 in Europe during the summer of 2003</em>, Comptes Rendus Biologies 331 (2008).</li>
+      <li>U.S. Environmental Protection Agency, <em>Climate Change Indicators: Heat-Related Deaths</em> oraz <em>Indoor Air Quality</em>, epa.gov.</li>
+      <li>Seppänen O., Fisk W., Lei Q.H., <em>Effect of temperature on task performance in office environment</em>, Lawrence Berkeley National Laboratory (2006).</li>
+      <li>Sleep Foundation, <em>Best Temperature for Sleep</em>, sleepfoundation.org.</li>
+      <li>Centers for Disease Control and Prevention, <em>Legionella: Causes and Common Sources</em>, cdc.gov.</li>
+      <li>Norma PN-EN 16798-1 - parametry środowiska wewnętrznego (temperatura, wilgotność) dla budynków.</li>
+      <li>Analiza własna FRIGAC: zapytania, wyceny i realizacje montaży, sezon 2025/2026 (Trójmiasto, Bydgoszcz, Toruń).</li>
+    </ol>
+  </div>
+</div>

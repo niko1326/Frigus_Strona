@@ -21,11 +21,9 @@ const articleSchema = {
   description: article.description,
   datePublished: article.datePublished,
   inLanguage: 'pl-PL',
-  author: {
-    '@type': 'Organization',
-    name: SITE.brandName,
-    url: SITE.siteUrl
-  },
+  author: article.author
+    ? { '@type': 'Person', name: article.author, worksFor: { '@type': 'Organization', name: SITE.brandName } }
+    : { '@type': 'Organization', name: SITE.brandName, url: SITE.siteUrl },
   publisher: {
     '@type': 'Organization',
     name: SITE.brandName,
@@ -55,11 +53,13 @@ const formattedDate = new Date(article.datePublished).toLocaleDateString('pl-PL'
       <div class="container" data-reveal>
         <p class="eyebrow">Porady · {formattedDate}</p>
         <h1>{article.title}</h1>
+        {article.author && <p class="article-byline">Autor: <strong>{article.author}</strong>, instalator FRIGAC</p>}
       </div>
     </section>
 
     <section class="section">
-      <div class="container article-content" data-reveal>
+      {/* Bez data-reveal: przy długich artykułach próg 18% widoczności nigdy nie jest osiągany. */}
+      <div class="container article-content">
         <slot />
       </div>
     </section>

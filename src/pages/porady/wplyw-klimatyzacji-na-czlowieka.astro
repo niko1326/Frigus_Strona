@@ -1,0 +1,11 @@
+---
+import ArticleLayout from '../../components/ArticleLayout.astro';
+import HealthImpactArticle from '../../components/articles/HealthImpactArticle.astro';
+import { ARTICLES } from '../../config/articles';
+
+const article = ARTICLES.find((entry) => entry.slug === 'wplyw-klimatyzacji-na-czlowieka')!;
+---
+
+<ArticleLayout article={article}>
+  <HealthImpactArticle />
+</ArticleLayout>
