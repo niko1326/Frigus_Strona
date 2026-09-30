@@ -1,8 +1,10 @@
 ---
 import CTAButton from '../../CTAButton.astro';
 import { BRANDS } from '../../../config/brands';
-import { PHONE_TEL, PRICING } from '../../../config/site';
+import { PHONE_TEL } from '../../../config/site';
 import { labels, routes } from '../../../i18n/content';
+
+const heroPriceFromPLN = 3399;
 
 const marqueeCities = [
   'Gdańsk',
@@ -61,7 +63,7 @@ const marqueeCities = [
 
       <div class="hero-price">
         <span>Klimatyzator z montażem od</span>
-        <strong>{PRICING.installFromPLN} zł</strong>
+        <strong>{heroPriceFromPLN} zł</strong>
         <span class="hero-price-note">brutto</span>
       </div>
 
