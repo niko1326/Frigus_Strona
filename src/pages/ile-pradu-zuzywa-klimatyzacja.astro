@@ -120,18 +120,19 @@ const appSchema = {
         <div class="tool-step">
           <label class="tool-step-title" for="energy-area"><span class="tool-step-num">3</span>Powierzchnia pomieszczenia</label>
           <div class="energy-input-unit">
-            <input class="energy-input" type="number" id="energy-area" min="10" max="200" step="1" value="30" required inputmode="numeric" />
+            <input class="energy-input" type="number" id="energy-area" step="any" placeholder="np. 30" required inputmode="decimal" />
             <span>m²</span>
           </div>
         </div>
 
         <fieldset class="tool-step">
           <legend><span class="tool-step-num">4</span>Jak dobrze pomieszczenie jest izolowane?</legend>
+          <p class="tool-required-hint">Pole wymagane — wybierz jedną opcję.</p>
           <div class="seg energy-choice-grid">
             {insulationDisplayOrder.map((key) => {
               const profile = HEATING_ASSUMPTIONS.heatLoadWm2[key];
               return <>
-              <input type="radio" name="insulation" id={`insulation-${key}`} value={key} checked={key === 'standard'} />
+              <input type="radio" name="insulation" id={`insulation-${key}`} value={key} />
               <label for={`insulation-${key}`}><span>{profile.label}</span><small>{profile.description}</small></label>
               </>;
             })}
@@ -141,9 +142,10 @@ const appSchema = {
         <div class="mode-panel" id="cooling-panel" data-mode-panel="cooling" role="region" aria-labelledby="mode-cooling">
           <fieldset class="tool-step">
             <legend><span class="tool-step-num">5</span>Jak intensywnie korzystasz z klimatyzacji?</legend>
+            <p class="tool-required-hint">Pole wymagane — wybierz jedną opcję.</p>
             <div class="seg energy-choice-grid">
               {Object.entries(USAGE_PROFILES).map(([key, profile]) => <>
-                <input type="radio" name="cooling-usage" id={`cooling-usage-${key}`} value={key} checked={key === 'standard'} />
+                <input type="radio" name="cooling-usage" id={`cooling-usage-${key}`} value={key} />
                 <label for={`cooling-usage-${key}`}><span>{profile.label}</span><small>{profile.description}</small></label>
               </>)}
             </div>
@@ -153,9 +155,10 @@ const appSchema = {
         <div class="mode-panel" id="heating-panel" data-mode-panel="heating" role="region" aria-labelledby="mode-heating" hidden>
           <fieldset class="tool-step">
             <legend><span class="tool-step-num">5</span>Jak intensywnie chcesz ogrzewać klimatyzacją?</legend>
+            <p class="tool-required-hint">Pole wymagane — wybierz jedną opcję.</p>
             <div class="seg energy-choice-grid">
               {Object.entries(HEATING_ASSUMPTIONS.usage).map(([key, profile]) => <>
-                <input type="radio" name="heating-usage" id={`heating-usage-${key}`} value={key} checked={key === 'regular'} />
+                <input type="radio" name="heating-usage" id={`heating-usage-${key}`} value={key} />
                 <label for={`heating-usage-${key}`}><span>{profile.label}</span><small>{profile.description}</small></label>
               </>)}
             </div>
@@ -164,7 +167,7 @@ const appSchema = {
 
         <div class="tool-step">
           <label class="tool-step-title" for="energy-price"><span class="tool-step-num">6</span>Cena energii (zł/kWh)</label>
-          <input class="energy-input" type="number" id="energy-price" min="0" max="100" step="any" value="1.2" required inputmode="decimal" aria-describedby="energy-price-hint" />
+          <input class="energy-input" type="number" id="energy-price" min="0" max="100" step="any" placeholder="np. 1,20" required inputmode="decimal" aria-describedby="energy-price-hint" />
           <p class="tool-hint" id="energy-price-hint">Wpisz stawkę brutto z faktury, wraz z opłatami zależnymi od zużycia.</p>
         </div>
         <noscript><p class="tool-hint">Włącz JavaScript, aby wybrać model i zobaczyć wynik.</p></noscript>
@@ -176,7 +179,7 @@ const appSchema = {
           <dl class="result-selection">
             <div><dt>Model</dt><dd id="eres-model">Wybierz model</dd></div>
             <div><dt>Moc</dt><dd id="eres-power">—</dd></div>
-            <div><dt>Metraż</dt><dd id="eres-area">30 m²</dd></div>
+            <div><dt>Metraż</dt><dd id="eres-area">—</dd></div>
           </dl>
           <p class="result-main"><strong id="eres-kwh">—</strong></p>
           <p class="result-sub" id="eres-source">Wybierz model i wariant mocy</p>
@@ -361,9 +364,21 @@ const appSchema = {
   }
 
   function validSharedInputs() {
-    const inputs = [areaInput, priceInput];
-    inputs.forEach((input) => input.setAttribute('aria-invalid', String(!input.validity.valid)));
-    return inputs.every((input) => input.validity.valid);
+    const areaValid = areaInput.validity.valid && Number.isFinite(areaInput.valueAsNumber) && areaInput.valueAsNumber > 0;
+    const priceValid = priceInput.validity.valid;
+    areaInput.setAttribute('aria-invalid', String(!areaValid));
+    priceInput.setAttribute('aria-invalid', String(!priceValid));
+    return areaValid && priceValid;
+  }
+
+  function validRequiredChoices() {
+    const names = ['insulation', state.mode === 'heating' ? 'heating-usage' : 'cooling-usage'];
+    return names.every((name) => {
+      const input = form.querySelector<HTMLInputElement>(`[name="${name}"]:checked`);
+      const fieldset = form.querySelector<HTMLInputElement>(`[name="${name}"]`)?.closest('fieldset');
+      fieldset?.setAttribute('aria-invalid', String(!input));
+      return Boolean(input);
+    });
   }
 
   function renderCooling() {
@@ -372,7 +387,11 @@ const appSchema = {
     set('result-disclaimer', 'To orientacyjne widełki. Uwzględniają SEER konkretnego wariantu, metraż, relację mocy urządzenia do szacowanego obciążenia i sposób użytkowania. Rzeczywiste zużycie zależy też od pogody, nastawy, izolacji, nasłonecznienia i modulacji sprężarki.');
     const variant = selectedVariant();
     if (!selectedModel() || !variant) return resultUnavailable('Wybierz model i wariant mocy.');
-    if (!validSharedInputs()) return resultUnavailable('Uzupełnij poprawnie metraż i cenę energii.');
+    const inputsValid = validSharedInputs();
+    const choicesValid = validRequiredChoices();
+    if (!inputsValid || !choicesValid) {
+      return resultUnavailable('Uzupełnij metraż, izolację, sposób użytkowania i cenę energii.');
+    }
     if (!variant.coolingCapacityKw || !variant.seer) {
       return resultUnavailable('Brak zweryfikowanych danych SEER dla tego wariantu. Wybierz inny model lub moc.');
     }
@@ -401,7 +420,11 @@ const appSchema = {
     set('result-disclaimer', 'To uproszczone oszacowanie na podstawie metrażu, izolacji i sposobu ogrzewania. Zużycie energii wynika z sezonowego zapotrzebowania na ciepło podzielonego przez SCOP konkretnego wariantu. Wynik nie zastępuje OZC ani doboru mocy przy temperaturze projektowej.');
     const variant = selectedVariant();
     if (!selectedModel() || !variant) return resultUnavailable('Wybierz model i wariant mocy.');
-    if (!validSharedInputs()) return resultUnavailable('Uzupełnij poprawnie metraż i cenę energii.');
+    const inputsValid = validSharedInputs();
+    const choicesValid = validRequiredChoices();
+    if (!inputsValid || !choicesValid) {
+      return resultUnavailable('Uzupełnij metraż, izolację, sposób użytkowania i cenę energii.');
+    }
     if (!variant.heatingCapacityKw || !variant.scop) {
       return resultUnavailable('Brak zweryfikowanych danych SCOP dla tego wariantu. Wybierz inny model lub moc.');
     }
@@ -481,11 +504,16 @@ const appSchema = {
   form.addEventListener('submit', event => event.preventDefault());
 
   form.querySelector<HTMLInputElement>(`[name="energy-brand"][value="${state.selectedBrand}"]`)!.checked = true;
-  areaInput.value = String(state.area);
-  priceInput.value = String(state.electricityPrice);
-  form.querySelector<HTMLInputElement>(`[name="cooling-usage"][value="${state.coolingUsage}"]`)!.checked = true;
-  form.querySelector<HTMLInputElement>(`[name="insulation"][value="${state.insulation}"]`)!.checked = true;
-  form.querySelector<HTMLInputElement>(`[name="heating-usage"][value="${state.heatingUsage}"]`)!.checked = true;
+  areaInput.value = typeof state.area === 'number' ? String(state.area) : '';
+  priceInput.value = typeof state.electricityPrice === 'number' ? String(state.electricityPrice) : '';
+  const restoreChoice = (name: string, value: string) => {
+    if (!value) return;
+    const input = form.querySelector<HTMLInputElement>(`[name="${name}"][value="${value}"]`);
+    if (input) input.checked = true;
+  };
+  restoreChoice('cooling-usage', state.coolingUsage);
+  restoreChoice('insulation', state.insulation);
+  restoreChoice('heating-usage', state.heatingUsage);
   renderModelOptions();
   renderVariants();
   syncMode();
@@ -498,6 +526,8 @@ const appSchema = {
   .energy-input-unit { position: relative; }
   .energy-input-unit .energy-input { padding-right: 3rem; }
   .energy-input-unit span { position: absolute; top: 50%; right: 0.9rem; transform: translateY(-50%); color: var(--muted); font-size: 0.9rem; pointer-events: none; }
+  .tool-required-hint { margin: 0.35rem 0 0.65rem; color: var(--muted); font-size: 0.8rem; line-height: 1.4; }
+  .tool-step[aria-invalid="true"] .tool-required-hint { color: #af3333; }
   .mode-switch { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.3rem; min-width: 0; margin: 1rem 0 0.4rem; padding: 0.25rem; border: 1px solid var(--line); border-radius: var(--radius-pill); background: var(--parchment); }
   .mode-switch input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
   .mode-switch label { display: flex; align-items: center; justify-content: center; min-width: 0; min-height: 44px; padding: 0.55rem 0.7rem; border-radius: var(--radius-pill); color: var(--muted); font-weight: 600; cursor: pointer; transition: color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease; }

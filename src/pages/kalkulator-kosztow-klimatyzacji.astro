@@ -3,14 +3,15 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import CTAButton from '../components/CTAButton.astro';
 import Layout from '../components/Layout.astro';
 import { COST_CALCULATOR_CONFIG } from '../config/costCalculator';
-import { PHONE_TEL, SITE } from '../config/site';
+import { PHONE_TEL, PRICING, SITE } from '../config/site';
 import { calculatorNavLabels, labels, pageMeta, routes } from '../i18n/content';
 
 const meta = pageMeta.calcCost;
+const installFromDisplay = new Intl.NumberFormat('pl-PL', { useGrouping: 'always' }).format(PRICING.installFromPLN);
 
 const costTable = [
-  { config: '1 pomieszczenie do 25 m², około 2,5 kW', cost: '3 499-4 500 zł' },
-  { config: '1 pomieszczenie 26-35 m², około 3,5 kW', cost: '3 499-4 500 zł' },
+  { config: '1 pomieszczenie do 25 m², około 2,5 kW', cost: `${installFromDisplay}-4 500 zł` },
+  { config: '1 pomieszczenie 26-35 m², około 3,5 kW', cost: `${installFromDisplay}-4 500 zł` },
   { config: '1 pomieszczenie 36-50 m², około 5,0 kW', cost: '4 500-6 000 zł' },
   { config: '1 pomieszczenie 51-70 m², około 7,0 kW', cost: '5 500-7 500 zł' },
   { config: '2-3 pomieszczenia', cost: 'suma widełek dobranych osobno dla każdej strefy' }
@@ -201,7 +202,7 @@ const appSchema = {
       <h2>Ile kosztuje klimatyzacja z montażem w 2026?</h2>
       <p>
         Najczęstszy scenariusz - jeden klimatyzator split do salonu lub sypialni - to u nas koszt
-        <strong>od 3 499 zł z urządzeniem i montażem</strong>. Poniżej typowe konfiguracje, które
+        <strong>od {installFromDisplay} zł z urządzeniem i montażem</strong>. Poniżej typowe konfiguracje, które
         montujemy w Gdańsku, Gdyni, Sopocie oraz w Bydgoszczy i Toruniu:
       </p>
       <div class="table-wrap">

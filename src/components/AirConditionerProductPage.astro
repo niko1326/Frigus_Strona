@@ -5,6 +5,10 @@ import Layout from './Layout.astro';
 import type { ProductLineupModel } from '../config/lineups';
 import { PHONE_TEL, SITE } from '../config/site';
 import { labels, routes } from '../i18n/content';
+import {
+  buildEnergyCalculatorHref,
+  buildEnergyCalculatorLabel
+} from '../utils/product-energy-link.mjs';
 
 interface Props {
   brand: string;
@@ -15,9 +19,13 @@ interface Props {
 
 const { brand, categoryLabel, categoryPath, model } = Astro.props;
 const productName = `${brand} ${model.name}`;
+const energyCtaModelName = model.product.ctaName ?? model.name;
 const currentPath = `${categoryPath}/${model.product.slug}`;
 const priceFormatter = new Intl.NumberFormat('pl-PL', { useGrouping: 'always' });
-const minimumPrice = priceFormatter.format(model.product.priceFromPLN);
+const hasPricing = model.variants.some((variant) => typeof variant.priceFromPLN === 'number');
+const minimumPrice = typeof model.product.priceFromPLN === 'number'
+  ? priceFormatter.format(model.product.priceFromPLN)
+  : null;
 const formatNumber = (value: number) => new Intl.NumberFormat('pl-PL', {
   minimumFractionDigits: Number.isInteger(value) ? 0 : 1,
   maximumFractionDigits: 2
@@ -25,8 +33,12 @@ const formatNumber = (value: number) => new Intl.NumberFormat('pl-PL', {
 const powerLabels = model.variants.map((variant) => `${variant.label} kW`).join(', ');
 const maxSeer = Math.max(...model.variants.map((variant) => variant.seer));
 const maxScop = Math.max(...model.variants.map((variant) => variant.scop));
-const title = `${productName} z montażem – cena i dane techniczne | FRIGAC`;
-const description = `${productName}: moce ${powerLabels}, SEER do ${formatNumber(maxSeer)} i SCOP do ${formatNumber(maxScop)}. Cena z montażem od ${minimumPrice} zł. Sprawdź parametry i poproś o wycenę.`;
+const title = hasPricing
+  ? `${productName} z montażem – cena i dane techniczne | FRIGAC`
+  : `${productName} z montażem – dane techniczne | FRIGAC`;
+const description = hasPricing && minimumPrice
+  ? `${productName}: moce ${powerLabels}, SEER do ${formatNumber(maxSeer)} i SCOP do ${formatNumber(maxScop)}. Cena z montażem od ${minimumPrice} zł. Sprawdź parametry i poproś o wycenę.`
+  : `${productName}: moce ${powerLabels}, SEER do ${formatNumber(maxSeer)} i SCOP do ${formatNumber(maxScop)}. Sprawdź funkcje, parametry i poproś o wycenę montażu.`;
 const colorOptions = model.product.colors ?? [];
 const firstColor = colorOptions.find((color) => color.name === 'Biały') ?? colorOptions[0];
 const productImage = firstColor?.image ?? model.image;
@@ -35,7 +47,12 @@ const firstVariant = model.variants[0];
 const firstVariantPrice = firstColor?.priceTier === 'color'
   ? firstVariant.colorPriceFromPLN ?? firstVariant.priceFromPLN
   : firstVariant.priceFromPLN;
-const initialPrice = priceFormatter.format(firstVariantPrice ?? model.product.priceFromPLN);
+const initialPriceValue = firstVariantPrice ?? model.product.priceFromPLN;
+const initialPrice = typeof initialPriceValue === 'number'
+  ? priceFormatter.format(initialPriceValue)
+  : null;
+const initialEnergyCtaHref = buildEnergyCalculatorHref(routes.calcEnergy, model.slug, firstVariant.powerKw);
+const initialEnergyCtaLabel = buildEnergyCalculatorLabel(brand, energyCtaModelName, firstVariant.label);
 
 const productSchema = {
   '@context': 'https://schema.org',
@@ -60,6 +77,9 @@ const productSchema = {
       : []),
     ...(model.noise
       ? [{ '@type': 'PropertyValue', name: 'Poziom ciśnienia akustycznego', value: model.noise }]
+      : []),
+    ...(model.connectivityLabel
+      ? [{ '@type': 'PropertyValue', name: 'Sterowanie', value: model.connectivityLabel }]
       : [])
   ]
 };
@@ -70,7 +90,7 @@ const productSchema = {
   title={title}
   description={description}
   keywords={[
-    `${productName} cena z montażem`,
+    ...(hasPricing ? [`${productName} cena z montażem`] : []),
     `${productName} dane techniczne`,
     `${productName} montaż`,
     ...model.variants.map((variant) => `${productName} ${variant.label} kW`)
@@ -155,6 +175,8 @@ const productSchema = {
                   data-heating={formatNumber(variant.heatingCapacityKw)}
                   data-seer={formatNumber(variant.seer)}
                   data-scop={formatNumber(variant.scop)}
+                  data-power={variant.powerKw}
+                  data-power-label={variant.label}
                   data-price={variant.priceFromPLN}
                   data-color-price={variant.colorPriceFromPLN}
                 >
@@ -184,15 +206,30 @@ const productSchema = {
           </div>
         </dl>
 
-        <div class="product-price-block" aria-live="polite">
-          <span data-product-price-label>Cena z montażem od</span>
-          <strong data-product-price>{initialPrice} zł</strong>
-          <small>
-            Pokazana cena odpowiada wybranej mocy i kolorowi oraz obejmuje standardowy montaż.
-            Dokładna wycena zależy m.in. od długości instalacji i miejsca montażu.
-          </small>
-          <a class="inline-link" href={routes.pricing}>Sprawdź, co obejmuje standardowy montaż</a>
-        </div>
+        <a
+          class="product-energy-cta"
+          href={initialEnergyCtaHref}
+          data-energy-calculator-cta
+          data-energy-base-path={routes.calcEnergy}
+          data-energy-model={model.slug}
+          data-energy-brand={brand}
+          data-energy-name={energyCtaModelName}
+        >
+          <span data-energy-cta-label>{initialEnergyCtaLabel}</span>
+          <span aria-hidden="true">→</span>
+        </a>
+
+        {hasPricing && initialPrice && (
+          <div class="product-price-block" aria-live="polite">
+            <span data-product-price-label>Cena z montażem od</span>
+            <strong data-product-price>{initialPrice} zł</strong>
+            <small>
+              Pokazana cena odpowiada wybranej mocy i kolorowi oraz obejmuje standardowy montaż.
+              Dokładna wycena zależy m.in. od długości instalacji i miejsca montażu.
+            </small>
+            <a class="inline-link" href={routes.pricing}>Sprawdź, co obejmuje standardowy montaż</a>
+          </div>
+        )}
 
         <div class="hero-actions">
           <CTAButton href={routes.contact} label="Zapytaj o montaż" />
@@ -222,6 +259,12 @@ const productSchema = {
             </li>
           ))
         }
+        {model.connectivityLabel && (
+          <li>
+            <span class="product-feature-check" aria-hidden="true">✓</span>
+            <span><strong>Sterowanie Wi-Fi</strong><small>{model.connectivityLabel.replace('Sterowanie Wi-Fi / ', '')}</small></span>
+          </li>
+        )}
         {model.energyClass && (
           <li>
             <span class="product-feature-check" aria-hidden="true">✓</span>
@@ -267,7 +310,7 @@ const productSchema = {
               <th scope="col">Moc grzewcza</th>
               <th scope="col">SEER</th>
               <th scope="col">SCOP</th>
-              <th scope="col">Cena z montażem od</th>
+              {hasPricing && <th scope="col">Cena z montażem od</th>}
             </tr>
           </thead>
           <tbody>
@@ -279,20 +322,22 @@ const productSchema = {
                   <td>{formatNumber(variant.heatingCapacityKw)} kW</td>
                   <td>{formatNumber(variant.seer)}</td>
                   <td>{formatNumber(variant.scop)}</td>
-                  <td class="product-table-price">
-                    {variant.priceFromPLN ? (
-                      variant.colorPriceFromPLN && variant.colorPriceFromPLN !== variant.priceFromPLN ? (
-                        <>
-                          <span>Biały: {priceFormatter.format(variant.priceFromPLN)} zł</span>
-                          <small>Kolor: {priceFormatter.format(variant.colorPriceFromPLN)} zł</small>
-                        </>
+                  {hasPricing && (
+                    <td class="product-table-price">
+                      {variant.priceFromPLN ? (
+                        variant.colorPriceFromPLN && variant.colorPriceFromPLN !== variant.priceFromPLN ? (
+                          <>
+                            <span>Biały: {priceFormatter.format(variant.priceFromPLN)} zł</span>
+                            <small>Kolor: {priceFormatter.format(variant.colorPriceFromPLN)} zł</small>
+                          </>
+                        ) : (
+                          <strong>{priceFormatter.format(variant.priceFromPLN)} zł</strong>
+                        )
                       ) : (
-                        <strong>{priceFormatter.format(variant.priceFromPLN)} zł</strong>
-                      )
-                    ) : (
-                      <span>Wycena indywidualna</span>
-                    )}
-                  </td>
+                        <span>Wycena indywidualna</span>
+                      )}
+                    </td>
+                  )}
                 </tr>
               ))
             }
@@ -337,6 +382,11 @@ const productSchema = {
   </section>
 
   <script>
+    import {
+      buildEnergyCalculatorHref,
+      buildEnergyCalculatorLabel
+    } from '../utils/product-energy-link.mjs';
+
     const colorButtons = document.querySelectorAll('[data-product-color]');
     const colorImage = document.querySelector('[data-product-color-image]');
     const colorLabel = document.querySelector('[data-product-color-label]');
@@ -344,6 +394,8 @@ const productSchema = {
     const variantRows = document.querySelectorAll('[data-variant-row]');
     const priceLabel = document.querySelector('[data-product-price-label]');
     const priceValue = document.querySelector('[data-product-price]');
+    const energyCta = document.querySelector<HTMLAnchorElement>('[data-energy-calculator-cta]');
+    const energyCtaLabel = document.querySelector<HTMLElement>('[data-energy-cta-label]');
     const formatPrice = new Intl.NumberFormat('pl-PL', { useGrouping: 'always' });
 
     const updatePrice = () => {
@@ -386,6 +438,19 @@ const productSchema = {
       if (target && value) target.textContent = value;
     };
 
+    const updateEnergyCta = (button: HTMLButtonElement) => {
+      if (!energyCta || !energyCtaLabel) return;
+      const { energyBasePath, energyModel, energyBrand, energyName } = energyCta.dataset;
+      const power = Number(button.dataset.power);
+      if (!energyBasePath || !energyModel || !energyBrand || !energyName || !Number.isFinite(power)) return;
+      energyCta.href = buildEnergyCalculatorHref(energyBasePath, energyModel, power);
+      energyCtaLabel.textContent = buildEnergyCalculatorLabel(
+        energyBrand,
+        energyName,
+        button.dataset.powerLabel
+      );
+    };
+
     variantButtons.forEach((button) => {
       button.addEventListener('click', () => {
         if (!(button instanceof HTMLButtonElement)) return;
@@ -401,6 +466,7 @@ const productSchema = {
         setText('heating', button.dataset.heating);
         setText('seer', button.dataset.seer);
         setText('scop', button.dataset.scop);
+        updateEnergyCta(button);
         updatePrice();
       });
     });

@@ -12,7 +12,11 @@ import {
   selectCalculatorModel,
   stateFromQuery
 } from '../src/utils/energy-calculator-state.mjs';
-import { ENERGY_MODELS, GREE_MODELS } from '../src/config/lineups.ts';
+import { ENERGY_MODELS, GREE_MODELS, KAISAI_MODELS } from '../src/config/lineups.ts';
+import {
+  buildEnergyCalculatorHref,
+  buildEnergyCalculatorLabel
+} from '../src/utils/product-energy-link.mjs';
 
 const coolingDefaults = {
   power: 3.5,
@@ -158,6 +162,13 @@ test('every Gree series has complete data for its dedicated catalog page', async
   for (const model of GREE_MODELS) {
     assert.ok(model.product.description.length > 80);
     assert.ok(model.product.recommendedFor.length >= 3);
+    const differentiatingCopy = [
+      model.tagline,
+      model.product.description,
+      ...model.product.recommendedFor,
+      ...model.features
+    ].join(' ');
+    assert.doesNotMatch(differentiatingCopy, /sterowanie (?:przez aplikację|Wi-Fi)|jonizac/i);
   }
 
   const expectedPrices = new Map([
@@ -243,6 +254,65 @@ test('deep links resolve model, power and mode', () => {
   assert.equal(heating.mode, 'heating');
 });
 
+test('product deep links leave customer inputs empty', () => {
+  const state = stateFromQuery('?model=gree-pular&power=3.2', ENERGY_MODELS);
+  assert.deepEqual(
+    {
+      model: state.selectedModel,
+      power: state.selectedVariant,
+      area: state.area,
+      price: state.electricityPrice,
+      insulation: state.insulation,
+      coolingUsage: state.coolingUsage,
+      heatingUsage: state.heatingUsage
+    },
+    {
+      model: 'gree-pular',
+      power: 3.2,
+      area: null,
+      price: null,
+      insulation: '',
+      coolingUsage: '',
+      heatingUsage: ''
+    }
+  );
+});
+
+test('product energy CTA uses central model slug and selected power', () => {
+  assert.equal(
+    buildEnergyCalculatorHref('/ile-pradu-zuzywa-klimatyzacja', 'gree-pular', 4.6),
+    '/ile-pradu-zuzywa-klimatyzacja/?model=gree-pular&power=4.6'
+  );
+  assert.equal(
+    buildEnergyCalculatorHref('/ile-pradu-zuzywa-klimatyzacja/', 'kaisai-nordic', 3.5),
+    '/ile-pradu-zuzywa-klimatyzacja/?model=kaisai-nordic&power=3.5'
+  );
+  assert.equal(
+    buildEnergyCalculatorLabel('Gree', 'Pular PRO', '3,5'),
+    'Sprawdź zużycie energii dla Gree Pular PRO 3,5 kW'
+  );
+});
+
+test('every Kaisai series has data for a dedicated product page without invented prices', () => {
+  assert.deepEqual(
+    KAISAI_MODELS.map((model) => model.product.slug),
+    ['air', 'fly-plus', 'geo-plus', 'art', 'evo', 'pro-heat-plus', 'nordic', 'ice']
+  );
+  for (const model of KAISAI_MODELS) {
+    assert.ok(model.product.description.length > 80);
+    assert.ok(model.product.recommendedFor.length >= 3);
+    assert.equal(model.product.priceFromPLN, undefined);
+    assert.ok(model.connectivityLabel);
+  }
+});
+
+test('product page updates energy CTA when the selected variant changes', async () => {
+  const page = await readFile(new URL('../src/components/AirConditionerProductPage.astro', import.meta.url), 'utf8');
+  assert.match(page, /data-energy-model=\{model\.slug\}/);
+  assert.match(page, /updateEnergyCta\(button\)/);
+  assert.match(page, /button\.dataset\.powerLabel/);
+});
+
 test('UI mode switch updates state without reloading the page', async () => {
   const page = await readFile(new URL('../src/pages/ile-pradu-zuzywa-klimatyzacja.astro', import.meta.url), 'utf8');
   assert.match(page, /changeCalculatorMode\(state, target\.value\)/);
@@ -255,4 +325,33 @@ test('UI builds a fresh model list for the selected brand without disabled optio
   assert.match(page, /ENERGY_MODELS\.filter\(\(model\) => model\.brand === state\.selectedBrand\)/);
   assert.match(page, /modelSelect\.replaceChildren\(placeholder\)/);
   assert.doesNotMatch(page, /option\.disabled/);
+});
+
+test('energy form accepts small rooms and marks choice groups as required', async () => {
+  const page = await readFile(new URL('../src/pages/ile-pradu-zuzywa-klimatyzacja.astro', import.meta.url), 'utf8');
+  const areaInput = page.match(/<input class="energy-input" type="number" id="energy-area"[^>]*>/)?.[0] ?? '';
+  assert.ok(areaInput);
+  assert.doesNotMatch(areaInput, /\bmin=/);
+  assert.doesNotMatch(areaInput, /\bmax=/);
+  assert.match(areaInput, /placeholder="np\. 30"/);
+  assert.match(page, /areaInput\.valueAsNumber > 0/);
+  assert.equal((page.match(/Pole wymagane — wybierz jedną opcję\./g) ?? []).length, 3);
+});
+
+test('published copy avoids invented installation volume and historical company data', async () => {
+  const article = await readFile(new URL('../src/components/articles/HealthImpactArticle.astro', import.meta.url), 'utf8');
+  assert.doesNotMatch(article, /setek montaży/i);
+  assert.doesNotMatch(article, /sezon 2025\/2026/i);
+  assert.doesNotMatch(article, /zapytania, wyceny i realizacje montaży/i);
+});
+
+test('catalog lineups render immediately without waiting for scroll reveal', async () => {
+  for (const relativePath of [
+    '../src/pages/klimatyzatory-gree.astro',
+    '../src/pages/klimatyzatory-kaisai.astro'
+  ]) {
+    const page = await readFile(new URL(relativePath, import.meta.url), 'utf8');
+    assert.match(page, /class="container lineup-container"/);
+    assert.doesNotMatch(page, /class="container lineup-container" data-reveal/);
+  }
 });

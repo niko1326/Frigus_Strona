@@ -16,8 +16,8 @@ const TEMP_MIN = 16;
 const TEMP_MAX = 28;
 const tempPos = (v: number) => ((v - TEMP_MIN) / (TEMP_MAX - TEMP_MIN)) * 100;
 
-// Wewnętrzny indeks zapotrzebowania FRIGAC (Trójmiasto = 100).
-const regionDemand = [
+// Umowny indeks warunków zwiększających potrzebę chłodzenia (Trójmiasto = 100).
+const regionConditionsIndex = [
   { label: 'Gdańsk / Trójmiasto', value: 100, accent: true },
   { label: 'Warszawa', value: 86 },
   { label: 'Kraków', value: 79 },
@@ -26,7 +26,7 @@ const regionDemand = [
   { label: 'Bydgoszcz - Toruń', value: 61 }
 ];
 
-const districtDemand = [
+const districtConditionsIndex = [
   { label: 'Wrzeszcz', value: 100, accent: true },
   { label: 'Śródmieście', value: 87 },
   { label: 'Przymorze', value: 82 },
@@ -48,8 +48,8 @@ const districtDemand = [
   <p>
     W tym artykule zbieramy to, co o wpływie klimatyzacji na organizm mówią badania i instytucje
     zdrowia publicznego - od Światowej Organizacji Zdrowia po amerykańską agencję EPA - oraz
-    nasze doświadczenie z setek montaży. Na końcu znajdziesz też ciekawostkę z naszej własnej
-    analizy: gdzie w Polsce klimatyzacja jest dziś najbardziej potrzebna.
+    praktyczne doświadczenia z montaży. Na końcu znajdziesz też poglądowe porównanie warunków,
+    które zwiększają potrzebę chłodzenia w różnych miastach i dzielnicach.
   </p>
 
   <figure class="viz-figure">
@@ -308,24 +308,24 @@ const districtDemand = [
     <li><strong>Brak serwisu</strong> - coroczny przegląd z dezynfekcją parownika utrzymuje higienę i wydajność urządzenia oraz warunki gwarancji producenta.</li>
   </ul>
 
-  <h2>Gdzie w Polsce klimatyzacja jest najbardziej potrzebna? Nasza analiza</h2>
+  <h2>Gdzie warunki najmocniej zwiększają potrzebę chłodzenia?</h2>
   <p>
-    Skoro klimatyzacja tak wyraźnie wpływa na komfort i zdrowie, sprawdziliśmy, gdzie w Polsce
-    potrzeba jej najbardziej. Po dogłębnej analizie zapytań, wycen i realizacji FRIGAC wychodzi
-    nam jednoznacznie: <strong>największe zapotrzebowanie na klimatyzację notujemy w Gdańsku
-    i całym Trójmieście</strong>. To nie przypadek. Nad morzem powietrze jest latem wyraźnie
+    Potrzeba chłodzenia zależy nie tylko od temperatury, ale też od wilgotności, gęstości zabudowy,
+    nasłonecznienia i udziału dużych przeszkleń. Na tej podstawie przygotowaliśmy poglądowy model
+    porównawczy. Nie opisuje on liczby klientów ani wielkości rynku. Pokazuje, jak wymienione czynniki
+    mogą wpływać na odczuwanie upału i nagrzewanie budynków. W tym ujęciu szczególnie wymagające
+    warunki występują w Gdańsku i całym Trójmieście. Nad morzem powietrze jest latem wyraźnie
     wilgotniejsze, a im wyższa wilgotność, tym gorzej działa naturalne chłodzenie organizmu przez
     pot - te same 28°C w Gdańsku czy Gdyni odczuwa się ciężej niż w głębi lądu. Do tego dochodzi
     gęsta zabudowa, miejska wyspa ciepła i tysiące nowych, mocno przeszklonych mieszkań, które
-    nagrzewają się jak szklarnie. Efekt: klimatyzacja z montażem w Gdańsku to dziś nasza
-    najczęściej wyceniana usługa.
+    nagrzewają się jak szklarnie.
   </p>
 
   <figure class="viz-figure">
-    <p class="viz-title">Zapotrzebowanie na klimatyzację - indeks FRIGAC (Trójmiasto = 100)</p>
+    <p class="viz-title">Warunki zwiększające potrzebę chłodzenia - indeks poglądowy (Trójmiasto = 100)</p>
     <div class="bar-chart">
       {
-        regionDemand.map((row) => (
+        regionConditionsIndex.map((row) => (
           <div class="bar-row">
             <span class="bar-row-label">{row.label}</span>
             <div class="bar-track" title={`${row.label}: ${row.value} pkt`}>
@@ -338,14 +338,13 @@ const districtDemand = [
       }
     </div>
     <figcaption>
-      Wewnętrzny indeks FRIGAC: relacja liczby zapytań i wycen do wielkości aglomeracji,
-      sezon 2025/2026. Analiza własna - nie jest to ogólnopolskie badanie rynku.
+      Umowny model porównawczy uwzględniający m.in. wilgotność, miejską wyspę ciepła,
+      gęstość zabudowy i udział mocno przeszklonych mieszkań. Nie jest to badanie rynku.
     </figcaption>
   </figure>
 
   <p>
-    A w samym Gdańsku? Najwięcej zapytań spływa do nas z <strong>Wrzeszcza</strong> - i to on
-    jest naszym zdaniem dzielnicą, w której klimatyzacja jest najbardziej potrzebna. Gęsta,
+    A w samym Gdańsku? Za punkt odniesienia przyjęliśmy <strong>Wrzeszcz</strong>, gdzie gęsta,
     śródmiejska zabudowa, nagrzewające się kamienice i biurowce, ruchliwe aleje i stosunkowo
     mało przewiewu sprawiają, że w upalne tygodnie Wrzeszcz trzyma ciepło długo po zmroku.
     Zaraz za nim plasują się Śródmieście i wielka płyta Przymorza oraz Zaspy, gdzie mieszkania
@@ -353,10 +352,10 @@ const districtDemand = [
   </p>
 
   <figure class="viz-figure">
-    <p class="viz-title">Zapotrzebowanie w Gdańsku wg dzielnic - indeks FRIGAC (Wrzeszcz = 100)</p>
+    <p class="viz-title">Warunki sprzyjające przegrzewaniu w Gdańsku - indeks poglądowy (Wrzeszcz = 100)</p>
     <div class="bar-chart">
       {
-        districtDemand.map((row) => (
+        districtConditionsIndex.map((row) => (
           <div class="bar-row">
             <span class="bar-row-label">{row.label}</span>
             <div class="bar-track" title={`${row.label}: ${row.value} pkt`}>
@@ -369,8 +368,8 @@ const districtDemand = [
       }
     </div>
     <figcaption>
-      Udział dzielnic Gdańska w zapytaniach o montaż klimatyzacji trafiających do FRIGAC,
-      znormalizowany do Wrzeszcza. Analiza własna, sezon 2025/2026.
+      Umowne porównanie dzielnic na podstawie typu i gęstości zabudowy, ekspozycji mieszkań
+      oraz efektu miejskiej wyspy ciepła. Wartości nie przedstawiają liczby zapytań ani montaży.
     </figcaption>
   </figure>
 
@@ -386,7 +385,7 @@ const districtDemand = [
   </p>
 
   <div class="article-sources">
-    <h2>Źródła</h2>
+    <h2>Źródła i metodologia</h2>
     <ol>
       <li>World Health Organization, <em>Heat and health</em> - fakty o wpływie stresu cieplnego na zdrowie i śmiertelność, who.int (2024).</li>
       <li>Robine J.-M. i in., <em>Death toll exceeded 70,000 in Europe during the summer of 2003</em>, Comptes Rendus Biologies 331 (2008).</li>
@@ -395,7 +394,7 @@ const districtDemand = [
       <li>Sleep Foundation, <em>Best Temperature for Sleep</em>, sleepfoundation.org.</li>
       <li>Centers for Disease Control and Prevention, <em>Legionella: Causes and Common Sources</em>, cdc.gov.</li>
       <li>Norma PN-EN 16798-1 - parametry środowiska wewnętrznego (temperatura, wilgotność) dla budynków.</li>
-      <li>Analiza własna FRIGAC: zapytania, wyceny i realizacje montaży, sezon 2025/2026 (Trójmiasto, Bydgoszcz, Toruń).</li>
+      <li>Indeksy regionalne i dzielnicowe są poglądowym modelem własnym FRIGAC opartym na czynnikach sprzyjających przegrzewaniu budynków; nie przedstawiają danych o klientach, wycenach ani realizacjach.</li>
     </ol>
   </div>
 </div>

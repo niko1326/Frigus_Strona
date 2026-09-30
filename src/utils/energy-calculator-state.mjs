@@ -3,11 +3,11 @@ export const DEFAULT_CALCULATOR_STATE = Object.freeze({
   selectedBrand: 'gree',
   selectedModel: '',
   selectedVariant: null,
-  area: 30,
-  electricityPrice: 1.2,
-  coolingUsage: 'standard',
-  insulation: 'standard',
-  heatingUsage: 'regular'
+  area: null,
+  electricityPrice: null,
+  coolingUsage: '',
+  insulation: '',
+  heatingUsage: ''
 });
 
 export function createCalculatorState(initial = {}) {

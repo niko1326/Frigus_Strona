@@ -21,6 +21,16 @@ const formatPrice = (value: number) => new Intl.NumberFormat('pl-PL', {
     models.map((model) => {
       const hasDetails = Boolean(detailBasePath && model.product);
       const href = hasDetails ? `${detailBasePath}/${model.product!.slug}` : routes.contact;
+      const colorOptions = brand.toLocaleLowerCase('pl') === 'gree'
+        ? model.product?.colors ?? []
+        : [];
+      const primaryColor = colorOptions.find((color) => color.name === 'Biały') ?? colorOptions[0];
+      const backgroundColors = colorOptions
+        .filter((color) => color !== primaryColor);
+      const showColorStack = Boolean(primaryColor && backgroundColors.length > 0);
+      const stackColors = primaryColor ? [primaryColor, ...backgroundColors] : [];
+      const isColorPair = stackColors.length === 2;
+      const stackImageWidth = isColorPair ? 76 : 59;
 
       return (
       <li>
@@ -31,14 +41,39 @@ const formatPrice = (value: number) => new Intl.NumberFormat('pl-PL', {
         >
           <span class="lineup-media">
             {model.badge && <span class="lineup-badge">{model.badge}</span>}
-            <img
-              src={model.image}
-              alt={model.alt}
-              width="640"
-              height="420"
-              loading="lazy"
-              decoding="async"
-            />
+            {showColorStack ? (
+              <span class="lineup-color-stack">
+                {stackColors.map((color, index) => {
+                  const isFront = index === 0;
+                  const progress = stackColors.length > 1 ? index / (stackColors.length - 1) : 1;
+                  const left = isColorPair ? 42 + progress * 16 : 29 + progress * 42;
+                  const top = isColorPair ? 60 - progress * 20 : 72 - progress * 44;
+
+                  return (
+                    <img
+                      class:list={['lineup-color-image', { 'is-front': isFront }]}
+                      style={`--stack-left:${left}%;--stack-top:${top}%;--stack-z:${stackColors.length - index};--stack-width:${stackImageWidth}%`}
+                      src={color.image}
+                      alt={isFront ? color.alt : ''}
+                      width="870"
+                      height="286"
+                      loading="lazy"
+                      decoding="async"
+                      aria-hidden={isFront ? undefined : 'true'}
+                    />
+                  );
+                })}
+              </span>
+            ) : (
+              <img
+                src={model.image}
+                alt={model.alt}
+                width="640"
+                height="420"
+                loading="lazy"
+                decoding="async"
+              />
+            )}
           </span>
 
           <span class="lineup-body">
@@ -46,6 +81,21 @@ const formatPrice = (value: number) => new Intl.NumberFormat('pl-PL', {
               <span class="lineup-brand">{brand}</span> {model.name}
             </span>
             <span class="lineup-tagline">{model.tagline}</span>
+
+            {model.connectivityLabel && (
+              <span class="lineup-connectivity">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M4.9 9.6a10.5 10.5 0 0 1 14.2 0M7.8 12.7a6.3 6.3 0 0 1 8.4 0M10.6 15.8a2.2 2.2 0 0 1 2.8 0M12 19h.01"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                  />
+                </svg>
+                <span>{model.connectivityLabel}</span>
+              </span>
+            )}
 
             <span class="lineup-specs">
               <span class="lineup-spec">
@@ -72,7 +122,7 @@ const formatPrice = (value: number) => new Intl.NumberFormat('pl-PL', {
               ))}
             </span>
 
-            {showPrice && model.product && (
+            {showPrice && model.product && typeof model.product.priceFromPLN === 'number' && (
               <span class="lineup-price">
                 <span class="lineup-price-label">Cena z montażem od</span>
                 <strong>{formatPrice(model.product.priceFromPLN)} zł</strong>

@@ -14,10 +14,10 @@ import { calculatorNavLabels, labels, pageMeta, routes } from '../i18n/content';
 const meta = pageMeta.gree;
 const featuredGreeSlug = 'gree-pular';
 const greeModelsForDisplay = [...GREE_MODELS].sort(
-  (first, second) => first.product.priceFromPLN - second.product.priceFromPLN
+  (first, second) => (first.product.priceFromPLN ?? Infinity) - (second.product.priceFromPLN ?? Infinity)
 );
 const greePriceFrom = new Intl.NumberFormat('pl-PL', { useGrouping: 'always' }).format(
-  Math.min(...GREE_MODELS.map((model) => model.product.priceFromPLN))
+  Math.min(...GREE_MODELS.flatMap((model) => model.product.priceFromPLN ?? []))
 );
 
 const highlights = [
@@ -37,7 +37,7 @@ const highlights = [
     Icon: IconShield,
     title: 'Sterowanie z telefonu',
     description:
-      'Wybrane serie Gree oferują sterowanie Wi-Fi, dzięki któremu można obsługiwać klimatyzator przez aplikację mobilną.'
+      'Wszystkie prezentowane serie Gree obsługują sterowanie Wi-Fi przez aplikację Gree+.'
   }
 ];
 
@@ -80,7 +80,7 @@ const lineupSchema = {
   </section>
 
   <section class="section section-gray">
-    <div class="container lineup-container" data-reveal>
+    <div class="container lineup-container">
       <ModelLineup
         brand="Gree"
         models={greeModelsForDisplay}

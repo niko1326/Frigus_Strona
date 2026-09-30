@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 import { ARTICLES } from '../config/articles';
-import { GREE_MODELS } from '../config/lineups';
+import { GREE_MODELS, KAISAI_MODELS } from '../config/lineups';
 import { SITE } from '../config/site';
 import { routes } from '../i18n/content';
 
@@ -28,9 +28,18 @@ const articlePaths = ARTICLES.map((article) => `/porady/${article.slug}`);
 const greeProductPaths = GREE_MODELS.map(
   (model) => `${routes.gree}/${model.product.slug}`
 );
+const kaisaiProductPaths = KAISAI_MODELS.map(
+  (model) => `${routes.kaisai}/${model.product.slug}`
+);
 
 const allPaths = Array.from(
-  new Set([...Object.values(routes), ...discoveredPaths, ...articlePaths, ...greeProductPaths])
+  new Set([
+    ...Object.values(routes),
+    ...discoveredPaths,
+    ...articlePaths,
+    ...greeProductPaths,
+    ...kaisaiProductPaths
+  ])
 );
 
 const articleDates = new Map(
@@ -55,7 +64,9 @@ function metaFor(path: string): UrlMeta {
     return { changefreq: 'monthly', priority: '0.8' };
   }
   if (path.startsWith('/porady/')) return { changefreq: 'monthly', priority: '0.7' };
-  if (path.startsWith(`${routes.gree}/`)) return { changefreq: 'monthly', priority: '0.7' };
+  if (path.startsWith(`${routes.gree}/`) || path.startsWith(`${routes.kaisai}/`)) {
+    return { changefreq: 'monthly', priority: '0.7' };
+  }
   if (path === routes.privacy || path === routes.terms) {
     return { changefreq: 'yearly', priority: '0.3' };
   }

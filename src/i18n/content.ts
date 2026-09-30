@@ -1,3 +1,5 @@
+import { PRICING } from '../config/site';
+
 export type PageKey =
   | 'home'
   | 'services'
@@ -81,9 +83,9 @@ export const labels = {
 
 export const pageMeta: Record<PageKey, PageMeta> = {
   home: {
-    title: 'Klimatyzacja Gdańsk i Trójmiasto - montaż od 3499 zł | FRIGAC',
+    title: `Klimatyzacja Gdańsk i Trójmiasto - montaż od ${PRICING.installFromPLN} zł | FRIGAC`,
     description:
-      'Klimatyzacja Gdańsk, Gdynia, Sopot i całe Trójmiasto. Klimatyzator z montażem od 3499 zł - Wrzeszcz, Przymorze, Zaspa, Oliwa, Jasień i inne osiedla, także w bloku. Montujemy również w Bydgoszczy i Toruniu. Standardowy montaż w 1 dzień, 5 lat gwarancji producenta.',
+      `Klimatyzacja Gdańsk, Gdynia, Sopot i całe Trójmiasto. Klimatyzator z montażem od ${PRICING.installFromPLN} zł - Wrzeszcz, Przymorze, Zaspa, Oliwa, Jasień i inne osiedla, także w bloku. Montujemy również w Bydgoszczy i Toruniu. Standardowy montaż w 1 dzień, 5 lat gwarancji producenta.`,
     keywords: [
       'klimatyzacja Gdańsk',
       'klima Gdańsk',
@@ -114,9 +116,9 @@ export const pageMeta: Record<PageKey, PageMeta> = {
     ]
   },
   pricing: {
-    title: 'Cennik montażu klimatyzacji od 3499 zł | FRIGAC',
+    title: `Cennik montażu klimatyzacji od ${PRICING.installFromPLN} zł | FRIGAC`,
     description:
-      'Ile kosztuje montaż klimatyzacji? Klimatyzator z montażem od 3499 zł, dojazd w cenie, wycena telefoniczna w kilka minut. Zobacz, co wpływa na finalną cenę montażu klimatyzacji.',
+      `Ile kosztuje montaż klimatyzacji? Klimatyzator z montażem od ${PRICING.installFromPLN} zł, dojazd w cenie, wycena telefoniczna w kilka minut. Zobacz, co wpływa na finalną cenę montażu klimatyzacji.`,
     keywords: [
       'cennik montażu klimatyzacji',
       'ile kosztuje montaż klimatyzacji',
@@ -176,9 +178,9 @@ export const pageMeta: Record<PageKey, PageMeta> = {
     ]
   },
   bydgoszcz: {
-    title: 'Klimatyzacja Bydgoszcz - montaż klimatyzacji od 3499 zł | FRIGAC',
+    title: `Klimatyzacja Bydgoszcz - montaż klimatyzacji od ${PRICING.installFromPLN} zł | FRIGAC`,
     description:
-      'Klimatyzacja Bydgoszcz: montaż klimatyzacji w mieszkaniu, bloku i domu - Fordon, Osowa Góra, Szwederowo, Osielsko, Białe Błota, Toruń. Klimatyzator z montażem od 3499 zł, 5 lat gwarancji producenta.',
+      `Klimatyzacja Bydgoszcz: montaż klimatyzacji w mieszkaniu, bloku i domu - Fordon, Osowa Góra, Szwederowo, Osielsko, Białe Błota, Toruń. Klimatyzator z montażem od ${PRICING.installFromPLN} zł, 5 lat gwarancji producenta.`,
     keywords: [
       'klimatyzacja Bydgoszcz',
       'montaż klimatyzacji Bydgoszcz',
@@ -189,9 +191,9 @@ export const pageMeta: Record<PageKey, PageMeta> = {
     ]
   },
   trojmiasto: {
-    title: 'Klimatyzacja Gdańsk, Gdynia, Sopot - montaż od 3499 zł | FRIGAC',
+    title: `Klimatyzacja Gdańsk, Gdynia, Sopot - montaż od ${PRICING.installFromPLN} zł | FRIGAC`,
     description:
-      'Klimatyzacja Gdańsk, Gdynia i Sopot: montaż klimatyzacji w apartamentach, mieszkaniach w bloku i domach - Wrzeszcz, Przymorze, Zaspa, Oliwa, Jasień, Ujeścisko, Chełm, Morena, Osowa i całe Trójmiasto. Klimatyzator z montażem od 3499 zł, standardowy montaż w 1 dzień, 5 lat gwarancji producenta.',
+      `Klimatyzacja Gdańsk, Gdynia i Sopot: montaż klimatyzacji w apartamentach, mieszkaniach w bloku i domach - Wrzeszcz, Przymorze, Zaspa, Oliwa, Jasień, Ujeścisko, Chełm, Morena, Osowa i całe Trójmiasto. Klimatyzator z montażem od ${PRICING.installFromPLN} zł, standardowy montaż w 1 dzień, 5 lat gwarancji producenta.`,
     keywords: [
       'klimatyzacja Gdańsk',
       'klima Gdańsk',
@@ -210,9 +212,9 @@ export const pageMeta: Record<PageKey, PageMeta> = {
     ]
   },
   gree: {
-    title: 'Klimatyzatory Gree z montażem od 3399 zł | FRIGAC',
+    title: `Klimatyzatory Gree z montażem od ${PRICING.installFromPLN} zł | FRIGAC`,
     description:
-      'Klimatyzacja Gree Gdańsk, Gdynia, Sopot i całe Trójmiasto oraz Bydgoszcz i Toruń: montujemy ciche jednostki split Gree z Wi-Fi, grzaniem zimą i wysoką klasą energetyczną. Gree z montażem od 3399 zł, 5 lat gwarancji producenta.',
+      `Klimatyzacja Gree Gdańsk, Gdynia, Sopot i całe Trójmiasto oraz Bydgoszcz i Toruń: montujemy ciche jednostki split Gree z Wi-Fi, grzaniem zimą i wysoką klasą energetyczną. Gree z montażem od ${PRICING.installFromPLN} zł, 5 lat gwarancji producenta.`,
     keywords: [
       'klimatyzacja Gree Gdańsk',
       'klimatyzator Gree montaż Gdańsk',
@@ -223,9 +225,9 @@ export const pageMeta: Record<PageKey, PageMeta> = {
     ]
   },
   kaisai: {
-    title: 'Klimatyzatory Kaisai z montażem od 3499 zł | FRIGAC',
+    title: `Klimatyzatory Kaisai z montażem od ${PRICING.installFromPLN} zł | FRIGAC`,
     description:
-      'Klimatyzacja Kaisai Gdańsk, Gdynia, Sopot i całe Trójmiasto oraz Bydgoszcz i Toruń: montujemy ścienne jednostki split Kaisai ze sterowaniem Wi-Fi i grzaniem zimą. Kaisai z montażem od 3499 zł, 5 lat gwarancji producenta.',
+      `Klimatyzacja Kaisai Gdańsk, Gdynia, Sopot i całe Trójmiasto oraz Bydgoszcz i Toruń: montujemy ścienne jednostki split Kaisai ze sterowaniem Wi-Fi i grzaniem zimą. Kaisai z montażem od ${PRICING.installFromPLN} zł, 5 lat gwarancji producenta.`,
     keywords: [
       'klimatyzator Kaisai montaż Gdańsk',
       'klimatyzacja Kaisai Gdańsk',

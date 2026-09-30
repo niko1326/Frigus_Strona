@@ -32,7 +32,7 @@ export const COMPANY = {
 } as const;
 
 export const PRICING = {
-  installFromPLN: 3499,
+  installFromPLN: 3399,
   standardInstallationMeters: 3,
   extraInstallationMeterFromPLN: 130,
   condensatePumpFromPLN: 350,

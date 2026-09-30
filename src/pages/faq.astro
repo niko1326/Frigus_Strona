@@ -2,7 +2,7 @@
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import CTAButton from '../components/CTAButton.astro';
 import Layout from '../components/Layout.astro';
-import { PHONE_TEL } from '../config/site';
+import { PHONE_TEL, PRICING } from '../config/site';
 import { labels, pageMeta } from '../i18n/content';
 
 const meta = pageMeta.faq;
@@ -16,7 +16,7 @@ const faqItems = [
   {
     question: 'Ile kosztuje montaż klimatyzacji z urządzeniem?',
     answer:
-      'Klimatyzator z montażem kosztuje u nas od 3499 zł. Finalna cena zależy od długości instalacji, klasy urządzenia i warunków technicznych. Dokładną wycenę podajemy telefonicznie w kilka minut.'
+      `Klimatyzator z montażem kosztuje u nas od ${PRICING.installFromPLN} zł. Finalna cena zależy od długości instalacji, klasy urządzenia i warunków technicznych. Dokładną wycenę podajemy telefonicznie w kilka minut.`
   },
   {
     question: 'Jak dobieracie miejsce montażu klimatyzacji?',

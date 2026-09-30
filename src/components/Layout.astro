@@ -7,6 +7,7 @@ import {
   BUSINESS,
   EMAIL,
   PHONE_TEL,
+  PRICING,
   SERVICE_AREAS,
   SITE,
   VERIFICATION
@@ -53,7 +54,7 @@ const localBusinessSchema = {
   email: EMAIL,
   url: SITE.siteUrl,
   image: businessImageUrl,
-  priceRange: 'od 3499 zł',
+  priceRange: `od ${PRICING.installFromPLN} zł`,
   areaServed: SERVICE_AREAS.map((name) => ({ '@type': 'City', name })),
   serviceType: BUSINESS.serviceType,
   openingHoursSpecification: [

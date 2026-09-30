@@ -12,8 +12,8 @@ export const COST_CALCULATOR_CONFIG = {
   roundTo: 50,
   multiRoomUpperBufferPerAdditionalRoom: 500,
   powerBands: [
-    { maxArea: 25, powerKw: '2,5', price: { low: 3499, high: 4500 } },
-    { maxArea: 35, powerKw: '3,5', price: { low: 3499, high: 4500 } },
+    { maxArea: 25, powerKw: '2,5', price: { low: PRICING.installFromPLN, high: 4500 } },
+    { maxArea: 35, powerKw: '3,5', price: { low: PRICING.installFromPLN, high: 4500 } },
     { maxArea: 50, powerKw: '5,0', price: { low: 4500, high: 6000 } },
     { maxArea: 70, powerKw: '7,0', price: { low: 5500, high: 7500 } }
   ],
