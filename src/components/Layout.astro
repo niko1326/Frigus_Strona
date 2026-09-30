@@ -153,8 +153,9 @@ const schemaBlocks = [localBusinessSchema, ...extraSchema];
       (() => {
         const revealNodes = document.querySelectorAll('[data-reveal]');
         const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
-        if (prefersReduced) {
+        if (prefersReduced || isMobile) {
           revealNodes.forEach((node) => node.classList.add('is-visible'));
           return;
         }

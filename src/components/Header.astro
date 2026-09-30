@@ -43,10 +43,6 @@ const items: Item[] = [
                 <svg class="nav-caret" viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
               </button>
               <div class="nav-menu" id={`nav-${item.id}-menu`} aria-labelledby={`nav-${item.id}-trigger`} hidden>
-                <button type="button" class="nav-menu-back" aria-label={`Wróć do menu głównego z sekcji ${item.label}`}>
-                  <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m10 3-5 5 5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
-                  <span>{item.label}</span>
-                </button>
                 <ul>
                   {item.children.map(link => <li><a href={link.href} class:list={{ 'is-active': isInSection(link.href) }} aria-current={current === link.href ? 'page' : undefined}>{link.label}</a></li>)}
                 </ul>
@@ -89,7 +85,6 @@ const items: Item[] = [
   };
   toggle.addEventListener('click', () => setMobile(toggle.getAttribute('aria-expanded') !== 'true'));
   groups.forEach(group => {
-    const back = group.panel.querySelector<HTMLButtonElement>('.nav-menu-back');
     const open = () => { closeGroups(); setGroup(group, true); };
     group.button.addEventListener('click', () => {
       if (group.button.getAttribute('aria-expanded') === 'true') setGroup(group, false);
@@ -115,10 +110,6 @@ const items: Item[] = [
       const index = links.indexOf(document.activeElement as HTMLAnchorElement);
       const next = event.key === 'Home' ? 0 : event.key === 'End' ? links.length - 1 : (index + (event.key === 'ArrowDown' ? 1 : -1) + links.length) % links.length;
       links[next]?.focus();
-    });
-    back?.addEventListener('click', () => {
-      setGroup(group, false);
-      group.button.focus();
     });
     group.element.addEventListener('focusout', event => {
       if (!group.element.contains(event.relatedTarget as Node | null)) setGroup(group, false);
