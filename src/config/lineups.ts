@@ -100,9 +100,9 @@ export const GREE_MODELS: ProductLineupModel[] = [
       ],
       { priceFromPLN: 4599 }
     ),
-    badge: 'Nowość',
+    badge: 'NOWA SERIA',
     tagline:
-      'Najnowsza seria Gree ze sprężarką G-STORM. Grzeje jeszcze przy -30°C, więc realnie zastępuje dogrzewanie zimą.',
+      'Najnowsza seria Gree ze sprężarką G-STORM, przygotowana do pracy w trybie grzania także przy bardzo niskich temperaturach.',
     image: '/photos/modele/gree-g-time.webp',
     alt: 'Klimatyzator ścienny Gree G-TIME w kolorze białym',
     variants: [
@@ -113,7 +113,7 @@ export const GREE_MODELS: ProductLineupModel[] = [
     ],
     energyClass: 'A+++ / A++',
     noise: 'od 18 dB(A)',
-    features: ['Grzanie do -30°C', 'Czujnik wilgotności', 'Sterowanie Wi-Fi', 'Czynnik R32']
+    features: ['Grzanie do -30°C', 'Cicha praca', 'Sterowanie Wi-Fi', 'Kontrola wilgotności']
   },
   {
     name: 'Cosmo Pearl',
@@ -129,7 +129,7 @@ export const GREE_MODELS: ProductLineupModel[] = [
       { priceFromPLN: 4399 }
     ),
     tagline:
-      'Cicha seria z jonizacją Colasma i wyjątkowo wyciszoną jednostką zewnętrzną. Dobry wybór, gdy sąsiad jest blisko.',
+      'Cicha seria z jonizacją Colasma i wyciszoną jednostką zewnętrzną, przeznaczona dla osób, którym szczególnie zależy na komforcie akustycznym.',
     image: '/photos/modele/gree-cosmo-pearl.webp',
     alt: 'Klimatyzator ścienny Gree Cosmo Pearl w perłowej bieli',
     variants: [
@@ -140,7 +140,7 @@ export const GREE_MODELS: ProductLineupModel[] = [
     ],
     energyClass: 'A+++ / A++',
     noise: 'od 18 dB(A)',
-    features: ['Jonizacja Colasma', 'Cicha jednostka zewnętrzna', 'Zawór EEV', 'Czynnik R32']
+    features: ['Cicha praca', 'Jonizacja powietrza', 'Cicha jednostka zewnętrzna', 'Sterowanie Wi-Fi']
   },
   {
     name: 'Clivia',
@@ -204,7 +204,7 @@ export const GREE_MODELS: ProductLineupModel[] = [
       variant('7,1', { coolingCapacityKw: 7.1, heatingCapacityKw: 7.3, seer: 7, scop: 4.3, priceFromPLN: 6499, colorPriceFromPLN: 6499 })
     ],
     energyClass: 'A+++ / A++ (2,7 kW), dalej A++ / A+',
-    features: ['5 kolorów', 'Lampa UVC', 'Jonizator', 'Kontrola wilgotności']
+    features: ['5 wersji kolorystycznych', 'Lampa UVC', 'Jonizacja', 'Kontrola wilgotności']
   },
   {
     name: 'Airy',
@@ -261,7 +261,7 @@ export const GREE_MODELS: ProductLineupModel[] = [
       variant('7,1', { coolingCapacityKw: 7.1, heatingCapacityKw: 7.8, seer: 8.5, scop: 4.6, priceFromPLN: 6799, colorPriceFromPLN: 6899 })
     ],
     energyClass: 'A+++ / A++',
-    features: ['Grzanie do -25°C', 'G-AI Plus 2.0', 'Lampa UVC', '4 kolory']
+    features: ['Grzanie do -25°C', 'Oszczędzanie energii G-AI', 'Lampa UVC', '4 wersje kolorystyczne']
   },
   {
     name: 'Amber Prestige',
@@ -276,9 +276,9 @@ export const GREE_MODELS: ProductLineupModel[] = [
       ],
       { priceFromPLN: 5599 }
     ),
-    badge: 'Najwyższa klasa',
+    badge: 'TOP DO OGRZEWANIA',
     tagline:
-      'Dwustopniowa sprężarka i najwyższa klasa energetyczna także w grzaniu. Wybór, gdy klimatyzacja ma być głównym źródłem ciepła.',
+      'Model nastawiony na wydajne grzanie, z dwustopniową sprężarką i pracą grzewczą przy bardzo niskich temperaturach.',
     image: '/photos/modele/gree-amber-prestige.webp',
     alt: 'Klimatyzator ścienny Gree Amber Prestige',
     variants: [
@@ -288,12 +288,7 @@ export const GREE_MODELS: ProductLineupModel[] = [
       variant('7,03', { coolingCapacityKw: 7.03, heatingCapacityKw: 7.03, seer: 6.5, scop: 4.1, priceFromPLN: 6999 })
     ],
     energyClass: 'A+++ / A+++ (do 3,5 kW), dalej A++ / A+',
-    features: [
-      'Grzanie przy -30°C',
-      'Chłodzenie do +52°C',
-      'Sprężarka dwustopniowa',
-      '7 lat gwarancji'
-    ]
+    features: ['Grzanie do -30°C', 'Wysoka efektywność grzania', 'Sprężarka dwustopniowa', 'Chłodzenie do +52°C']
   },
   {
     name: 'U-Crown Silver',
@@ -309,7 +304,7 @@ export const GREE_MODELS: ProductLineupModel[] = [
       { priceFromPLN: 5499 }
     ),
     tagline:
-      'Metalowy front w charakterystycznym profilu w kształcie litery U. Najbardziej wyrazista wizualnie jednostka w ofercie Gree.',
+      'Charakterystyczna jednostka z metalowym frontem i profilem w kształcie litery U, skierowana do bardziej designerskich wnętrz.',
     image: '/photos/modele/gree-u-crown.webp',
     alt: 'Klimatyzator ścienny Gree U-Crown w kolorze srebrnym',
     variants: [
@@ -318,7 +313,7 @@ export const GREE_MODELS: ProductLineupModel[] = [
       variant('5,3', { coolingCapacityKw: 5.3, heatingCapacityKw: 5.3, seer: 6.8, scop: 4 })
     ],
     energyClass: 'A++ / A++',
-    features: ['Metaliczny front', '7 biegów wentylatora', 'Multi Free Match', '7 lat gwarancji']
+    features: ['Metalowy front', 'Cicha praca', 'Sterowanie Wi-Fi']
   },
   {
     name: 'Fairy',
@@ -356,7 +351,7 @@ export const GREE_MODELS: ProductLineupModel[] = [
       }
     ),
     tagline:
-      'Zaokrąglona, dyskretna bryła w trzech kolorach. Klasyczny wybór do sypialni i pokoju dziecka.',
+      'Zaokrąglona, dyskretna jednostka dostępna w trzech kolorach, z jonizacją i sterowaniem Wi-Fi.',
     image: '/photos/modele/gree-fairy.webp',
     alt: 'Klimatyzator ścienny Gree Fairy w kolorze czarnym',
     variants: [
@@ -366,7 +361,7 @@ export const GREE_MODELS: ProductLineupModel[] = [
       variant('7,1', { coolingCapacityKw: 7.1, heatingCapacityKw: 7.8, seer: 7, scop: 4.2, priceFromPLN: 6099 })
     ],
     energyClass: 'A++ / A+',
-    features: ['3 kolory', 'Jonizator', '7 biegów wentylatora', 'Sterowanie Wi-Fi']
+    features: ['3 wersje kolorystyczne', 'Jonizacja', 'Cicha praca', 'Sterowanie Wi-Fi']
   },
   {
     name: 'Pular',
@@ -381,9 +376,9 @@ export const GREE_MODELS: ProductLineupModel[] = [
       ],
       { priceFromPLN: 3399 }
     ),
-    badge: 'Najczęściej wybierana',
+    badge: 'MOCNY STOSUNEK CENY DO JAKOŚCI',
     tagline:
-      'Najlepszy stosunek ceny do możliwości w ofercie Gree. To od tej serii zwykle zaczynamy wycenę mieszkania.',
+      'Przystępna cenowo seria z Wi-Fi, samoczyszczeniem i kilkoma wariantami mocy. Dobry wybór, gdy zależy Ci na prostym, funkcjonalnym klimatyzatorze.',
     image: '/photos/modele/gree-pular.webp',
     alt: 'Klimatyzator ścienny Gree Pular w wersji matowej',
     variants: [
@@ -393,7 +388,7 @@ export const GREE_MODELS: ProductLineupModel[] = [
       variant('6,2', { coolingCapacityKw: 6.2, heatingCapacityKw: 6.5, seer: 6.8, scop: 4, priceFromPLN: 5199 })
     ],
     energyClass: 'A++ / A+',
-    features: ['Wi-Fi w standardzie', 'Samoczyszczenie', 'Wersja mat lub połysk', 'Czynnik R32']
+    features: ['Wi-Fi w standardzie', 'Samoczyszczenie', 'Mat lub połysk']
   },
   {
     name: 'Pular PRO',
@@ -435,7 +430,7 @@ export const GREE_MODELS: ProductLineupModel[] = [
       variant('7,1', { coolingCapacityKw: 7.1, heatingCapacityKw: 7.8, seer: 7, scop: 4.2, priceFromPLN: 6199 })
     ],
     energyClass: 'A++ / A+',
-    features: ['Grzanie do -25°C', 'Chłodzenie do +50°C', 'Jonizator', 'Samoczyszczenie']
+    features: ['Grzanie do -25°C', 'Chłodzenie do +50°C', 'Jonizacja', 'Samoczyszczenie']
   }
 ];
 
@@ -443,9 +438,8 @@ export const KAISAI_MODELS: LineupModel[] = [
   {
     name: 'AIR (KKWK)',
     slug: 'kaisai-air',
-    badge: 'Nowość',
     tagline:
-      'Najnowsza seria Kaisai z filtrem jonów srebra i samoczyszczeniem parownika. Prosty, uniwersalny wybór do mieszkania.',
+      'Seria z filtrem jonów srebra, trybem ECO, samoczyszczeniem parownika oraz grzałką tacy ociekowej.',
     image: '/photos/modele/kaisai-air.webp',
     alt: 'Klimatyzator ścienny Kaisai AIR w kolorze białym',
     variants: [
@@ -455,19 +449,14 @@ export const KAISAI_MODELS: LineupModel[] = [
       variant('7,0', { coolingCapacityKw: 7, heatingCapacityKw: 7.1, seer: 6.4, scop: 4 })
     ],
     energyClass: 'A++ / A+',
-    features: [
-      'Grzanie do -20°C',
-      'Filtr jonów srebra',
-      'Samoczyszczenie parownika',
-      'Złote lamele'
-    ]
+    features: ['Filtr jonów srebra', 'Tryb ECO', 'Samoczyszczenie', 'Grzałka tacy skroplin']
   },
   {
     name: 'FLY+ (KKWX)',
     slug: 'kaisai-fly-plus',
-    badge: 'Nowość',
+    badge: 'CICHA PRACA',
     tagline:
-      'Seria projektowana pod cichą pracę, z trybem sterylizacji 56°C. Do sypialni, w której klimatyzator pracuje nocą.',
+      'Seria nastawiona na cichą i energooszczędną pracę, z funkcją AI Eco+, sterylizacją 56°C i grzaniem do -25°C.',
     image: '/photos/modele/kaisai-fly-plus.webp',
     alt: 'Klimatyzator ścienny Kaisai FLY+ w kolorze białym',
     variants: [
@@ -477,14 +466,14 @@ export const KAISAI_MODELS: LineupModel[] = [
       variant('7,0', { coolingCapacityKw: 7, heatingCapacityKw: 7.3, seer: 6.5, scop: 4.1 })
     ],
     energyClass: 'A++ / A+',
-    features: ['Grzanie do -25°C', 'Tryb AI Eco+', 'Sterylizacja 56°C', 'Obsługa Modbus']
+    features: ['Cicha praca', 'Sterylizacja 56°C', 'AI Eco+', 'Grzanie do -25°C']
   },
   {
     name: 'GEO+ (KKWR / KKWS)',
     slug: 'kaisai-geo-plus',
-    badge: 'Nowość',
+    badge: 'OCZYSZCZANIE POWIETRZA',
     tagline:
-      'Wysoka klasa energetyczna, lampa UVC i potrójna filtracja. Dostępna w bieli i w szarości.',
+      'Model 2w1 łączący klimatyzację z rozbudowanym oczyszczaniem powietrza, lampą UVC i nawiewem Soft Wind.',
     image: '/photos/modele/kaisai-geo-plus.webp',
     alt: 'Klimatyzatory ścienne Kaisai GEO+ w wersji białej i szarej',
     variants: [
@@ -494,14 +483,14 @@ export const KAISAI_MODELS: LineupModel[] = [
       variant('7,2', { coolingCapacityKw: 7.2, heatingCapacityKw: 7.3, seer: 8.7, scop: 4.6 })
     ],
     energyClass: 'A+++ / A++',
-    features: ['Grzanie do -25°C', 'Lampa UVC', 'Potrójny filtr', 'Nawiew Soft Wind']
+    features: ['Lampa UVC', 'Rozbudowana filtracja', 'Nawiew Soft Wind', 'Oczyszczanie powietrza']
   },
   {
     name: 'ART (KKWI / KKWF)',
     slug: 'kaisai-art',
-    badge: 'Nowość',
+    badge: 'DESIGN',
     tagline:
-      'Designerska jednostka z podwójnymi żaluzjami, w bieli lub czerni. Gdy klimatyzator ma być widoczny i ma dobrze wyglądać.',
+      'Jednostka dostępna w bieli i czerni, z podwójnymi żaluzjami, filtrem zapachowym i grzaniem do -25°C.',
     image: '/photos/modele/kaisai-art.webp',
     alt: 'Klimatyzatory ścienne Kaisai ART w wersji białej i czarnej',
     variants: [
@@ -511,18 +500,13 @@ export const KAISAI_MODELS: LineupModel[] = [
       variant('7,0', { coolingCapacityKw: 7, heatingCapacityKw: 7.1, seer: 8.5, scop: 4.7 })
     ],
     energyClass: 'A+++ / A++',
-    features: [
-      'Grzanie do -25°C',
-      'Podwójne żaluzje',
-      'Sterowanie z aplikacji',
-      'Biały lub czarny'
-    ]
+    features: ['Biały lub czarny', 'Podwójne żaluzje', 'Grzanie do -25°C', 'Filtr zapachowy']
   },
   {
     name: 'EVO (KEV)',
     slug: 'kaisai-evo',
     tagline:
-      'Sprawdzona seria ze zintegrowanym modułem Wi-Fi w standardzie. Rozsądny wybór do pierwszej klimatyzacji.',
+      'Model z funkcją ECO, filtrem jonów srebra oraz rozwiązaniami wspierającymi higienę urządzenia i pracę zimą.',
     image: '/photos/modele/kaisai-evo.webp',
     alt: 'Klimatyzator ścienny Kaisai EVO w kolorze białym',
     variants: [
@@ -532,19 +516,13 @@ export const KAISAI_MODELS: LineupModel[] = [
       variant('7,0', { coolingCapacityKw: 7, heatingCapacityKw: 7.1, seer: 6.4, scop: 4 })
     ],
     energyClass: 'A++ / A+',
-    features: [
-      'Grzanie do -20°C',
-      'Wi-Fi w standardzie',
-      'Samoczyszczenie parownika',
-      'Filtr jonów srebra'
-    ]
+    features: ['Filtr jonów srebra', 'Tryb ECO', 'Samoczyszczenie', 'Grzałka tacy skroplin']
   },
   {
     name: 'PRO HEAT+ (KRW / KRB)',
     slug: 'kaisai-pro-heat-plus',
-    badge: 'Do grzania zimą',
     tagline:
-      'Seria zaprojektowana pod pracę grzewczą przy niskich temperaturach. Dobra alternatywa dla dogrzewania elektrycznego.',
+      'Seria do grzania przy temperaturze zewnętrznej do -25°C, z lampą UVC, jonizatorem i łagodnym nawiewem Gentle Cooling.',
     image: '/photos/modele/kaisai-pro-heat-plus.webp',
     alt: 'Klimatyzatory ścienne Kaisai PRO HEAT+ w wersji białej i czarnej',
     variants: [
@@ -554,24 +532,25 @@ export const KAISAI_MODELS: LineupModel[] = [
       variant('7,0', { coolingCapacityKw: 7, heatingCapacityKw: 7.1, seer: 8.5, scop: 4.7 })
     ],
     energyClass: 'A+++ / A++',
-    features: ['Grzanie do -25°C', 'Wi-Fi w standardzie', 'Jonizator', 'Biały lub czarny']
+    features: ['Grzanie do -25°C', 'Lampa UVC', 'Jonizator', 'Gentle Cooling']
   },
   {
     name: 'NORDIC (KNP)',
     slug: 'kaisai-nordic',
+    badge: 'TOP DO OGRZEWANIA',
     tagline:
-      'Najwyższa klasa energetyczna także w grzaniu i praca przy mrozie do -35°C. Dostępna w jednej wielkości.',
+      'Model do pracy grzewczej przy temperaturze do -35°C, zachowujący pełną moc przy -15°C, ze sterylizacją 56°C i Wi-Fi.',
     image: '/photos/modele/kaisai-nordic.webp',
     alt: 'Klimatyzator ścienny Kaisai NORDIC w kolorze białym',
     variants: [variant('3,5', { coolingCapacityKw: 3.5, heatingCapacityKw: 3.8, seer: 9.2, scop: 5.1 })],
     energyClass: 'A+++ / A+++',
-    features: ['Grzanie do -35°C', 'Jonizator', 'Sterowanie Wi-Fi', 'Czynnik R32']
+    features: ['Grzanie do -35°C', 'Pełna moc grzewcza przy -15°C', 'Sterylizacja 56°C', 'Wi-Fi w standardzie']
   },
   {
     name: 'ICE (KLW / KLB)',
     slug: 'kaisai-ice',
     tagline:
-      'Wysokie współczynniki sezonowe i filtr Bio HEPA, w czarnym lub białym wykończeniu.',
+      'Seria z filtrem Bio HEPA, jonizacją i nawiewem 3D, wyposażona w tryby oszczędzania energii Eco i Gear.',
     image: '/photos/modele/kaisai-ice.webp',
     alt: 'Klimatyzatory ścienne Kaisai ICE w wersji czarnej i białej',
     variants: [
@@ -581,7 +560,7 @@ export const KAISAI_MODELS: LineupModel[] = [
       variant('7,0', { coolingCapacityKw: 7, heatingCapacityKw: 7.3, seer: 6.4, scop: 4 })
     ],
     energyClass: 'A+++ / A+',
-    features: ['SEER 8,8 / SCOP 4,6', 'Grzanie do -25°C', 'Filtr Bio HEPA', 'Czarny lub biały']
+    features: ['Filtr Bio HEPA', 'Jonizacja', 'Nawiew 3D', 'Tryby Eco i Gear']
   }
 ];
 

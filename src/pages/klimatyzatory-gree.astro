@@ -12,6 +12,10 @@ import { PHONE_TEL, SITE } from '../config/site';
 import { calculatorNavLabels, labels, pageMeta, routes } from '../i18n/content';
 
 const meta = pageMeta.gree;
+const featuredGreeSlug = 'gree-pular';
+const greeModelsForDisplay = [...GREE_MODELS].sort(
+  (first, second) => first.product.priceFromPLN - second.product.priceFromPLN
+);
 const greePriceFrom = new Intl.NumberFormat('pl-PL', { useGrouping: 'always' }).format(
   Math.min(...GREE_MODELS.map((model) => model.product.priceFromPLN))
 );
@@ -41,7 +45,7 @@ const lineupSchema = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
   name: 'Serie klimatyzatorów ściennych Gree montowane przez FRIGAC',
-  itemListElement: GREE_MODELS.map((model, index) => ({
+  itemListElement: greeModelsForDisplay.map((model, index) => ({
     '@type': 'ListItem',
     position: index + 1,
     item: {
@@ -79,9 +83,10 @@ const lineupSchema = {
     <div class="container lineup-container" data-reveal>
       <ModelLineup
         brand="Gree"
-        models={GREE_MODELS}
+        models={greeModelsForDisplay}
         detailBasePath={routes.gree}
         showPrice={true}
+        featuredSlug={featuredGreeSlug}
       />
     </div>
   </section>

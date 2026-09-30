@@ -7,9 +7,10 @@ interface Props {
   models: LineupModel[];
   detailBasePath?: string;
   showPrice?: boolean;
+  featuredSlug?: string;
 }
 
-const { brand, models, detailBasePath, showPrice = false } = Astro.props;
+const { brand, models, detailBasePath, showPrice = false, featuredSlug } = Astro.props;
 const formatPrice = (value: number) => new Intl.NumberFormat('pl-PL', {
   useGrouping: 'always'
 }).format(value);
@@ -24,7 +25,7 @@ const formatPrice = (value: number) => new Intl.NumberFormat('pl-PL', {
       return (
       <li>
         <a
-          class="lineup-card"
+          class:list={['lineup-card', { 'lineup-card-featured': model.slug === featuredSlug }]}
           href={href}
           aria-label={`${brand} ${model.name} - ${hasDetails ? 'zobacz szczegóły' : 'zapytaj o wycenę'}`}
         >
