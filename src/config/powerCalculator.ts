@@ -16,7 +16,7 @@ export const POWER_CALCULATOR_CONFIG = {
   baseKwPerSquareMeter: 0.1,
   height: {
     standard: { label: 'do 2,7 m', correction: 0 },
-    elevated: { label: '2,7–3,2 m', correction: 0.08 },
+    elevated: { label: '2,7-3,2 m', correction: 0.08 },
     high: { label: 'powyżej 3,2 m', correction: 0.15 }
   },
   sun: {

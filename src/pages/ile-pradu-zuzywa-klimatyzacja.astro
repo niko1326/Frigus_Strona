@@ -127,7 +127,7 @@ const appSchema = {
 
         <fieldset class="tool-step">
           <legend><span class="tool-step-num">4</span>Jak dobrze pomieszczenie jest izolowane?</legend>
-          <p class="tool-required-hint">Pole wymagane — wybierz jedną opcję.</p>
+          <p class="tool-required-hint">Pole wymagane - wybierz jedną opcję.</p>
           <div class="seg energy-choice-grid">
             {insulationDisplayOrder.map((key) => {
               const profile = HEATING_ASSUMPTIONS.heatLoadWm2[key];
@@ -142,7 +142,7 @@ const appSchema = {
         <div class="mode-panel" id="cooling-panel" data-mode-panel="cooling" role="region" aria-labelledby="mode-cooling">
           <fieldset class="tool-step">
             <legend><span class="tool-step-num">5</span>Jak intensywnie korzystasz z klimatyzacji?</legend>
-            <p class="tool-required-hint">Pole wymagane — wybierz jedną opcję.</p>
+            <p class="tool-required-hint">Pole wymagane - wybierz jedną opcję.</p>
             <div class="seg energy-choice-grid">
               {Object.entries(USAGE_PROFILES).map(([key, profile]) => <>
                 <input type="radio" name="cooling-usage" id={`cooling-usage-${key}`} value={key} />
@@ -155,7 +155,7 @@ const appSchema = {
         <div class="mode-panel" id="heating-panel" data-mode-panel="heating" role="region" aria-labelledby="mode-heating" hidden>
           <fieldset class="tool-step">
             <legend><span class="tool-step-num">5</span>Jak intensywnie chcesz ogrzewać klimatyzacją?</legend>
-            <p class="tool-required-hint">Pole wymagane — wybierz jedną opcję.</p>
+            <p class="tool-required-hint">Pole wymagane - wybierz jedną opcję.</p>
             <div class="seg energy-choice-grid">
               {Object.entries(HEATING_ASSUMPTIONS.usage).map(([key, profile]) => <>
                 <input type="radio" name="heating-usage" id={`heating-usage-${key}`} value={key} />
@@ -178,16 +178,16 @@ const appSchema = {
           <p class="eyebrow" id="result-eyebrow">Chłodzenie</p>
           <dl class="result-selection">
             <div><dt>Model</dt><dd id="eres-model">Wybierz model</dd></div>
-            <div><dt>Moc</dt><dd id="eres-power">—</dd></div>
-            <div><dt>Metraż</dt><dd id="eres-area">—</dd></div>
+            <div><dt>Moc</dt><dd id="eres-power">-</dd></div>
+            <div><dt>Metraż</dt><dd id="eres-area">-</dd></div>
           </dl>
-          <p class="result-main"><strong id="eres-kwh">—</strong></p>
+          <p class="result-main"><strong id="eres-kwh">-</strong></p>
           <p class="result-sub" id="eres-source">Wybierz model i wariant mocy</p>
           <dl class="result-rows">
-            <div class="result-row"><dt>Orientacyjny koszt</dt><dd id="eres-season">—</dd></div>
-            <div class="result-row"><dt>Założenia</dt><dd id="eres-usage">—</dd></div>
-            <div class="result-row"><dt id="eres-peak-label">Orientacyjne obciążenie chłodnicze</dt><dd id="eres-peak">—</dd></div>
-            <div class="result-row"><dt>Parametr urządzenia</dt><dd id="eres-efficiency">—</dd></div>
+            <div class="result-row"><dt>Orientacyjny koszt</dt><dd id="eres-season">-</dd></div>
+            <div class="result-row"><dt>Założenia</dt><dd id="eres-usage">-</dd></div>
+            <div class="result-row"><dt id="eres-peak-label">Orientacyjne obciążenie chłodnicze</dt><dd id="eres-peak">-</dd></div>
+            <div class="result-row"><dt>Parametr urządzenia</dt><dd id="eres-efficiency">-</dd></div>
           </dl>
           <p id="energy-error">Wybierz model i wariant mocy, aby zobaczyć wynik.</p>
           <p class="selection-warning" id="eres-selection-warning" hidden>Wybrana moc wymaga sprawdzenia dla tego metrażu.</p>
@@ -200,14 +200,14 @@ const appSchema = {
 
   <section class="section">
     <div class="container article-content" data-reveal>
-      <h2>Ile prądu bierze klimatyzacja — na czym opiera się kalkulator?</h2>
+      <h2>Ile prądu bierze klimatyzacja - na czym opiera się kalkulator?</h2>
       <p>Moc chłodnicza 3,5 kW określa wydajność chłodzenia, a nie pobór elektryczny. Chwilowy pobór zmienia się wraz z obciążeniem i modulacją sprężarki. Nie można go obliczyć jako moc chłodnicza podzielona przez SEER.</p>
-      <p>W uproszczonym modelu stosujemy <strong>Qseason ≈ Pdesign × 350 / SEER</strong>. Pdesign to projektowe obciążenie chłodnicze w kW; w formularzu przybliżamy je mocą chłodniczą urządzenia. Jeśli karta produktu podaje Pdesignc, jest ono właściwą wartością odniesienia. 350 oznacza referencyjne równoważne godziny aktywnego chłodzenia — nie liczbę godzin, przez które włączysz urządzenie.</p>
+      <p>W uproszczonym modelu stosujemy <strong>Qseason ≈ Pdesign × 350 / SEER</strong>. Pdesign to projektowe obciążenie chłodnicze w kW; w formularzu przybliżamy je mocą chłodniczą urządzenia. Jeśli karta produktu podaje Pdesignc, jest ono właściwą wartością odniesienia. 350 oznacza referencyjne równoważne godziny aktywnego chłodzenia - nie liczbę godzin, przez które włączysz urządzenie.</p>
       <p>To podejście zbliżone do etykiety energetycznej UE dla klimatyzatorów split, a nie obliczenie poboru chwilowego ani kosztu konkretnego dnia. Podstawa: <a class="inline-link" href="https://eur-lex.europa.eu/legal-content/PL/TXT/?uri=CELEX:32011R0626">rozporządzenie UE nr 626/2011, definicje w załączniku I i tabela 4 w załączniku VII</a>.</p>
       <h2>Co oznacza SEER?</h2>
       <p>SEER to sezonowy współczynnik efektywności chłodzenia. Uwzględnia pracę klimatyzatora przy różnych temperaturach i częściowym obciążeniu w ciągu sezonu. Im wyższy SEER, tym mniej energii urządzenie potrzebuje do zapewnienia tej samej ilości chłodzenia w warunkach testowych.</p>
       <p>Na etykiecie energetycznej urządzenia można znaleźć także deklarowane roczne zużycie energii w chłodzeniu. Jeśli znasz konkretny model klimatyzatora, ta wartość jest lepszym punktem odniesienia niż sam SEER. Nadal jest to wartość referencyjna, nie pomiar w Twoim domu.</p>
-      <h2>SEER a koszt sezonu — klimatyzacja 3,5 kW</h2>
+      <h2>SEER a koszt sezonu - klimatyzacja 3,5 kW</h2>
       <div class="table-wrap">
         <table class="tool-table">
           <caption class="visually-hidden">Referencyjne zużycie i koszt sezonu dla mocy 3,5 kW oraz ceny 1,20 zł/kWh</caption>
@@ -217,10 +217,10 @@ const appSchema = {
       </div>
       <p class="tiny-note">Założenia: moc 3,5 kW jako przybliżenie Pdesign, 350 godzin równoważnych, przykładowa cena 1,20 zł/kWh. Koszt liczymy z niezaokrąglonego zużycia; wyniki pokazujemy w pełnych kWh i złotych.</p>
       <h2>Jak rozumieć sposób użytkowania?</h2>
-      <p>Przyjmujemy orientacyjne mnożniki: sporadycznie 0,6–0,9, standardowo 0,9–1,3, intensywnie 1,3–2,0 wartości referencyjnej. Kalkulator koryguje widełki także na podstawie metrażu, izolacji i relacji mocy wybranego wariantu do orientacyjnego obciążenia 80–120 W/m². To założenia kalkulatora FRIGAC, a nie współczynniki z metodologii UE. Faktyczne zużycie może znaleźć się poza tymi widełkami.</p>
+      <p>Przyjmujemy orientacyjne mnożniki: sporadycznie 0,6-0,9, standardowo 0,9-1,3, intensywnie 1,3-2,0 wartości referencyjnej. Kalkulator koryguje widełki także na podstawie metrażu, izolacji i relacji mocy wybranego wariantu do orientacyjnego obciążenia 80-120 W/m². To założenia kalkulatora FRIGAC, a nie współczynniki z metodologii UE. Faktyczne zużycie może znaleźć się poza tymi widełkami.</p>
       <h2>Jak kalkulator szacuje ogrzewanie klimatyzacją?</h2>
       <p>Tryb grzania najpierw szacuje przedział sezonowego zapotrzebowania na ciepło na podstawie powierzchni, jakości izolacji i planowanego sposobu ogrzewania. Następnie dzieli tę wartość przez SCOP konkretnego wariantu urządzenia. SCOP jest sezonowym współczynnikiem efektywności ogrzewania, dlatego lepiej nadaje się do takiego porównania niż chwilowy COP.</p>
-      <p>Do orientacyjnej kontroli mocy przyjmujemy 35–55 W/m² dla dobrej izolacji, 55–80 W/m² dla standardowej i 80–120 W/m² dla słabej. Osobne mnożniki rozróżniają dogrzewanie, regularną pracę i użycie klimatyzatora jako głównego ogrzewania. Są to jawne założenia modelu orientacyjnego, a nie wartości z normy ani pełne obliczenie projektowe.</p>
+      <p>Do orientacyjnej kontroli mocy przyjmujemy 35-55 W/m² dla dobrej izolacji, 55-80 W/m² dla standardowej i 80-120 W/m² dla słabej. Osobne mnożniki rozróżniają dogrzewanie, regularną pracę i użycie klimatyzatora jako głównego ogrzewania. Są to jawne założenia modelu orientacyjnego, a nie wartości z normy ani pełne obliczenie projektowe.</p>
       <p>SCOP opisuje efektywność sezonową urządzenia w warunkach badawczych. Kalkulator korzysta wyłącznie ze zweryfikowanego SCOP wybranego wariantu i nie zastępuje go maksymalnym parametrem całej serii. Więcej informacji o metodologii zawiera <a class="inline-link" href="https://eur-lex.europa.eu/legal-content/PL/TXT/?uri=CELEX:32012R0206">rozporządzenie Komisji (UE) nr 206/2012</a>.</p>
       <p class="tiny-note">Wynik ogrzewania nie zastępuje obliczenia OZC ani doboru mocy przy temperaturze projektowej. Kalkulator sygnalizuje, gdy moc grzewcza wariantu nie pokrywa górnej granicy orientacyjnego obciążenia.</p>
       <h2>Czy warto dopłacić do wyższego SEER?</h2>
@@ -347,16 +347,16 @@ const appSchema = {
     const model = selectedModel();
     const variant = selectedVariant();
     set('eres-model', model ? `${model.brandLabel} ${model.name}` : 'Wybierz model');
-    set('eres-power', variant ? `${variant.label} kW` : '—');
-    set('eres-area', areaInput.validity.valid ? `${formatDecimal(areaInput.valueAsNumber)} m²` : '—');
+    set('eres-power', variant ? `${variant.label} kW` : '-');
+    set('eres-area', areaInput.validity.valid ? `${formatDecimal(areaInput.valueAsNumber)} m²` : '-');
   }
 
   function resultUnavailable(message: string) {
-    set('eres-kwh', '—');
-    set('eres-season', '—');
-    set('eres-usage', '—');
-    set('eres-peak', '—');
-    set('eres-efficiency', '—');
+    set('eres-kwh', '-');
+    set('eres-season', '-');
+    set('eres-usage', '-');
+    set('eres-peak', '-');
+    set('eres-efficiency', '-');
     set('eres-source', message);
     set('energy-error', message);
     show('energy-error', true);
@@ -404,10 +404,10 @@ const appSchema = {
       usage,
       insulation: state.insulation as keyof typeof HEATING_ASSUMPTIONS.heatLoadWm2
     });
-    set('eres-kwh', `≈ ${result.usageKwh.map(fmt).join('–')} kWh / sezon`);
-    set('eres-season', `≈ ${result.usageCost.map(fmt).join('–')} zł / sezon`);
+    set('eres-kwh', `≈ ${result.usageKwh.map(fmt).join('-')} kWh / sezon`);
+    set('eres-season', `≈ ${result.usageCost.map(fmt).join('-')} zł / sezon`);
     set('eres-usage', `${HEATING_ASSUMPTIONS.heatLoadWm2[state.insulation as keyof typeof HEATING_ASSUMPTIONS.heatLoadWm2].label} · ${USAGE_PROFILES[usage].label}`);
-    set('eres-peak', `≈ ${result.roomLoadKw.map(formatDecimal).join('–')} kW`);
+    set('eres-peak', `≈ ${result.roomLoadKw.map(formatDecimal).join('-')} kW`);
     set('eres-efficiency', `SEER ${formatDecimal(variant.seer)}`);
     set('eres-source', 'Szacunek dla sezonu chłodzenia');
     show('energy-error', false);
@@ -438,10 +438,10 @@ const appSchema = {
       heatingCapacityKw: variant.heatingCapacityKw,
       price: state.electricityPrice
     });
-    set('eres-kwh', `≈ ${result.electricityKwh.map(fmt).join('–')} kWh / sezon`);
-    set('eres-season', `≈ ${result.cost.map(fmt).join('–')} zł / sezon`);
+    set('eres-kwh', `≈ ${result.electricityKwh.map(fmt).join('-')} kWh / sezon`);
+    set('eres-season', `≈ ${result.cost.map(fmt).join('-')} zł / sezon`);
     set('eres-usage', `${HEATING_ASSUMPTIONS.heatLoadWm2[insulation].label} · ${HEATING_ASSUMPTIONS.usage[usage].label}`);
-    set('eres-peak', `≈ ${result.peakHeatKw.map(formatDecimal).join('–')} kW`);
+    set('eres-peak', `≈ ${result.peakHeatKw.map(formatDecimal).join('-')} kW`);
     set('eres-efficiency', `SCOP ${formatDecimal(variant.scop)}`);
     set('eres-source', 'Uproszczony szacunek dla sezonu grzewczego');
     show('energy-error', false);

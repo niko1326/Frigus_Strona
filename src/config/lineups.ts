@@ -371,7 +371,7 @@ export const GREE_MODELS: ProductLineupModel[] = [
       }
     ),
     tagline:
-      'Zaokrąglona jednostka dostępna w trzech kolorach i czterech wariantach mocy — od 2,7 do 7,1 kW.',
+      'Zaokrąglona jednostka dostępna w trzech kolorach i czterech wariantach mocy - od 2,7 do 7,1 kW.',
     image: '/photos/modele/gree-fairy.webp',
     alt: 'Klimatyzator ścienny Gree Fairy w kolorze czarnym',
     variants: [

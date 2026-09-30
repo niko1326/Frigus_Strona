@@ -18,7 +18,7 @@ export const GREE_CERTIFICATES: Certificate[] = [
     document: '/certificates/gree-hubert.pdf',
     width: 2105,
     height: 1489,
-    alt: 'Certyfikat autoryzacyjny GREE Huberta Maciejewskiego – serie RAC, U-Match i Free Match'
+    alt: 'Certyfikat autoryzacyjny GREE Huberta Maciejewskiego - serie RAC, U-Match i Free Match'
   },
   {
     id: 'gree-nikodem',
@@ -28,7 +28,7 @@ export const GREE_CERTIFICATES: Certificate[] = [
     document: '/certificates/gree-nikodem.pdf',
     width: 2105,
     height: 1489,
-    alt: 'Certyfikat autoryzacyjny GREE Nikodema Hirscha – serie RAC, U-Match i Free Match'
+    alt: 'Certyfikat autoryzacyjny GREE Nikodema Hirscha - serie RAC, U-Match i Free Match'
   }
 ];
 
@@ -53,7 +53,7 @@ export const FGAS_CERTIFICATES: Certificate[] = [
     document: '/certificates/fgaz-hubert.webp',
     width: 1050,
     height: 694,
-    alt: 'Certyfikat F-gazowy dla personelu UDT – Hubert Maciejewski, data urodzenia zamaskowana'
+    alt: 'Certyfikat F-gazowy dla personelu UDT - Hubert Maciejewski, data urodzenia zamaskowana'
   },
   {
     id: 'fgaz-nikodem',
@@ -63,6 +63,6 @@ export const FGAS_CERTIFICATES: Certificate[] = [
     document: '/certificates/fgaz-nikodem.webp',
     width: 1010,
     height: 660,
-    alt: 'Certyfikat F-gazowy dla personelu UDT – Nikodem Hirsch, data urodzenia zamaskowana'
+    alt: 'Certyfikat F-gazowy dla personelu UDT - Nikodem Hirsch, data urodzenia zamaskowana'
   }
 ];

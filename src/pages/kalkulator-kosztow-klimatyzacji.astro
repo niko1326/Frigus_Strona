@@ -164,7 +164,7 @@ const appSchema = {
       <div class="tool-result-wrap">
         <div class="tool-result" role="status" aria-live="polite">
           <p class="eyebrow">Szacunkowy koszt</p>
-          <p class="result-main"><strong id="cres-cost">3 500–4 500 zł</strong></p>
+          <p class="result-main"><strong id="cres-cost">3 500-4 500 zł</strong></p>
           <p class="result-sub" id="cres-sub">z urządzeniem i standardowym montażem</p>
           <dl class="result-rows">
             <div class="result-row">
@@ -361,7 +361,7 @@ const appSchema = {
       return;
     }
 
-    ($('cres-cost') as HTMLElement).textContent = `${formatPrice(estimate.range.low)}–${formatPrice(estimate.range.high)} zł`;
+    ($('cres-cost') as HTMLElement).textContent = `${formatPrice(estimate.range.low)}-${formatPrice(estimate.range.high)} zł`;
     ($('cres-sub') as HTMLElement).textContent = rooms === 1
       ? 'z urządzeniem i standardowym montażem'
       : 'z urządzeniami i standardowym montażem';

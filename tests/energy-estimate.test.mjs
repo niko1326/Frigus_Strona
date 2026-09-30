@@ -335,7 +335,7 @@ test('energy form accepts small rooms and marks choice groups as required', asyn
   assert.doesNotMatch(areaInput, /\bmax=/);
   assert.match(areaInput, /placeholder="np\. 30"/);
   assert.match(page, /areaInput\.valueAsNumber > 0/);
-  assert.equal((page.match(/Pole wymagane — wybierz jedną opcję\./g) ?? []).length, 3);
+  assert.equal((page.match(/Pole wymagane - wybierz jedną opcję\./g) ?? []).length, 3);
 });
 
 test('published copy avoids invented installation volume and historical company data', async () => {

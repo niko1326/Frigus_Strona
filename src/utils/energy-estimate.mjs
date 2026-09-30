@@ -82,7 +82,7 @@ const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 
 /**
  * Reference cooling is capacity × 350 / SEER. The displayed range additionally
- * reflects the room load (80–120 W/m²) and the selected usage profile.
+ * reflects the room load (80-120 W/m²) and the selected usage profile.
  * @param {{power: number, seer: number, area: number, price: number, usage: keyof typeof USAGE_PROFILES, insulation: keyof typeof HEATING_ASSUMPTIONS.heatLoadWm2}} input
  */
 export function calculateEnergyEstimate({ power, seer, area, price, usage, insulation }) {

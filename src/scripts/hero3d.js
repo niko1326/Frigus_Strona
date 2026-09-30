@@ -199,7 +199,7 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
   beam.rotation.x = -0.85;
   unit.add(beam);
 
-  // Faliste wstęgi powietrza płynące z wylotu — fala wędruje wzdłuż wstęgi,
+  // Faliste wstęgi powietrza płynące z wylotu - fala wędruje wzdłuż wstęgi,
   // co daje wrażenie ciągłego nawiewu.
   // Na małym ekranie 28 segmentów zachowuje miękki kształt wstęg, a istotnie
   // ogranicza liczbę pozycji przeliczanych podczas każdej klatki.
@@ -555,7 +555,7 @@ export function initHero3D(stage, { brand = 'GREE' } = {}) {
     scrollRotationX = MathUtils.lerp(scrollRotationX, isMobile ? scrollTargetX : 0, 0.11);
     scrollRotationZ = MathUtils.lerp(scrollRotationZ, isMobile ? scrollTargetZ : 0, 0.09);
 
-    // intro: 0-2.2 s — kamera dolatuje, jednostka obraca się do pozycji
+    // intro: 0-2.2 s - kamera dolatuje, jednostka obraca się do pozycji
     const intro = easeOut(Math.min(t / 2.2, 1));
     const spin = (1 - intro) * -0.25;
 

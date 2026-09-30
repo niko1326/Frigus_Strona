@@ -34,8 +34,8 @@ const powerLabels = model.variants.map((variant) => `${variant.label} kW`).join(
 const maxSeer = Math.max(...model.variants.map((variant) => variant.seer));
 const maxScop = Math.max(...model.variants.map((variant) => variant.scop));
 const title = hasPricing
-  ? `${productName} z montażem – cena i dane techniczne | FRIGAC`
-  : `${productName} z montażem – dane techniczne | FRIGAC`;
+  ? `${productName} z montażem - cena i dane techniczne | FRIGAC`
+  : `${productName} z montażem - dane techniczne | FRIGAC`;
 const description = hasPricing && minimumPrice
   ? `${productName}: moce ${powerLabels}, SEER do ${formatNumber(maxSeer)} i SCOP do ${formatNumber(maxScop)}. Cena z montażem od ${minimumPrice} zł. Sprawdź parametry i poproś o wycenę.`
   : `${productName}: moce ${powerLabels}, SEER do ${formatNumber(maxSeer)} i SCOP do ${formatNumber(maxScop)}. Sprawdź funkcje, parametry i poproś o wycenę montażu.`;

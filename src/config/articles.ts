@@ -13,8 +13,8 @@ export type Article = {
 export const ARTICLES: Article[] = [
   {
     slug: 'pompka-skroplin-do-klimatyzacji',
-    title: 'Pompka skroplin do klimatyzacji – kiedy jest potrzebna i ile kosztuje?',
-    metaTitle: 'Pompka skroplin do klimatyzacji – kiedy potrzebna? | FRIGAC',
+    title: 'Pompka skroplin do klimatyzacji - kiedy jest potrzebna i ile kosztuje?',
+    metaTitle: 'Pompka skroplin do klimatyzacji - kiedy potrzebna? | FRIGAC',
     description:
       'Kiedy potrzebna jest pompka skroplin do klimatyzacji, jak działa i czy jest głośna? Wyjaśniamy zasady odpływu skroplin oraz koszt montażu pompki.',
     keywords: [
@@ -30,7 +30,7 @@ export const ARTICLES: Article[] = [
   },
   {
     slug: 'pomiar-zuzycia-pradu-klimatyzacji-wifi',
-    title: 'Pomiar zużycia prądu klimatyzacji przez Wi-Fi – jak działa i czy warto?',
+    title: 'Pomiar zużycia prądu klimatyzacji przez Wi-Fi - jak działa i czy warto?',
     metaTitle: 'Pomiar zużycia prądu klimatyzacji przez Wi-Fi | FRIGAC',
     description:
       'Jak mierzyć zużycie prądu klimatyzacji przez Wi-Fi? Wyjaśniamy różnicę między mocą chłodniczą a poborem prądu, działanie modułu i jego koszt.',
