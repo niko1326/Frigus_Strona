@@ -3437,12 +3437,13 @@ summary:focus-visible {
   }
 
   .product-spec-table,
-  .product-spec-table tbody,
-  .product-spec-table tr {
+  .product-spec-table tbody {
     display: block;
   }
 
   .product-spec-table tbody tr {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     padding: 0.85rem 1rem;
     border-bottom: 1px solid var(--line);
   }
@@ -3451,28 +3452,44 @@ summary:focus-visible {
     border-bottom: 0;
   }
 
-  .product-spec-table tbody th,
-  .product-spec-table tbody td {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 0.22rem 0;
+  .product-spec-table tbody th {
+    grid-column: 1 / -1;
+    display: block;
+    padding: 0 0 0.65rem;
     border: 0;
     white-space: normal;
     background: transparent;
   }
 
   .product-spec-table tbody th {
-    margin-bottom: 0.25rem;
     font-size: 1rem;
+  }
+
+  .product-spec-table tbody td {
+    min-width: 0;
+    display: grid;
+    align-content: start;
+    justify-items: start;
+    gap: 0.2rem;
+    padding: 0.5rem 0.35rem;
+    border: 0;
+    border-left: 1px solid var(--line);
+    white-space: normal;
+    background: transparent;
+    font-size: 0.84rem;
+  }
+
+  .product-spec-table tbody td:nth-of-type(1) {
+    border-left: 0;
+    padding-left: 0;
   }
 
   .product-spec-table tbody td::before {
     content: attr(data-label);
     color: var(--muted-soft);
-    font-size: 0.75rem;
+    font-size: 0.62rem;
     font-weight: 500;
+    line-height: 1.2;
   }
 
   .product-spec-table tbody tr.is-selected {
@@ -3484,8 +3501,14 @@ summary:focus-visible {
   }
 
   .product-table-price {
+    grid-column: 1 / -1;
+    display: flex !important;
+    align-items: baseline !important;
+    justify-content: space-between !important;
+    gap: 1rem !important;
     margin-top: 0.25rem;
-    padding-top: 0.55rem !important;
+    padding: 0.7rem 0 0 !important;
+    border-left: 0 !important;
     border-top: 1px solid var(--line) !important;
   }
 
