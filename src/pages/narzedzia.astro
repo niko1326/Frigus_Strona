@@ -3,28 +3,28 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import CTAButton from '../components/CTAButton.astro';
 import Layout from '../components/Layout.astro';
 import { PHONE_TEL, SITE } from '../config/site';
-import { labels, pageMeta, routes } from '../i18n/content';
+import { calculatorNavLabels, labels, pageMeta, routes } from '../i18n/content';
 
 const meta = pageMeta.tools;
 
 const tools = [
   {
     href: routes.calcPower,
-    title: 'Kalkulator mocy klimatyzacji',
+    title: calculatorNavLabels.power,
     description:
       'Jaka moc klimatyzacji pasuje do jednej strefy? Oszacuj kW i BTU z umiarkowaną korektą wysokości, nasłonecznienia, położenia i przeszkleń.',
     icon: 'power'
   },
   {
     href: routes.calcCost,
-    title: 'Kalkulator kosztów klimatyzacji',
+    title: calculatorNavLabels.cost,
     description:
       'Ile kosztuje klimatyzacja z montażem? Podaj liczbę i metraż pomieszczeń, priorytet urządzenia oraz długość instalacji.',
     icon: 'cost'
   },
   {
     href: routes.calcEnergy,
-    title: 'Kalkulator zużycia prądu',
+    title: calculatorNavLabels.energy,
     description:
       'Oszacuj referencyjne sezonowe zużycie energii i koszt chłodzenia z mocy, SEER lub danych etykiety energetycznej.',
     icon: 'energy'

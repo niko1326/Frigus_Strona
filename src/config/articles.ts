@@ -12,6 +12,40 @@ export type Article = {
 
 export const ARTICLES: Article[] = [
   {
+    slug: 'pompka-skroplin-do-klimatyzacji',
+    title: 'Pompka skroplin do klimatyzacji – kiedy jest potrzebna i ile kosztuje?',
+    metaTitle: 'Pompka skroplin do klimatyzacji – kiedy potrzebna? | FRIGAC',
+    description:
+      'Kiedy potrzebna jest pompka skroplin do klimatyzacji, jak działa i czy jest głośna? Wyjaśniamy zasady odpływu skroplin oraz koszt montażu pompki.',
+    keywords: [
+      'pompka skroplin do klimatyzacji',
+      'pompka do klimatyzacji',
+      'odprowadzanie skroplin z klimatyzacji',
+      'montaż pompki skroplin'
+    ],
+    datePublished: '2026-09-12',
+    excerpt:
+      'Grawitacyjny odpływ jest najprostszy, ale nie zawsze możliwy. Sprawdź, kiedy potrzebna jest pompka skroplin, jak pracuje i ile kosztuje jej montaż.',
+    author: 'Nikodem Hirsch'
+  },
+  {
+    slug: 'pomiar-zuzycia-pradu-klimatyzacji-wifi',
+    title: 'Pomiar zużycia prądu klimatyzacji przez Wi-Fi – jak działa i czy warto?',
+    metaTitle: 'Pomiar zużycia prądu klimatyzacji przez Wi-Fi | FRIGAC',
+    description:
+      'Jak mierzyć zużycie prądu klimatyzacji przez Wi-Fi? Wyjaśniamy różnicę między mocą chłodniczą a poborem prądu, działanie modułu i jego koszt.',
+    keywords: [
+      'pomiar zużycia energii klimatyzacji',
+      'pomiar prądu klimatyzacji',
+      'ile prądu zużywa klimatyzacja',
+      'klimatyzacja Wi-Fi'
+    ],
+    datePublished: '2026-09-30',
+    excerpt:
+      'Moc chłodnicza 3,5 kW nie oznacza poboru 3,5 kW prądu. Zobacz, co mierzy moduł energii Wi-Fi i kiedy taki podgląd jest naprawdę przydatny.',
+    author: 'Nikodem Hirsch'
+  },
+  {
     slug: 'jaka-klimatyzacja-do-mieszkania',
     title: 'Jaką klimatyzację wybrać do mieszkania?',
     metaTitle: 'Jaka klimatyzacja do mieszkania? Poradnik | FRIGAC',

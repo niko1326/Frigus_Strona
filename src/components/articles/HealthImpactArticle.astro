@@ -4,7 +4,7 @@
   Używany w dwóch miejscach: na stronie /porady/wplyw-klimatyzacji-na-czlowieka
   oraz jako rozwijany teaser na stronie głównej (pod osią czasu).
 */
-import { routes } from '../../i18n/content';
+import { calculatorNavLabels, routes } from '../../i18n/content';
 
 // Zakresy temperatur (skala osi: 16-28°C).
 const tempRanges = [
@@ -381,7 +381,7 @@ const districtDemand = [
     oddychasz. Ryzyka - suche śluzówki, przewiania, drobnoustroje - niemal w całości wynikają
     ze złych nastaw, złego miejsca montażu albo braku higieny urządzenia. Jeśli zastanawiasz
     się nad klimatyzacją w Gdańsku, Gdyni, Sopocie albo w Bydgoszczy czy Toruniu, pomożemy
-    dobrać moc (możesz zacząć od naszego <a href={routes.calcPower}>kalkulatora mocy</a>)
+    dobrać moc (możesz zacząć od narzędzia <a href={routes.calcPower}>{calculatorNavLabels.power}</a>)
     i zamontujemy urządzenie tak, żeby pracowało dla Twojego zdrowia, nie przeciw niemu.
   </p>
 

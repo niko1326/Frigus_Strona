@@ -4,7 +4,7 @@ import CTAButton from '../components/CTAButton.astro';
 import Layout from '../components/Layout.astro';
 import { COST_CALCULATOR_CONFIG } from '../config/costCalculator';
 import { PHONE_TEL, SITE } from '../config/site';
-import { labels, pageMeta, routes } from '../i18n/content';
+import { calculatorNavLabels, labels, pageMeta, routes } from '../i18n/content';
 
 const meta = pageMeta.calcCost;
 
@@ -68,7 +68,7 @@ const appSchema = {
   currentPath={routes.calcCost}
   extraSchema={[appSchema, faqSchema]}
 >
-  <Breadcrumbs items={[{ label: 'Narzędzia', href: routes.tools }, { label: 'Kalkulator kosztów klimatyzacji' }]} />
+  <Breadcrumbs items={[{ label: 'Narzędzia', href: routes.tools }, { label: calculatorNavLabels.cost }]} />
 
   <section class="page-hero">
     <div class="container" data-reveal>
@@ -150,7 +150,7 @@ const appSchema = {
             <input type="range" id="clen" min="1" max={COST_CALCULATOR_CONFIG.maxInstallationMeters} step="1" value={COST_CALCULATOR_CONFIG.defaultInstallationMeters} aria-label="Długość instalacji w metrach bieżących" />
             <output class="range-value" id="clen-out" for="clen">{COST_CALCULATOR_CONFIG.defaultInstallationMeters} mb</output>
           </div>
-          <p class="tool-hint" id="installation-hint">Do 5 mb w cenie standardowego montażu.</p>
+          <p class="tool-hint" id="installation-hint">Do {COST_CALCULATOR_CONFIG.standardInstallationMeters} mb w cenie standardowego montażu.</p>
           <p class="tool-hint">Dłuższa trasa instalacji wymaga potwierdzenia indywidualnej wyceny.</p>
         </div>
 
@@ -170,7 +170,7 @@ const appSchema = {
               <dt>Orientacyjna konfiguracja</dt>
               <dd id="cres-config">1 × klimatyzator split</dd>
               <dd id="cres-powers">około 2,5 kW</dd>
-              <dd id="cres-installation">instalacja do 5 mb</dd>
+              <dd id="cres-installation">instalacja do {COST_CALCULATOR_CONFIG.standardInstallationMeters} mb</dd>
             </div>
             <div class="result-row" id="layout-note" hidden>
               <dt>Układ urządzeń</dt>
@@ -226,14 +226,14 @@ const appSchema = {
         </table>
       </div>
       <p class="tiny-note">
-        Widełki obejmują urządzenie, dostawę, standardowy montaż do 5 mb, uruchomienie i dojazd.
+        Widełki obejmują urządzenie, dostawę, standardowy montaż do {COST_CALCULATOR_CONFIG.standardInstallationMeters} mb, uruchomienie i dojazd.
         Opracowanie własne FRIGAC, 2026.
       </p>
       <h2>Koszt zakupu to nie wszystko - policz też prąd</h2>
       <p>
         Nowoczesny klimatyzator inwerterowy z SEER powyżej 6 kosztuje w typowym mieszkaniu
         <strong>200-500 zł za cały sezon chłodzenia</strong>. Dokładny koszt dla swojego urządzenia
-        policzysz w naszym <a class="inline-link" href={routes.calcEnergy}>kalkulatorze zużycia prądu</a>.
+        policzysz, wybierając <a class="inline-link" href={routes.calcEnergy}>{calculatorNavLabels.energy}</a>.
       </p>
     </div>
   </section>
@@ -261,7 +261,7 @@ const appSchema = {
     <div class="container related-links" data-reveal>
       <p>Zobacz też:</p>
       <a class="text-link" href={routes.tools}>Wszystkie kalkulatory</a>
-      <a class="text-link" href={routes.calcPower}>Kalkulator mocy klimatyzacji</a>
+      <a class="text-link" href={routes.calcPower}>{calculatorNavLabels.power}</a>
       <a class="text-link" href={routes.pricing}>Pełny cennik montażu</a>
       <a class="text-link" href="/porady/ile-kosztuje-montaz-klimatyzacji">Artykuł: ile kosztuje montaż klimatyzacji</a>
     </div>
@@ -346,7 +346,7 @@ const appSchema = {
     ($('clen-out') as HTMLElement).textContent = `${installationMeters} mb`;
     ($('installation-hint') as HTMLElement).textContent =
       installationMeters <= COST_CALCULATOR_CONFIG.standardInstallationMeters
-        ? 'Do 5 mb w cenie standardowego montażu.'
+        ? `Do ${COST_CALCULATOR_CONFIG.standardInstallationMeters} mb w cenie standardowego montażu.`
         : 'Dodatkowa długość została uwzględniona w orientacyjnych widełkach.';
 
     const estimate = calculateCostEstimate({
@@ -371,7 +371,7 @@ const appSchema = {
       .map((room) => `około ${room.powerKw} kW`)
       .join(' • ');
     ($('cres-installation') as HTMLElement).textContent = installationMeters <= COST_CALCULATOR_CONFIG.standardInstallationMeters
-      ? 'instalacja do 5 mb'
+      ? `instalacja do ${COST_CALCULATOR_CONFIG.standardInstallationMeters} mb`
       : `instalacja około ${installationMeters} mb`;
     ($('layout-note') as HTMLElement).hidden = rooms === 1;
   }
@@ -385,6 +385,18 @@ const appSchema = {
 </script>
 
 <style>
+  #cost-form {
+    padding-top: calc(0.5rem + clamp(1.3rem, 2.4vw, 1.7rem));
+  }
+
+  #cost-form > .tool-step:first-child {
+    padding-top: 0;
+  }
+
+  #cost-form > .tool-step:first-child > .seg {
+    margin-top: clamp(0.75rem, 1.5vw, 1.25rem);
+  }
+
   .room-areas {
     display: grid;
   }

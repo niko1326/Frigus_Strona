@@ -1,7 +1,7 @@
 ---
 import { BRANDS } from '../config/brands';
 import { COMPANY, CONTACTS, EMAIL, HOURS, SERVICE_AREAS, SITE } from '../config/site';
-import { labels, routes } from '../i18n/content';
+import { calculatorNavLabels, labels, routes } from '../i18n/content';
 
 const year = new Date().getFullYear();
 const areasLine = SERVICE_AREAS.join(', ');
@@ -34,7 +34,7 @@ const areasLine = SERVICE_AREAS.join(', ');
       <a href={routes.trojmiasto}>Klimatyzacja Gdańsk i Trójmiasto</a>
       <a href={routes.bydgoszcz}>Klimatyzacja Bydgoszcz</a>
       {BRANDS.map((brand) => <a href={brand.href}>{brand.linkLabel}</a>)}
-      <a href={routes.calcPower}>Kalkulator klimatyzacji</a>
+      <a href={routes.calcPower}>{calculatorNavLabels.power}</a>
       <a href={routes.blog}>Porady</a>
     </nav>
 

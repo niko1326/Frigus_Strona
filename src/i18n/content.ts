@@ -57,6 +57,12 @@ export const navLinks: NavLink[] = [
   { href: routes.contact, label: 'Kontakt' }
 ];
 
+export const calculatorNavLabels = {
+  power: 'Dobór mocy klimatyzatora',
+  cost: 'Wycena montażu klimatyzacji',
+  energy: 'Koszt zużycia energii'
+} as const;
+
 export const labels = {
   callNow: 'Zadzwoń po darmową wycenę',
   callShort: 'Zadzwoń teraz',

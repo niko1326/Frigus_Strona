@@ -1,11 +1,20 @@
 ---
 import Breadcrumbs from '../components/Breadcrumbs.astro';
+import BrandPricingCards from '../components/BrandPricingCards.astro';
 import CTAButton from '../components/CTAButton.astro';
 import Layout from '../components/Layout.astro';
+import { GREE_MODELS, KAISAI_MODELS } from '../config/lineups';
 import { PHONE_TEL, PRICING } from '../config/site';
-import { labels, pageMeta } from '../i18n/content';
+import { labels, pageMeta, routes } from '../i18n/content';
 
 const meta = pageMeta.pricing;
+
+type AdditionalService = {
+  service: string;
+  price: string;
+  guideHref?: string;
+  guideLabel?: string;
+};
 
 const priceFactors = [
   {
@@ -20,6 +29,42 @@ const priceFactors = [
     title: 'Klasa urządzenia',
     description: 'Cena zależy od wybranej mocy i producenta. Doradzimy urządzenie dopasowane do budżetu.'
   }
+];
+
+const additionalServices: AdditionalService[] = [
+  {
+    service: 'Dodatkowy metr instalacji 2,5–3,5 kW',
+    price: `od ${PRICING.extraInstallationMeterFromPLN} zł brutto / mb`
+  },
+  {
+    service: 'Dodatkowy metr instalacji od ok. 5 kW',
+    price: 'od 170 zł brutto / mb'
+  },
+  {
+    service: 'Dodatkowy metr instalacji ok. 7 kW',
+    price: 'od 200 zł brutto / mb'
+  },
+  {
+    service: 'Pompka skroplin z montażem',
+    price: `od ${PRICING.condensatePumpFromPLN} zł brutto`,
+    guideHref: '/porady/pompka-skroplin-do-klimatyzacji',
+    guideLabel: 'Kiedy potrzebna jest pompka skroplin?'
+  },
+  {
+    service: 'Moduł pomiaru zużycia energii Wi-Fi z montażem',
+    price: `od ${PRICING.energyMeterFromPLN} zł brutto`,
+    guideHref: '/porady/pomiar-zuzycia-pradu-klimatyzacji-wifi',
+    guideLabel: 'Jak działa pomiar zużycia energii?'
+  },
+  {
+    service: 'Nietypowe prace montażowe',
+    price: 'wycena indywidualna'
+  }
+];
+
+const brandPricing = [
+  { name: 'GREE', href: routes.gree, models: GREE_MODELS },
+  { name: 'KAISAI', href: routes.kaisai, models: KAISAI_MODELS }
 ];
 ---
 
@@ -49,7 +94,8 @@ const priceFactors = [
         <span class="price-note">brutto</span>
       </p>
       <ul class="bullet-list">
-        <li>{PRICING.travelIncluded}</li>
+        <li>Standardowy montaż do {PRICING.standardInstallationMeters} mb z prowadzeniem instalacji w korytkach.</li>
+        <li>Dojazd w cenie.</li>
         <li>Podłączenie do istniejącej instalacji elektrycznej w cenie montażu.</li>
         <li>Ostateczną cenę potwierdzamy przed rozpoczęciem realizacji.</li>
         <li>5 lat gwarancji producenta.</li>
@@ -62,8 +108,113 @@ const priceFactors = [
   <section class="section section-gray">
     <div class="container" data-reveal>
       <div class="section-head">
+        <p class="eyebrow">Standard FRIGAC</p>
+        <h2>Co obejmuje standardowy montaż</h2>
+      </div>
+      <div class="plain-stack">
+        <ul class="check-list">
+          <li>dobór mocy i modelu do metrażu, nasłonecznienia i układu pomieszczeń,</li>
+          <li>dostawa urządzenia,</li>
+          <li>klimatyzator split z jednostką wewnętrzną i zewnętrzną,</li>
+          <li>montaż jednostki wewnętrznej,</li>
+          <li>przepust przez ścianę,</li>
+          <li>montaż jednostki zewnętrznej,</li>
+          <li>do {PRICING.standardInstallationMeters} mb instalacji chłodniczej, przewody, odpływ skroplin i prowadzenie instalacji w korytkach,</li>
+          <li>podłączenie urządzenia do instalacji elektrycznej,</li>
+          <li>wykonanie próżni, uruchomienie i test działania,</li>
+          <li>pokazanie obsługi pilota oraz, na prośbę klienta, pomoc w pierwszym połączeniu z aplikacją mobilną w modelach z Wi-Fi,</li>
+          <li>{PRICING.travelIncluded}</li>
+          <li>5 lat gwarancji producenta.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container" data-reveal>
+      <div class="section-head">
+        <p class="eyebrow">GREE i KAISAI</p>
+        <h2>Cena zależy od wybranego modelu</h2>
+        <p>
+          Poszczególne modele i warianty mocy różnią się ceną. Aktualne ceny urządzeń z montażem
+          znajdziesz w naszych kategoriach GREE i KAISAI.
+        </p>
+      </div>
+      <BrandPricingCards brands={brandPricing} />
+    </div>
+  </section>
+
+  <section class="section section-gray">
+    <div class="container" data-reveal>
+      <div class="section-head">
+        <p class="eyebrow">Cennik</p>
+        <h2>Usługi dodatkowe</h2>
+      </div>
+      <div class="table-wrap">
+        <table class="tool-table additional-services-table">
+          <caption class="visually-hidden">Cennik usług dodatkowych</caption>
+          <thead>
+            <tr>
+              <th scope="col">Usługa</th>
+              <th scope="col">Cena</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              additionalServices.map((item) => (
+                <tr>
+                  <td>
+                    <span class="additional-service-content">
+                      <span class="additional-service-name">{item.service}</span>
+                      {item.guideHref && item.guideLabel && (
+                        <a class="text-link text-link-inline service-guide-link" href={item.guideHref}>
+                          {item.guideLabel}
+                        </a>
+                      )}
+                    </span>
+                  </td>
+                  <td><strong>{item.price}</strong></td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+      <p class="additional-services-description">
+        W większych jednostkach stosowane są większe średnice rur chłodniczych, dlatego koszt
+        dodatkowego metra instalacji jest odpowiednio wyższy.
+      </p>
+      <p class="tiny-note">
+        Ceny dotyczą standardowych warunków montażowych. Ostateczna wycena zależy od przebiegu
+        instalacji, dostępu i warunków technicznych.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cta-band" data-reveal>
+      <div>
+        <h2>Sprawdź koszt swojej konfiguracji</h2>
+        <p>Podaj liczbę pomieszczeń, metraż i długość instalacji, aby poznać orientacyjne widełki.</p>
+      </div>
+      <CTAButton
+        href={routes.calcCost}
+        label="Oblicz orientacyjny koszt montażu →"
+        variant="inverse"
+      />
+    </div>
+  </section>
+
+  <section class="section section-gray">
+    <div class="container" data-reveal>
+      <div class="section-head">
         <p class="eyebrow">Wycena</p>
         <h2>Co wpływa na cenę montażu klimatyzacji</h2>
+        <p>
+          Koszt montażu klimatyzacji zależy od długości trasy, miejsca montażu oraz wybranego
+          urządzenia. Typowe usługi mają ceny wskazane wyżej, a nietypowe prace wyceniamy po
+          poznaniu warunków technicznych.
+        </p>
       </div>
       <div class="card-grid card-grid-3">
         {
@@ -75,38 +226,15 @@ const priceFactors = [
           ))
         }
       </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container content-grid" data-reveal>
-      <div class="plain-stack">
-        <h2>W cenie bazowej</h2>
-        <ul class="check-list">
-          <li>dobór mocy i modelu do metrażu, nasłonecznienia i układu pomieszczeń,</li>
-          <li>dostawa urządzenia,</li>
-          <li>klimatyzator split z jednostką wewnętrzną i zewnętrzną,</li>
-          <li>montaż jednostki wewnętrznej,</li>
-          <li>przepust przez ścianę,</li>
-          <li>montaż jednostki zewnętrznej,</li>
-          <li>poprowadzenie instalacji chłodniczej do 5 mb i odpływu skroplin,</li>
-          <li>podłączenie urządzenia do instalacji elektrycznej,</li>
-          <li>wykonanie próżni, uruchomienie i test działania,</li>
-          <li>pokazanie obsługi pilota oraz, na prośbę klienta, pomoc w pierwszym połączeniu z aplikacją mobilną w modelach z Wi-Fi,</li>
-          <li>dojazd w Gdańsku, Gdyni, Sopocie oraz Bydgoszczy i Toruniu,</li>
-          <li>5 lat gwarancji producenta.</li>
-        </ul>
-      </div>
-      <div class="plain-stack">
-        <h2>Wyceniane indywidualnie</h2>
+      <div class="plain-stack individual-pricing">
+        <h3>Dodatkowe koszty montażu wyceniane indywidualnie</h3>
         <ul class="bullet-list">
-          <li>instalacja dłuższa niż standardowa (każdy dodatkowy metr),</li>
+          <li>niestandardowy przebieg trasy instalacji wymagający dodatkowych prac,</li>
           <li>montaż jednostki zewnętrznej na elewacji z dostępem wysokościowym,</li>
-          <li>konstrukcje wsporcze i nietypowe mocowania,</li>
-          <li>urządzenia wyższych serii - np. <a class="inline-link" href="/klimatyzatory-gree">Gree</a> lub <a class="inline-link" href="/klimatyzatory-kaisai">Kaisai</a> z cichszą pracą, wyższą sprawnością lub funkcjami wspierającymi ogrzewanie.</li>
+          <li>konstrukcje wsporcze i nietypowe mocowania.</li>
         </ul>
         <p class="tiny-note">
-          Dokładną cenę montażu klimatyzacji podajemy telefonicznie w kilka minut - bez wizji
+          Dokładną cenę montażu klimatyzacji podajemy telefonicznie w kilka minut — bez wizji
           lokalnej w typowych przypadkach.
         </p>
       </div>
@@ -122,3 +250,48 @@ const priceFactors = [
     </div>
   </section>
 </Layout>
+
+<style>
+  .additional-services-table {
+    min-width: 0;
+    table-layout: fixed;
+  }
+
+  .additional-services-table th:last-child,
+  .additional-services-table td:last-child {
+    width: 36%;
+  }
+
+  .additional-services-description {
+    max-width: 72ch;
+    margin-top: 1.25rem;
+  }
+
+  .additional-service-content {
+    display: grid;
+    justify-items: start;
+    gap: 0.35rem;
+  }
+
+  .service-guide-link {
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  .individual-pricing {
+    margin-top: clamp(2rem, 4vw, 3rem);
+  }
+
+  @media (max-width: 479.98px) {
+    .additional-services-table th,
+    .additional-services-table td {
+      padding-inline: 0.75rem;
+    }
+
+    .additional-services-table th:last-child,
+    .additional-services-table td:last-child {
+      width: 42%;
+    }
+  }
+</style>

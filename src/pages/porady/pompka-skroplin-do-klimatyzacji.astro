@@ -1,0 +1,153 @@
+---
+import ArticleLayout from '../../components/ArticleLayout.astro';
+import { ARTICLES } from '../../config/articles';
+import { PRICING } from '../../config/site';
+import { routes } from '../../i18n/content';
+
+const article = ARTICLES.find((entry) => entry.slug === 'pompka-skroplin-do-klimatyzacji')!;
+---
+
+<ArticleLayout article={article}>
+  <p>
+    Podczas chłodzenia klimatyzator nie tylko obniża temperaturę, ale też osusza powietrze. Powstająca
+    w ten sposób woda musi zostać bezpiecznie odprowadzona poza jednostkę wewnętrzną. Najprościej
+    zrobić to grawitacyjnie. Gdy układ pomieszczenia lub przebieg instalacji na to nie pozwala,
+    potrzebna jest <strong>pompka skroplin do klimatyzacji</strong>. Wyjaśniamy, kiedy warto ją zastosować,
+    jak pracuje i o czym pamiętać podczas późniejszego serwisu.
+  </p>
+
+  <h2>Skąd biorą się skropliny z klimatyzacji?</h2>
+  <p>
+    Powietrze w mieszkaniu zawsze zawiera pewną ilość pary wodnej. W trybie chłodzenia wentylator
+    przepuszcza je przez zimny parownik jednostki wewnętrznej. Jeśli temperatura powierzchni
+    wymiennika jest niższa od punktu rosy, para wodna zmienia się w krople. Podobny efekt widać na
+    zimnej butelce wyjętej z lodówki.
+  </p>
+  <p>
+    Krople spływają z parownika do tacy ociekowej, a stamtąd trafiają do przewodu odpływowego.
+    Ilość wody zależy między innymi od wilgotności, temperatury, czasu pracy i wydajności urządzenia.
+    W parny dzień może jej powstać znacznie więcej niż przy łagodnej, suchej pogodzie. Skropliny nie
+    są wodą użytkową: po drodze mają kontakt z kurzem, tacą i przewodem odpływowym.
+  </p>
+
+  <h2>Jak wygląda grawitacyjny odpływ skroplin klimatyzacji?</h2>
+  <p>
+    Standardowe <strong>odprowadzanie skroplin z klimatyzacji</strong> wykorzystuje grawitację. Przewód
+    wychodzący z jednostki wewnętrznej prowadzi się ze stałym spadkiem do bezpiecznego punktu
+    odprowadzenia. Może to być odpowiednio przygotowany odpływ kanalizacyjny albo miejsce na zewnątrz,
+    w którym woda nie będzie niszczyć elewacji, kapać na przejście czy przeszkadzać sąsiadom.
+  </p>
+  <p>
+    Kluczowy jest ciągły spadek na całej trasie. Przewód nie powinien tworzyć wzniesień, załamań ani
+    miejsc, w których woda będzie stała. Taka kieszeń sprzyja odkładaniu osadu, rozwojowi biofilmu i
+    cofaniu się wody do tacy. Przy podłączeniu do kanalizacji potrzebne jest także rozwiązanie
+    chroniące pomieszczenie przed zapachami z instalacji. Sposób wykonania dobiera instalator do
+    konkretnej trasy i zaleceń producenta.
+  </p>
+
+  <h2>Kiedy pompka nie jest potrzebna?</h2>
+  <p>
+    Pompka do klimatyzacji nie daje korzyści, jeśli wodę można odprowadzić prostą, krótką trasą ze
+    stałym spadkiem. Grawitacja jest wtedy cicha, nie zużywa energii i nie dodaje kolejnego elementu,
+    który wymaga kontroli. Dlatego podczas planowania{' '}
+    <a class="inline-link" href={routes.services}>montażu klimatyzacji</a>{' '}
+    najpierw szukamy poprawnej drogi dla odpływu grawitacyjnego. Pompka jest rozwiązaniem problemu
+    technicznego, a nie obowiązkowym wyposażeniem każdego zestawu split.
+  </p>
+
+  <h2>Kiedy pompka skroplin jest potrzebna lub bardzo przydatna?</h2>
+  <p>
+    Pompka jest potrzebna, gdy punkt, do którego ma trafić woda, znajduje się wyżej niż odpływ z
+    jednostki albo gdy na trasie nie da się zachować spadku. Tak bywa szczególnie przy montażu
+    urządzenia na ścianie wewnętrznej, daleko od elewacji lub pionu kanalizacyjnego. Pomaga również
+    wtedy, gdy instalację trzeba przeprowadzić nad drzwiami, przez sufit podwieszany albo przez
+    pomieszczenie, w którym nie można obniżyć całej trasy.
+  </p>
+  <p>Typowe sytuacje to:</p>
+  <ul class="bullet-list">
+    <li>jednostka wewnętrzna zamontowana poniżej dostępnego punktu odpływu,</li>
+    <li>brak możliwości wykonania przewiertu ze spadkiem na zewnątrz,</li>
+    <li>długa trasa prowadzona w zabudowie lub nad sufitem,</li>
+    <li>lokal użytkowy, w którym skropliny muszą trafić do konkretnego odpływu technicznego,</li>
+    <li>układ architektoniczny wymagający podniesienia wody na krótkim odcinku.</li>
+  </ul>
+
+  <h2>Jak działa pompka do klimatyzacji?</h2>
+  <p>
+    Niewielki zbiornik lub czujnik odbiera wodę z tacy ociekowej. Gdy poziom skroplin wzrośnie,
+    pływak albo czujnik elektroniczny uruchamia pompę. Woda jest tłoczona cienkim przewodem do
+    miejsca, od którego może dalej odpłynąć. Pompka zwykle nie pracuje bez przerwy: włącza się na
+    krótko po zebraniu określonej ilości wody, a następnie wyłącza.
+  </p>
+  <p>
+    Wydajność i dopuszczalną wysokość podnoszenia trzeba dopasować do ilości skroplin oraz długości
+    i przebiegu przewodu. Przypadkowo dobrany model może pracować zbyt często, głośno albo nie
+    zapewnić pewnego odpływu. Ważne jest także poprawne zasilanie oraz stabilne zamocowanie, które
+    ogranicza przenoszenie drgań na ścianę lub obudowę.
+  </p>
+
+  <h2>Gdzie można zamontować pompkę skroplin?</h2>
+  <p>
+    Zależnie od konstrukcji pompka może znaleźć się w przestrzeni przy jednostce, w korytku
+    instalacyjnym, nad sufitem podwieszanym albo w dostępnym miejscu technicznym. Nie powinna być
+    szczelnie zabudowana bez możliwości kontroli. Instalator musi mieć dostęp do zbiornika, filtra,
+    czujnika i połączeń przewodów, ponieważ te elementy okresowo się czyści i sprawdza.
+  </p>
+
+  <h2>Czy pompka skroplin jest głośna?</h2>
+  <p>
+    Każda pompka podczas uruchomienia wydaje dźwięk, ale prawidłowo dobrana i zamontowana nie powinna
+    stale przeszkadzać. Najczęściej słychać krótkie załączenie silnika lub zmianę dźwięku przepływu
+    wody. W sypialni znaczenie ma zarówno wybór cichego urządzenia, jak i sposób zamocowania.
+    Naprężony przewód albo obudowa dotykająca lekkiej zabudowy może wzmacniać drgania bardziej niż
+    sama pompka.
+  </p>
+
+  <h2>Serwis i czyszczenie odpływu skroplin</h2>
+  <p>
+    Wilgoć, kurz i osad tworzą warunki do powstawania śliskiego nalotu. Z czasem może on ograniczyć
+    przepływ, zablokować pływak lub wywołać nieprzyjemny zapach. Podczas regularnego{' '}
+    <a class="inline-link" href="/porady/jak-czesto-serwisowac-klimatyzacje">serwisu klimatyzacji</a>{' '}
+    warto kontrolować tacę, drożność przewodów, szczelność połączeń i pracę pompki. Częstotliwość
+    czyszczenia zależy od intensywności pracy oraz warunków w pomieszczeniu.
+  </p>
+  <p>
+    Niedrożny odpływ może doprowadzić do przepełnienia tacy i kapania wody z jednostki wewnętrznej.
+    Skutkiem bywają zacieki, uszkodzenie farby, zabudowy lub mebli. Niektóre układy mogą przekazać
+    sygnał awarii i zatrzymać klimatyzator, ale nie należy zakładać, że każda instalacja ma takie
+    zabezpieczenie. Pojawienie się wody pod urządzeniem wymaga wyłączenia go i szybkiej kontroli.
+  </p>
+
+  <h2>Ile kosztuje montaż pompki skroplin?</h2>
+  <p>
+    Pompka nie jest standardowym elementem montażu, gdy możliwy jest prawidłowy odpływ grawitacyjny.
+    W FRIGAC <strong>pompka skroplin z montażem kosztuje od {PRICING.condensatePumpFromPLN} zł brutto</strong>.
+    Końcowa cena zależy od typu pompki, miejsca jej zamontowania, długości przewodu i dostępu do
+    instalacji. Aktualne stawki pozostałych prac znajdziesz w{' '}
+    <a class="inline-link" href={routes.pricing}>cenniku montażu klimatyzacji</a>.
+  </p>
+
+  <h2>Najczęstsze pytania</h2>
+  <h3>Czy każda klimatyzacja potrzebuje pompki skroplin?</h3>
+  <p>Nie. Jeżeli można wykonać drożny odpływ ze stałym spadkiem, rozwiązanie grawitacyjne jest prostsze i cichsze.</p>
+
+  <h3>Gdzie montuje się pompkę skroplin?</h3>
+  <p>Najczęściej przy jednostce wewnętrznej, w korytku, suficie podwieszanym lub dostępnym miejscu technicznym.</p>
+
+  <h3>Co się stanie, gdy pompka przestanie działać?</h3>
+  <p>Woda może pozostać w tacy i zacząć wyciekać. Zabezpieczenie zatrzymujące urządzenie działa tylko wtedy, gdy zostało przewidziane i poprawnie podłączone.</p>
+
+  <h3>Ile kosztuje pompka skroplin z montażem?</h3>
+  <p>Cena zaczyna się od {PRICING.condensatePumpFromPLN} zł brutto, a dokładna wycena zależy od trasy i miejsca montażu.</p>
+
+  <h2>Jak zaplanować odpływ przed montażem?</h2>
+  <p>
+    Najlepiej ustalić przebieg odpływu jeszcze przed wierceniem i zabudową instalacji. Na podstawie
+    zdjęć lub krótkiej rozmowy możemy wstępnie ocenić, czy wystarczy grawitacja, czy potrzebny będzie
+    montaż pompki skroplin. Wykonujemy montaże w Gdańsku, Gdyni, Sopocie, Bydgoszczy i Toruniu, a w
+    okolicach po wcześniejszym uzgodnieniu. Zobacz{' '}
+    <a class="inline-link" href={routes.services}>zakres montażu</a>{' '}
+    albo{' '}
+    <a class="inline-link" href={routes.contact}>skontaktuj się z nami po wycenę</a>.
+  </p>
+</ArticleLayout>

@@ -24,19 +24,23 @@ export const SERVICE_AREAS = [
   'okolice'
 ] as const;
 
-// Dane firmowe do stopki i regulaminu. Pola puste nie są renderowane.
-// Uzupełnij NIP/adres, gdy będą znane.
+// Dane firmowe do stopki i dokumentów prawnych. Pola puste nie są renderowane.
 export const COMPANY = {
-  legalName: 'FRIGAC',
-  nip: '',
+  legalName: 'Frigus Hubert Maciejewski',
+  nip: '5543045506',
   address: ''
 } as const;
 
 export const PRICING = {
   installFromPLN: 3499,
+  standardInstallationMeters: 3,
+  extraInstallationMeterFromPLN: 130,
+  condensatePumpFromPLN: 350,
+  energyMeterFromPLN: 250,
   pricingNote:
     'Podana cena obejmuje klimatyzator z montażem w standardowym zakresie. Finalna wycena zależy od długości instalacji i warunków technicznych. Na ten moment realizujemy usługę bez VAT dla klientów indywidualnych (brutto = netto).',
-  travelIncluded: 'Dojazd w obszarze działania: w cenie.'
+  travelIncluded:
+    'Dojazd w Gdańsku, Gdyni, Sopocie, Bydgoszczy i Toruniu oraz w okolicach po wcześniejszym uzgodnieniu.'
 } as const;
 
 export const HOURS = {

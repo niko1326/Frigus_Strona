@@ -3,7 +3,7 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import CTAButton from '../components/CTAButton.astro';
 import Layout from '../components/Layout.astro';
 import { PHONE_TEL, SITE } from '../config/site';
-import { labels, pageMeta, routes } from '../i18n/content';
+import { calculatorNavLabels, labels, pageMeta, routes } from '../i18n/content';
 import {
   calculateEnergyEstimate,
   formatEnergyNumber as fmt,
@@ -12,6 +12,7 @@ import {
 } from '../utils/energy-estimate.mjs';
 
 const meta = pageMeta.calcEnergy;
+const insulationDisplayOrder = ['poor', 'standard', 'good'] as const;
 
 const seerTable = [4, 5.5, 6.5, 8, 8.5].map((seer) => ({
   seer: seer.toLocaleString('pl-PL'),
@@ -73,7 +74,7 @@ const appSchema = {
   currentPath={routes.calcEnergy}
   extraSchema={[appSchema, faqSchema]}
 >
-  <Breadcrumbs items={[{ label: 'Narzędzia', href: routes.tools }, { label: 'Ile prądu zużywa klimatyzacja' }]} />
+  <Breadcrumbs items={[{ label: 'Narzędzia', href: routes.tools }, { label: calculatorNavLabels.energy }]} />
 
   <section class="page-hero">
     <div class="container" data-reveal>
@@ -127,10 +128,13 @@ const appSchema = {
         <fieldset class="tool-step">
           <legend><span class="tool-step-num">4</span>Jak dobrze pomieszczenie jest izolowane?</legend>
           <div class="seg energy-choice-grid">
-            {Object.entries(HEATING_ASSUMPTIONS.heatLoadWm2).map(([key, profile]) => <>
+            {insulationDisplayOrder.map((key) => {
+              const profile = HEATING_ASSUMPTIONS.heatLoadWm2[key];
+              return <>
               <input type="radio" name="insulation" id={`insulation-${key}`} value={key} checked={key === 'standard'} />
               <label for={`insulation-${key}`}><span>{profile.label}</span><small>{profile.description}</small></label>
-            </>)}
+              </>;
+            })}
           </div>
         </fieldset>
 
@@ -244,8 +248,8 @@ const appSchema = {
     <div class="container related-links" data-reveal>
       <p>Zobacz też:</p>
       <a class="text-link" href={routes.tools}>Wszystkie kalkulatory</a>
-      <a class="text-link" href={routes.calcPower}>Kalkulator mocy klimatyzacji</a>
-      <a class="text-link" href={routes.calcCost}>Kalkulator kosztów montażu</a>
+      <a class="text-link" href={routes.calcPower}>{calculatorNavLabels.power}</a>
+      <a class="text-link" href={routes.calcCost}>{calculatorNavLabels.cost}</a>
       <a class="text-link" href="/porady/jak-czesto-serwisowac-klimatyzacje">Jak serwis wpływa na zużycie energii</a>
     </div>
   </section>

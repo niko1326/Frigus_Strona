@@ -1,6 +1,6 @@
 ---
 import { SITE, PHONE_TEL } from '../config/site';
-import { labels, navLinks, routes } from '../i18n/content';
+import { calculatorNavLabels, labels, navLinks, routes } from '../i18n/content';
 import IconPhone from './icons/IconPhone.astro';
 
 interface Props { currentPath: string }
@@ -14,9 +14,9 @@ const items: Item[] = [
     { label: 'Klimatyzatory KAISAI', href: routes.kaisai }
   ] },
   { label: 'Kalkulatory', id: 'calculators', children: [
-    { label: 'Kalkulator mocy klimatyzacji', href: routes.calcPower },
-    { label: 'Kalkulator kosztów klimatyzacji', href: routes.calcCost },
-    { label: 'Kalkulator zużycia prądu', href: routes.calcEnergy }
+    { label: calculatorNavLabels.power, href: routes.calcPower },
+    { label: calculatorNavLabels.cost, href: routes.calcCost },
+    { label: calculatorNavLabels.energy, href: routes.calcEnergy }
   ] },
   ...navLinks.slice(2)
 ];

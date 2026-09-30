@@ -1,0 +1,170 @@
+---
+import ArticleLayout from '../../components/ArticleLayout.astro';
+import { ARTICLES } from '../../config/articles';
+import { PRICING } from '../../config/site';
+import { routes } from '../../i18n/content';
+
+const article = ARTICLES.find((entry) => entry.slug === 'pomiar-zuzycia-pradu-klimatyzacji-wifi')!;
+---
+
+<ArticleLayout article={article}>
+  <p>
+    Etykieta „3,5 kW” na klimatyzatorze opisuje jego wydajność chłodniczą, a nie stały pobór prądu.
+    Rzeczywiste zużycie zmienia się z minuty na minutę, ponieważ urządzenie dopasowuje pracę do
+    warunków w pomieszczeniu. Jeśli chcesz obserwować je bez zaglądania do licznika głównego,
+    rozwiązaniem może być <strong>pomiar zużycia energii klimatyzacji</strong> przez osobny moduł z
+    dostępem Wi-Fi.
+  </p>
+
+  <h2>Czy klimatyzator 3,5 kW pobiera 3,5 kW prądu?</h2>
+  <p>
+    Nie. Moc chłodnicza lub grzewcza określa ilość ciepła, którą urządzenie potrafi odebrać z
+    pomieszczenia albo do niego dostarczyć. Moc elektryczna mówi natomiast, ile energii w danej
+    chwili pobierają sprężarka, wentylatory i elektronika. Klimatyzator przenosi ciepło, dlatego
+    dostarczana moc cieplna może być kilka razy większa od pobieranej mocy elektrycznej.
+  </p>
+  <p>
+    Trzeba też odróżnić kilowaty od kilowatogodzin. Kilowat (kW) opisuje chwilową moc. Kilowatogodzina
+    (kWh) to energia zużyta w czasie i właśnie za nią rozlicza nas sprzedawca energii. Urządzenie
+    pobierające średnio 0,5 kW przez dwie godziny zużyje około 1 kWh. W praktyce średnia nie jest
+    stała, dlatego pojedynczy odczyt mocy nie wystarcza do oceny kosztu całego sezonu.
+  </p>
+
+  <h2>Jak działa klimatyzator inverterowy?</h2>
+  <p>
+    W nowoczesnym klimatyzatorze inverterowym elektronika reguluje prędkość sprężarki. Po uruchomieniu
+    urządzenie może pracować intensywnie, aby szybko zbliżyć się do zadanej temperatury. Później
+    ogranicza moc i tylko uzupełnia bieżące straty ciepła. Nie działa więc wyłącznie w prostym cyklu
+    „pełna moc albo wyłączenie”.
+  </p>
+  <p>
+    Z tego powodu pobór prądu klimatyzacji jest zmienny. Ten sam model może zużyć inną ilość energii
+    w dwóch mieszkaniach albo w dwóch dniach o różnej pogodzie. Wiarygodniejszy obraz daje suma z
+    kilku dni lub tygodni niż chwilowa wartość obserwowana zaraz po włączeniu.
+  </p>
+
+  <h2>Od czego zależy zużycie prądu klimatyzacji?</h2>
+  <h3>Temperatura zadana i temperatura na zewnątrz</h3>
+  <p>
+    Im większa różnica między temperaturą wewnętrzną a zewnętrzną, tym więcej ciepła trzeba przenieść.
+    Ustawienie bardzo niskiej temperatury podczas upału wydłuża intensywną pracę sprężarki. Podobnie
+    przy ogrzewaniu: wraz ze spadkiem temperatury zewnętrznej rośnie zapotrzebowanie budynku, a
+    warunki pracy pompy ciepła stają się trudniejsze.
+  </p>
+
+  <h3>Izolacja, okna i nasłonecznienie</h3>
+  <p>
+    Dobrze ocieplone mieszkanie wolniej przyjmuje ciepło latem i wolniej je traci zimą. Duże
+    przeszklenia od południa, nagrzany dach, nieszczelne okna lub nieocieplone ściany zwiększają
+    obciążenie. Dlatego pytanie „ile prądu zużywa klimatyzacja?” nie ma jednej odpowiedzi pasującej
+    do każdego budynku.
+  </p>
+
+  <h3>Metraż i prawidłowy dobór mocy</h3>
+  <p>
+    Za małe urządzenie może długo pracować blisko maksymalnej wydajności i mimo tego nie zapewnić
+    komfortu. Przewymiarowanie również nie jest dobrym sposobem na oszczędność: może pogorszyć
+    regulację temperatury i osuszanie. Dobry{' '}
+    <a class="inline-link" href={routes.calcPower}>dobór mocy klimatyzatora</a>{' '}
+    uwzględnia metraż, wysokość, izolację, przeszklenia, piętro i sposób użytkowania pomieszczenia.
+  </p>
+
+  <h3>Tryb pracy i codzienne nawyki</h3>
+  <p>
+    Na koszt prądu klimatyzacji wpływają liczba godzin pracy, ustawiona temperatura, prędkość
+    wentylatora, otwieranie okien oraz to, czy urządzenie chłodzi jedną zamkniętą strefę, czy próbuje
+    obsłużyć kilka pomieszczeń przez otwarte drzwi. Filtry i wymienniki powinny być czyste, ponieważ
+    ograniczony przepływ powietrza pogarsza warunki pracy układu.
+  </p>
+
+  <h2>Czym jest moduł pomiaru zużycia energii?</h2>
+  <p>
+    To element mierzący parametry elektryczne obwodu zasilającego klimatyzator i zapisujący zużytą
+    energię. Zależnie od rozwiązania może być zamontowany w rozdzielnicy, osobnej obudowie technicznej
+    albo w innym dostępnym miejscu na dedykowanym obwodzie urządzenia. Sposób podłączenia dobiera się
+    do instalacji elektrycznej, obciążenia i zaleceń producenta modułu.
+  </p>
+  <p>
+    Po połączeniu z domową siecią Wi-Fi użytkownik sprawdza dane w aplikacji właściwej dla modułu.
+    Typowo dostępne są bieżąca moc, energia zużyta w wybranym okresie oraz historia dzienna lub
+    miesięczna. Zakres prezentowanych parametrów zależy od urządzenia i aplikacji. Moduł mierzy
+    monitorowany obwód albo podłączone urządzenie — nie pokazuje automatycznie zużycia całego domu.
+  </p>
+
+  <h2>Pomiar energii a sterowanie klimatyzacją przez Wi-Fi</h2>
+  <p>
+    Te funkcje łatwo pomylić. Fabryczna lub opcjonalna <strong>klimatyzacja Wi-Fi</strong> pozwala zwykle
+    zmieniać temperaturę, tryb i harmonogram pracy. Moduł pomiarowy służy do obserwowania energii na
+    zasilaniu. Jeśli producent nie przewidział dodatkowej integracji, sam miernik nie steruje
+    klimatyzatorem i nie zastępuje jego aplikacji. Oba rozwiązania mogą działać równolegle, ale mają
+    inne zadania.
+  </p>
+
+  <h2>Dla kogo pomiar prądu klimatyzacji ma sens?</h2>
+  <p>
+    Moduł przydaje się osobom, które chcą porównać zużycie przed i po zmianie ustawień, obserwować
+    koszty w różnych miesiącach albo oddzielić klimatyzator od pozostałych odbiorników w domu. Jest
+    też praktyczny w wynajmowanym lokalu, biurze lub domu z fotowoltaiką, jeśli celem jest poznanie
+    profilu pracy konkretnego obwodu. Nie jest jednak wymagany do normalnego działania klimatyzacji.
+  </p>
+  <p>
+    Przed montażem warto sprawdzić, czy urządzenie ma osobny obwód. Jeżeli ten sam obwód zasila także
+    inne odbiorniki, wskazanie będzie ich sumą. Moduł nie zastępuje również legalizowanego licznika
+    rozliczeniowego i nie powinien być traktowany jako dokładne odwzorowanie rachunku za cały dom.
+    Koszt w aplikacji zależy ponadto od poprawnie wpisanej stawki za kWh i sposobu rozliczania taryfy.
+  </p>
+
+  <h2>Dlaczego pomiar jest szczególnie przydatny przy ogrzewaniu?</h2>
+  <p>
+    Klimatyzacja do grzania może pracować przez wiele godzin dziennie, a jej obciążenie mocno zmienia
+    się wraz z pogodą. Historia zużycia pokazuje, ile energii urządzenie potrzebowało przy dodatniej
+    temperaturze, a ile podczas mrozu. Pomaga też ocenić wpływ obniżenia nastawy, harmonogramu i
+    ogrzewanej powierzchni.
+  </p>
+  <p>
+    Sam odczyt nie odpowie jednak całkowicie na pytanie, ile kosztuje ogrzewanie klimatyzacją.
+    Potrzebna jest jeszcze rzeczywista cena energii, opłaty wynikające z taryfy oraz odpowiednio
+    długi okres obserwacji. Do wstępnego oszacowania możesz wykorzystać nasz{' '}
+    <a class="inline-link" href={routes.calcEnergy}>kalkulator zużycia energii klimatyzacji</a>,{' '}
+    a moduł
+    pozwoli później porównać założenia z pracą konkretnego urządzenia.
+  </p>
+
+  <h2>Ile kosztuje moduł pomiaru energii z montażem?</h2>
+  <p>
+    W FRIGAC <strong>moduł pomiaru zużycia energii Wi-Fi z montażem kosztuje od {PRICING.energyMeterFromPLN} zł brutto</strong>.
+    Ostateczna cena zależy od miejsca montażu, dostępności rozdzielnicy, sposobu prowadzenia przewodów
+    i układu istniejącej instalacji. Stawka dotyczy standardowych warunków; zakres zawsze potwierdzamy
+    przed pracą. Pozostałe pozycje znajdziesz w{' '}
+    <a class="inline-link" href={routes.pricing}>cenniku klimatyzacji z montażem</a>.
+  </p>
+
+  <h2>Najczęstsze pytania</h2>
+  <h3>Czy klimatyzator 3,5 kW pobiera 3,5 kW prądu?</h3>
+  <p>Nie. 3,5 kW oznacza zwykle moc chłodniczą. Pobór elektryczny jest inną wartością i zmienia się podczas pracy.</p>
+
+  <h3>Jak sprawdzić, ile prądu zużywa klimatyzacja?</h3>
+  <p>Najczytelniejszy wynik daje pomiar energii na dedykowanym obwodzie urządzenia, obserwowany przez odpowiednio długi okres.</p>
+
+  <h3>Czy można mierzyć zużycie klimatyzacji przez Wi-Fi?</h3>
+  <p>Tak. Moduł pomiarowy zapisuje dane monitorowanego obwodu i udostępnia je w swojej aplikacji przez sieć Wi-Fi.</p>
+
+  <h3>Czy pomiar energii ma sens przy grzaniu klimatyzacją?</h3>
+  <p>Tak, ponieważ pozwala porównywać zużycie w różnych warunkach pogodowych i przy różnych ustawieniach ogrzewania.</p>
+
+  <h3>Czy moduł pomiarowy steruje klimatyzatorem?</h3>
+  <p>Nie, jeśli jego funkcją jest wyłącznie pomiar. Sterowanie zapewnia osobny moduł lub fabryczna funkcja Wi-Fi klimatyzatora.</p>
+
+  <h2>Pomiar warto zaplanować razem z instalacją</h2>
+  <p>
+    Najłatwiej przewidzieć miejsce miernika i sposób podłączenia podczas planowania zasilania pod{' '}
+    <a class="inline-link" href={routes.services}>montaż klimatyzacji</a>. Możemy dobrać urządzenie z
+    oferty{' '}
+    <a class="inline-link" href={routes.gree}>GREE</a>{' '}
+    lub{' '}
+    <a class="inline-link" href={routes.kaisai}>KAISAI</a>{' '}
+    i ocenić możliwość pomiaru na miejscu. Pracujemy w Gdańsku, Gdyni, Sopocie, Bydgoszczy i Toruniu.
+    Jeśli chcesz omówić instalację oraz monitoring,{' '}
+    <a class="inline-link" href={routes.contact}>skontaktuj się z nami po wycenę</a>.
+  </p>
+</ArticleLayout>

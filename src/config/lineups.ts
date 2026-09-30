@@ -7,6 +7,8 @@ export type EnergyVariant = {
   heatingCapacityKw: number;
   seer: number;
   scop: number;
+  /** Cena urządzenia z montażem; po uzupełnieniu zasila automatycznie ceny „od”. */
+  installedPriceFromPLN?: number;
 };
 
 export type LineupModel = {
@@ -348,3 +350,13 @@ export const ENERGY_MODELS = [
   ...GREE_MODELS.map((model) => ({ ...model, brand: 'gree' as const, brandLabel: 'GREE' })),
   ...KAISAI_MODELS.map((model) => ({ ...model, brand: 'kaisai' as const, brandLabel: 'KAISAI' }))
 ];
+
+export const getLowestInstalledPrice = (models: LineupModel[]): number | null => {
+  const prices = models.flatMap((model) =>
+    model.variants.flatMap((item) =>
+      typeof item.installedPriceFromPLN === 'number' ? [item.installedPriceFromPLN] : []
+    )
+  );
+
+  return prices.length > 0 ? Math.min(...prices) : null;
+};

@@ -9,7 +9,7 @@ const article = ARTICLES.find((entry) => entry.slug === 'ile-kosztuje-montaz-kli
 <ArticleLayout article={article}>
   <p>
     "Ile to kosztuje?" to pierwsze pytanie w niemal każdej rozmowie. Odpowiedź w skrócie: kompletna
-    klimatyzacja z kompleksowym standardowym montażem do 5 mb zaczyna się od około
+    klimatyzacja z kompleksowym standardowym montażem do {PRICING.standardInstallationMeters} mb zaczyna się od około
     {PRICING.installFromPLN} zł. To cena początkowa, a nie jedna stawka dla każdej realizacji. Poniżej
     wyjaśniamy, co obejmuje i od czego zależy ostateczna wycena.
   </p>
@@ -34,7 +34,7 @@ const article = ARTICLES.find((entry) => entry.slug === 'ile-kosztuje-montaz-kli
     <li>montaż jednostki wewnętrznej,</li>
     <li>przepust przez ścianę,</li>
     <li>montaż jednostki zewnętrznej,</li>
-    <li>poprowadzenie instalacji chłodniczej i odpływu skroplin,</li>
+    <li>do {PRICING.standardInstallationMeters} mb instalacji chłodniczej, przewody, odpływ skroplin i prowadzenie instalacji w korytkach,</li>
     <li>podłączenie urządzenia do instalacji elektrycznej,</li>
     <li>wykonanie próżni,</li>
     <li>uruchomienie i test działania,</li>
@@ -50,7 +50,7 @@ const article = ARTICLES.find((entry) => entry.slug === 'ile-kosztuje-montaz-kli
   </p>
   <h3>Długość instalacji i liczba jednostek</h3>
   <p>
-    Cena początkowa obejmuje standardowy montaż do 5 mb. Dłuższa trasa wymaga większej ilości
+    Cena początkowa obejmuje standardowy montaż do {PRICING.standardInstallationMeters} mb. Dłuższa trasa wymaga większej ilości
     materiałów, a klimatyzowanie kilku oddzielnych pomieszczeń zwykle oznacza kilka jednostek.
   </p>
   <h3>Warunki techniczne na miejscu</h3>

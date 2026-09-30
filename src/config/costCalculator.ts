@@ -1,12 +1,14 @@
+import { PRICING } from './site';
+
 export type CostRange = { low: number; high: number };
 export type DevicePriority = 'price' | 'comfort' | 'heating' | 'unsure';
 
 export const COST_CALCULATOR_CONFIG = {
   roomArea: { min: 10, max: 100, step: 1 },
-  defaultInstallationMeters: 5,
-  standardInstallationMeters: 5,
+  defaultInstallationMeters: PRICING.standardInstallationMeters,
+  standardInstallationMeters: PRICING.standardInstallationMeters,
   maxInstallationMeters: 15,
-  extraMeter: { low: 100, high: 150 },
+  extraMeter: { low: PRICING.extraInstallationMeterFromPLN, high: 150 },
   roundTo: 50,
   multiRoomUpperBufferPerAdditionalRoom: 500,
   powerBands: [

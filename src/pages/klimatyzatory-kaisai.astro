@@ -9,7 +9,7 @@ import IconShield from '../components/icons/IconShield.astro';
 import IconWind from '../components/icons/IconWind.astro';
 import { KAISAI_MODELS } from '../config/lineups';
 import { PHONE_TEL, PRICING } from '../config/site';
-import { labels, pageMeta, routes } from '../i18n/content';
+import { calculatorNavLabels, labels, pageMeta, routes } from '../i18n/content';
 
 const meta = pageMeta.kaisai;
 
@@ -99,8 +99,8 @@ const lineupSchema = {
       </div>
       <SizingTable />
       <p class="tiny-note lineup-note">
-        Chcesz policzyć samodzielnie? Skorzystaj z naszego{' '}
-        <a class="text-link text-link-inline" href={routes.calcPower}>kalkulatora mocy klimatyzacji</a>
+        Chcesz policzyć samodzielnie? Otwórz{' '}
+        <a class="text-link text-link-inline" href={routes.calcPower}>{calculatorNavLabels.power}</a>
       </p>
     </div>
   </section>
