@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { access, readFile } from 'node:fs/promises';
 import {
   calculateEnergyEstimate as calculateCooling,
   calculateHeatingEstimate as calculateHeating,
@@ -12,7 +12,7 @@ import {
   selectCalculatorModel,
   stateFromQuery
 } from '../src/utils/energy-calculator-state.mjs';
-import { ENERGY_MODELS } from '../src/config/lineups.ts';
+import { ENERGY_MODELS, GREE_MODELS } from '../src/config/lineups.ts';
 
 const coolingDefaults = {
   power: 3.5,
@@ -137,6 +137,71 @@ test('every listed variant has complete, positive manufacturer energy data', () 
       scop: 4
     }
   );
+});
+
+test('every Gree series has complete data for its dedicated catalog page', async () => {
+  assert.deepEqual(
+    GREE_MODELS.map((model) => model.product.slug),
+    [
+      'g-time',
+      'cosmo-pearl',
+      'clivia',
+      'airy',
+      'amber-prestige',
+      'u-crown-silver',
+      'fairy',
+      'pular',
+      'pular-pro'
+    ]
+  );
+
+  for (const model of GREE_MODELS) {
+    assert.ok(model.product.description.length > 80);
+    assert.ok(model.product.recommendedFor.length >= 3);
+  }
+
+  const expectedPrices = new Map([
+    ['g-time', { minimum: 4599, variants: [4599, 4799, 6199, 6599] }],
+    ['cosmo-pearl', { minimum: 4399, variants: [4399, 4599, 5899, 6399] }],
+    ['clivia', { minimum: 4399, variants: [4399, 4599, 5899, 6499], colors: [4499, 4599, 5999, 6499] }],
+    ['airy', { minimum: 4899, variants: [4899, 5099, 6299, 6799], colors: [5099, 5199, 6399, 6899] }],
+    ['amber-prestige', { minimum: 5599, variants: [5599, 5799, 6399, 6999] }],
+    ['u-crown-silver', { minimum: 5499, variants: [5499, undefined, undefined] }],
+    ['fairy', { minimum: 3799, variants: [3799, 3999, 5499, 6099] }],
+    ['pular', { minimum: 3399, variants: [3399, 3499, 4399, 5199] }],
+    ['pular-pro', { minimum: 3999, variants: [3999, 4199, 5599, 6199] }]
+  ]);
+
+  for (const model of GREE_MODELS) {
+    const expected = expectedPrices.get(model.product.slug);
+    assert.ok(expected);
+    assert.equal(model.product.priceFromPLN, expected.minimum);
+    assert.deepEqual(model.variants.map((variant) => variant.priceFromPLN), expected.variants);
+    assert.deepEqual(
+      model.variants.map((variant) => variant.colorPriceFromPLN).filter(Boolean),
+      expected.colors ?? []
+    );
+  }
+
+  const expectedColors = new Map([
+    ['clivia', 5],
+    ['airy', 4],
+    ['fairy', 3],
+    ['pular-pro', 2]
+  ]);
+
+  for (const model of GREE_MODELS) {
+    const colors = model.product.colors ?? [];
+    assert.equal(colors.length, expectedColors.get(model.product.slug) ?? 0);
+    assert.equal(new Set(colors.map((color) => color.image)).size, colors.length);
+
+    for (const color of colors) {
+      assert.ok(color.name.length > 0);
+      assert.match(color.image, /^\/photos\/modele\/kolory\/.+\.webp$/);
+      assert.match(color.swatch, /^#[0-9a-f]{6}$/i);
+      await access(new URL(`../public${color.image}`, import.meta.url));
+    }
+  }
 });
 
 test('changing model preserves power only when the new model offers it', () => {

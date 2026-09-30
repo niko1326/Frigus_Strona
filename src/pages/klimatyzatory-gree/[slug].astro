@@ -1,0 +1,25 @@
+---
+import type { GetStaticPaths } from 'astro';
+import AirConditionerProductPage from '../../components/AirConditionerProductPage.astro';
+import { GREE_MODELS, type ProductLineupModel } from '../../config/lineups';
+import { routes } from '../../i18n/content';
+
+export const getStaticPaths = (() =>
+  GREE_MODELS.map((model) => ({
+    params: { slug: model.product.slug },
+    props: { model }
+  }))) satisfies GetStaticPaths;
+
+interface Props {
+  model: ProductLineupModel;
+}
+
+const { model } = Astro.props;
+---
+
+<AirConditionerProductPage
+  brand="Gree"
+  categoryLabel="Klimatyzatory Gree"
+  categoryPath={routes.gree}
+  model={model}
+/>

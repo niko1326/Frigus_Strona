@@ -210,9 +210,9 @@ export const pageMeta: Record<PageKey, PageMeta> = {
     ]
   },
   gree: {
-    title: 'Klimatyzatory Gree z montażem od 3499 zł | FRIGAC',
+    title: 'Klimatyzatory Gree z montażem od 3399 zł | FRIGAC',
     description:
-      'Klimatyzacja Gree Gdańsk, Gdynia, Sopot i całe Trójmiasto oraz Bydgoszcz i Toruń: montujemy ciche jednostki split Gree z Wi-Fi, grzaniem zimą i wysoką klasą energetyczną. Gree z montażem od 3499 zł, 5 lat gwarancji producenta.',
+      'Klimatyzacja Gree Gdańsk, Gdynia, Sopot i całe Trójmiasto oraz Bydgoszcz i Toruń: montujemy ciche jednostki split Gree z Wi-Fi, grzaniem zimą i wysoką klasą energetyczną. Gree z montażem od 3399 zł, 5 lat gwarancji producenta.',
     keywords: [
       'klimatyzacja Gree Gdańsk',
       'klimatyzator Gree montaż Gdańsk',

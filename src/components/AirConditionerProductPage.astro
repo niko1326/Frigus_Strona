@@ -1,0 +1,408 @@
+---
+import Breadcrumbs from './Breadcrumbs.astro';
+import CTAButton from './CTAButton.astro';
+import Layout from './Layout.astro';
+import type { ProductLineupModel } from '../config/lineups';
+import { PHONE_TEL, SITE } from '../config/site';
+import { labels, routes } from '../i18n/content';
+
+interface Props {
+  brand: string;
+  categoryLabel: string;
+  categoryPath: string;
+  model: ProductLineupModel;
+}
+
+const { brand, categoryLabel, categoryPath, model } = Astro.props;
+const productName = `${brand} ${model.name}`;
+const currentPath = `${categoryPath}/${model.product.slug}`;
+const priceFormatter = new Intl.NumberFormat('pl-PL', { useGrouping: 'always' });
+const minimumPrice = priceFormatter.format(model.product.priceFromPLN);
+const formatNumber = (value: number) => new Intl.NumberFormat('pl-PL', {
+  minimumFractionDigits: Number.isInteger(value) ? 0 : 1,
+  maximumFractionDigits: 2
+}).format(value);
+const powerLabels = model.variants.map((variant) => `${variant.label} kW`).join(', ');
+const maxSeer = Math.max(...model.variants.map((variant) => variant.seer));
+const maxScop = Math.max(...model.variants.map((variant) => variant.scop));
+const title = `${productName} z montażem – cena i dane techniczne | FRIGAC`;
+const description = `${productName}: moce ${powerLabels}, SEER do ${formatNumber(maxSeer)} i SCOP do ${formatNumber(maxScop)}. Cena z montażem od ${minimumPrice} zł. Sprawdź parametry i poproś o wycenę.`;
+const colorOptions = model.product.colors ?? [];
+const firstColor = colorOptions.find((color) => color.name === 'Biały') ?? colorOptions[0];
+const productImage = firstColor?.image ?? model.image;
+const productImageAlt = firstColor?.alt ?? model.alt;
+const firstVariant = model.variants[0];
+const firstVariantPrice = firstColor?.priceTier === 'color'
+  ? firstVariant.colorPriceFromPLN ?? firstVariant.priceFromPLN
+  : firstVariant.priceFromPLN;
+const initialPrice = priceFormatter.format(firstVariantPrice ?? model.product.priceFromPLN);
+
+const productSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  '@id': new URL(`${currentPath}#produkt`, SITE.siteUrl).toString(),
+  name: productName,
+  description: model.product.description,
+  image: colorOptions.length > 0
+    ? colorOptions.map((color) => new URL(color.image, SITE.siteUrl).toString())
+    : new URL(model.image, SITE.siteUrl).toString(),
+  url: new URL(currentPath, SITE.siteUrl).toString(),
+  brand: { '@type': 'Brand', name: brand },
+  category: 'Klimatyzator ścienny split z montażem',
+  additionalProperty: [
+    {
+      '@type': 'PropertyValue',
+      name: 'Dostępne warianty mocy',
+      value: powerLabels
+    },
+    ...(model.energyClass
+      ? [{ '@type': 'PropertyValue', name: 'Klasa energetyczna', value: model.energyClass }]
+      : []),
+    ...(model.noise
+      ? [{ '@type': 'PropertyValue', name: 'Poziom ciśnienia akustycznego', value: model.noise }]
+      : [])
+  ]
+};
+
+---
+
+<Layout
+  title={title}
+  description={description}
+  keywords={[
+    `${productName} cena z montażem`,
+    `${productName} dane techniczne`,
+    `${productName} montaż`,
+    ...model.variants.map((variant) => `${productName} ${variant.label} kW`)
+  ]}
+  currentPath={currentPath}
+  ogImage={productImage}
+  ogImageAlt={productImageAlt}
+  ogImageWidth={870}
+  ogImageHeight={326}
+  extraSchema={[productSchema]}
+>
+  <Breadcrumbs
+    items={[
+      { label: categoryLabel, href: categoryPath },
+      { label: productName }
+    ]}
+  />
+
+  <section class="product-hero section-gray">
+    <div class="container product-hero-grid" data-reveal>
+      <figure class="product-hero-media">
+        {model.badge && <span class="lineup-badge">{model.badge}</span>}
+        <img
+          src={productImage}
+          alt={productImageAlt}
+          width="870"
+          height="326"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+          data-product-color-image
+        />
+      </figure>
+
+      <div class="product-hero-copy">
+        <p class="eyebrow">Klimatyzator ścienny z montażem</p>
+        <h1>{productName}</h1>
+        <p class="product-lead">{model.tagline}</p>
+
+        {colorOptions.length > 1 && (
+          <fieldset class="product-color-block">
+            <legend class="product-field-label">
+              Wybierz kolor: <strong data-product-color-label>{firstColor?.name}</strong>
+            </legend>
+            <div class="product-color-options">
+              {colorOptions.map((color) => (
+                <button
+                  type="button"
+                  class:list={['product-color-option', { 'is-selected': color === firstColor }]}
+                  aria-label={`Pokaż ${productName} w kolorze ${color.name}`}
+                  aria-pressed={color === firstColor ? 'true' : 'false'}
+                  data-product-color
+                  data-image={color.image}
+                  data-alt={color.alt}
+                  data-color-name={color.name}
+                  data-price-tier={color.priceTier ?? 'standard'}
+                >
+                  <span
+                    class="product-color-swatch"
+                    style={`--product-swatch: ${color.swatch}`}
+                    aria-hidden="true"
+                  ></span>
+                  <span>{color.name}</span>
+                </button>
+              ))}
+            </div>
+          </fieldset>
+        )}
+
+        <div class="product-power-block">
+          <p class="product-field-label">Wybierz wariant mocy</p>
+          <div class="product-power-options" aria-label={`Warianty mocy ${productName}`}>
+            {
+              model.variants.map((variant, index) => (
+                <button
+                  type="button"
+                  class:list={['product-power-option', { 'is-selected': index === 0 }]}
+                  aria-pressed={index === 0 ? 'true' : 'false'}
+                  data-product-variant
+                  data-index={index}
+                  data-cooling={formatNumber(variant.coolingCapacityKw)}
+                  data-heating={formatNumber(variant.heatingCapacityKw)}
+                  data-seer={formatNumber(variant.seer)}
+                  data-scop={formatNumber(variant.scop)}
+                  data-price={variant.priceFromPLN}
+                  data-color-price={variant.colorPriceFromPLN}
+                >
+                  {variant.label} kW
+                </button>
+              ))
+            }
+          </div>
+        </div>
+
+        <dl class="product-quick-specs" aria-live="polite">
+          <div>
+            <dt>Chłodzenie</dt>
+            <dd><span data-spec="cooling">{formatNumber(firstVariant.coolingCapacityKw)}</span> kW</dd>
+          </div>
+          <div>
+            <dt>Grzanie</dt>
+            <dd><span data-spec="heating">{formatNumber(firstVariant.heatingCapacityKw)}</span> kW</dd>
+          </div>
+          <div>
+            <dt>SEER</dt>
+            <dd data-spec="seer">{formatNumber(firstVariant.seer)}</dd>
+          </div>
+          <div>
+            <dt>SCOP</dt>
+            <dd data-spec="scop">{formatNumber(firstVariant.scop)}</dd>
+          </div>
+        </dl>
+
+        <div class="product-price-block" aria-live="polite">
+          <span data-product-price-label>Cena z montażem od</span>
+          <strong data-product-price>{initialPrice} zł</strong>
+          <small>
+            Pokazana cena odpowiada wybranej mocy i kolorowi oraz obejmuje standardowy montaż.
+            Dokładna wycena zależy m.in. od długości instalacji i miejsca montażu.
+          </small>
+          <a class="inline-link" href={routes.pricing}>Sprawdź, co obejmuje standardowy montaż</a>
+        </div>
+
+        <div class="hero-actions">
+          <CTAButton href={routes.contact} label="Zapytaj o montaż" />
+          <CTAButton
+            href={`tel:${PHONE_TEL}`}
+            label={labels.callNow}
+            ariaLabel={`${labels.callNow}: ${productName}`}
+            variant="secondary"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container" data-reveal>
+      <div class="section-head">
+        <p class="eyebrow">Najważniejsze cechy</p>
+        <h2>Co wyróżnia {productName}</h2>
+      </div>
+      <ul class="product-feature-grid" role="list">
+        {
+          model.features.map((feature) => (
+            <li>
+              <span class="product-feature-check" aria-hidden="true">✓</span>
+              <strong>{feature}</strong>
+            </li>
+          ))
+        }
+        {model.energyClass && (
+          <li>
+            <span class="product-feature-check" aria-hidden="true">✓</span>
+            <span><strong>Klasa energetyczna</strong><small>{model.energyClass}</small></span>
+          </li>
+        )}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section-gray">
+    <div class="container product-audience-grid" data-reveal>
+      <div class="section-head product-section-head">
+        <p class="eyebrow">Dobór modelu</p>
+        <h2>Dla kogo jest {productName}?</h2>
+        <p>{model.product.description}</p>
+      </div>
+      <div class="product-audience-card">
+        <h3>{productName} sprawdzi się szczególnie:</h3>
+        <ul class="check-list">
+          {model.product.recommendedFor.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container" data-reveal>
+      <div class="section-head">
+        <p class="eyebrow">Dane techniczne</p>
+        <h2>Porównanie wariantów mocy</h2>
+        <p>
+          Wartości znamionowe i współczynniki sezonowe dla poszczególnych wariantów. Wybór mocy
+          potwierdzamy po sprawdzeniu metrażu, nasłonecznienia i układu pomieszczenia.
+        </p>
+      </div>
+      <div class="product-table-wrap">
+        <table class="product-spec-table">
+          <thead>
+            <tr>
+              <th scope="col">Wariant</th>
+              <th scope="col">Moc chłodnicza</th>
+              <th scope="col">Moc grzewcza</th>
+              <th scope="col">SEER</th>
+              <th scope="col">SCOP</th>
+              <th scope="col">Cena z montażem od</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              model.variants.map((variant, index) => (
+                <tr class:list={{ 'is-selected': index === 0 }} data-variant-row data-index={index}>
+                  <th scope="row">{variant.label} kW</th>
+                  <td>{formatNumber(variant.coolingCapacityKw)} kW</td>
+                  <td>{formatNumber(variant.heatingCapacityKw)} kW</td>
+                  <td>{formatNumber(variant.seer)}</td>
+                  <td>{formatNumber(variant.scop)}</td>
+                  <td class="product-table-price">
+                    {variant.priceFromPLN ? (
+                      variant.colorPriceFromPLN && variant.colorPriceFromPLN !== variant.priceFromPLN ? (
+                        <>
+                          <span>Biały: {priceFormatter.format(variant.priceFromPLN)} zł</span>
+                          <small>Kolor: {priceFormatter.format(variant.colorPriceFromPLN)} zł</small>
+                        </>
+                      ) : (
+                        <strong>{priceFormatter.format(variant.priceFromPLN)} zł</strong>
+                      )
+                    ) : (
+                      <span>Wycena indywidualna</span>
+                    )}
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+      <p class="tiny-note">
+        Dane pochodzą z kart produktowych producenta. Etykieta wariantu może być zaokrągloną nazwą
+        handlową; tabela pokazuje dokładną moc znamionową.
+      </p>
+      <p class="product-shared-specs">
+        {model.energyClass && <span><strong>Klasa energetyczna:</strong> {model.energyClass}</span>}
+        {model.noise && <span><strong>Głośność:</strong> {model.noise}</span>}
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cta-band product-bottom-cta" data-reveal>
+      <div>
+        <p class="eyebrow">Darmowa wycena</p>
+        <h2>Chcesz zamontować {productName}?</h2>
+        <p>
+          Powiedz nam, gdzie ma pracować klimatyzator. Dobierzemy odpowiednią moc i podamy dokładną
+          cenę montażu.
+        </p>
+      </div>
+      <div class="product-cta-actions">
+        <CTAButton href={routes.contact} label="Poproś o darmową wycenę" />
+        <CTAButton href={`tel:${PHONE_TEL}`} label="Zadzwoń" variant="secondary" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm">
+    <div class="container related-links" data-reveal>
+      <p>Zobacz też:</p>
+      <a class="text-link" href={categoryPath}>Wszystkie klimatyzatory {brand}</a>
+      <a class="text-link" href={routes.calcPower}>Kalkulator mocy klimatyzacji</a>
+      <a class="text-link" href={routes.pricing}>Cennik montażu klimatyzacji</a>
+    </div>
+  </section>
+
+  <script>
+    const colorButtons = document.querySelectorAll('[data-product-color]');
+    const colorImage = document.querySelector('[data-product-color-image]');
+    const colorLabel = document.querySelector('[data-product-color-label]');
+    const variantButtons = document.querySelectorAll('[data-product-variant]');
+    const variantRows = document.querySelectorAll('[data-variant-row]');
+    const priceLabel = document.querySelector('[data-product-price-label]');
+    const priceValue = document.querySelector('[data-product-price]');
+    const formatPrice = new Intl.NumberFormat('pl-PL', { useGrouping: 'always' });
+
+    const updatePrice = () => {
+      const selectedVariant = document.querySelector<HTMLButtonElement>('[data-product-variant].is-selected');
+      const selectedColor = document.querySelector<HTMLButtonElement>('[data-product-color].is-selected');
+      if (!selectedVariant || !priceLabel || !priceValue) return;
+
+      const usesColorPrice = selectedColor?.dataset.priceTier === 'color';
+      const rawPrice = usesColorPrice
+        ? selectedVariant.dataset.colorPrice ?? selectedVariant.dataset.price
+        : selectedVariant.dataset.price;
+
+      if (rawPrice) {
+        priceLabel.textContent = 'Cena z montażem od';
+        priceValue.textContent = `${formatPrice.format(Number(rawPrice))} zł`;
+      } else {
+        priceLabel.textContent = 'Cena z montażem';
+        priceValue.textContent = 'Zapytaj o wycenę';
+      }
+    };
+
+    colorButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        if (!(button instanceof HTMLButtonElement) || !(colorImage instanceof HTMLImageElement)) return;
+
+        colorButtons.forEach((item) => {
+          item.classList.toggle('is-selected', item === button);
+          item.setAttribute('aria-pressed', item === button ? 'true' : 'false');
+        });
+
+        if (button.dataset.image) colorImage.src = button.dataset.image;
+        if (button.dataset.alt) colorImage.alt = button.dataset.alt;
+        if (colorLabel && button.dataset.colorName) colorLabel.textContent = button.dataset.colorName;
+        updatePrice();
+      });
+    });
+
+    const setText = (name: string, value: string | undefined) => {
+      const target = document.querySelector(`[data-spec="${name}"]`);
+      if (target && value) target.textContent = value;
+    };
+
+    variantButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        if (!(button instanceof HTMLButtonElement)) return;
+        const index = button.dataset.index;
+
+        variantButtons.forEach((item) => {
+          item.classList.toggle('is-selected', item === button);
+          item.setAttribute('aria-pressed', item === button ? 'true' : 'false');
+        });
+        variantRows.forEach((row) => row.classList.toggle('is-selected', row.getAttribute('data-index') === index));
+
+        setText('cooling', button.dataset.cooling);
+        setText('heating', button.dataset.heating);
+        setText('seer', button.dataset.seer);
+        setText('scop', button.dataset.scop);
+        updatePrice();
+      });
+    });
+  </script>
+</Layout>

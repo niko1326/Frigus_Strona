@@ -5,19 +5,28 @@ import type { LineupModel } from '../config/lineups';
 interface Props {
   brand: string;
   models: LineupModel[];
+  detailBasePath?: string;
+  showPrice?: boolean;
 }
 
-const { brand, models } = Astro.props;
+const { brand, models, detailBasePath, showPrice = false } = Astro.props;
+const formatPrice = (value: number) => new Intl.NumberFormat('pl-PL', {
+  useGrouping: 'always'
+}).format(value);
 ---
 
 <ul class="lineup-grid" role="list">
   {
-    models.map((model) => (
+    models.map((model) => {
+      const hasDetails = Boolean(detailBasePath && model.product);
+      const href = hasDetails ? `${detailBasePath}/${model.product!.slug}` : routes.contact;
+
+      return (
       <li>
         <a
           class="lineup-card"
-          href={routes.contact}
-          aria-label={`${brand} ${model.name} - zapytaj o wycenę`}
+          href={href}
+          aria-label={`${brand} ${model.name} - ${hasDetails ? 'zobacz szczegóły' : 'zapytaj o wycenę'}`}
         >
           <span class="lineup-media">
             {model.badge && <span class="lineup-badge">{model.badge}</span>}
@@ -62,8 +71,16 @@ const { brand, models } = Astro.props;
               ))}
             </span>
 
+            {showPrice && model.product && (
+              <span class="lineup-price">
+                <span class="lineup-price-label">Cena z montażem od</span>
+                <strong>{formatPrice(model.product.priceFromPLN)} zł</strong>
+                <small>podstawowy wariant i standardowy montaż</small>
+              </span>
+            )}
+
             <span class="lineup-cta">
-              Zapytaj o wycenę
+              {hasDetails ? 'Zobacz szczegóły' : 'Zapytaj o wycenę'}
               <svg class="lineup-cta-arrow" viewBox="0 0 24 24" aria-hidden="true">
                 <path
                   d="M4 12h15M13 6l6 6-6 6"
@@ -78,6 +95,7 @@ const { brand, models } = Astro.props;
           </span>
         </a>
       </li>
-    ))
+      );
+    })
   }
 </ul>

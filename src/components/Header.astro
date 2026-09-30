@@ -6,6 +6,7 @@ import IconPhone from './icons/IconPhone.astro';
 interface Props { currentPath: string }
 const { currentPath } = Astro.props;
 const current = currentPath.replace(/\/$/, '') || '/';
+const isInSection = (href: string) => current === href || current.startsWith(`${href}/`);
 type Item = { label: string; href?: string; id?: string; children?: { label: string; href: string }[] };
 const items: Item[] = [
   ...navLinks.slice(0, 2),
@@ -36,17 +37,17 @@ const items: Item[] = [
         {items.map((item) => (
           <li class={item.children ? 'nav-has-menu' : undefined}>
             {item.children ? <>
-              <button type="button" class:list={['nav-trigger', { 'is-active': item.children.some(link => link.href === current) }]}
+              <button type="button" class:list={['nav-trigger', { 'is-active': item.children.some(link => isInSection(link.href)) }]}
                 id={`nav-${item.id}-trigger`} aria-expanded="false" aria-controls={`nav-${item.id}-menu`} aria-haspopup="true">
                 {item.label}
                 <svg class="nav-caret" viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
               </button>
               <div class="nav-menu" id={`nav-${item.id}-menu`} hidden>
                 <ul>
-                  {item.children.map(link => <li><a href={link.href} class:list={{ 'is-active': current === link.href }} aria-current={current === link.href ? 'page' : undefined}>{link.label}</a></li>)}
+                  {item.children.map(link => <li><a href={link.href} class:list={{ 'is-active': isInSection(link.href) }} aria-current={current === link.href ? 'page' : undefined}>{link.label}</a></li>)}
                 </ul>
               </div>
-            </> : <a href={item.href} class:list={{ 'is-active': current === item.href }} aria-current={current === item.href ? 'page' : undefined}>{item.label}</a>}
+            </> : <a href={item.href} class:list={{ 'is-active': item.href ? isInSection(item.href) : false }} aria-current={current === item.href ? 'page' : undefined}>{item.label}</a>}
           </li>
         ))}
       </ul>
