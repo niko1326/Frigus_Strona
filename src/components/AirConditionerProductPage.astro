@@ -318,12 +318,12 @@ const productSchema = {
               model.variants.map((variant, index) => (
                 <tr class:list={{ 'is-selected': index === 0 }} data-variant-row data-index={index}>
                   <th scope="row">{variant.label} kW</th>
-                  <td>{formatNumber(variant.coolingCapacityKw)} kW</td>
-                  <td>{formatNumber(variant.heatingCapacityKw)} kW</td>
-                  <td>{formatNumber(variant.seer)}</td>
-                  <td>{formatNumber(variant.scop)}</td>
+                  <td data-label="Chłodzenie">{formatNumber(variant.coolingCapacityKw)} kW</td>
+                  <td data-label="Grzanie">{formatNumber(variant.heatingCapacityKw)} kW</td>
+                  <td data-label="SEER">{formatNumber(variant.seer)}</td>
+                  <td data-label="SCOP">{formatNumber(variant.scop)}</td>
                   {hasPricing && (
-                    <td class="product-table-price">
+                    <td class="product-table-price" data-label="Cena z montażem od">
                       {variant.priceFromPLN ? (
                         variant.colorPriceFromPLN && variant.colorPriceFromPLN !== variant.priceFromPLN ? (
                           <>
