@@ -613,6 +613,12 @@ strong {
   align-items: stretch;
 }
 
+.hero.is-heating {
+  background:
+    radial-gradient(58% 78% at 79% 58%, rgba(225, 57, 29, 0.16), transparent 72%),
+    var(--tile-dark);
+}
+
 /*
   Kontener treści przykrywa całą szerokość hero, więc przechwytywał kliknięcia
   kierowane w jednostkę 3D. Sam nie łapie wskaźnika, łapią go dopiero dzieci.
@@ -760,6 +766,13 @@ strong {
     radial-gradient(95% 90% at 16% 40%, rgba(13, 17, 23, 0.92) 0%, rgba(13, 17, 23, 0.5) 36%, transparent 58%),
     linear-gradient(to top, rgba(13, 17, 23, 0.8), transparent 26%);
   pointer-events: none;
+}
+
+.hero.is-heating .hero-veil {
+  background:
+    radial-gradient(95% 90% at 16% 40%, rgba(13, 17, 23, 0.92) 0%, rgba(13, 17, 23, 0.5) 36%, transparent 58%),
+    radial-gradient(58% 84% at 79% 58%, rgba(225, 57, 29, 0.12), transparent 70%),
+    linear-gradient(to top, rgba(13, 17, 23, 0.8), transparent 26%);
 }
 
 /* Marquee miast pod hero */
@@ -2731,6 +2744,22 @@ summary:focus-visible {
   box-shadow: 0 20px 40px rgba(10, 114, 194, 0.19);
 }
 
+.lineup-card-unavailable {
+  border-color: var(--line);
+  background: color-mix(in srgb, var(--canvas) 84%, var(--parchment));
+  color: var(--muted);
+  cursor: not-allowed;
+  filter: grayscale(0.82);
+  opacity: 0.68;
+}
+
+.lineup-card-unavailable:hover,
+.lineup-card-unavailable:focus-within {
+  border-color: var(--line);
+  box-shadow: none;
+  transform: none;
+}
+
 .lineup-media {
   position: relative;
   display: grid;
@@ -2794,6 +2823,28 @@ summary:focus-visible {
   max-width: calc(100% - 1.4rem);
   line-height: 1.25;
   z-index: 5;
+}
+
+.lineup-availability {
+  position: absolute;
+  inset-block-start: 0.7rem;
+  inset-inline-start: 0.7rem;
+  z-index: 5;
+  max-width: calc(100% - 1.4rem);
+  padding: 0.3rem 0.6rem;
+  border: 1px solid rgba(74, 82, 92, 0.28);
+  border-radius: var(--radius-pill);
+  background: rgba(74, 82, 92, 0.12);
+  color: var(--ink);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.lineup-card-unavailable .lineup-cta {
+  color: var(--muted-soft);
 }
 
 .lineup-card-featured .lineup-badge {
@@ -4043,6 +4094,12 @@ summary:focus-visible {
     /* Model ma własny slot poniżej tekstu, więc nie potrzebuje górnej
        nakładki zaciemniającej. Pozostaje tylko dolne wygaszenie HERO. */
     background: linear-gradient(to top, rgba(13, 17, 23, 0.72), transparent 24%);
+  }
+
+  .hero.is-heating .hero-veil {
+    background:
+      radial-gradient(78% 48% at 50% 48%, rgba(225, 57, 29, 0.13), transparent 72%),
+      linear-gradient(to top, rgba(13, 17, 23, 0.72), transparent 24%);
   }
 
 }

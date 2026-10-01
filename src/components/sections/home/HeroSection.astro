@@ -157,10 +157,15 @@ const marqueeCities = [
   });
 
   if (hero instanceof HTMLElement && stage instanceof HTMLElement) {
+    const month = new Date().getMonth();
+    const climateMode = month >= 4 && month <= 8 ? 'cooling' : 'heating';
+    hero.classList.add(climateMode === 'cooling' ? 'is-cooling' : 'is-heating');
+    hero.dataset.climateMode = climateMode;
+
     const start = () => {
       import('../../../scripts/hero3d.js')
         .then(({ initHero3D }) => {
-          const scene = initHero3D(stage, { brand: activeBrand.name });
+          const scene = initHero3D(stage, { brand: activeBrand.name, mode: climateMode });
 
           /*
             Kliknięcie w samą jednostkę prowadzi na podstronę marki,

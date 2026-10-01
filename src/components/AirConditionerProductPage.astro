@@ -19,6 +19,7 @@ interface Props {
 
 const { brand, categoryLabel, categoryPath, model } = Astro.props;
 const productName = `${brand} ${model.name}`;
+const isConsoleModel = model.slug === 'kaisai-konsola';
 const energyCtaModelName = model.product.ctaName ?? model.name;
 const currentPath = `${categoryPath}/${model.product.slug}`;
 const priceFormatter = new Intl.NumberFormat('pl-PL', { useGrouping: 'always' });
@@ -40,6 +41,9 @@ const description = hasPricing && minimumPrice
   ? `${productName}: moce ${powerLabels}, SEER do ${formatNumber(maxSeer)} i SCOP do ${formatNumber(maxScop)}. Cena z montażem od ${minimumPrice} zł. Sprawdź parametry i poproś o wycenę.`
   : `${productName}: moce ${powerLabels}, SEER do ${formatNumber(maxSeer)} i SCOP do ${formatNumber(maxScop)}. Sprawdź funkcje, parametry i poproś o wycenę montażu.`;
 const colorOptions = model.product.colors ?? [];
+const colorTierOptions = colorOptions.filter((color) => color.priceTier === 'color');
+const colorTierLabel = colorTierOptions.length === 1 ? colorTierOptions[0].name : 'Kolor';
+const hasColorTier = colorTierOptions.length > 0;
 const firstColor = colorOptions.find((color) => color.name === 'Biały') ?? colorOptions[0];
 const productImage = firstColor?.image ?? model.image;
 const productImageAlt = firstColor?.alt ?? model.alt;
@@ -65,7 +69,7 @@ const productSchema = {
     : new URL(model.image, SITE.siteUrl).toString(),
   url: new URL(currentPath, SITE.siteUrl).toString(),
   brand: { '@type': 'Brand', name: brand },
-  category: 'Klimatyzator ścienny split z montażem',
+  category: isConsoleModel ? 'Klimatyzator konsolowy split z montażem' : 'Klimatyzator ścienny split z montażem',
   additionalProperty: [
     {
       '@type': 'PropertyValue',
@@ -126,7 +130,7 @@ const productSchema = {
       </figure>
 
       <div class="product-hero-copy">
-        <p class="eyebrow">Klimatyzator ścienny z montażem</p>
+        <p class="eyebrow">{isConsoleModel ? 'Klimatyzator konsolowy z montażem' : 'Klimatyzator ścienny z montażem'}</p>
         <h1>{productName}</h1>
         <p class="product-lead">{model.tagline}</p>
 
@@ -325,10 +329,15 @@ const productSchema = {
                   {hasPricing && (
                     <td class="product-table-price" data-label="Cena z montażem od">
                       {variant.priceFromPLN ? (
-                        variant.colorPriceFromPLN && variant.colorPriceFromPLN !== variant.priceFromPLN ? (
+                        hasColorTier ? (
                           <>
                             <span>Biały: {priceFormatter.format(variant.priceFromPLN)} zł</span>
-                            <small>Kolor: {priceFormatter.format(variant.colorPriceFromPLN)} zł</small>
+                            <small>
+                              {colorTierLabel}:{' '}
+                              {variant.colorPriceFromPLN
+                                ? `${priceFormatter.format(variant.colorPriceFromPLN)} zł`
+                                : 'niedostępny'}
+                            </small>
                           </>
                         ) : (
                           <strong>{priceFormatter.format(variant.priceFromPLN)} zł</strong>
@@ -405,12 +414,15 @@ const productSchema = {
 
       const usesColorPrice = selectedColor?.dataset.priceTier === 'color';
       const rawPrice = usesColorPrice
-        ? selectedVariant.dataset.colorPrice ?? selectedVariant.dataset.price
+        ? selectedVariant.dataset.colorPrice
         : selectedVariant.dataset.price;
 
       if (rawPrice) {
         priceLabel.textContent = 'Cena z montażem od';
         priceValue.textContent = `${formatPrice.format(Number(rawPrice))} zł`;
+      } else if (usesColorPrice) {
+        priceLabel.textContent = 'Wybrany wariant';
+        priceValue.textContent = 'Niedostępny';
       } else {
         priceLabel.textContent = 'Cena z montażem';
         priceValue.textContent = 'Zapytaj o wycenę';

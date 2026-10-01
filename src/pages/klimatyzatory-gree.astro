@@ -12,10 +12,12 @@ import { PHONE_TEL, SITE } from '../config/site';
 import { calculatorNavLabels, labels, pageMeta, routes } from '../i18n/content';
 
 const meta = pageMeta.gree;
-const featuredGreeSlug = 'gree-pular';
-const greeModelsForDisplay = [...GREE_MODELS].sort(
-  (first, second) => (first.product.priceFromPLN ?? Infinity) - (second.product.priceFromPLN ?? Infinity)
-);
+const featuredGreeSlug = 'gree-pular-pro';
+const greeModelsForDisplay = [...GREE_MODELS].sort((first, second) => {
+  if (first.slug === featuredGreeSlug) return -1;
+  if (second.slug === featuredGreeSlug) return 1;
+  return (first.product.priceFromPLN ?? Infinity) - (second.product.priceFromPLN ?? Infinity);
+});
 const greePriceFrom = new Intl.NumberFormat('pl-PL', { useGrouping: 'always' }).format(
   Math.min(...GREE_MODELS.flatMap((model) => model.product.priceFromPLN ?? []))
 );

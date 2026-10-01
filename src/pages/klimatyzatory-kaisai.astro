@@ -7,18 +7,27 @@ import SizingTable from '../components/SizingTable.astro';
 import IconIndoor from '../components/icons/IconIndoor.astro';
 import IconShield from '../components/icons/IconShield.astro';
 import IconWind from '../components/icons/IconWind.astro';
-import { KAISAI_MODELS } from '../config/lineups';
-import { PHONE_TEL, PRICING, SITE } from '../config/site';
+import { getLowestInstalledPrice, KAISAI_MODELS, KAISAI_UNAVAILABLE_MODELS } from '../config/lineups';
+import { PHONE_TEL, SITE } from '../config/site';
 import { calculatorNavLabels, labels, pageMeta, routes } from '../i18n/content';
 
 const meta = pageMeta.kaisai;
+const featuredKaisaiSlug = 'kaisai-pro-heat-plus';
+const lowestInstalledPrice = getLowestInstalledPrice(KAISAI_MODELS);
+const kaisaiModelsForDisplay = [...KAISAI_MODELS, ...KAISAI_UNAVAILABLE_MODELS].sort((first, second) => {
+  if (first.slug === featuredKaisaiSlug) return -1;
+  if (second.slug === featuredKaisaiSlug) return 1;
+  if (first.slug === 'kaisai-konsola') return 1;
+  if (second.slug === 'kaisai-konsola') return -1;
+  return (first.product?.priceFromPLN ?? Infinity) - (second.product?.priceFromPLN ?? Infinity);
+});
 
 const highlights = [
   {
     Icon: IconIndoor,
     title: 'Grzanie także przy mrozie',
     description:
-      'Serie PRO HEAT+ i NORDIC projektowano pod polską zimę - NORDIC pracuje grzewczo nawet przy -35°C.'
+      'Wybrane serie, w tym PRO HEAT+, są przygotowane do ogrzewania przy temperaturze zewnętrznej do -25°C.'
   },
   {
     Icon: IconWind,
@@ -37,17 +46,17 @@ const highlights = [
 const lineupSchema = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
-  name: 'Serie klimatyzatorów ściennych Kaisai montowane przez FRIGAC',
-  itemListElement: KAISAI_MODELS.map((model, index) => ({
+  name: 'Klimatyzatory Kaisai montowane przez FRIGAC',
+  itemListElement: kaisaiModelsForDisplay.filter((model) => model.product).map((model, index) => ({
     '@type': 'ListItem',
     position: index + 1,
     item: {
       '@type': 'Product',
       name: `Kaisai ${model.name}`,
       brand: { '@type': 'Brand', name: 'Kaisai' },
-      category: 'Klimatyzator ścienny split',
+      category: model.slug === 'kaisai-konsola' ? 'Klimatyzator konsolowy split' : 'Klimatyzator ścienny split',
       description: model.tagline,
-      url: new URL(`${routes.kaisai}/${model.product.slug}`, SITE.siteUrl).toString()
+      url: new URL(`${routes.kaisai}/${model.product!.slug}`, SITE.siteUrl).toString()
     }
   }))
 };
@@ -66,7 +75,7 @@ const lineupSchema = {
     <div class="container" data-reveal>
       <h1>Klimatyzatory Kaisai z montażem</h1>
       <p>
-        Poznaj ścienne klimatyzatory Kaisai do mieszkań, domów i biur. Dobierzemy serię i moc
+        Poznaj ścienne i konsolowe klimatyzatory Kaisai do mieszkań, domów i biur. Dobierzemy serię i moc
         urządzenia do metrażu, układu pomieszczenia oraz tego, czy klimatyzacja ma również ogrzewać.
       </p>
     </div>
@@ -74,7 +83,13 @@ const lineupSchema = {
 
   <section class="section section-gray">
     <div class="container lineup-container">
-      <ModelLineup brand="Kaisai" models={KAISAI_MODELS} detailBasePath={routes.kaisai} />
+      <ModelLineup
+        brand="Kaisai"
+        models={kaisaiModelsForDisplay}
+        detailBasePath={routes.kaisai}
+        showPrice={true}
+        featuredSlug={featuredKaisaiSlug}
+      />
     </div>
   </section>
 
@@ -102,10 +117,11 @@ const lineupSchema = {
       <div class="plain-stack">
         <h2>Dla kogo polecamy Kaisai</h2>
         <ul class="bullet-list">
-          <li>Do domów, gdzie klimatyzacja ma realnie dogrzewać zimą: serie PRO HEAT+ i NORDIC.</li>
+          <li>Do domów, gdzie klimatyzacja ma realnie dogrzewać zimą: między innymi serie GEO i PRO HEAT+.</li>
           <li>Do wnętrz, w których jednostka ma być ozdobą: seria ART w bieli lub czerni.</li>
+          <li>Pod okno, na poddasze lub przy niskiej ścianie: jednostka konsolowa KKGB.</li>
           <li>Dla osób szukających dodatkowych funkcji: wybrane serie z lampą UVC, filtrem Bio HEPA lub jonami srebra.</li>
-          <li>Kaisai z montażem od {PRICING.installFromPLN} zł - dojazd i uruchomienie w cenie.</li>
+          {lowestInstalledPrice && <li>Kaisai z montażem od {lowestInstalledPrice} zł - dojazd i uruchomienie w cenie.</li>}
         </ul>
       </div>
       <div class="plain-stack">
@@ -141,7 +157,7 @@ const lineupSchema = {
     <div class="container plain-stack" data-reveal>
       <p>
         Kaisai to marka stworzona w 2011 roku przez warszawską grupę Klima-Therm, obecna dziś
-        w ponad dwudziestu krajach Europy. Montujemy ścienne jednostki split Kaisai na czynniku R32,
+        w ponad dwudziestu krajach Europy. Montujemy ścienne i konsolowe jednostki split Kaisai,
         z pełnym uruchomieniem układu i 5-letnią gwarancją producenta.
       </p>
       <div class="cta-inline">

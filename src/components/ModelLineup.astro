@@ -20,10 +20,9 @@ const formatPrice = (value: number) => new Intl.NumberFormat('pl-PL', {
   {
     models.map((model) => {
       const hasDetails = Boolean(detailBasePath && model.product);
+      const isUnavailable = model.unavailable === true;
       const href = hasDetails ? `${detailBasePath}/${model.product!.slug}` : routes.contact;
-      const colorOptions = brand.toLocaleLowerCase('pl') === 'gree'
-        ? model.product?.colors ?? []
-        : [];
+      const colorOptions = model.product?.colors ?? [];
       const primaryColor = colorOptions.find((color) => color.name === 'Biały') ?? colorOptions[0];
       const backgroundColors = colorOptions
         .filter((color) => color !== primaryColor);
@@ -35,12 +34,14 @@ const formatPrice = (value: number) => new Intl.NumberFormat('pl-PL', {
       return (
       <li>
         <a
-          class:list={['lineup-card', { 'lineup-card-featured': model.slug === featuredSlug }]}
-          href={href}
-          aria-label={`${brand} ${model.name} - ${hasDetails ? 'zobacz szczegóły' : 'zapytaj o wycenę'}`}
+          class:list={['lineup-card', { 'lineup-card-featured': model.slug === featuredSlug, 'lineup-card-unavailable': isUnavailable }]}
+          href={isUnavailable ? undefined : href}
+          aria-disabled={isUnavailable ? 'true' : undefined}
+          aria-label={`${brand} ${model.name} - ${isUnavailable ? 'chwilowo niedostępny' : hasDetails ? 'zobacz szczegóły' : 'zapytaj o wycenę'}`}
         >
           <span class="lineup-media">
             {model.badge && <span class="lineup-badge">{model.badge}</span>}
+            {isUnavailable && <span class="lineup-availability">{model.unavailableLabel ?? 'Chwilowo niedostępny'}</span>}
             {showColorStack ? (
               <span class="lineup-color-stack">
                 {stackColors.map((color, index) => {
@@ -131,17 +132,19 @@ const formatPrice = (value: number) => new Intl.NumberFormat('pl-PL', {
             )}
 
             <span class="lineup-cta">
-              {hasDetails ? 'Zobacz szczegóły' : 'Zapytaj o wycenę'}
-              <svg class="lineup-cta-arrow" viewBox="0 0 24 24" aria-hidden="true">
-                <path
-                  d="M4 12h15M13 6l6 6-6 6"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.8"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
+              {isUnavailable ? (model.unavailableLabel ?? 'Chwilowo niedostępny') : hasDetails ? 'Zobacz szczegóły' : 'Zapytaj o wycenę'}
+              {!isUnavailable && (
+                <svg class="lineup-cta-arrow" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M4 12h15M13 6l6 6-6 6"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              )}
             </span>
           </span>
         </a>

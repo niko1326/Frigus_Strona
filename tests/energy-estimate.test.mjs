@@ -111,10 +111,14 @@ test('heating-specific choices survive a round trip through cooling', () => {
   assert.equal(result.heatingUsage, 'primary');
 });
 
-test('central model data exposes Nordic and Pular variants exactly', () => {
-  const nordic = ENERGY_MODELS.find((model) => model.slug === 'kaisai-nordic');
+test('central model data exposes Kaisai console and Pular variants exactly', () => {
+  const consoleModel = ENERGY_MODELS.find((model) => model.slug === 'kaisai-konsola');
   const pular = ENERGY_MODELS.find((model) => model.slug === 'gree-pular');
-  assert.deepEqual(nordic.variants.map((variant) => variant.powerKw), [3.5]);
+  assert.deepEqual(consoleModel.variants.map((variant) => variant.powerKw), [3.5]);
+  assert.deepEqual(consoleModel.variants[0], {
+    label: '3,5', powerKw: 3.5, coolingCapacityKw: 3.5, heatingCapacityKw: 3.6,
+    seer: 6.5, scop: 4, priceFromPLN: 4399
+  });
   assert.deepEqual(pular.variants.map((variant) => variant.powerKw), [2.5, 3.2, 4.6, 6.2]);
 });
 
@@ -138,7 +142,8 @@ test('every listed variant has complete, positive manufacturer energy data', () 
       coolingCapacityKw: 3.4,
       heatingCapacityKw: 3.4,
       seer: 6.1,
-      scop: 4
+      scop: 4,
+      priceFromPLN: 3499
     }
   );
 });
@@ -284,8 +289,8 @@ test('product energy CTA uses central model slug and selected power', () => {
     '/ile-pradu-zuzywa-klimatyzacja/?model=gree-pular&power=4.6'
   );
   assert.equal(
-    buildEnergyCalculatorHref('/ile-pradu-zuzywa-klimatyzacja/', 'kaisai-nordic', 3.5),
-    '/ile-pradu-zuzywa-klimatyzacja/?model=kaisai-nordic&power=3.5'
+    buildEnergyCalculatorHref('/ile-pradu-zuzywa-klimatyzacja/', 'kaisai-konsola', 3.5),
+    '/ile-pradu-zuzywa-klimatyzacja/?model=kaisai-konsola&power=3.5'
   );
   assert.equal(
     buildEnergyCalculatorLabel('Gree', 'Pular PRO', '3,5'),
@@ -293,17 +298,26 @@ test('product energy CTA uses central model slug and selected power', () => {
   );
 });
 
-test('every Kaisai series has data for a dedicated product page without invented prices', () => {
+test('every available Kaisai series has a priced product page', () => {
   assert.deepEqual(
     KAISAI_MODELS.map((model) => model.product.slug),
-    ['air', 'fly-plus', 'geo-plus', 'art', 'evo', 'pro-heat-plus', 'nordic', 'ice']
+    ['air', 'fly-plus', 'geo', 'geo-plus', 'art', 'pro-heat-plus', 'ice', 'konsola']
+  );
+  assert.deepEqual(
+    KAISAI_MODELS.map((model) => model.product.priceFromPLN),
+    [3399, 3699, 3699, 3999, 4199, 3799, 3899, 4399]
   );
   for (const model of KAISAI_MODELS) {
     assert.ok(model.product.description.length > 80);
     assert.ok(model.product.recommendedFor.length >= 3);
-    assert.equal(model.product.priceFromPLN, undefined);
+    assert.ok(model.variants.every((variant) => Number.isFinite(variant.priceFromPLN)));
     assert.ok(model.connectivityLabel);
   }
+  assert.ok(!ENERGY_MODELS.some((model) => ['kaisai-evo', 'kaisai-nordic'].includes(model.slug)));
+  assert.deepEqual(
+    KAISAI_MODELS.find((model) => model.slug === 'kaisai-ice').variants.map((variant) => variant.colorPriceFromPLN),
+    [4099, 4199, undefined, undefined]
+  );
 });
 
 test('product page updates energy CTA when the selected variant changes', async () => {
