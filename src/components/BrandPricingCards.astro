@@ -1,10 +1,7 @@
 ---
-import { getLowestInstalledPrice, type LineupModel } from '../config/lineups';
-
 type BrandPricingItem = {
   name: string;
   href: string;
-  models: LineupModel[];
 };
 
 interface Props {
@@ -12,26 +9,17 @@ interface Props {
 }
 
 const { brands } = Astro.props;
-const priceFormatter = new Intl.NumberFormat('pl-PL');
 ---
 
 <div class="content-grid brand-pricing-grid">
   {
-    brands.map((brand) => {
-      const lowestPrice = getLowestInstalledPrice(brand.models);
-
-      return (
+    brands.map((brand) => (
         <article class="info-card brand-pricing-card">
           <p class="eyebrow">{brand.name}</p>
-          <h3>
-            {lowestPrice
-              ? `Klimatyzatory z montażem od ${priceFormatter.format(lowestPrice)} zł`
-              : `Aktualne ceny urządzeń z montażem znajdziesz w kategorii ${brand.name}.`}
-          </h3>
+          <h3>Modele {brand.name} z cenami urządzeń i standardowego montażu</h3>
           <a class="text-link" href={brand.href}>Zobacz modele i ceny {brand.name}</a>
         </article>
-      );
-    })
+      ))
   }
 </div>
 

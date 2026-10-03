@@ -3,7 +3,6 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import BrandPricingCards from '../components/BrandPricingCards.astro';
 import CTAButton from '../components/CTAButton.astro';
 import Layout from '../components/Layout.astro';
-import { GREE_MODELS, KAISAI_MODELS } from '../config/lineups';
 import { PHONE_TEL, PRICING } from '../config/site';
 import { labels, pageMeta, routes } from '../i18n/content';
 
@@ -63,8 +62,8 @@ const additionalServices: AdditionalService[] = [
 ];
 
 const brandPricing = [
-  { name: 'GREE', href: routes.gree, models: GREE_MODELS },
-  { name: 'KAISAI', href: routes.kaisai, models: KAISAI_MODELS }
+  { name: 'GREE', href: routes.gree },
+  { name: 'KAISAI', href: routes.kaisai }
 ];
 ---
 
@@ -100,8 +99,28 @@ const brandPricing = [
         <li>Ostateczną cenę potwierdzamy przed rozpoczęciem realizacji.</li>
         <li>5 lat gwarancji producenta.</li>
       </ul>
+      <p class="tiny-note pricing-start-note">
+        Cena od {PRICING.installFromPLN} zł, aktualna od 01.10.2026 r., dotyczy Gree Pular
+        2,5 kW oraz Kaisai AIR (KKWK) 2,6 kW w podstawowej konfiguracji ze standardowym
+        montażem do {PRICING.standardInstallationMeters} mb.
+      </p>
       <p class="tiny-note">{PRICING.pricingNote}</p>
+      <a class="text-link pricing-models-jump" href="#modele-i-ceny">
+        Zobacz konkretne modele i ceny z montażem
+      </a>
       <CTAButton href={`tel:${PHONE_TEL}`} label={labels.callNow} ariaLabel={labels.callNow} />
+    </div>
+
+    <div class="container pricing-models-section" id="modele-i-ceny" data-reveal>
+      <div class="section-head">
+        <p class="eyebrow">GREE i KAISAI</p>
+        <h2>Sprawdź konkretne modele i ceny</h2>
+        <p>
+          Cena zależy od wybranego urządzenia i wariantu mocy. Zobacz dostępne modele GREE
+          i KAISAI wraz z cenami z urządzeniem i standardowym montażem.
+        </p>
+      </div>
+      <BrandPricingCards brands={brandPricing} />
     </div>
   </section>
 
@@ -127,20 +146,6 @@ const brandPricing = [
           <li>5 lat gwarancji producenta.</li>
         </ul>
       </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container" data-reveal>
-      <div class="section-head">
-        <p class="eyebrow">GREE i KAISAI</p>
-        <h2>Cena zależy od wybranego modelu</h2>
-        <p>
-          Poszczególne modele i warianty mocy różnią się ceną. Aktualne ceny urządzeń z montażem
-          znajdziesz w naszych kategoriach GREE i KAISAI.
-        </p>
-      </div>
-      <BrandPricingCards brands={brandPricing} />
     </div>
   </section>
 
@@ -252,6 +257,16 @@ const brandPricing = [
 </Layout>
 
 <style>
+  .pricing-models-jump {
+    margin-top: 0;
+  }
+
+  .pricing-models-section {
+    margin-top: clamp(2rem, 5vw, 3.5rem);
+    padding-top: clamp(1.5rem, 3vw, 2.25rem);
+    border-top: 1px solid var(--line);
+  }
+
   .additional-services-table {
     min-width: 0;
     table-layout: fixed;

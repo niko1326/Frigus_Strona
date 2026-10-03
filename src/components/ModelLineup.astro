@@ -1,4 +1,5 @@
 ---
+import { PRICING } from '../config/site';
 import { routes } from '../i18n/content';
 import type { LineupModel } from '../config/lineups';
 
@@ -125,9 +126,9 @@ const formatPrice = (value: number) => new Intl.NumberFormat('pl-PL', {
 
             {showPrice && model.product && typeof model.product.priceFromPLN === 'number' && (
               <span class="lineup-price">
-                <span class="lineup-price-label">Cena z montażem od</span>
+                <span class="lineup-price-label">Cena z urządzeniem i montażem od</span>
                 <strong>{formatPrice(model.product.priceFromPLN)} zł</strong>
-                <small>podstawowy wariant i standardowy montaż</small>
+                <small>urządzenie + standardowy montaż do {PRICING.standardInstallationMeters} mb</small>
               </span>
             )}
 

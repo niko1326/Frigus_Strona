@@ -854,8 +854,9 @@ strong {
 }
 
 .brand-chip-cta::after {
-  content: ' →';
+  content: '→';
   display: inline-block;
+  margin-left: 0.32rem;
   transition: transform 0.25s ease;
 }
 
