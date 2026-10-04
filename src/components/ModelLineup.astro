@@ -38,7 +38,7 @@ const formatPrice = (value: number) => new Intl.NumberFormat('pl-PL', {
           class:list={['lineup-card', { 'lineup-card-featured': model.slug === featuredSlug, 'lineup-card-unavailable': isUnavailable }]}
           href={isUnavailable ? undefined : href}
           aria-disabled={isUnavailable ? 'true' : undefined}
-          aria-label={`${brand} ${model.name} - ${isUnavailable ? 'chwilowo niedostępny' : hasDetails ? 'zobacz szczegóły' : 'zapytaj o wycenę'}`}
+          aria-label={`${brand} ${model.name} - ${isUnavailable ? 'chwilowo niedostępny' : hasDetails ? 'zobacz szczegóły' : 'skonsultuj model'}`}
         >
           <span class="lineup-media">
             {model.badge && <span class="lineup-badge">{model.badge}</span>}
@@ -133,7 +133,7 @@ const formatPrice = (value: number) => new Intl.NumberFormat('pl-PL', {
             )}
 
             <span class="lineup-cta">
-              {isUnavailable ? (model.unavailableLabel ?? 'Chwilowo niedostępny') : hasDetails ? 'Zobacz szczegóły' : 'Zapytaj o wycenę'}
+              {isUnavailable ? (model.unavailableLabel ?? 'Chwilowo niedostępny') : hasDetails ? 'Zobacz szczegóły' : 'Skonsultuj model'}
               {!isUnavailable && (
                 <svg class="lineup-cta-arrow" viewBox="0 0 24 24" aria-hidden="true">
                   <path

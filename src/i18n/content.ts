@@ -66,15 +66,17 @@ export const calculatorNavLabels = {
 } as const;
 
 export const labels = {
-  callNow: 'Zadzwoń po darmową wycenę',
+  callNow: 'Skonsultuj montaż klimatyzacji',
   callShort: 'Zadzwoń teraz',
-  freeQuote: 'Darmowa wycena',
+  freeQuote: 'Skontaktuj się z nami',
+  scheduleVisit: 'Umów bezpłatną wizytę',
+  consultInstallation: 'Skonsultuj montaż klimatyzacji',
   navAria: 'Główna nawigacja',
   phoneAria: 'Zadzwoń do FRIGAC',
   footerHours: 'Godziny pracy',
   footerInfo:
     'Montaż i serwis klimatyzacji w Gdańsku, Gdyni, Sopocie i całym Trójmieście, a także w Bydgoszczy i Toruniu.',
-  stickyCall: 'Zadzwoń: darmowa wycena',
+  stickyCall: 'Bezpłatna wizyta',
   seeServices: 'Zobacz zakres usług',
   readPricing: 'Sprawdź cennik',
   privacy: 'Polityka prywatności',

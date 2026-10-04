@@ -1,24 +1,34 @@
 ---
 const steps = [
   {
-    title: 'Rozmowa i wycena',
+    title: 'Kontakt i wstępne rozeznanie',
     description:
-      'Dzwonisz, opisujesz mieszkanie lub dom, a my w kilka minut podajemy orientacyjną cenę i proponujemy termin.'
+      'Skontaktuj się z nami i opowiedz krótko, czego potrzebujesz. Jeśli masz już konkretny model na oku, możesz nam go wskazać - nie musisz jednak samodzielnie wybierać urządzenia.'
   },
   {
-    title: 'Dobór urządzenia',
+    title: 'Bezpłatna wizyta',
     description:
-      'Dobieramy moc i model klimatyzatora do metrażu, nasłonecznienia i budżetu. Doradzamy, nie sprzedajemy na siłę.'
+      'Na miejscu oglądamy pomieszczenie, sprawdzamy warunki techniczne, możliwe miejsca montażu jednostek i przebieg instalacji. Rozmawiamy też o tym, jak klimatyzacja ma być używana.'
   },
   {
-    title: 'Standardowy montaż w 1 dzień',
+    title: 'Dobór i propozycja urządzenia',
     description:
-      'Montujemy jednostkę wewnętrzną i zewnętrzną, wykonujemy próżnię, uruchamiamy układ i sprzątamy po pracy.'
+      'Na podstawie warunków na miejscu proponujemy odpowiednią moc i modele. Jeśli masz już wybrane urządzenie, sprawdzimy, czy będzie odpowiednie i wyjaśnimy jego mocne oraz słabsze strony.'
+  },
+  {
+    title: 'Potwierdzenie zakresu i ceny',
+    description:
+      'Po ustaleniu odpowiedniego modelu potwierdzamy zakres montażu, finalną cenę i termin realizacji.'
+  },
+  {
+    title: 'Montaż i uruchomienie',
+    description:
+      'Montujemy urządzenie, wykonujemy próżnię, uruchamiamy układ i sprawdzamy poprawność działania.'
   },
   {
     title: 'Gwarancja i serwis',
     description:
-      'Otrzymujesz 5 lat gwarancji producenta. W kolejnych sezonach zadbamy też o przeglądy i czyszczenie.'
+      'Po montażu urządzenie obejmuje gwarancja producenta. Zapewniamy również późniejszy serwis i okresowe przeglądy.'
   }
 ];
 ---
@@ -27,10 +37,12 @@ const steps = [
   <div class="container">
     <div class="section-head">
       <p class="eyebrow">Jak działamy</p>
-      <h2>Od telefonu do chłodu w 4 krokach</h2>
+      <h2>Od pierwszego kontaktu do montażu i serwisu</h2>
     </div>
 
-    <ol class="timeline">
+    <div class="workflow-process">
+    <svg class="workflow-connector" aria-hidden="true"><path /></svg>
+    <ol class="timeline workflow-timeline">
       {
         steps.map((step, index) => (
           <li class="timeline-item">
@@ -39,9 +51,57 @@ const steps = [
               <h3>{step.title}</h3>
               <p>{step.description}</p>
             </div>
+
           </li>
         ))
       }
     </ol>
+    </div>
   </div>
 </section>
+
+<script>
+  const process = document.querySelector<HTMLElement>('.workflow-process');
+  if (process) {
+    const svg = process.querySelector<SVGSVGElement>('.workflow-connector')!;
+    const path = svg.querySelector('path')!;
+    const items = Array.from(process.querySelectorAll<HTMLElement>('.timeline-item'));
+    const desktop = window.matchMedia('(min-width: 760px)');
+    // Layout offsets are unaffected by the reveal animation's transforms.
+    const position = (element: HTMLElement) => {
+      let x = 0, y = 0;
+      let node: HTMLElement | null = element;
+      while (node && node !== process) {
+        x += node.offsetLeft;
+        y += node.offsetTop;
+        node = node.offsetParent as HTMLElement | null;
+      }
+      return { x, y };
+    };
+    const draw = () => {
+      if (!desktop.matches) return;
+      const third = items[2].querySelector<HTMLElement>('.timeline-marker')!;
+      const fourth = items[3].querySelector<HTMLElement>('.timeline-marker')!;
+      const a = position(third), b = position(fourth);
+      const x3 = a.x + third.offsetWidth / 2, y3 = a.y + third.offsetHeight / 2;
+      const x4 = b.x + fourth.offsetWidth / 2, y4 = b.y + fourth.offsetHeight / 2;
+      const textBottom = Math.max(...items.slice(0, 3).map(item => {
+        const text = item.querySelector<HTMLElement>('p')!;
+        return position(text).y + text.offsetHeight;
+      }));
+      const middle = (textBottom + b.y) / 2;
+      const right = process.clientWidth + 12;
+      const radius = 12;
+      svg.setAttribute('viewBox', `0 0 ${process.clientWidth} ${process.offsetHeight}`);
+      path.setAttribute('d', `M ${x3} ${y3}
+        H ${right - radius} Q ${right} ${y3} ${right} ${y3 + radius}
+        V ${middle - radius} Q ${right} ${middle} ${right - radius} ${middle}
+        H ${x4 + radius} Q ${x4} ${middle} ${x4} ${middle + radius}
+        V ${y4}`);
+    };
+    new ResizeObserver(draw).observe(process);
+    desktop.addEventListener('change', draw);
+    document.fonts.ready.then(draw);
+    draw();
+  }
+</script>

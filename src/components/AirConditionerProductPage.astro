@@ -4,7 +4,7 @@ import CTAButton from './CTAButton.astro';
 import Layout from './Layout.astro';
 import type { ProductLineupModel } from '../config/lineups';
 import { PHONE_TEL, SITE } from '../config/site';
-import { labels, routes } from '../i18n/content';
+import { routes } from '../i18n/content';
 import {
   buildEnergyCalculatorHref,
   buildEnergyCalculatorLabel
@@ -236,11 +236,11 @@ const productSchema = {
         )}
 
         <div class="hero-actions">
-          <CTAButton href={routes.contact} label="Zapytaj o montaż" />
+          <CTAButton href={routes.contact} label="Skonsultuj ten model" />
           <CTAButton
             href={`tel:${PHONE_TEL}`}
-            label={labels.callNow}
-            ariaLabel={`${labels.callNow}: ${productName}`}
+            label="Zadzwoń i skonsultuj"
+            ariaLabel={`Zadzwoń i skonsultuj model ${productName}`}
             variant="secondary"
           />
         </div>
@@ -367,16 +367,16 @@ const productSchema = {
   <section class="section">
     <div class="container cta-band product-bottom-cta" data-reveal>
       <div>
-        <p class="eyebrow">Darmowa wycena</p>
+        <p class="eyebrow">Konsultacja modelu</p>
         <h2>Chcesz zamontować {productName}?</h2>
         <p>
-          Powiedz nam, gdzie ma pracować klimatyzator. Dobierzemy odpowiednią moc i podamy dokładną
-          cenę montażu.
+          Powiedz nam, gdzie ma pracować klimatyzator. Dobierzemy odpowiednią moc, a po sprawdzeniu
+          warunków potwierdzimy zakres i cenę montażu.
         </p>
       </div>
       <div class="product-cta-actions">
-        <CTAButton href={routes.contact} label="Poproś o darmową wycenę" />
-        <CTAButton href={`tel:${PHONE_TEL}`} label="Zadzwoń" variant="secondary" />
+        <CTAButton href={routes.contact} label="Skonsultuj ten model" />
+        <CTAButton href={`tel:${PHONE_TEL}`} label="Umów bezpłatną wizytę" variant="secondary" />
       </div>
     </div>
   </section>

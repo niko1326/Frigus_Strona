@@ -3,7 +3,7 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import CTAButton from '../components/CTAButton.astro';
 import Layout from '../components/Layout.astro';
 import { PHONE_TEL, SITE } from '../config/site';
-import { calculatorNavLabels, labels, pageMeta, routes } from '../i18n/content';
+import { calculatorNavLabels, pageMeta, routes } from '../i18n/content';
 import {
   calculateEnergyEstimate,
   formatEnergyNumber as fmt,
@@ -191,7 +191,7 @@ const appSchema = {
           </dl>
           <p id="energy-error">Wybierz model i wariant mocy, aby zobaczyć wynik.</p>
           <p class="selection-warning" id="eres-selection-warning" hidden>Wybrana moc wymaga sprawdzenia dla tego metrażu.</p>
-          <CTAButton href={`tel:${PHONE_TEL}`} label="Dobierz oszczędny model" ariaLabel={labels.phoneAria} />
+          <CTAButton href={`tel:${PHONE_TEL}`} label="Skonsultuj wybór modelu" ariaLabel="Skonsultuj wybór modelu telefonicznie" />
           <p class="tool-disclaimer" id="result-disclaimer">To orientacyjne wyliczenie. SEER jest sezonowym wskaźnikiem efektywności. Rzeczywiste zużycie zależy od temperatury zewnętrznej, nastawy, izolacji, nasłonecznienia, wielkości pomieszczenia oraz sposobu użytkowania i modulacji sprężarki.</p>
         </div>
       </div>

@@ -4,7 +4,7 @@ import CTAButton from '../components/CTAButton.astro';
 import Layout from '../components/Layout.astro';
 import { COST_CALCULATOR_CONFIG } from '../config/costCalculator';
 import { PHONE_TEL, PRICING, SITE } from '../config/site';
-import { calculatorNavLabels, labels, pageMeta, routes } from '../i18n/content';
+import { calculatorNavLabels, pageMeta, routes } from '../i18n/content';
 
 const meta = pageMeta.calcCost;
 const installFromDisplay = new Intl.NumberFormat('pl-PL', { useGrouping: 'always' }).format(PRICING.installFromPLN);
@@ -186,7 +186,7 @@ const appSchema = {
               <dd>5 lat gwarancji producenta</dd>
             </div>
           </dl>
-          <CTAButton href={`tel:${PHONE_TEL}`} label="Potwierdź bezpłatną wycenę" ariaLabel={labels.phoneAria} />
+          <CTAButton href={`tel:${PHONE_TEL}`} label="Skonsultuj swoją konfigurację" ariaLabel="Skonsultuj swoją konfigurację telefonicznie" />
           <p class="tool-disclaimer">
             Wynik ma charakter orientacyjny i nie stanowi oferty handlowej. Ostateczna cena zależy
             m.in. od wybranego modelu, rzeczywistej długości instalacji oraz warunków technicznych

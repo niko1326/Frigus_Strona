@@ -4,7 +4,7 @@ import CTAButton from '../components/CTAButton.astro';
 import Layout from '../components/Layout.astro';
 import { POWER_CALCULATOR_CONFIG } from '../config/powerCalculator';
 import { PHONE_DISPLAY, PHONE_TEL, SITE } from '../config/site';
-import { calculatorNavLabels, labels, pageMeta, routes } from '../i18n/content';
+import { calculatorNavLabels, pageMeta, routes } from '../i18n/content';
 
 const meta = pageMeta.calcPower;
 
@@ -169,7 +169,7 @@ const appSchema = {
               <dd id="res-system">Potwierdzimy moc i model po sprawdzeniu warunków montażu.</dd>
             </div>
           </dl>
-          <CTAButton href={`tel:${PHONE_TEL}`} label="Potwierdź bezpłatny dobór" ariaLabel={labels.phoneAria} />
+          <CTAButton href={`tel:${PHONE_TEL}`} label="Skonsultuj dobór klimatyzatora" ariaLabel="Skonsultuj dobór klimatyzatora telefonicznie" />
           <button type="button" class="btn-report" id="btn-report">
             Pobierz raport (PDF)
           </button>
@@ -286,7 +286,7 @@ const appSchema = {
       </tbody>
     </table>
     <p>
-      Chcesz dokładny dobór? FRIGAC wykona bezpłatną wycenę - zadzwoń: {PHONE_DISPLAY}.
+      Chcesz potwierdzić dobór? Skonsultuj wynik z FRIGAC - zadzwoń: {PHONE_DISPLAY}.
       Działamy w Gdańsku, Gdyni, Sopocie oraz w Bydgoszczy i Toruniu. Wynik kalkulatora jest orientacyjny
       i nie stanowi oferty handlowej.
     </p>

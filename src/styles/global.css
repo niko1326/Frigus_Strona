@@ -1016,6 +1016,14 @@ strong {
   font-size: 0.95rem;
 }
 
+.workflow-process {
+  position: relative;
+}
+
+.workflow-connector {
+  display: none;
+}
+
 /* ---------- Karty (hairline, bez cienia) ---------- */
 
 .card-grid {
@@ -4172,6 +4180,72 @@ summary:focus-visible {
     bottom: auto;
     width: auto;
     height: 2px;
+  }
+
+  .workflow-process {
+    --workflow-line: color-mix(in srgb, var(--accent) 48%, var(--line));
+    --workflow-line-width: 2.5px;
+  }
+
+  .workflow-timeline {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: auto auto auto 3.1rem auto auto auto;
+    gap: 0.8rem 1.8rem;
+  }
+
+  .workflow-timeline .timeline-item {
+    grid-row: 1 / span 3;
+    grid-template-rows: subgrid;
+    min-width: 0;
+    align-items: start;
+  }
+
+  .workflow-timeline .timeline-item:nth-child(n + 4) {
+    grid-row: 5 / span 3;
+  }
+
+  .workflow-timeline .timeline-body {
+    grid-row: 2 / span 2;
+    grid-template-rows: subgrid;
+    padding-top: 0;
+    min-width: 0;
+    align-items: start;
+  }
+
+  .workflow-timeline .timeline-body h3 {
+    block-size: auto;
+    margin: 0;
+  }
+
+  .workflow-timeline .timeline-item:nth-child(3)::before {
+    content: none;
+  }
+
+  .workflow-timeline .timeline-item:not(:last-child)::before {
+    right: -1.8rem;
+    top: calc(1.15rem - var(--workflow-line-width) / 2);
+    height: var(--workflow-line-width);
+    background: var(--workflow-line);
+    border-radius: var(--radius-pill);
+  }
+
+  .workflow-connector {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .workflow-connector path {
+    fill: none;
+    stroke: var(--workflow-line);
+    stroke-width: var(--workflow-line-width);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
   }
 
   [data-reveal] .timeline-item:not(:last-child)::before {
