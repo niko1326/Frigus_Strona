@@ -66,6 +66,9 @@ const marqueeCities = [
         <strong>{heroPriceFromPLN} zł</strong>
         <span class="hero-price-note">brutto</span>
       </div>
+      <a class="price-details-link hero-price-details-link" href={PRICING.startingPriceDetailsHref}>
+        {PRICING.startingPriceLinkLabel}
+      </a>
 
       <div class="hero-model-slot" data-hero-model-slot>
         <a class="brand-chip brand-chip-mobile" data-brand-link href={BRANDS[0].href} data-brands={JSON.stringify(BRANDS)}>
@@ -83,7 +86,7 @@ const marqueeCities = [
       <ul class="hero-trust">
         <li>5 lat gwarancji producenta</li>
         <li>Dostawa urządzenia w cenie</li>
-        <li>Dojazd w cenie</li>
+        <li>Dojazd w obsługiwanych miastach w cenie</li>
       </ul>
     </div>
   </div>

@@ -16,7 +16,8 @@ const faqItems = [
   {
     question: 'Ile kosztuje montaż klimatyzacji z urządzeniem?',
     answer:
-      `Klimatyzator z montażem kosztuje u nas od ${PRICING.installFromPLN} zł. Finalna cena zależy od długości instalacji, klasy urządzenia i warunków technicznych. Dokładną wycenę podajemy telefonicznie w kilka minut.`
+      `Klimatyzator z montażem kosztuje od ${PRICING.installFromPLN} zł. Inne moce i kolory mogą mieć inne ceny. Dodatkowe metry i usługi rozliczamy zgodnie z cennikiem, a finalny zakres i cenę potwierdzamy przed rozpoczęciem prac.`,
+    priceDetailsLink: true
   },
   {
     question: 'Jak dobieracie miejsce montażu klimatyzacji?',
@@ -26,7 +27,7 @@ const faqItems = [
   {
     question: 'Czy dojazd jest dodatkowo płatny?',
     answer:
-      'Nie. W Gdańsku, Gdyni, Sopocie i całym Trójmieście oraz w Bydgoszczy, Toruniu i okolicach dojazd jest wliczony w cenę montażu.'
+      'W Gdańsku, Gdyni, Sopocie, Bydgoszczy i Toruniu dojazd jest wliczony w cenę montażu. Dojazd do okolicznych miejscowości potwierdzamy wcześniej.'
   },
   {
     question: 'Dlaczego Gdańsk i Trójmiasto?',
@@ -56,7 +57,7 @@ const faqItems = [
   {
     question: 'Jak uzyskać wycenę montażu?',
     answer:
-      'Najszybciej telefonicznie: opisz mieszkanie lub dom, a orientacyjną cenę podamy od ręki. W nietypowych przypadkach umawiamy krótką wizję lokalną.'
+      'Zadzwoń i opisz mieszkanie lub dom. W typowych przypadkach możemy wcześniej podać orientacyjny koszt. Finalny zakres i cenę potwierdzamy po ustaleniu modelu i warunków montażu; w nietypowych przypadkach umawiamy wizję lokalną.'
   }
 ];
 
@@ -98,6 +99,11 @@ const faqSchema = {
           <details class="faq-item">
             <summary>{item.question}</summary>
             <p>{item.answer}</p>
+            {'priceDetailsLink' in item && item.priceDetailsLink && (
+              <a class="price-details-link" href={PRICING.startingPriceDetailsHref}>
+                {PRICING.startingPriceLinkLabel}
+              </a>
+            )}
           </details>
         ))
       }

@@ -28,21 +28,32 @@ interface Props {
   ogImageHeight?: number;
 }
 
+// Ten sam podział sezonów jest używany przez animację na stronie głównej:
+// maj-wrzesień promuje chłodzenie, a październik-kwiecień grzanie.
+const currentMonth = new Date().getMonth();
+const isCoolingSeason = currentMonth >= 4 && currentMonth <= 8;
+const seasonalOgImage = isCoolingSeason
+  ? '/og/frigac-og-3399.png'
+  : '/og/frigac-og-grzanie-3399.png';
+const seasonalOgImageAlt = isCoolingSeason
+  ? 'FRIGAC - klimatyzacja z montażem: Gdańsk, Trójmiasto, Bydgoszcz i Toruń'
+  : 'FRIGAC - ogrzewanie klimatyzacją z montażem: Gdańsk, Trójmiasto, Bydgoszcz i Toruń';
+
 const {
   title,
   description,
   currentPath,
   keywords = [],
   extraSchema = [],
-  ogImage = '/og/frigac-og-grzanie-3399.png',
-  ogImageAlt = 'FRIGAC - montaż klimatyzacji: Gdańsk, Trójmiasto, Bydgoszcz i Toruń',
+  ogImage = seasonalOgImage,
+  ogImageAlt = seasonalOgImageAlt,
   ogImageWidth = 1200,
   ogImageHeight = 630
 } = Astro.props;
 
 const canonicalUrl = new URL(currentPath, SITE.siteUrl).toString();
 const ogImageUrl = new URL(ogImage, SITE.siteUrl).toString();
-const businessImageUrl = new URL('/og/frigac-og-grzanie-3399.png', SITE.siteUrl).toString();
+const businessImageUrl = new URL(seasonalOgImage, SITE.siteUrl).toString();
 
 const localBusinessSchema = {
   '@context': 'https://schema.org',

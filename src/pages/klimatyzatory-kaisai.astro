@@ -8,7 +8,7 @@ import IconIndoor from '../components/icons/IconIndoor.astro';
 import IconShield from '../components/icons/IconShield.astro';
 import IconWind from '../components/icons/IconWind.astro';
 import { getLowestInstalledPrice, KAISAI_MODELS, KAISAI_UNAVAILABLE_MODELS } from '../config/lineups';
-import { PHONE_TEL, SITE } from '../config/site';
+import { PHONE_TEL, PRICING, SITE } from '../config/site';
 import { calculatorNavLabels, labels, pageMeta, routes } from '../i18n/content';
 
 const meta = pageMeta.kaisai;
@@ -51,10 +51,8 @@ const lineupSchema = {
     '@type': 'ListItem',
     position: index + 1,
     item: {
-      '@type': 'Product',
+      '@type': 'WebPage',
       name: `Kaisai ${model.name}`,
-      brand: { '@type': 'Brand', name: 'Kaisai' },
-      category: model.slug === 'kaisai-konsola' ? 'Klimatyzator konsolowy split' : 'Klimatyzator ścienny split',
       description: model.tagline,
       url: new URL(`${routes.kaisai}/${model.product!.slug}`, SITE.siteUrl).toString()
     }
@@ -121,8 +119,16 @@ const lineupSchema = {
           <li>Do wnętrz, w których jednostka ma być ozdobą: seria ART w bieli lub czerni.</li>
           <li>Pod okno, na poddasze lub przy niskiej ścianie: jednostka konsolowa KKGB.</li>
           <li>Dla osób szukających dodatkowych funkcji: wybrane serie z lampą UVC, filtrem Bio HEPA lub jonami srebra.</li>
-          {lowestInstalledPrice && <li>Kaisai z montażem od {lowestInstalledPrice} zł - dojazd i uruchomienie w cenie.</li>}
+          {lowestInstalledPrice && (
+            <li>
+              Kaisai z urządzeniem i standardowym montażem do {PRICING.standardInstallationMeters} mb
+              od {lowestInstalledPrice} zł.
+            </li>
+          )}
         </ul>
+        <a class="price-details-link" href={PRICING.startingPriceDetailsHref}>
+          {PRICING.startingPriceLinkLabel}
+        </a>
       </div>
       <div class="plain-stack">
         <h2>Czym Kaisai różni się od Gree</h2>

@@ -1,7 +1,31 @@
-import { PRICING } from './site';
+import { PRICING } from './site.ts';
+import { ENERGY_MODELS } from './lineups.ts';
 
 export type CostRange = { low: number; high: number };
 export type DevicePriority = 'price' | 'comfort' | 'heating' | 'unsure';
+
+const getLowestVariantPrice = (minPowerKw: number, maxPowerKw: number): number => {
+  const prices = ENERGY_MODELS.flatMap((model) => model.variants.flatMap((variant) =>
+    variant.powerKw >= minPowerKw &&
+    variant.powerKw <= maxPowerKw &&
+    typeof variant.priceFromPLN === 'number'
+      ? [variant.priceFromPLN]
+      : []
+  ));
+
+  if (prices.length === 0) {
+    throw new Error(`Brak ceny wariantu dla zakresu mocy ${minPowerKw}-${maxPowerKw} kW.`);
+  }
+
+  return Math.min(...prices);
+};
+
+const ENTRY_PRICES = {
+  small: getLowestVariantPrice(2.5, 2.7),
+  medium: getLowestVariantPrice(3.1, 3.6),
+  large: getLowestVariantPrice(4.6, 5.4),
+  extraLarge: getLowestVariantPrice(6.2, 7.2)
+} as const;
 
 export const COST_CALCULATOR_CONFIG = {
   roomArea: { min: 10, max: 100, step: 1 },
@@ -12,10 +36,10 @@ export const COST_CALCULATOR_CONFIG = {
   roundTo: 50,
   multiRoomUpperBufferPerAdditionalRoom: 500,
   powerBands: [
-    { maxArea: 25, powerKw: '2,5', price: { low: PRICING.installFromPLN, high: 4500 } },
-    { maxArea: 35, powerKw: '3,5', price: { low: PRICING.installFromPLN, high: 4500 } },
-    { maxArea: 50, powerKw: '5,0', price: { low: 4500, high: 6000 } },
-    { maxArea: 70, powerKw: '7,0', price: { low: 5500, high: 7500 } }
+    { maxArea: 25, powerKw: '2,5', price: { low: ENTRY_PRICES.small, high: 4500 } },
+    { maxArea: 35, powerKw: '3,5', price: { low: ENTRY_PRICES.medium, high: 4500 } },
+    { maxArea: 50, powerKw: '5,0', price: { low: ENTRY_PRICES.large, high: 6000 } },
+    { maxArea: 70, powerKw: '7,0', price: { low: ENTRY_PRICES.extraLarge, high: 7500 } }
   ],
   priorities: {
     price: { label: 'Najlepsza cena', adjustment: { low: 0, high: 0 } },

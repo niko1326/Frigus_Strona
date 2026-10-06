@@ -8,7 +8,7 @@ import IconIndoor from '../components/icons/IconIndoor.astro';
 import IconShield from '../components/icons/IconShield.astro';
 import IconWaves from '../components/icons/IconWaves.astro';
 import { GREE_MODELS } from '../config/lineups';
-import { PHONE_TEL, SITE } from '../config/site';
+import { PHONE_TEL, PRICING, SITE } from '../config/site';
 import { calculatorNavLabels, labels, pageMeta, routes } from '../i18n/content';
 
 const meta = pageMeta.gree;
@@ -51,10 +51,8 @@ const lineupSchema = {
     '@type': 'ListItem',
     position: index + 1,
     item: {
-      '@type': 'Product',
+      '@type': 'WebPage',
       name: `Gree ${model.name}`,
-      brand: { '@type': 'Brand', name: 'Gree' },
-      category: 'Klimatyzator ścienny split',
       description: model.tagline,
       url: new URL(`${routes.gree}/${model.product.slug}`, SITE.siteUrl).toString()
     }
@@ -120,9 +118,13 @@ const lineupSchema = {
           <li>Do mieszkań w bloku: kompaktowe jednostki wewnętrzne i cicha praca.</li>
           <li>Do domów: modele z wydajnym grzaniem przy ujemnych temperaturach.</li>
           <li>
-            Dla szukających dobrego stosunku ceny do możliwości - Gree z montażem od {greePriceFrom} zł.
+            Dla szukających dobrego stosunku ceny do możliwości - Gree z urządzeniem i standardowym
+            montażem do {PRICING.standardInstallationMeters} mb od {greePriceFrom} zł.
           </li>
         </ul>
+        <a class="price-details-link" href={PRICING.startingPriceDetailsHref}>
+          {PRICING.startingPriceLinkLabel}
+        </a>
       </div>
       <div class="plain-stack">
         <h2>Dobór modelu zostaw nam</h2>

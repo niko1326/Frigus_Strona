@@ -2,6 +2,7 @@
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import Layout from '../../components/Layout.astro';
 import { ARTICLES } from '../../config/articles';
+import { PRICING } from '../../config/site';
 import { pageMeta } from '../../i18n/content';
 
 const meta = pageMeta.blog;
@@ -42,6 +43,11 @@ const sortedArticles = [...ARTICLES].sort((a, b) => b.datePublished.localeCompar
               <a href={`/porady/${article.slug}`}>{article.title}</a>
             </h2>
             <p>{article.excerpt}</p>
+            {article.priceDetailsHref && (
+              <a class="price-details-link" href={article.priceDetailsHref}>
+                {PRICING.startingPriceLinkLabel}
+              </a>
+            )}
             <a class="text-link" href={`/porady/${article.slug}`}>Czytaj dalej</a>
           </article>
         ))

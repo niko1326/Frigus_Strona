@@ -9,6 +9,8 @@ import {
   buildEnergyCalculatorHref,
   buildEnergyCalculatorLabel
 } from '../utils/product-energy-link.mjs';
+import { buildProductStructuredData } from '../utils/product-structured-data';
+import { toColorParam, toPowerParam } from '../utils/product-variant-url.mjs';
 
 interface Props {
   brand: string;
@@ -57,36 +59,14 @@ const initialPrice = typeof initialPriceValue === 'number'
   : null;
 const initialEnergyCtaHref = buildEnergyCalculatorHref(routes.calcEnergy, model.slug, firstVariant.powerKw);
 const initialEnergyCtaLabel = buildEnergyCalculatorLabel(brand, energyCtaModelName, firstVariant.label);
-
-const productSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Product',
-  '@id': new URL(`${currentPath}#produkt`, SITE.siteUrl).toString(),
-  name: productName,
-  description: model.product.description,
-  image: colorOptions.length > 0
-    ? colorOptions.map((color) => new URL(color.image, SITE.siteUrl).toString())
-    : new URL(model.image, SITE.siteUrl).toString(),
-  url: new URL(currentPath, SITE.siteUrl).toString(),
-  brand: { '@type': 'Brand', name: brand },
-  category: isConsoleModel ? 'Klimatyzator konsolowy split z montażem' : 'Klimatyzator ścienny split z montażem',
-  additionalProperty: [
-    {
-      '@type': 'PropertyValue',
-      name: 'Dostępne warianty mocy',
-      value: powerLabels
-    },
-    ...(model.energyClass
-      ? [{ '@type': 'PropertyValue', name: 'Klasa energetyczna', value: model.energyClass }]
-      : []),
-    ...(model.noise
-      ? [{ '@type': 'PropertyValue', name: 'Poziom ciśnienia akustycznego', value: model.noise }]
-      : []),
-    ...(model.connectivityLabel
-      ? [{ '@type': 'PropertyValue', name: 'Sterowanie', value: model.connectivityLabel }]
-      : [])
-  ]
-};
+const productSchema = buildProductStructuredData({
+  brand,
+  category: isConsoleModel
+    ? 'Klimatyzator konsolowy split z montażem'
+    : 'Klimatyzator ścienny split z montażem',
+  model,
+  pageUrl: new URL(currentPath, SITE.siteUrl).toString()
+});
 
 ---
 
@@ -150,6 +130,7 @@ const productSchema = {
                   data-image={color.image}
                   data-alt={color.alt}
                   data-color-name={color.name}
+                  data-color-param={toColorParam(color.name)}
                   data-price-tier={color.priceTier ?? 'standard'}
                 >
                   <span
@@ -180,6 +161,7 @@ const productSchema = {
                   data-seer={formatNumber(variant.seer)}
                   data-scop={formatNumber(variant.scop)}
                   data-power={variant.powerKw}
+                  data-power-param={toPowerParam(variant.label)}
                   data-power-label={variant.label}
                   data-price={variant.priceFromPLN}
                   data-color-price={variant.colorPriceFromPLN}
@@ -225,11 +207,12 @@ const productSchema = {
 
         {hasPricing && initialPrice && (
           <div class="product-price-block" aria-live="polite">
-            <span data-product-price-label>Cena z montażem od</span>
+            <span data-product-price-label>Cena brutto z urządzeniem i montażem do 3 mb</span>
             <strong data-product-price>{initialPrice} zł</strong>
             <small>
-              Pokazana cena odpowiada wybranej mocy i kolorowi oraz obejmuje standardowy montaż.
-              Dokładna wycena zależy m.in. od długości instalacji i miejsca montażu.
+              Pokazana cena odpowiada wybranej mocy i kolorowi oraz obejmuje urządzenie i standardowy montaż do 3 mb.
+              Dodatkowe metry i usługi rozliczamy zgodnie z cennikiem; finalny zakres i cenę
+              potwierdzamy przed rozpoczęciem prac.
             </small>
             <a class="inline-link" href={routes.pricing}>Sprawdź, co obejmuje standardowy montaż</a>
           </div>
@@ -314,7 +297,7 @@ const productSchema = {
               <th scope="col">Moc grzewcza</th>
               <th scope="col">SEER</th>
               <th scope="col">SCOP</th>
-              {hasPricing && <th scope="col">Cena z montażem od</th>}
+              {hasPricing && <th scope="col">Cena brutto z urządzeniem i montażem do 3 mb</th>}
             </tr>
           </thead>
           <tbody>
@@ -327,7 +310,7 @@ const productSchema = {
                   <td data-label="SEER">{formatNumber(variant.seer)}</td>
                   <td data-label="SCOP">{formatNumber(variant.scop)}</td>
                   {hasPricing && (
-                    <td class="product-table-price" data-label="Cena z montażem od">
+                    <td class="product-table-price" data-label="Cena brutto z urządzeniem i montażem do 3 mb">
                       {variant.priceFromPLN ? (
                         hasColorTier ? (
                           <>
@@ -395,11 +378,15 @@ const productSchema = {
       buildEnergyCalculatorHref,
       buildEnergyCalculatorLabel
     } from '../utils/product-energy-link.mjs';
+    import {
+      buildVariantUrl,
+      resolveVariantSelection
+    } from '../utils/product-variant-url.mjs';
 
-    const colorButtons = document.querySelectorAll('[data-product-color]');
+    const colorButtons = document.querySelectorAll<HTMLButtonElement>('[data-product-color]');
     const colorImage = document.querySelector('[data-product-color-image]');
     const colorLabel = document.querySelector('[data-product-color-label]');
-    const variantButtons = document.querySelectorAll('[data-product-variant]');
+    const variantButtons = document.querySelectorAll<HTMLButtonElement>('[data-product-variant]');
     const variantRows = document.querySelectorAll('[data-variant-row]');
     const priceLabel = document.querySelector('[data-product-price-label]');
     const priceValue = document.querySelector('[data-product-price]');
@@ -418,7 +405,7 @@ const productSchema = {
         : selectedVariant.dataset.price;
 
       if (rawPrice) {
-        priceLabel.textContent = 'Cena z montażem od';
+        priceLabel.textContent = 'Cena brutto z urządzeniem i montażem do 3 mb';
         priceValue.textContent = `${formatPrice.format(Number(rawPrice))} zł`;
       } else if (usesColorPrice) {
         priceLabel.textContent = 'Wybrany wariant';
@@ -429,21 +416,32 @@ const productSchema = {
       }
     };
 
-    colorButtons.forEach((button) => {
-      button.addEventListener('click', () => {
-        if (!(button instanceof HTMLButtonElement) || !(colorImage instanceof HTMLImageElement)) return;
+    const selectColor = (button: HTMLButtonElement) => {
+      colorButtons.forEach((item) => {
+        item.classList.toggle('is-selected', item === button);
+        item.setAttribute('aria-pressed', item === button ? 'true' : 'false');
+      });
 
-        colorButtons.forEach((item) => {
-          item.classList.toggle('is-selected', item === button);
-          item.setAttribute('aria-pressed', item === button ? 'true' : 'false');
-        });
-
+      if (colorImage instanceof HTMLImageElement) {
         if (button.dataset.image) colorImage.src = button.dataset.image;
         if (button.dataset.alt) colorImage.alt = button.dataset.alt;
-        if (colorLabel && button.dataset.colorName) colorLabel.textContent = button.dataset.colorName;
-        updatePrice();
+      }
+      if (colorLabel && button.dataset.colorName) colorLabel.textContent = button.dataset.colorName;
+      updatePrice();
+    };
+
+    const syncVariantUrl = () => {
+      const selectedVariant = document.querySelector<HTMLButtonElement>('[data-product-variant].is-selected');
+      const selectedColor = document.querySelector<HTMLButtonElement>('[data-product-color].is-selected');
+      if (!selectedVariant?.dataset.powerParam) return;
+
+      const nextUrl = buildVariantUrl(window.location.href, {
+        power: selectedVariant.dataset.powerParam,
+        color: selectedColor?.dataset.colorParam,
+        hasColorVariants: colorButtons.length > 1
       });
-    });
+      window.history.replaceState(window.history.state, '', nextUrl);
+    };
 
     const setText = (name: string, value: string | undefined) => {
       const target = document.querySelector(`[data-spec="${name}"]`);
@@ -463,24 +461,48 @@ const productSchema = {
       );
     };
 
-    variantButtons.forEach((button) => {
+    const selectVariant = (button: HTMLButtonElement) => {
+      const index = button.dataset.index;
+
+      variantButtons.forEach((item) => {
+        item.classList.toggle('is-selected', item === button);
+        item.setAttribute('aria-pressed', item === button ? 'true' : 'false');
+      });
+      variantRows.forEach((row) => row.classList.toggle('is-selected', row.getAttribute('data-index') === index));
+
+      setText('cooling', button.dataset.cooling);
+      setText('heating', button.dataset.heating);
+      setText('seer', button.dataset.seer);
+      setText('scop', button.dataset.scop);
+      updateEnergyCta(button);
+      updatePrice();
+    };
+
+    colorButtons.forEach((button) => {
       button.addEventListener('click', () => {
-        if (!(button instanceof HTMLButtonElement)) return;
-        const index = button.dataset.index;
-
-        variantButtons.forEach((item) => {
-          item.classList.toggle('is-selected', item === button);
-          item.setAttribute('aria-pressed', item === button ? 'true' : 'false');
-        });
-        variantRows.forEach((row) => row.classList.toggle('is-selected', row.getAttribute('data-index') === index));
-
-        setText('cooling', button.dataset.cooling);
-        setText('heating', button.dataset.heating);
-        setText('seer', button.dataset.seer);
-        setText('scop', button.dataset.scop);
-        updateEnergyCta(button);
-        updatePrice();
+        selectColor(button);
+        syncVariantUrl();
       });
     });
+
+    variantButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        selectVariant(button);
+        syncVariantUrl();
+      });
+    });
+
+    const initialSelection = resolveVariantSelection({
+      search: window.location.search,
+      powers: Array.from(variantButtons, (button) => button.dataset.powerParam ?? ''),
+      colors: Array.from(colorButtons, (button) => button.dataset.colorParam ?? '')
+    });
+    const initialVariant = Array.from(variantButtons)
+      .find((button) => button.dataset.powerParam === initialSelection.power);
+    const initialColor = Array.from(colorButtons)
+      .find((button) => button.dataset.colorParam === initialSelection.color);
+
+    if (initialVariant) selectVariant(initialVariant);
+    if (initialColor) selectColor(initialColor);
   </script>
 </Layout>

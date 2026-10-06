@@ -35,7 +35,8 @@ const districts = [
       <h1>Klimatyzacja Bydgoszcz - montaż w mieszkaniu i domu</h1>
       <p>
         Mieszkasz w Bydgoszczy, Toruniu lub okolicach? Jesteśmy lokalną ekipą montażową: przyjedziemy
-        na wycenę bez dodatkowych kosztów. Standardowy montaż klimatyzacji w 1 dzień.
+        na bezpłatną wizytę techniczną, jeśli warunki trzeba sprawdzić na miejscu. Standardowy montaż
+        klimatyzacji wykonujemy w 1 dzień.
       </p>
       <div class="hero-actions">
         <CTAButton href={`tel:${PHONE_TEL}`} label={labels.callNow} ariaLabel={labels.callNow} />
@@ -84,7 +85,13 @@ const districts = [
     <div class="container cta-band" data-reveal>
       <div>
         <h2>Klimatyzator z montażem od {PRICING.installFromPLN} zł</h2>
-        <p>Dojazd na terenie Bydgoszczy i okolic w cenie. Wycena telefoniczna w kilka minut.</p>
+        <p>
+          Dojazd w Bydgoszczy jest w cenie, a realizacje w okolicach uzgadniamy indywidualnie.
+          Finalny zakres i cenę potwierdzamy przed rozpoczęciem prac.
+        </p>
+        <a class="price-details-link" href={PRICING.startingPriceDetailsHref}>
+          {PRICING.startingPriceLinkLabel}
+        </a>
       </div>
       <CTAButton
         href={`tel:${PHONE_TEL}`}

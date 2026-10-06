@@ -31,14 +31,41 @@ export const COMPANY = {
   address: ''
 } as const;
 
+const INSTALL_FROM_PLN = 3399;
+const STANDARD_INSTALLATION_METERS = 3;
+const STARTING_PRICE_VARIANTS = [
+  {
+    brand: 'Gree',
+    productSlug: 'pular',
+    displayName: 'Gree Pular 2,5 kW'
+  },
+  {
+    brand: 'Kaisai',
+    productSlug: 'air',
+    displayName: 'Kaisai AIR (KKWK) 2,6 kW'
+  }
+] as const;
+const STARTING_PRICE_MODELS = STARTING_PRICE_VARIANTS
+  .map((variant) => variant.displayName)
+  .join(' oraz ');
+const STARTING_PRICE_ANCHOR = `cena-${INSTALL_FROM_PLN}`;
+const STARTING_PRICE_DETAILS = `Cena ${INSTALL_FROM_PLN} zł dotyczy ${STARTING_PRICE_MODELS} ze standardowym montażem do ${STANDARD_INSTALLATION_METERS} mb.`;
+const STARTING_PRICE_LINK_LABEL = `Sprawdź, czego dotyczy cena ${INSTALL_FROM_PLN} zł →`;
+
 export const PRICING = {
-  installFromPLN: 3399,
-  standardInstallationMeters: 3,
+  installFromPLN: INSTALL_FROM_PLN,
+  standardInstallationMeters: STANDARD_INSTALLATION_METERS,
+  startingPriceVariants: STARTING_PRICE_VARIANTS,
+  startingPriceModels: STARTING_PRICE_MODELS,
+  startingPriceAnchor: STARTING_PRICE_ANCHOR,
+  startingPriceDetails: STARTING_PRICE_DETAILS,
+  startingPriceDetailsHref: `/cennik#${STARTING_PRICE_ANCHOR}`,
+  startingPriceLinkLabel: STARTING_PRICE_LINK_LABEL,
   extraInstallationMeterFromPLN: 130,
   condensatePumpFromPLN: 350,
   energyMeterFromPLN: 250,
   pricingNote:
-    'Podana cena obejmuje klimatyzator z montażem w standardowym zakresie. Finalna wycena zależy od długości instalacji i warunków technicznych. Na ten moment realizujemy usługę bez VAT dla klientów indywidualnych (brutto = netto).',
+    'Dodatkowe metry instalacji i usługi są rozliczane zgodnie z cennikiem, a nietypowe prace wyceniamy indywidualnie. Finalny zakres i cenę potwierdzamy przed rozpoczęciem prac. Na ten moment realizujemy usługę bez VAT dla klientów indywidualnych (brutto = netto).',
   travelIncluded:
     'Dojazd w Gdańsku, Gdyni, Sopocie, Bydgoszczy i Toruniu oraz w okolicach po wcześniejszym uzgodnieniu.'
 } as const;

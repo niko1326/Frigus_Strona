@@ -78,10 +78,13 @@ import { labels, routes } from '../../../i18n/content';
         <p class="aside-title">Montaż w skrócie</p>
         <ul class="check-list">
           <li>standardowy montaż w 1 dzień,</li>
-          <li>od {PRICING.installFromPLN} zł z urządzeniem,</li>
-          <li>dojazd w cenie,</li>
+          <li>od {PRICING.installFromPLN} zł za urządzenie i standardowy montaż do {PRICING.standardInstallationMeters} mb,</li>
+          <li>dojazd w obsługiwanych miastach w cenie,</li>
           <li>5 lat gwarancji producenta.</li>
         </ul>
+        <a class="price-details-link" href={PRICING.startingPriceDetailsHref}>
+          {PRICING.startingPriceLinkLabel}
+        </a>
         <a class="cta-button cta-primary cta-full" href={`tel:${PHONE_TEL}`} aria-label={labels.phoneAria}>
           Zadzwoń: {PHONE_DISPLAY}
         </a>

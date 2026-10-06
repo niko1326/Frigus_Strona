@@ -8,20 +8,25 @@ import { calculatorNavLabels, pageMeta, routes } from '../i18n/content';
 
 const meta = pageMeta.calcCost;
 const installFromDisplay = new Intl.NumberFormat('pl-PL', { useGrouping: 'always' }).format(PRICING.installFromPLN);
+const formatPrice = (value: number) => new Intl.NumberFormat('pl-PL', { useGrouping: 'always' }).format(value);
 
 const costTable = [
-  { config: '1 pomieszczenie do 25 m², około 2,5 kW', cost: `${installFromDisplay}-4 500 zł` },
-  { config: '1 pomieszczenie 26-35 m², około 3,5 kW', cost: `${installFromDisplay}-4 500 zł` },
-  { config: '1 pomieszczenie 36-50 m², około 5,0 kW', cost: '4 500-6 000 zł' },
-  { config: '1 pomieszczenie 51-70 m², około 7,0 kW', cost: '5 500-7 500 zł' },
+  { config: '1 pomieszczenie do 25 m², około 2,5 kW', band: COST_CALCULATOR_CONFIG.powerBands[0] },
+  { config: '1 pomieszczenie 26-35 m², około 3,5 kW', band: COST_CALCULATOR_CONFIG.powerBands[1] },
+  { config: '1 pomieszczenie 36-50 m², około 5,0 kW', band: COST_CALCULATOR_CONFIG.powerBands[2] },
+  { config: '1 pomieszczenie 51-70 m², około 7,0 kW', band: COST_CALCULATOR_CONFIG.powerBands[3] },
+].map(({ config, band }) => ({
+  config,
+  cost: `${formatPrice(band.price.low)}-${formatPrice(band.price.high)} zł`
+})).concat([
   { config: '2-3 pomieszczenia', cost: 'suma widełek dobranych osobno dla każdej strefy' }
-];
+]);
 
 const faqItems = [
   {
     question: 'Ile kosztuje klimatyzacja do mieszkania 50 m2?',
     answer:
-      'Dla jednej strefy o powierzchni około 50 m2 kalkulator przyjmuje orientacyjnie urządzenie około 5,0 kW i bazowe widełki 4 500-6 000 zł ze standardowym montażem. Przy kilku pomieszczeniach każdą strefę liczymy osobno, a ostateczny układ urządzeń potwierdzamy po sprawdzeniu możliwości montażu.'
+      `Dla jednej strefy o powierzchni około 50 m2 kalkulator przyjmuje orientacyjnie urządzenie około 5,0 kW i bazowe widełki ${costTable[2].cost} ze standardowym montażem. Przy kilku pomieszczeniach każdą strefę liczymy osobno, a ostateczny układ urządzeń potwierdzamy po sprawdzeniu możliwości montażu.`
   },
   {
     question: 'Co najbardziej wpływa na cenę montażu klimatyzacji?',
@@ -36,7 +41,7 @@ const faqItems = [
   {
     question: 'Czy do ceny trzeba doliczyć coś jeszcze?',
     answer:
-      'Wynik obejmuje urządzenie, dostawę, standardowy montaż, uruchomienie i dojazd. Ostateczna cena zależy od wybranego modelu, rzeczywistej długości instalacji i warunków technicznych na miejscu; potwierdzamy ją przed rozpoczęciem realizacji.'
+      `Wynik obejmuje urządzenie, dostawę, standardowy montaż do ${PRICING.standardInstallationMeters} mb, uruchomienie i dojazd w obsługiwanych miastach. Dodatkowe metry i usługi rozliczamy zgodnie z cennikiem. Finalny zakres i cenę potwierdzamy przed rozpoczęciem prac.`
   }
 ];
 
@@ -164,7 +169,7 @@ const appSchema = {
       <div class="tool-result-wrap">
         <div class="tool-result" role="status" aria-live="polite">
           <p class="eyebrow">Szacunkowy koszt</p>
-          <p class="result-main"><strong id="cres-cost">3 500-4 500 zł</strong></p>
+          <p class="result-main"><strong id="cres-cost">{costTable[0].cost}</strong></p>
           <p class="result-sub" id="cres-sub">z urządzeniem i standardowym montażem</p>
           <dl class="result-rows">
             <div class="result-row">
@@ -205,6 +210,9 @@ const appSchema = {
         <strong>od {installFromDisplay} zł z urządzeniem i montażem</strong>. Poniżej typowe konfiguracje, które
         montujemy w Gdańsku, Gdyni, Sopocie oraz w Bydgoszczy i Toruniu:
       </p>
+      <a class="price-details-link" href={PRICING.startingPriceDetailsHref}>
+        {PRICING.startingPriceLinkLabel}
+      </a>
       <div class="table-wrap">
         <table class="tool-table">
           <caption class="visually-hidden">Orientacyjne koszty klimatyzacji z montażem</caption>

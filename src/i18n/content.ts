@@ -120,7 +120,7 @@ export const pageMeta: Record<PageKey, PageMeta> = {
   pricing: {
     title: `Cennik montażu klimatyzacji od ${PRICING.installFromPLN} zł | FRIGAC`,
     description:
-      `Ile kosztuje montaż klimatyzacji? Klimatyzator z montażem od ${PRICING.installFromPLN} zł, dojazd w cenie, wycena telefoniczna w kilka minut. Zobacz, co wpływa na finalną cenę montażu klimatyzacji.`,
+      `Ile kosztuje montaż klimatyzacji? Klimatyzator z urządzeniem i standardowym montażem do ${PRICING.standardInstallationMeters} mb od ${PRICING.installFromPLN} zł. Zobacz, co wpływa na finalną cenę montażu.`,
     keywords: [
       'cennik montażu klimatyzacji',
       'ile kosztuje montaż klimatyzacji',
@@ -144,9 +144,9 @@ export const pageMeta: Record<PageKey, PageMeta> = {
     ]
   },
   contact: {
-    title: 'Kontakt i darmowa wycena klimatyzacji | FRIGAC',
+    title: 'Kontakt i wycena klimatyzacji | FRIGAC',
     description:
-      'Zadzwoń po darmową wycenę montażu klimatyzacji: 735 400 610. Działamy w Gdańsku, Gdyni, Sopocie i całym Trójmieście oraz w Bydgoszczy i Toruniu. Wycena telefoniczna w kilka minut, montaż w dogodnym terminie.',
+      'Skontaktuj się z FRIGAC w sprawie wyceny montażu klimatyzacji: 735 400 610. Działamy w Gdańsku, Gdyni, Sopocie i całym Trójmieście oraz w Bydgoszczy i Toruniu. Finalny zakres i cenę potwierdzamy po ustaleniu modelu i warunków montażu.',
     keywords: [
       'klimatyzacja Gdańsk kontakt',
       'klima Gdańsk telefon',

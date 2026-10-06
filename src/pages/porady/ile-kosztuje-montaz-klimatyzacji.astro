@@ -9,10 +9,13 @@ const article = ARTICLES.find((entry) => entry.slug === 'ile-kosztuje-montaz-kli
 <ArticleLayout article={article}>
   <p>
     "Ile to kosztuje?" to pierwsze pytanie w niemal każdej rozmowie. Odpowiedź w skrócie: kompletna
-    klimatyzacja z kompleksowym standardowym montażem do {PRICING.standardInstallationMeters} mb zaczyna się od około
+    klimatyzacja z kompleksowym standardowym montażem do {PRICING.standardInstallationMeters} mb zaczyna się od
     {PRICING.installFromPLN} zł. To cena początkowa, a nie jedna stawka dla każdej realizacji. Poniżej
     wyjaśniamy, co obejmuje i od czego zależy ostateczna wycena.
   </p>
+  <a class="price-details-link" href={PRICING.startingPriceDetailsHref}>
+    {PRICING.startingPriceLinkLabel}
+  </a>
 
   <h2>Z czego składa się cena klimatyzacji z montażem</h2>
   <ul class="bullet-list">
@@ -70,9 +73,13 @@ const article = ARTICLES.find((entry) => entry.slug === 'ile-kosztuje-montaz-kli
   <h2>Podsumowanie</h2>
   <p>
     W 2026 roku za kompletną, porządnie zamontowaną klimatyzację do pokoju lub salonu zapłacisz od
-    około {PRICING.installFromPLN} zł. Widełki dla swojej konfiguracji policzysz w naszym{' '}
+    {PRICING.installFromPLN} zł. Inne moce i kolory mogą mieć inne ceny. Widełki dla swojej
+    konfiguracji policzysz w naszym{' '}
     <a class="inline-link" href="/kalkulator-kosztow-klimatyzacji">kalkulatorze kosztów klimatyzacji</a>,
     a ostateczną cenę potwierdzimy po ustaleniu modelu, długości instalacji, liczby jednostek i
     warunków technicznych.
   </p>
+  <a class="price-details-link" href={PRICING.startingPriceDetailsHref}>
+    {PRICING.startingPriceLinkLabel}
+  </a>
 </ArticleLayout>

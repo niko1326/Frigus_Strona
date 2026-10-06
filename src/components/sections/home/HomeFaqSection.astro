@@ -5,7 +5,8 @@ import { routes } from '../../../i18n/content';
 const faqItems = [
   {
     question: 'Ile kosztuje montaż klimatyzacji w Gdańsku?',
-    answer: `Klimatyzacja z montażem w Gdańsku zaczyna się od ${PRICING.installFromPLN} zł. W cenie jest klimatyzator split, dojazd na terenie Gdańska, Gdyni, Sopotu i okolic, uruchomienie układu oraz 5 lat gwarancji producenta. Montujemy na wszystkich osiedlach - od Wrzeszcza i Przymorza po Jasień i Ujeścisko.`
+    answer: `Klimatyzacja z montażem w Gdańsku zaczyna się od ${PRICING.installFromPLN} zł. Inne moce i kolory mogą mieć inne ceny. Dojazd w Gdańsku, Gdyni i Sopocie jest w cenie; realizacje w okolicach uzgadniamy wcześniej. Montujemy na wszystkich osiedlach - od Wrzeszcza i Przymorza po Jasień i Ujeścisko.`,
+    priceDetailsLink: true
   },
   {
     question: 'Dlaczego Gdańsk i Trójmiasto?',
@@ -62,6 +63,11 @@ const faqSchema = {
           <details class="faq-item">
             <summary>{item.question}</summary>
             <p>{item.answer}</p>
+            {'priceDetailsLink' in item && item.priceDetailsLink && (
+              <a class="price-details-link" href={PRICING.startingPriceDetailsHref}>
+                {PRICING.startingPriceLinkLabel}
+              </a>
+            )}
           </details>
         ))
       }

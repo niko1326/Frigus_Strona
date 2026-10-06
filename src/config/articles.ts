@@ -1,3 +1,5 @@
+import { PRICING } from './site';
+
 export type Article = {
   slug: string;
   title: string;
@@ -6,6 +8,7 @@ export type Article = {
   keywords: string[];
   datePublished: string;
   excerpt: string;
+  priceDetailsHref?: string;
   /** Autor wpisu; brak = artykuł firmowy (FRIGAC). */
   author?: string;
 };
@@ -75,7 +78,8 @@ export const ARTICLES: Article[] = [
     ],
     datePublished: '2026-08-27',
     excerpt:
-      'Klimatyzator z montażem zaczyna się od około 3500 zł. Sprawdź, co dokładnie składa się na tę cenę i kiedy montaż może kosztować więcej.'
+      `Klimatyzator z urządzeniem i standardowym montażem do ${PRICING.standardInstallationMeters} mb zaczyna się od ${PRICING.installFromPLN} zł. Sprawdź, co składa się na cenę i kiedy montaż może kosztować więcej.`,
+    priceDetailsHref: PRICING.startingPriceDetailsHref
   },
   {
     slug: 'jak-czesto-serwisowac-klimatyzacje',

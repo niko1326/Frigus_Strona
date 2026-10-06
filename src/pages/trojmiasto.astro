@@ -101,7 +101,13 @@ const districts = [
     <div class="container cta-band" data-reveal>
       <div>
         <h2>Klimatyzator z montażem od {PRICING.installFromPLN} zł</h2>
-        <p>Dojazd na terenie Trójmiasta w cenie. Wycena telefoniczna w kilka minut.</p>
+        <p>
+          Dojazd w Gdańsku, Gdyni i Sopocie jest w cenie. Finalny zakres i cenę potwierdzamy przed
+          rozpoczęciem prac.
+        </p>
+        <a class="price-details-link" href={PRICING.startingPriceDetailsHref}>
+          {PRICING.startingPriceLinkLabel}
+        </a>
       </div>
       <CTAButton
         href={`tel:${PHONE_TEL}`}

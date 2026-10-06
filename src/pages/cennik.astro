@@ -87,22 +87,20 @@ const brandPricing = [
   </section>
 
   <section class="section">
-    <div class="container pricing-panel" data-reveal>
+    <div class="container pricing-panel" id={PRICING.startingPriceAnchor} data-reveal>
       <p class="price-main">
         Klimatyzator z montażem od {PRICING.installFromPLN} zł
         <span class="price-note">brutto</span>
       </p>
       <ul class="bullet-list">
         <li>Standardowy montaż do {PRICING.standardInstallationMeters} mb z prowadzeniem instalacji w korytkach.</li>
-        <li>Dojazd w cenie.</li>
+        <li>{PRICING.travelIncluded}</li>
         <li>Podłączenie do istniejącej instalacji elektrycznej w cenie montażu.</li>
         <li>Ostateczną cenę potwierdzamy przed rozpoczęciem realizacji.</li>
         <li>5 lat gwarancji producenta.</li>
       </ul>
       <p class="tiny-note pricing-start-note">
-        Cena od {PRICING.installFromPLN} zł, aktualna od 01.10.2026 r., dotyczy Gree Pular
-        2,5 kW oraz Kaisai AIR (KKWK) 2,6 kW w podstawowej konfiguracji ze standardowym
-        montażem do {PRICING.standardInstallationMeters} mb.
+        {PRICING.startingPriceDetails} Cennik aktualny od 01.10.2026 r.
       </p>
       <p class="tiny-note">{PRICING.pricingNote}</p>
       <a class="text-link pricing-models-jump" href="#modele-i-ceny">
@@ -239,8 +237,8 @@ const brandPricing = [
           <li>konstrukcje wsporcze i nietypowe mocowania.</li>
         </ul>
         <p class="tiny-note">
-          Dokładną cenę montażu klimatyzacji podajemy telefonicznie w kilka minut - bez wizji
-          lokalnej w typowych przypadkach.
+          W typowych przypadkach możemy podać orientacyjny koszt wcześniej. Finalny zakres i cenę
+          potwierdzamy po ustaleniu modelu i warunków montażu.
         </p>
       </div>
     </div>
