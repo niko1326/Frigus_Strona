@@ -165,10 +165,32 @@ const marqueeCities = [
     hero.classList.add(climateMode === 'cooling' ? 'is-cooling' : 'is-heating');
     hero.dataset.climateMode = climateMode;
 
+    /*
+      Pobieranie GLB zaczyna się równolegle z dynamicznym importem Three.js.
+      Wcześniej model zaczynał się pobierać dopiero po pobraniu i wykonaniu
+      całego modułu 3D, co zostawiało pustą scenę szczególnie na mobile.
+    */
+    const isMobileHero = stage.clientWidth < 900;
+    const modelPath = activeBrand.name.toUpperCase() === 'KAISAI'
+      ? isMobileHero
+        ? '/modele3d/kaisai-mobile.glb'
+        : '/modele3d/kaisai aktualne-to-3d-texture.glb'
+      : '/modele3d/pular_pro2.glb';
+    const modelData = fetch(modelPath, { cache: 'force-cache' })
+      .then((response) => {
+        if (!response.ok) throw new Error(`Nie udało się pobrać modelu 3D: ${response.status}`);
+        return response.arrayBuffer();
+      })
+      .catch(() => null);
+
     const start = () => {
       import('../../../scripts/hero3d.js')
         .then(({ initHero3D }) => {
-          const scene = initHero3D(stage, { brand: activeBrand.name, mode: climateMode });
+          const scene = initHero3D(stage, {
+            brand: activeBrand.name,
+            mode: climateMode,
+            modelData
+          });
 
           /*
             Kliknięcie w samą jednostkę prowadzi na podstronę marki,
@@ -212,6 +234,6 @@ const marqueeCities = [
         });
     };
 
-    requestAnimationFrame(start);
+    start();
   }
 </script>

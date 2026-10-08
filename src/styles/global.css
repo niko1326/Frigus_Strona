@@ -769,14 +769,14 @@ strong {
 }
 
 /* Kanwa 3D wypełnia całą sekcję; treść leży nad nią.
-   Wjeżdża płynnie dopiero, gdy scena jest gotowa. */
+   Pojawia się po wyrenderowaniu pierwszej kompletnej klatki. */
 
 .hero-stage {
   position: absolute;
   inset: 0;
   z-index: 1;
   opacity: 0;
-  transition: opacity 0.9s ease;
+  transition: opacity 0.2s ease;
 }
 
 .hero.is-3d .hero-stage {

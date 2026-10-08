@@ -90,7 +90,16 @@ function beamTexture(isMobile = false, isHeating = false) {
   return tex;
 }
 
-export function initHero3D(stage, { brand = 'GREE', mode = 'cooling' } = {}) {
+/**
+ * @param {HTMLElement} stage
+ * @param {{
+ *   brand?: string,
+ *   mode?: string,
+ *   modelData?: Promise<ArrayBuffer | null> | null
+ * }} [options]
+ */
+export function initHero3D(stage, options = {}) {
+  const { brand = 'GREE', mode = 'cooling', modelData = null } = options;
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const brandName = brand.toUpperCase();
   const isKaisai = brandName === 'KAISAI';
@@ -527,7 +536,12 @@ export function initHero3D(stage, { brand = 'GREE', mode = 'cooling' } = {}) {
   const ready = (async () => {
     if (!modelConfig) throw new Error(`Brak aktualnego modelu HERO dla marki ${brandName}`);
 
-    const gltf = await new GLTFLoader().loadAsync(modelConfig.path);
+    const loader = new GLTFLoader();
+    const prefetchedData = modelData ? await modelData : null;
+    const resourcePath = modelConfig.path.slice(0, modelConfig.path.lastIndexOf('/') + 1);
+    const gltf = prefetchedData
+      ? await loader.parseAsync(prefetchedData, resourcePath)
+      : await loader.loadAsync(modelConfig.path);
     const model = gltf.scene;
     const whiteShellMaterial = new MeshPhysicalMaterial({
       color: 0xffffff,
@@ -598,9 +612,8 @@ export function initHero3D(stage, { brand = 'GREE', mode = 'cooling' } = {}) {
     }
     camera.lookAt(comp.lookX, comp.camY, 0);
     updateStreams(0, prefersReduced ? 0.8 : 0);
-    // Przygotuj shadery i pierwsze bufory/tekstury, gdy canvas jest jeszcze
-    // ukryty. Koszt pierwszego renderu nie może zużywać czasu intro.
-    await renderer.compileAsync(scene, camera);
+    // Pierwsza kompletna klatka powstaje synchronicznie. compileAsync potrafił
+    // opóźnić rozwiązanie `ready` na części urządzeń mimo gotowego GLB.
     renderer.render(scene, camera);
     modelLoaded = true;
   })();
