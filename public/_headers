@@ -1,0 +1,23 @@
+# Cloudflare Workers Static Assets / Pages. CSP script hashes are generated
+# from the built HTML by scripts/build-security-headers.mjs (npm run build).
+/*
+  Strict-Transport-Security: max-age=604800
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://*.google-analytics.com https://www.googletagmanager.com; font-src 'self'; connect-src 'self' blob: https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com; upgrade-insecure-requests
+
+# Hashed Astro bundles are safe to cache for a year.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Unversioned public assets get a shorter lifetime so replacements propagate.
+/fonts/*
+  Cache-Control: public, max-age=604800
+/photos/*
+  Cache-Control: public, max-age=86400
+/certificates/*
+  Cache-Control: public, max-age=86400
+/modele3d/*
+  Cache-Control: public, max-age=604800

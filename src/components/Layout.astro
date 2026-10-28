@@ -13,6 +13,7 @@ import {
   VERIFICATION
 } from '../config/site';
 import { labels } from '../i18n/content';
+import '../styles/fonts.css';
 import '../styles/global.css';
 
 interface Props {
@@ -125,12 +126,7 @@ const schemaBlocks = [localBusinessSchema, ...extraSchema];
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preload" href="/fonts/inter-latin-variable.woff2" as="font" type="font/woff2" crossorigin />
 
     {schemaBlocks.map((block) => (
       <script is:inline type="application/ld+json" set:html={JSON.stringify(block)} />
@@ -141,12 +137,7 @@ const schemaBlocks = [localBusinessSchema, ...extraSchema];
         <>
           <script
             is:inline
-            async
-            src={`https://www.googletagmanager.com/gtag/js?id=${ANALYTICS.ga4.measurementId}`}
-          />
-          <script
-            is:inline
-            set:html={`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${ANALYTICS.ga4.measurementId}');`}
+            set:html={`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${ANALYTICS.ga4.measurementId}');window.addEventListener('load',()=>{const load=()=>{const script=document.createElement('script');script.async=true;script.src='https://www.googletagmanager.com/gtag/js?id=${ANALYTICS.ga4.measurementId}';document.head.append(script);};if('requestIdleCallback' in window)window.requestIdleCallback(load,{timeout:3000});else setTimeout(load,0);},{once:true});`}
           />
         </>
       )

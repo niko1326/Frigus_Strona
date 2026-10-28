@@ -1,20 +1,23 @@
 ---
 import type { Certificate } from '../config/certificates';
+import { getResponsiveImage } from '../utils/responsive-images';
 interface Props { certificate: Certificate }
 const { certificate } = Astro.props;
+const image = getResponsiveImage(certificate.image);
 ---
 
 <figure class="document-card">
-  <a class:list={['document-preview', { 'document-preview-portrait': certificate.height > certificate.width }]} href={certificate.document} target="_blank" rel="noopener noreferrer"
-    aria-label={`Otwórz dokument: ${certificate.title} - ${certificate.holder} (nowa karta)`}>
-    <img src={certificate.image} alt={certificate.alt} width={certificate.width} height={certificate.height}
+  <a class:list={['document-preview', { 'document-preview-portrait': certificate.height > certificate.width }]} href={certificate.document} target="_blank" rel="noopener noreferrer">
+    <img src={image.src} srcset={image.srcset}
+      sizes="(min-width: 1160px) 510px, (min-width: 760px) calc((100vw - 104px) / 2), calc(100vw - 64px)"
+      alt={`${certificate.alt} (otwiera pełny dokument w nowej karcie)`} width={image.width} height={image.height}
       loading="lazy" decoding="async" />
   </a>
   <figcaption>
     <strong>{certificate.holder}</strong>
     <span>{certificate.title}</span>
     <a href={certificate.document} target="_blank" rel="noopener noreferrer"
-      aria-label={`Zobacz pełny dokument: ${certificate.title} - ${certificate.holder} (nowa karta)`}>
+      aria-label={`Zobacz dokument: ${certificate.title} - ${certificate.holder} (nowa karta)`}>
       Zobacz dokument <span aria-hidden="true">↗</span>
     </a>
   </figcaption>

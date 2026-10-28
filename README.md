@@ -22,6 +22,12 @@ npm run build
 npm run preview
 ```
 
+Testy: `npm test`. Kontrola Astro i TypeScript: `npm run check`.
+
+`npm run build` generuje także `dist/_headers` z hashami skryptów dla CSP.
+Przed publikacją używaj całego polecenia, aby nagłówki odpowiadały zbudowanemu HTML.
+Opis poprawek i kontroli po audycie: [NAPRAWY_RAPORTU.md](./NAPRAWY_RAPORTU.md).
+
 ## Edycja danych biznesowych
 
 Wszystkie główne dane są w jednym pliku: `src/config/site.ts`

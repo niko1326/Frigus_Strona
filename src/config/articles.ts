@@ -53,7 +53,7 @@ export const ARTICLES: Article[] = [
     title: 'Jaką klimatyzację wybrać do mieszkania?',
     metaTitle: 'Jaka klimatyzacja do mieszkania? Poradnik | FRIGAC',
     description:
-      'Jaką klimatyzację wybrać do mieszkania w bloku? Podpowiadamy, jak dobrać moc do metrażu, na co zwrócić uwagę przy wyborze urządzenia i jak zaplanować miejsce montażu.',
+      'Jaką klimatyzację wybrać do mieszkania w bloku? Sprawdź, jak dobrać moc do metrażu, porównać funkcje urządzeń i zaplanować miejsce montażu.',
     keywords: [
       'jaka klimatyzacja do mieszkania',
       'klimatyzacja do mieszkania w bloku',
@@ -69,7 +69,7 @@ export const ARTICLES: Article[] = [
     title: 'Ile kosztuje montaż klimatyzacji w 2026 roku?',
     metaTitle: 'Ile kosztuje montaż klimatyzacji w 2026? | FRIGAC',
     description:
-      'Ile kosztuje montaż klimatyzacji z urządzeniem w 2026 roku? Realne widełki cenowe, składniki ceny i podpowiedzi, jak nie przepłacić za montaż klimatyzacji w mieszkaniu lub domu.',
+      'Ile kosztuje klimatyzacja z montażem w 2026 roku? Poznaj widełki cenowe, zakres standardowego montażu oraz koszty dodatkowych prac w mieszkaniu i domu.',
     keywords: [
       'ile kosztuje montaż klimatyzacji',
       'cena montażu klimatyzacji 2026',
@@ -86,7 +86,7 @@ export const ARTICLES: Article[] = [
     title: 'Jak często serwisować klimatyzację?',
     metaTitle: 'Jak często serwisować klimatyzację? | FRIGAC',
     description:
-      'Jak często robić przegląd klimatyzacji i co grozi za jego brak? Wyjaśniamy, co obejmuje serwis klimatyzacji, ile kosztuje i dlaczego warto go robić przed sezonem letnim.',
+      'Jak często robić przegląd klimatyzacji? Sprawdź, co obejmuje serwis, ile kosztuje i jak dopasować terminy do użytkowania oraz gwarancji producenta.',
     keywords: [
       'serwis klimatyzacji jak często',
       'przegląd klimatyzacji',
@@ -102,7 +102,7 @@ export const ARTICLES: Article[] = [
     title: 'Jaki wpływ może mieć klimatyzacja na człowieka?',
     metaTitle: 'Wpływ klimatyzacji na zdrowie człowieka | FRIGAC',
     description:
-      'Jak klimatyzacja wpływa na sen, koncentrację, alergie i serce? Co daje dobrze serwisowana klima, a czym grozi zaniedbana? Przegląd badań o wpływie klimatyzacji na organizm człowieka - z wykresami i źródłami.',
+      'Jak klimatyzacja wpływa na sen, koncentrację i alergie? Poznaj korzyści, ryzyka i znaczenie serwisu. Przegląd badań z wykresami i źródłami.',
     keywords: [
       'wpływ klimatyzacji na zdrowie',
       'czy klimatyzacja jest zdrowa',

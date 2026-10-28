@@ -2,6 +2,7 @@
 import { PRICING } from '../config/site';
 import { routes } from '../i18n/content';
 import type { LineupModel } from '../config/lineups';
+import { getResponsiveImage } from '../utils/responsive-images';
 
 interface Props {
   brand: string;
@@ -31,6 +32,11 @@ const formatPrice = (value: number) => new Intl.NumberFormat('pl-PL', {
       const stackColors = primaryColor ? [primaryColor, ...backgroundColors] : [];
       const isColorPair = stackColors.length === 2;
       const stackImageWidth = isColorPair ? 76 : 59;
+      const image = getResponsiveImage(model.image, 480);
+      const cardSizes = '(min-width: 1160px) 340px, (min-width: 1060px) calc((100vw - 120px) / 3), (min-width: 760px) calc((100vw - 96px) / 2), calc(100vw - 76px)';
+      const stackSizes = isColorPair
+        ? '(min-width: 1160px) 270px, (min-width: 1060px) 24vw, (min-width: 760px) 37vw, 74vw'
+        : '(min-width: 1160px) 210px, (min-width: 1060px) 19vw, (min-width: 760px) 29vw, 57vw';
 
       return (
       <li>
@@ -38,7 +44,6 @@ const formatPrice = (value: number) => new Intl.NumberFormat('pl-PL', {
           class:list={['lineup-card', { 'lineup-card-featured': model.slug === featuredSlug, 'lineup-card-unavailable': isUnavailable }]}
           href={isUnavailable ? undefined : href}
           aria-disabled={isUnavailable ? 'true' : undefined}
-          aria-label={`${brand} ${model.name} - ${isUnavailable ? 'chwilowo niedostępny' : hasDetails ? 'zobacz szczegóły' : 'skonsultuj model'}`}
         >
           <span class="lineup-media">
             {model.badge && <span class="lineup-badge">{model.badge}</span>}
@@ -50,15 +55,18 @@ const formatPrice = (value: number) => new Intl.NumberFormat('pl-PL', {
                   const progress = stackColors.length > 1 ? index / (stackColors.length - 1) : 1;
                   const left = isColorPair ? 42 + progress * 16 : 29 + progress * 42;
                   const top = isColorPair ? 60 - progress * 20 : 72 - progress * 44;
+                  const colorImage = getResponsiveImage(color.image, 480);
 
                   return (
                     <img
                       class:list={['lineup-color-image', { 'is-front': isFront }]}
                       style={`--stack-left:${left}%;--stack-top:${top}%;--stack-z:${stackColors.length - index};--stack-width:${stackImageWidth}%`}
-                      src={color.image}
+                      src={colorImage.src}
+                      srcset={colorImage.srcset}
+                      sizes={stackSizes}
                       alt={isFront ? color.alt : ''}
-                      width="870"
-                      height="286"
+                      width={colorImage.width}
+                      height={colorImage.height}
                       loading="lazy"
                       decoding="async"
                       aria-hidden={isFront ? undefined : 'true'}
@@ -68,10 +76,12 @@ const formatPrice = (value: number) => new Intl.NumberFormat('pl-PL', {
               </span>
             ) : (
               <img
-                src={model.image}
+                src={image.src}
+                srcset={image.srcset}
+                sizes={cardSizes}
                 alt={model.alt}
-                width="640"
-                height="420"
+                width={image.width}
+                height={image.height}
                 loading="lazy"
                 decoding="async"
               />

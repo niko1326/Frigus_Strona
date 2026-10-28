@@ -85,9 +85,9 @@ export const labels = {
 
 export const pageMeta: Record<PageKey, PageMeta> = {
   home: {
-    title: `Klimatyzacja Gdańsk i Trójmiasto - montaż od ${PRICING.installFromPLN} zł | FRIGAC`,
+    title: `Klimatyzacja Gdańsk i Trójmiasto od ${PRICING.installFromPLN} zł | FRIGAC`,
     description:
-      `Klimatyzacja Gdańsk, Gdynia, Sopot i całe Trójmiasto. Klimatyzator z montażem od ${PRICING.installFromPLN} zł - Wrzeszcz, Przymorze, Zaspa, Oliwa, Jasień i inne osiedla, także w bloku. Montujemy również w Bydgoszczy i Toruniu. Standardowy montaż w 1 dzień, 5 lat gwarancji producenta.`,
+      `Klimatyzacja z montażem od ${PRICING.installFromPLN} zł w Gdańsku, Gdyni i Sopocie. Dobór urządzenia, montaż i serwis. Sprawdź ofertę FRIGAC i umów bezpłatną wizytę.`,
     keywords: [
       'klimatyzacja Gdańsk',
       'klima Gdańsk',
@@ -108,7 +108,7 @@ export const pageMeta: Record<PageKey, PageMeta> = {
   services: {
     title: 'Usługi: montaż i serwis klimatyzacji | FRIGAC',
     description:
-      'Pełny zakres usług FRIGAC: dobór klimatyzatora, montaż jednostki wewnętrznej i zewnętrznej, uruchomienie układu oraz przeglądy i czyszczenie. Sprawdź, co dokładnie obejmuje montaż.',
+      'Dobór i montaż klimatyzacji, uruchomienie, przeglądy i czyszczenie. Poznaj usługi FRIGAC i sprawdź, co obejmuje standardowy montaż klimatyzatora.',
     keywords: [
       'montaż klimatyzacji split',
       'serwis klimatyzacji',
@@ -120,7 +120,7 @@ export const pageMeta: Record<PageKey, PageMeta> = {
   pricing: {
     title: `Cennik montażu klimatyzacji od ${PRICING.installFromPLN} zł | FRIGAC`,
     description:
-      `Ile kosztuje montaż klimatyzacji? Klimatyzator z urządzeniem i standardowym montażem do ${PRICING.standardInstallationMeters} mb od ${PRICING.installFromPLN} zł. Zobacz, co wpływa na finalną cenę montażu.`,
+      `Klimatyzator ze standardowym montażem do ${PRICING.standardInstallationMeters} mb od ${PRICING.installFromPLN} zł. Sprawdź cennik FRIGAC, zakres usługi i koszty dodatkowych prac.`,
     keywords: [
       'cennik montażu klimatyzacji',
       'ile kosztuje montaż klimatyzacji',
@@ -135,7 +135,7 @@ export const pageMeta: Record<PageKey, PageMeta> = {
   faq: {
     title: 'Montaż klimatyzacji: najczęstsze pytania | FRIGAC',
     description:
-      'Ile trwa montaż klimatyzacji? Jak dobieramy miejsce montażu? Jaka jest gwarancja? Odpowiadamy na najczęstsze pytania o montaż i serwis klimatyzacji w mieszkaniu i domu.',
+      'Ile trwa montaż klimatyzacji, gdzie umieścić jednostkę i jaka jest gwarancja? Odpowiedzi FRIGAC na pytania o montaż i serwis w mieszkaniu i domu.',
     keywords: [
       'montaż klimatyzacji pytania',
       'ile trwa montaż klimatyzacji',
@@ -146,7 +146,7 @@ export const pageMeta: Record<PageKey, PageMeta> = {
   contact: {
     title: 'Kontakt i wycena klimatyzacji | FRIGAC',
     description:
-      'Skontaktuj się z FRIGAC w sprawie wyceny montażu klimatyzacji: 735 400 610. Działamy w Gdańsku, Gdyni, Sopocie i całym Trójmieście oraz w Bydgoszczy i Toruniu. Finalny zakres i cenę potwierdzamy po ustaleniu modelu i warunków montażu.',
+      'Zapytaj FRIGAC o wycenę montażu klimatyzacji: 735 400 610. Obsługujemy Gdańsk, Gdynię, Sopot, Bydgoszcz i Toruń. Umów bezpłatną wizytę.',
     keywords: [
       'klimatyzacja Gdańsk kontakt',
       'klima Gdańsk telefon',
@@ -159,7 +159,7 @@ export const pageMeta: Record<PageKey, PageMeta> = {
   about: {
     title: 'O nas: certyfikowani instalatorzy klimatyzacji | FRIGAC',
     description:
-      'Poznaj zespół FRIGAC: certyfikowani instalatorzy klimatyzacji (F-gazy) z Gdańska i Trójmiasta, działający także w Bydgoszczy i Toruniu. Ponad 20 modeli do wyboru, czysty montaż i 5 lat gwarancji producenta.',
+      'Poznaj FRIGAC i certyfikowanych instalatorów klimatyzacji. Montujemy w Trójmieście, Bydgoszczy i Toruniu. Sprawdź nasze kwalifikacje i sposób pracy.',
     keywords: [
       'instalator klimatyzacji Gdańsk',
       'firma klimatyzacyjna Trójmiasto',
@@ -171,7 +171,7 @@ export const pageMeta: Record<PageKey, PageMeta> = {
   blog: {
     title: 'Porady: dobór, montaż i serwis klimatyzacji | FRIGAC',
     description:
-      'Praktyczne porady o klimatyzacji: jak dobrać moc urządzenia do mieszkania, ile kosztuje montaż, jak często serwisować klimatyzację. Wiedza od certyfikowanych instalatorów.',
+      'Jak dobrać klimatyzację do mieszkania, ile kosztuje montaż i kiedy zlecić serwis? Praktyczne poradniki FRIGAC przygotowane przez instalatorów.',
     keywords: [
       'jaka klimatyzacja do mieszkania',
       'porady klimatyzacja',
@@ -180,9 +180,9 @@ export const pageMeta: Record<PageKey, PageMeta> = {
     ]
   },
   bydgoszcz: {
-    title: `Klimatyzacja Bydgoszcz - montaż klimatyzacji od ${PRICING.installFromPLN} zł | FRIGAC`,
+    title: `Klimatyzacja Bydgoszcz - montaż od ${PRICING.installFromPLN} zł | FRIGAC`,
     description:
-      `Klimatyzacja Bydgoszcz: montaż klimatyzacji w mieszkaniu, bloku i domu - Fordon, Osowa Góra, Szwederowo, Osielsko, Białe Błota, Toruń. Klimatyzator z montażem od ${PRICING.installFromPLN} zł, 5 lat gwarancji producenta.`,
+      `Klimatyzacja z montażem od ${PRICING.installFromPLN} zł w Bydgoszczy i okolicach. Dobór urządzenia do mieszkania i domu, montaż oraz serwis. Zapytaj FRIGAC o wycenę.`,
     keywords: [
       'klimatyzacja Bydgoszcz',
       'montaż klimatyzacji Bydgoszcz',
@@ -193,9 +193,9 @@ export const pageMeta: Record<PageKey, PageMeta> = {
     ]
   },
   trojmiasto: {
-    title: `Klimatyzacja Gdańsk, Gdynia, Sopot - montaż od ${PRICING.installFromPLN} zł | FRIGAC`,
+    title: `Klimatyzacja Gdańsk, Gdynia, Sopot od ${PRICING.installFromPLN} zł | FRIGAC`,
     description:
-      `Klimatyzacja Gdańsk, Gdynia i Sopot: montaż klimatyzacji w apartamentach, mieszkaniach w bloku i domach - Wrzeszcz, Przymorze, Zaspa, Oliwa, Jasień, Ujeścisko, Chełm, Morena, Osowa i całe Trójmiasto. Klimatyzator z montażem od ${PRICING.installFromPLN} zł, standardowy montaż w 1 dzień, 5 lat gwarancji producenta.`,
+      `Montaż i serwis klimatyzacji w Gdańsku, Gdyni i Sopocie. Urządzenie z montażem od ${PRICING.installFromPLN} zł. Poznaj ofertę FRIGAC dla mieszkań i domów w Trójmieście.`,
     keywords: [
       'klimatyzacja Gdańsk',
       'klima Gdańsk',
@@ -216,7 +216,7 @@ export const pageMeta: Record<PageKey, PageMeta> = {
   gree: {
     title: `Klimatyzatory Gree z montażem od ${PRICING.installFromPLN} zł | FRIGAC`,
     description:
-      `Klimatyzacja Gree Gdańsk, Gdynia, Sopot i całe Trójmiasto oraz Bydgoszcz i Toruń: montujemy ciche jednostki split Gree z Wi-Fi, grzaniem zimą i wysoką klasą energetyczną. Gree z montażem od ${PRICING.installFromPLN} zł, 5 lat gwarancji producenta.`,
+      `Klimatyzatory Gree z montażem od ${PRICING.installFromPLN} zł. Porównaj modele, moce, ceny i funkcje. Montaż FRIGAC w Trójmieście, Bydgoszczy i Toruniu.`,
     keywords: [
       'klimatyzacja Gree Gdańsk',
       'klimatyzator Gree montaż Gdańsk',
@@ -229,7 +229,7 @@ export const pageMeta: Record<PageKey, PageMeta> = {
   kaisai: {
     title: `Klimatyzatory Kaisai z montażem od ${PRICING.installFromPLN} zł | FRIGAC`,
     description:
-      `Klimatyzacja Kaisai Gdańsk, Gdynia, Sopot i całe Trójmiasto oraz Bydgoszcz i Toruń: montujemy ścienne jednostki split Kaisai ze sterowaniem Wi-Fi i grzaniem zimą. Kaisai z montażem od ${PRICING.installFromPLN} zł, 5 lat gwarancji producenta.`,
+      `Klimatyzatory Kaisai z montażem od ${PRICING.installFromPLN} zł. Poznaj modele, ceny i parametry. Dobór i montaż FRIGAC w Trójmieście, Bydgoszczy i Toruniu.`,
     keywords: [
       'klimatyzator Kaisai montaż Gdańsk',
       'klimatyzacja Kaisai Gdańsk',
@@ -242,7 +242,7 @@ export const pageMeta: Record<PageKey, PageMeta> = {
   tools: {
     title: 'Darmowe kalkulatory klimatyzacji online | FRIGAC',
     description:
-      'Bezpłatne narzędzia FRIGAC: kalkulator mocy klimatyzacji (kW i BTU na m2), kalkulator kosztów montażu oraz kalkulator zużycia prądu przez klimatyzację. Bez rejestracji, z raportem do pobrania.',
+      'Darmowe kalkulatory FRIGAC: dobór mocy klimatyzacji, wycena montażu i koszt zużycia prądu. Oblicz orientacyjny wynik online, bez rejestracji.',
     keywords: [
       'kalkulator klimatyzacji',
       'kalkulator mocy klimatyzacji',
@@ -268,7 +268,7 @@ export const pageMeta: Record<PageKey, PageMeta> = {
   calcCost: {
     title: 'Ile kosztuje klimatyzacja? Kalkulator kosztów | FRIGAC',
     description:
-      'Kalkulator kosztów klimatyzacji: poznaj orientacyjne widełki ceny urządzenia ze standardowym montażem. Podaj liczbę pomieszczeń, ich metraż, priorytet i długość instalacji.',
+      'Oblicz orientacyjny koszt klimatyzacji z montażem. Podaj liczbę i metraż pomieszczeń, priorytet oraz długość instalacji w kalkulatorze FRIGAC.',
     keywords: [
       'ile kosztuje klimatyzacja',
       'kalkulator kosztów klimatyzacji',
@@ -280,7 +280,7 @@ export const pageMeta: Record<PageKey, PageMeta> = {
   calcEnergy: {
     title: 'Ile prądu zużywa klimatyzacja? Kalkulator | FRIGAC',
     description:
-      'Sprawdź orientacyjne zużycie prądu i koszt chłodzenia klimatyzacją. Kalkulator uwzględnia moc urządzenia, SEER, cenę energii i sposób użytkowania.',
+      'Oszacuj zużycie prądu i koszt chłodzenia lub grzania klimatyzacją. Kalkulator FRIGAC uwzględnia model, SEER lub SCOP, metraż i cenę energii.',
     keywords: [
       'ile prądu zużywa klimatyzacja',
       'klimatyzacja koszt prądu',
@@ -290,7 +290,7 @@ export const pageMeta: Record<PageKey, PageMeta> = {
     ]
   },
   privacy: {
-    title: 'Polityka prywatności | FRIGAC',
+    title: 'Polityka prywatności serwisu FRIGAC',
     description:
       'Polityka prywatności serwisu FRIGAC: jakie dane przetwarzamy, w jakim celu i jakie prawa przysługują Ci zgodnie z RODO.',
     keywords: []

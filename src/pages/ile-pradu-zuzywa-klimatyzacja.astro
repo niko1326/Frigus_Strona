@@ -208,7 +208,7 @@ const appSchema = {
       <p>SEER to sezonowy współczynnik efektywności chłodzenia. Uwzględnia pracę klimatyzatora przy różnych temperaturach i częściowym obciążeniu w ciągu sezonu. Im wyższy SEER, tym mniej energii urządzenie potrzebuje do zapewnienia tej samej ilości chłodzenia w warunkach testowych.</p>
       <p>Na etykiecie energetycznej urządzenia można znaleźć także deklarowane roczne zużycie energii w chłodzeniu. Jeśli znasz konkretny model klimatyzatora, ta wartość jest lepszym punktem odniesienia niż sam SEER. Nadal jest to wartość referencyjna, nie pomiar w Twoim domu.</p>
       <h2>SEER a koszt sezonu - klimatyzacja 3,5 kW</h2>
-      <div class="table-wrap">
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Zużycie energii klimatyzacji — tabela przewijana">
         <table class="tool-table">
           <caption class="visually-hidden">Referencyjne zużycie i koszt sezonu dla mocy 3,5 kW oraz ceny 1,20 zł/kWh</caption>
           <thead><tr><th scope="col">SEER</th><th scope="col">Zużycie (kWh/sezon)</th><th scope="col">Koszt (zł/sezon)</th></tr></thead>
@@ -538,6 +538,10 @@ const appSchema = {
   @keyframes mode-panel-in { from { opacity: 0.4; transform: translateY(3px); } to { opacity: 1; transform: translateY(0); } }
   .brand-switch { gap: 0.4rem; }
   .brand-switch label { min-width: 6.5rem; }
+  /* Reserve the space before JavaScript restores a model from the query string. */
+  #variant-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-content: start; gap: 0.5rem; min-block-size: 96px; }
+  #variant-options :global(label) { min-width: 0; padding-inline: 0.45rem; }
+  #variant-hint { min-block-size: 2lh; }
   .energy-choice-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.45rem; }
   .energy-choice-grid label { display: grid; align-content: center; justify-content: start; gap: 0.1rem; width: 100%; min-height: 58px; padding: 0.55rem 0.7rem; white-space: normal; border-radius: 10px; text-align: left; }
   .energy-choice-grid small { font-size: 0.78rem; line-height: 1.35; font-weight: 400; }
@@ -549,6 +553,11 @@ const appSchema = {
   .result-selection div { min-width: 0; }
   .result-selection dt { color: #bfe0f7; font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; }
   .result-selection dd { margin: 0.2rem 0 0; color: #fff; font-size: 0.9rem; font-weight: 600; line-height: 1.3; overflow-wrap: anywhere; }
+  .result-selection div:first-child dd { min-block-size: 3lh; }
+  #eres-source, #energy-error { min-block-size: 3lh; }
+  @media (min-width: 480px) {
+    #variant-options { grid-template-columns: repeat(4, minmax(0, 1fr)); min-block-size: 44px; }
+  }
   @media (min-width: 900px) {
     .energy-choice-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   }

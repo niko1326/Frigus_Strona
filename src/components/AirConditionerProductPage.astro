@@ -11,6 +11,7 @@ import {
 } from '../utils/product-energy-link.mjs';
 import { buildProductStructuredData } from '../utils/product-structured-data';
 import { toColorParam, toPowerParam } from '../utils/product-variant-url.mjs';
+import { getResponsiveImage } from '../utils/responsive-images';
 
 interface Props {
   brand: string;
@@ -33,15 +34,16 @@ const formatNumber = (value: number) => new Intl.NumberFormat('pl-PL', {
   minimumFractionDigits: Number.isInteger(value) ? 0 : 1,
   maximumFractionDigits: 2
 }).format(value);
-const powerLabels = model.variants.map((variant) => `${variant.label} kW`).join(', ');
+const powerLabels = `${model.variants.map((variant) => variant.label).join('/')} kW`;
 const maxSeer = Math.max(...model.variants.map((variant) => variant.seer));
 const maxScop = Math.max(...model.variants.map((variant) => variant.scop));
+const metaProductName = `${brand} ${energyCtaModelName}`;
 const title = hasPricing
-  ? `${productName} z montażem - cena i dane techniczne | FRIGAC`
-  : `${productName} z montażem - dane techniczne | FRIGAC`;
+  ? `${metaProductName} - cena z montażem i parametry | FRIGAC`
+  : `${metaProductName} - montaż i dane techniczne | FRIGAC`;
 const description = hasPricing && minimumPrice
-  ? `${productName}: moce ${powerLabels}, SEER do ${formatNumber(maxSeer)} i SCOP do ${formatNumber(maxScop)}. Cena z montażem od ${minimumPrice} zł. Sprawdź parametry i poproś o wycenę.`
-  : `${productName}: moce ${powerLabels}, SEER do ${formatNumber(maxSeer)} i SCOP do ${formatNumber(maxScop)}. Sprawdź funkcje, parametry i poproś o wycenę montażu.`;
+  ? `${productName}: moce ${powerLabels}, SEER do ${formatNumber(maxSeer)} i SCOP do ${formatNumber(maxScop)}. Cena z montażem od ${minimumPrice} zł. Porównaj parametry i zamów wycenę.`
+  : `${productName}: moce ${powerLabels}, SEER do ${formatNumber(maxSeer)} i SCOP do ${formatNumber(maxScop)}. Sprawdź parametry i zapytaj o wycenę montażu.`;
 const colorOptions = model.product.colors ?? [];
 const colorTierOptions = colorOptions.filter((color) => color.priceTier === 'color');
 const colorTierLabel = colorTierOptions.length === 1 ? colorTierOptions[0].name : 'Kolor';
@@ -49,6 +51,8 @@ const hasColorTier = colorTierOptions.length > 0;
 const firstColor = colorOptions.find((color) => color.name === 'Biały') ?? colorOptions[0];
 const productImage = firstColor?.image ?? model.image;
 const productImageAlt = firstColor?.alt ?? model.alt;
+const responsiveProductImage = getResponsiveImage(productImage);
+const productImageSizes = '(min-width: 1160px) 475px, (min-width: 900px) 44vw, (min-width: 760px) calc(100vw - 120px), calc(100vw - 66px)';
 const firstVariant = model.variants[0];
 const firstVariantPrice = firstColor?.priceTier === 'color'
   ? firstVariant.colorPriceFromPLN ?? firstVariant.priceFromPLN
@@ -82,8 +86,8 @@ const productSchema = buildProductStructuredData({
   currentPath={currentPath}
   ogImage={productImage}
   ogImageAlt={productImageAlt}
-  ogImageWidth={870}
-  ogImageHeight={326}
+  ogImageWidth={responsiveProductImage.width}
+  ogImageHeight={responsiveProductImage.height}
   extraSchema={[productSchema]}
 >
   <Breadcrumbs
@@ -98,10 +102,12 @@ const productSchema = buildProductStructuredData({
       <figure class="product-hero-media">
         {model.badge && <span class="lineup-badge">{model.badge}</span>}
         <img
-          src={productImage}
+          src={responsiveProductImage.src}
+          srcset={responsiveProductImage.srcset}
+          sizes={productImageSizes}
           alt={productImageAlt}
-          width="870"
-          height="326"
+          width={responsiveProductImage.width}
+          height={responsiveProductImage.height}
           loading="eager"
           fetchpriority="high"
           decoding="async"
@@ -120,14 +126,19 @@ const productSchema = buildProductStructuredData({
               Wybierz kolor: <strong data-product-color-label>{firstColor?.name}</strong>
             </legend>
             <div class="product-color-options">
-              {colorOptions.map((color) => (
+              {colorOptions.map((color) => {
+                const colorImage = getResponsiveImage(color.image);
+                return (
                 <button
                   type="button"
                   class:list={['product-color-option', { 'is-selected': color === firstColor }]}
                   aria-label={`Pokaż ${productName} w kolorze ${color.name}`}
                   aria-pressed={color === firstColor ? 'true' : 'false'}
                   data-product-color
-                  data-image={color.image}
+                  data-image={colorImage.src}
+                  data-image-srcset={colorImage.srcset}
+                  data-image-width={colorImage.width}
+                  data-image-height={colorImage.height}
                   data-alt={color.alt}
                   data-color-name={color.name}
                   data-color-param={toColorParam(color.name)}
@@ -140,7 +151,8 @@ const productSchema = buildProductStructuredData({
                   ></span>
                   <span>{color.name}</span>
                 </button>
-              ))}
+                );
+              })}
             </div>
           </fieldset>
         )}
@@ -423,8 +435,12 @@ const productSchema = buildProductStructuredData({
       });
 
       if (colorImage instanceof HTMLImageElement) {
+        if (button.dataset.imageSrcset) colorImage.srcset = button.dataset.imageSrcset;
+        else colorImage.removeAttribute('srcset');
         if (button.dataset.image) colorImage.src = button.dataset.image;
         if (button.dataset.alt) colorImage.alt = button.dataset.alt;
+        if (button.dataset.imageWidth) colorImage.width = Number(button.dataset.imageWidth);
+        if (button.dataset.imageHeight) colorImage.height = Number(button.dataset.imageHeight);
       }
       if (colorLabel && button.dataset.colorName) colorLabel.textContent = button.dataset.colorName;
       updatePrice();

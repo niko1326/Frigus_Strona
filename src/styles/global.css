@@ -12,19 +12,21 @@
   --tile-dark-2: #12171e;
   --ink: #1b1d20;
   --muted: #464a51;
-  --muted-soft: #6b7076;
+  --muted-soft: #626970;
   --on-dark: #ffffff;
   --on-dark-muted: #dce5ee;
   --line: #e4e6e9;
   --line-on-dark: rgba(255, 255, 255, 0.12);
 
-  --accent: #0a72c2;
+  --accent: #086ebc;
   --accent-hover: #0862a7;
   --accent-on-dark: #56b7ff;
   --accent-tint: #e8f3fb;
+  --on-blue-muted: #e8f3fb;
 
-  --convert: #e8641b;
-  --convert-hover: #cf5613;
+  /* Biały tekst zachowuje kontrast WCAG AA także w przyciskach i nawigacji. */
+  --convert: #c74e10;
+  --convert-hover: #b8450b;
 
   --radius-card: 18px;
   --radius-media: 12px;
@@ -48,6 +50,10 @@
 
 * {
   box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
 }
 
 html,
@@ -172,11 +178,11 @@ strong {
 }
 
 .section-blue p {
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--on-blue-muted);
 }
 
 .section-blue .eyebrow {
-  color: #bfe0f7;
+  color: var(--on-blue-muted);
 }
 
 .section-blue .text-bright {
@@ -276,9 +282,12 @@ strong {
   vertical-align: baseline;
 }
 
-.section-dark .text-link,
-.section-blue .text-link {
+.section-dark .text-link {
   color: var(--accent-on-dark);
+}
+
+.section-blue .text-link {
+  color: var(--on-dark);
 }
 
 .section-dark .text-link:hover,
@@ -726,7 +735,7 @@ strong {
 
 .section-blue .price-details-link,
 .cta-band .price-details-link {
-  color: rgba(255, 255, 255, 0.72);
+  color: var(--on-blue-muted);
 }
 
 .hero-model-slot,
@@ -1259,7 +1268,7 @@ strong {
 }
 
 .cta-band p {
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--on-blue-muted);
   margin-top: 0.45rem;
 }
 
@@ -1391,7 +1400,7 @@ strong {
   background: linear-gradient(
     105deg,
     transparent 32%,
-    rgba(255, 255, 255, 0.35) 50%,
+    rgba(255, 255, 255, 0.08) 50%,
     transparent 64%
   );
   transform: translateX(-130%);
@@ -1423,6 +1432,7 @@ strong {
 
 .section-dark .cta-secondary,
 .hero .cta-secondary,
+.section-blue .cta-secondary,
 .cta-band .cta-secondary {
   color: var(--on-dark);
   border-color: rgba(255, 255, 255, 0.4);
@@ -1430,7 +1440,9 @@ strong {
 
 .section-dark .cta-secondary:hover,
 .hero .cta-secondary:hover,
+.section-blue .cta-secondary:hover,
 .cta-band .cta-secondary:hover {
+  color: var(--on-dark);
   border-color: rgba(255, 255, 255, 0.85);
 }
 
@@ -1467,7 +1479,8 @@ strong {
 
 a:focus-visible,
 button:focus-visible,
-summary:focus-visible {
+summary:focus-visible,
+[tabindex="0"]:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 4px;
@@ -2418,7 +2431,7 @@ summary:focus-visible {
 }
 
 .tool-result .eyebrow {
-  color: #bfe0f7;
+  color: var(--on-blue-muted);
   margin-bottom: 0;
 }
 
@@ -2441,7 +2454,7 @@ summary:focus-visible {
 }
 
 .result-sub {
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--on-blue-muted);
   font-size: 0.9rem;
   margin-top: -0.7rem;
 }
@@ -2460,7 +2473,7 @@ summary:focus-visible {
 }
 
 .result-row dt {
-  color: #bfe0f7;
+  color: var(--on-blue-muted);
   font-size: 0.72rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -2500,7 +2513,7 @@ summary:focus-visible {
 
 .tool-disclaimer {
   font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--on-blue-muted);
   line-height: 1.5;
 }
 
@@ -3873,7 +3886,7 @@ summary:focus-visible {
   font-size: clamp(4rem, 12vw, 7rem);
   font-weight: 200;
   letter-spacing: -0.04em;
-  color: var(--line);
+  color: var(--muted-soft);
   line-height: 1;
 }
 

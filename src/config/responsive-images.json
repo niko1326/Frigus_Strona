@@ -1,0 +1,762 @@
+{
+  "/photos/modele/gree-airy.webp": {
+    "width": 640,
+    "height": 420,
+    "variants": [
+      {
+        "src": "/photos/modele/gree-airy.webp",
+        "width": 640
+      }
+    ]
+  },
+  "/photos/modele/gree-amber-prestige.webp": {
+    "width": 640,
+    "height": 420,
+    "variants": [
+      {
+        "src": "/photos/modele/gree-amber-prestige.webp",
+        "width": 640
+      }
+    ]
+  },
+  "/photos/modele/gree-clivia.webp": {
+    "width": 640,
+    "height": 420,
+    "variants": [
+      {
+        "src": "/photos/modele/gree-clivia.webp",
+        "width": 640
+      }
+    ]
+  },
+  "/photos/modele/gree-cosmo-pearl.webp": {
+    "width": 640,
+    "height": 420,
+    "variants": [
+      {
+        "src": "/photos/modele/gree-cosmo-pearl.webp",
+        "width": 640
+      }
+    ]
+  },
+  "/photos/modele/gree-fairy.webp": {
+    "width": 640,
+    "height": 420,
+    "variants": [
+      {
+        "src": "/photos/modele/gree-fairy.webp",
+        "width": 640
+      }
+    ]
+  },
+  "/photos/modele/gree-g-time.webp": {
+    "width": 640,
+    "height": 420,
+    "variants": [
+      {
+        "src": "/photos/modele/gree-g-time.webp",
+        "width": 640
+      }
+    ]
+  },
+  "/photos/modele/gree-pular-pro.webp": {
+    "width": 640,
+    "height": 420,
+    "variants": [
+      {
+        "src": "/photos/modele/gree-pular-pro.webp",
+        "width": 640
+      }
+    ]
+  },
+  "/photos/modele/gree-pular.webp": {
+    "width": 640,
+    "height": 420,
+    "variants": [
+      {
+        "src": "/photos/modele/gree-pular.webp",
+        "width": 640
+      }
+    ]
+  },
+  "/photos/modele/gree-u-crown.webp": {
+    "width": 640,
+    "height": 420,
+    "variants": [
+      {
+        "src": "/photos/modele/gree-u-crown.webp",
+        "width": 640
+      }
+    ]
+  },
+  "/photos/modele/kaisai-air.webp": {
+    "width": 870,
+    "height": 320,
+    "variants": [
+      {
+        "src": "/photos/modele/kaisai-air.webp",
+        "width": 870
+      }
+    ]
+  },
+  "/photos/modele/kaisai-art.webp": {
+    "width": 640,
+    "height": 420,
+    "variants": [
+      {
+        "src": "/photos/modele/kaisai-art.webp",
+        "width": 640
+      }
+    ]
+  },
+  "/photos/modele/kaisai-evo.webp": {
+    "width": 640,
+    "height": 420,
+    "variants": [
+      {
+        "src": "/photos/modele/kaisai-evo.webp",
+        "width": 640
+      }
+    ]
+  },
+  "/photos/modele/kaisai-fly-plus.webp": {
+    "width": 640,
+    "height": 420,
+    "variants": [
+      {
+        "src": "/photos/modele/kaisai-fly-plus.webp",
+        "width": 640
+      }
+    ]
+  },
+  "/photos/modele/kaisai-geo-plus.webp": {
+    "width": 640,
+    "height": 420,
+    "variants": [
+      {
+        "src": "/photos/modele/kaisai-geo-plus.webp",
+        "width": 640
+      }
+    ]
+  },
+  "/photos/modele/kaisai-geo.webp": {
+    "width": 632,
+    "height": 395,
+    "variants": [
+      {
+        "src": "/photos/modele/kaisai-geo.webp",
+        "width": 632
+      }
+    ]
+  },
+  "/photos/modele/kaisai-ice.webp": {
+    "width": 640,
+    "height": 420,
+    "variants": [
+      {
+        "src": "/photos/modele/kaisai-ice.webp",
+        "width": 640
+      }
+    ]
+  },
+  "/photos/modele/kaisai-konsola.webp": {
+    "width": 800,
+    "height": 800,
+    "variants": [
+      {
+        "src": "/photos/modele/kaisai-konsola.webp",
+        "width": 800
+      }
+    ]
+  },
+  "/photos/modele/kaisai-nordic.webp": {
+    "width": 640,
+    "height": 420,
+    "variants": [
+      {
+        "src": "/photos/modele/kaisai-nordic.webp",
+        "width": 640
+      }
+    ]
+  },
+  "/photos/modele/kaisai-pro-heat-plus.webp": {
+    "width": 640,
+    "height": 420,
+    "variants": [
+      {
+        "src": "/photos/modele/kaisai-pro-heat-plus.webp",
+        "width": 640
+      }
+    ]
+  },
+  "/photos/modele/kolory/gree-airy-bialy.webp": {
+    "width": 870,
+    "height": 286,
+    "variants": [
+      {
+        "src": "/photos/modele/kolory/responsive/gree-airy-bialy-240.webp",
+        "width": 240
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/gree-airy-bialy-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/gree-airy-bialy-720.webp",
+        "width": 720
+      },
+      {
+        "src": "/photos/modele/kolory/gree-airy-bialy.webp",
+        "width": 870
+      }
+    ]
+  },
+  "/photos/modele/kolory/gree-airy-ciemny.webp": {
+    "width": 870,
+    "height": 286,
+    "variants": [
+      {
+        "src": "/photos/modele/kolory/responsive/gree-airy-ciemny-240.webp",
+        "width": 240
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/gree-airy-ciemny-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/gree-airy-ciemny-720.webp",
+        "width": 720
+      },
+      {
+        "src": "/photos/modele/kolory/gree-airy-ciemny.webp",
+        "width": 870
+      }
+    ]
+  },
+  "/photos/modele/kolory/gree-airy-srebrny.webp": {
+    "width": 870,
+    "height": 286,
+    "variants": [
+      {
+        "src": "/photos/modele/kolory/responsive/gree-airy-srebrny-240.webp",
+        "width": 240
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/gree-airy-srebrny-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/gree-airy-srebrny-720.webp",
+        "width": 720
+      },
+      {
+        "src": "/photos/modele/kolory/gree-airy-srebrny.webp",
+        "width": 870
+      }
+    ]
+  },
+  "/photos/modele/kolory/gree-airy-szampanski.webp": {
+    "width": 870,
+    "height": 286,
+    "variants": [
+      {
+        "src": "/photos/modele/kolory/responsive/gree-airy-szampanski-240.webp",
+        "width": 240
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/gree-airy-szampanski-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/gree-airy-szampanski-720.webp",
+        "width": 720
+      },
+      {
+        "src": "/photos/modele/kolory/gree-airy-szampanski.webp",
+        "width": 870
+      }
+    ]
+  },
+  "/photos/modele/kolory/gree-clivia-bezowy-kamien.webp": {
+    "width": 870,
+    "height": 306,
+    "variants": [
+      {
+        "src": "/photos/modele/kolory/responsive/gree-clivia-bezowy-kamien-240.webp",
+        "width": 240
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/gree-clivia-bezowy-kamien-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/gree-clivia-bezowy-kamien-720.webp",
+        "width": 720
+      },
+      {
+        "src": "/photos/modele/kolory/gree-clivia-bezowy-kamien.webp",
+        "width": 870
+      }
+    ]
+  },
+  "/photos/modele/kolory/gree-clivia-bialy.webp": {
+    "width": 870,
+    "height": 307,
+    "variants": [
+      {
+        "src": "/photos/modele/kolory/responsive/gree-clivia-bialy-240.webp",
+        "width": 240
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/gree-clivia-bialy-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/gree-clivia-bialy-720.webp",
+        "width": 720
+      },
+      {
+        "src": "/photos/modele/kolory/gree-clivia-bialy.webp",
+        "width": 870
+      }
+    ]
+  },
+  "/photos/modele/kolory/gree-clivia-granatowy.webp": {
+    "width": 870,
+    "height": 306,
+    "variants": [
+      {
+        "src": "/photos/modele/kolory/responsive/gree-clivia-granatowy-240.webp",
+        "width": 240
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/gree-clivia-granatowy-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/gree-clivia-granatowy-720.webp",
+        "width": 720
+      },
+      {
+        "src": "/photos/modele/kolory/gree-clivia-granatowy.webp",
+        "width": 870
+      }
+    ]
+  },
+  "/photos/modele/kolory/gree-clivia-satynowa-czern.webp": {
+    "width": 870,
+    "height": 307,
+    "variants": [
+      {
+        "src": "/photos/modele/kolory/responsive/gree-clivia-satynowa-czern-240.webp",
+        "width": 240
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/gree-clivia-satynowa-czern-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/gree-clivia-satynowa-czern-720.webp",
+        "width": 720
+      },
+      {
+        "src": "/photos/modele/kolory/gree-clivia-satynowa-czern.webp",
+        "width": 870
+      }
+    ]
+  },
+  "/photos/modele/kolory/gree-clivia-srebrny.webp": {
+    "width": 870,
+    "height": 307,
+    "variants": [
+      {
+        "src": "/photos/modele/kolory/responsive/gree-clivia-srebrny-240.webp",
+        "width": 240
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/gree-clivia-srebrny-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/gree-clivia-srebrny-720.webp",
+        "width": 720
+      },
+      {
+        "src": "/photos/modele/kolory/gree-clivia-srebrny.webp",
+        "width": 870
+      }
+    ]
+  },
+  "/photos/modele/kolory/gree-fairy-bialy.webp": {
+    "width": 870,
+    "height": 267,
+    "variants": [
+      {
+        "src": "/photos/modele/kolory/responsive/gree-fairy-bialy-240.webp",
+        "width": 240
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/gree-fairy-bialy-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/gree-fairy-bialy-720.webp",
+        "width": 720
+      },
+      {
+        "src": "/photos/modele/kolory/gree-fairy-bialy.webp",
+        "width": 870
+      }
+    ]
+  },
+  "/photos/modele/kolory/gree-fairy-ciemny.webp": {
+    "width": 870,
+    "height": 267,
+    "variants": [
+      {
+        "src": "/photos/modele/kolory/responsive/gree-fairy-ciemny-240.webp",
+        "width": 240
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/gree-fairy-ciemny-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/gree-fairy-ciemny-720.webp",
+        "width": 720
+      },
+      {
+        "src": "/photos/modele/kolory/gree-fairy-ciemny.webp",
+        "width": 870
+      }
+    ]
+  },
+  "/photos/modele/kolory/gree-fairy-srebrny.webp": {
+    "width": 870,
+    "height": 267,
+    "variants": [
+      {
+        "src": "/photos/modele/kolory/responsive/gree-fairy-srebrny-240.webp",
+        "width": 240
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/gree-fairy-srebrny-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/gree-fairy-srebrny-720.webp",
+        "width": 720
+      },
+      {
+        "src": "/photos/modele/kolory/gree-fairy-srebrny.webp",
+        "width": 870
+      }
+    ]
+  },
+  "/photos/modele/kolory/gree-pular-pro-bialy.webp": {
+    "width": 870,
+    "height": 326,
+    "variants": [
+      {
+        "src": "/photos/modele/kolory/responsive/gree-pular-pro-bialy-240.webp",
+        "width": 240
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/gree-pular-pro-bialy-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/gree-pular-pro-bialy-720.webp",
+        "width": 720
+      },
+      {
+        "src": "/photos/modele/kolory/gree-pular-pro-bialy.webp",
+        "width": 870
+      }
+    ]
+  },
+  "/photos/modele/kolory/gree-pular-pro-ciemny.webp": {
+    "width": 870,
+    "height": 319,
+    "variants": [
+      {
+        "src": "/photos/modele/kolory/responsive/gree-pular-pro-ciemny-240.webp",
+        "width": 240
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/gree-pular-pro-ciemny-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/gree-pular-pro-ciemny-720.webp",
+        "width": 720
+      },
+      {
+        "src": "/photos/modele/kolory/gree-pular-pro-ciemny.webp",
+        "width": 870
+      }
+    ]
+  },
+  "/photos/modele/kolory/kaisai-art-bialy.webp": {
+    "width": 870,
+    "height": 320,
+    "variants": [
+      {
+        "src": "/photos/modele/kolory/responsive/kaisai-art-bialy-240.webp",
+        "width": 240
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/kaisai-art-bialy-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/kaisai-art-bialy-720.webp",
+        "width": 720
+      },
+      {
+        "src": "/photos/modele/kolory/kaisai-art-bialy.webp",
+        "width": 870
+      }
+    ]
+  },
+  "/photos/modele/kolory/kaisai-art-czarny.webp": {
+    "width": 870,
+    "height": 320,
+    "variants": [
+      {
+        "src": "/photos/modele/kolory/responsive/kaisai-art-czarny-240.webp",
+        "width": 240
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/kaisai-art-czarny-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/kaisai-art-czarny-720.webp",
+        "width": 720
+      },
+      {
+        "src": "/photos/modele/kolory/kaisai-art-czarny.webp",
+        "width": 870
+      }
+    ]
+  },
+  "/photos/modele/kolory/kaisai-geo-plus-bialy.webp": {
+    "width": 870,
+    "height": 320,
+    "variants": [
+      {
+        "src": "/photos/modele/kolory/responsive/kaisai-geo-plus-bialy-240.webp",
+        "width": 240
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/kaisai-geo-plus-bialy-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/kaisai-geo-plus-bialy-720.webp",
+        "width": 720
+      },
+      {
+        "src": "/photos/modele/kolory/kaisai-geo-plus-bialy.webp",
+        "width": 870
+      }
+    ]
+  },
+  "/photos/modele/kolory/kaisai-geo-plus-szary.webp": {
+    "width": 870,
+    "height": 320,
+    "variants": [
+      {
+        "src": "/photos/modele/kolory/responsive/kaisai-geo-plus-szary-240.webp",
+        "width": 240
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/kaisai-geo-plus-szary-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/kaisai-geo-plus-szary-720.webp",
+        "width": 720
+      },
+      {
+        "src": "/photos/modele/kolory/kaisai-geo-plus-szary.webp",
+        "width": 870
+      }
+    ]
+  },
+  "/photos/modele/kolory/kaisai-ice-bialy.webp": {
+    "width": 870,
+    "height": 320,
+    "variants": [
+      {
+        "src": "/photos/modele/kolory/responsive/kaisai-ice-bialy-240.webp",
+        "width": 240
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/kaisai-ice-bialy-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/kaisai-ice-bialy-720.webp",
+        "width": 720
+      },
+      {
+        "src": "/photos/modele/kolory/kaisai-ice-bialy.webp",
+        "width": 870
+      }
+    ]
+  },
+  "/photos/modele/kolory/kaisai-ice-czarny.webp": {
+    "width": 870,
+    "height": 320,
+    "variants": [
+      {
+        "src": "/photos/modele/kolory/responsive/kaisai-ice-czarny-240.webp",
+        "width": 240
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/kaisai-ice-czarny-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/kaisai-ice-czarny-720.webp",
+        "width": 720
+      },
+      {
+        "src": "/photos/modele/kolory/kaisai-ice-czarny.webp",
+        "width": 870
+      }
+    ]
+  },
+  "/photos/modele/kolory/kaisai-pro-heat-plus-bialy.webp": {
+    "width": 870,
+    "height": 320,
+    "variants": [
+      {
+        "src": "/photos/modele/kolory/responsive/kaisai-pro-heat-plus-bialy-240.webp",
+        "width": 240
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/kaisai-pro-heat-plus-bialy-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/kaisai-pro-heat-plus-bialy-720.webp",
+        "width": 720
+      },
+      {
+        "src": "/photos/modele/kolory/kaisai-pro-heat-plus-bialy.webp",
+        "width": 870
+      }
+    ]
+  },
+  "/photos/modele/kolory/kaisai-pro-heat-plus-czarny.webp": {
+    "width": 870,
+    "height": 320,
+    "variants": [
+      {
+        "src": "/photos/modele/kolory/responsive/kaisai-pro-heat-plus-czarny-240.webp",
+        "width": 240
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/kaisai-pro-heat-plus-czarny-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/photos/modele/kolory/responsive/kaisai-pro-heat-plus-czarny-720.webp",
+        "width": 720
+      },
+      {
+        "src": "/photos/modele/kolory/kaisai-pro-heat-plus-czarny.webp",
+        "width": 870
+      }
+    ]
+  },
+  "/certificates/fgaz-hubert.webp": {
+    "width": 1050,
+    "height": 694,
+    "variants": [
+      {
+        "src": "/certificates/responsive/fgaz-hubert-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/certificates/responsive/fgaz-hubert-720.webp",
+        "width": 720
+      },
+      {
+        "src": "/certificates/responsive/fgaz-hubert-1040.webp",
+        "width": 1040
+      }
+    ]
+  },
+  "/certificates/fgaz-nikodem.webp": {
+    "width": 1010,
+    "height": 660,
+    "variants": [
+      {
+        "src": "/certificates/responsive/fgaz-nikodem-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/certificates/responsive/fgaz-nikodem-720.webp",
+        "width": 720
+      }
+    ]
+  },
+  "/certificates/gree-hubert.webp": {
+    "width": 2105,
+    "height": 1489,
+    "variants": [
+      {
+        "src": "/certificates/responsive/gree-hubert-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/certificates/responsive/gree-hubert-720.webp",
+        "width": 720
+      },
+      {
+        "src": "/certificates/responsive/gree-hubert-1040.webp",
+        "width": 1040
+      }
+    ]
+  },
+  "/certificates/gree-nikodem.webp": {
+    "width": 2105,
+    "height": 1489,
+    "variants": [
+      {
+        "src": "/certificates/responsive/gree-nikodem-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/certificates/responsive/gree-nikodem-720.webp",
+        "width": 720
+      },
+      {
+        "src": "/certificates/responsive/gree-nikodem-1040.webp",
+        "width": 1040
+      }
+    ]
+  },
+  "/certificates/kaisai.webp": {
+    "width": 1489,
+    "height": 2105,
+    "variants": [
+      {
+        "src": "/certificates/responsive/kaisai-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/certificates/responsive/kaisai-720.webp",
+        "width": 720
+      },
+      {
+        "src": "/certificates/responsive/kaisai-1040.webp",
+        "width": 1040
+      }
+    ]
+  }
+}
