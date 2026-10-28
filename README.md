@@ -6,7 +6,7 @@ Minimalistyczna, szybka strona dla FRIGAC (montaż klimatyzacji: Bydgoszcz, Toru
 
 - Astro + TypeScript
 - Czyste CSS (bez ciężkiego JS, bez frameworków)
-- Strona w pełni statyczna, tylko PL
+- Publiczna strona statyczna, tylko PL; wewnętrzny panel chroni Cloudflare Worker
 
 ## Local development
 
@@ -90,9 +90,23 @@ Domena jest ustawiona na `https://frigac.pl` w trzech miejscach:
 
 `src/components/PolandMap.astro` - geometria województw z simplemaps.com (bezpłatna licencja komercyjna). Podświetlone regiony mają klasę `is-active`.
 
-## Deploy na Cloudflare Pages
+## Katalog techniczny i oferty
 
-1. Wypchnij repo do GitHub.
-2. Cloudflare Dashboard: Pages -> Create a project -> Connect to Git.
-3. Build settings: preset `Astro`, build `npm run build`, output `dist`.
-4. Podepnij domenę `frigac.pl`.
+Modele, warianty, ceny, kolory, zdjęcia i uzupełnienia techniczne: `src/config/lineups.ts`.
+Rejestr źródeł: `src/config/product-sources.json`. Braki są zwracane jako `null`.
+Zastane dane pozostają zachowane; różnice ze źródłami wymagają ręcznej decyzji.
+
+- [Raport researchu i braków](docs/product-research/REPORT.md), [pełny audyt CSV](docs/product-research/AUDIT.csv).
+- Ponowne wygenerowanie raportu: `npm run audit:products`.
+- Kontrola danych publikowanych przez kalkulatory po buildzie: `npm run check:public-payload`.
+- Panel `/panel/oferty/`: [obsługa, autoryzacja i sekrety](docs/offers-panel.md).
+- Testy przeglądarkowe i PDF: [instrukcja](docs/offers-qa.md).
+
+## Deploy na Cloudflare Workers
+
+`wrangler.toml` kieruje żądania do Workera przed obsługą statycznego HTML.
+W docelowym projekcie ustaw sekrety `PANEL_USERNAME` i `PANEL_PASSWORD`, następnie użyj
+`npm run deploy`. Szczegóły i kontrolę po publikacji opisuje [instrukcja panelu](docs/offers-panel.md).
+
+Samo opublikowanie `dist/` na Pages lub innym hostingu statycznym omija autoryzację.
+Dotychczasowe wdrożenie Pages wymaga migracji domeny do Workera albo osobnej ochrony hostingowej.

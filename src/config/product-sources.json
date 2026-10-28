@@ -1,0 +1,278 @@
+{
+  "gree-rac-2026": {
+    "url": "https://gree.pl/pliki-do-pobrania/katalog-rac",
+    "resolvedUrl": "https://publuu.com/flip-book/486678/1815613",
+    "title": "GREE Katalog RAC/LCAC 2026",
+    "publisher": "GREE / Free Polska",
+    "kind": "manufacturer-catalogue",
+    "accessedDate": "2026-10-28",
+    "sha256": "7a14c5d7e1d799a531500c8a0f7a321fa8d5c9547bb04126e47eff824699e1a6",
+    "locator": "PDF spread pages 23, 30, 37, 43, 47, 51, 55, 58, 61; printed pages 44–45, 58–59, 72–73, 84–85, 92–93, 100–101, 108–109, 114–115, 120–121",
+    "notes": "Public manufacturer-linked Publuu edition 13, downloaded through its public download link; signed CDN URL intentionally not stored."
+  },
+  "gree-g-time-page": {
+    "url": "https://gree.pl/produkt/klimatyzator-scienny-g-time/",
+    "title": "Klimatyzator ścienny G-TIME",
+    "publisher": "GREE / Free Polska",
+    "kind": "manufacturer-product-page",
+    "accessedDate": "2026-10-28",
+    "locator": "Parametry techniczne → Model / Jednostka wewnętrzna / Jednostka zewnętrzna; Poznaj wszystkie funkcje",
+    "notes": "Technical and feature tabs read from the same public page AJAX endpoint. POST action=product_technical_parameters, postid=10638, catid=1/2/3; feature categories 19/20/21/35/36. Quantitative readings cross-checked against manufacturer catalogue."
+  },
+  "gree-cosmo-pearl-page": {
+    "url": "https://gree.pl/produkt/klimatyzator-scienny-cosmo-pearl/",
+    "title": "Klimatyzator ścienny COSMO PEARL",
+    "publisher": "GREE / Free Polska",
+    "kind": "manufacturer-product-page",
+    "accessedDate": "2026-10-28",
+    "locator": "Parametry techniczne → Model / Jednostka wewnętrzna / Jednostka zewnętrzna; Poznaj wszystkie funkcje",
+    "notes": "Technical and feature tabs read from the same public page AJAX endpoint. POST action=product_technical_parameters, postid=8906, catid=1/2/3; feature categories 19/20/21/35/36. Quantitative readings cross-checked against manufacturer catalogue."
+  },
+  "gree-clivia-page": {
+    "url": "https://gree.pl/produkt/klimatyzator-scienny-clivia/",
+    "title": "Klimatyzator ścienny Clivia Beige Stone / Satin Black / Navy Blue / Silver / White",
+    "publisher": "GREE / Free Polska",
+    "kind": "manufacturer-product-page",
+    "accessedDate": "2026-10-28",
+    "locator": "Parametry techniczne → Model / Jednostka wewnętrzna / Jednostka zewnętrzna; Poznaj wszystkie funkcje",
+    "notes": "Technical and feature tabs read from the same public page AJAX endpoint. POST action=product_technical_parameters, postid=6704, catid=1/2/3; feature categories 19/20/21/35/36. Quantitative readings cross-checked against manufacturer catalogue."
+  },
+  "gree-airy-page": {
+    "url": "https://gree.pl/produkt/klimatyzator-scienny-airy/",
+    "title": "Klimatyzator ścienny Airy Dark / Champagne / Silver / White",
+    "publisher": "GREE / Free Polska",
+    "kind": "manufacturer-product-page",
+    "accessedDate": "2026-10-28",
+    "locator": "Parametry techniczne → Model / Jednostka wewnętrzna / Jednostka zewnętrzna; Poznaj wszystkie funkcje",
+    "notes": "Technical and feature tabs read from the same public page AJAX endpoint. POST action=product_technical_parameters, postid=7894, catid=1/2/3; feature categories 19/20/21/35/36. Quantitative readings cross-checked against manufacturer catalogue."
+  },
+  "gree-amber-prestige-page": {
+    "url": "https://gree.pl/produkt/klimatyzator-amber-prestige/",
+    "title": "Klimatyzator ścienny Amber Prestige",
+    "publisher": "GREE / Free Polska",
+    "kind": "manufacturer-product-page",
+    "accessedDate": "2026-10-28",
+    "locator": "Parametry techniczne → Model / Jednostka wewnętrzna / Jednostka zewnętrzna; Poznaj wszystkie funkcje",
+    "notes": "Technical and feature tabs read from the same public page AJAX endpoint. POST action=product_technical_parameters, postid=416, catid=1/2/3; feature categories 19/20/21/35/36. Quantitative readings cross-checked against manufacturer catalogue."
+  },
+  "gree-u-crown-page": {
+    "url": "https://gree.pl/produkt/klimatyzator-u-crown/",
+    "title": "Klimatyzator ścienny U-Crown Silver",
+    "publisher": "GREE / Free Polska",
+    "kind": "manufacturer-product-page",
+    "accessedDate": "2026-10-28",
+    "locator": "Parametry techniczne → Model / Jednostka wewnętrzna / Jednostka zewnętrzna; Poznaj wszystkie funkcje",
+    "notes": "Technical and feature tabs read from the same public page AJAX endpoint. POST action=product_technical_parameters, postid=414, catid=1/2/3; feature categories 19/20/21/35/36. Quantitative readings cross-checked against manufacturer catalogue."
+  },
+  "gree-fairy-page": {
+    "url": "https://gree.pl/produkt/klimatyzator-fairy/",
+    "title": "Klimatyzator ścienny Fairy Dark / Silver / White",
+    "publisher": "GREE / Free Polska",
+    "kind": "manufacturer-product-page",
+    "accessedDate": "2026-10-28",
+    "locator": "Parametry techniczne → Model / Jednostka wewnętrzna / Jednostka zewnętrzna; Poznaj wszystkie funkcje",
+    "notes": "Technical and feature tabs read from the same public page AJAX endpoint. POST action=product_technical_parameters, postid=2210, catid=1/2/3; feature categories 19/20/21/35/36. Quantitative readings cross-checked against manufacturer catalogue."
+  },
+  "gree-pular-page": {
+    "url": "https://gree.pl/produkt/klimatyzator-pular/",
+    "title": "Klimatyzator ścienny Pular Matt / Shiny",
+    "publisher": "GREE / Free Polska",
+    "kind": "manufacturer-product-page",
+    "accessedDate": "2026-10-28",
+    "locator": "Parametry techniczne → Model / Jednostka wewnętrzna / Jednostka zewnętrzna; Poznaj wszystkie funkcje",
+    "notes": "Technical and feature tabs read from the same public page AJAX endpoint. POST action=product_technical_parameters, postid=592, catid=1/2/3; feature categories 19/20/21/35/36. Quantitative readings cross-checked against manufacturer catalogue."
+  },
+  "gree-pular-pro-page": {
+    "url": "https://gree.pl/produkt/klimatyzator-pular-pro/",
+    "title": "Klimatyzator ścienny Pular PRO Dark / White",
+    "publisher": "GREE / Free Polska",
+    "kind": "manufacturer-product-page",
+    "accessedDate": "2026-10-28",
+    "locator": "Parametry techniczne → Model / Jednostka wewnętrzna / Jednostka zewnętrzna; Poznaj wszystkie funkcje",
+    "notes": "Technical and feature tabs read from the same public page AJAX endpoint. POST action=product_technical_parameters, postid=7866, catid=1/2/3; feature categories 19/20/21/35/36. Quantitative readings cross-checked against manufacturer catalogue."
+  },
+  "kaisai-air-leaflet": {
+    "title": "KAISAI AIR – ulotka techniczna 2026",
+    "url": "https://kaisai.com/pl/files/page_files/965/air-260522-pl.pdf",
+    "publisher": "KAISAI / Klima-Therm",
+    "kind": "manufacturer-document",
+    "accessedAt": "2026-10-28",
+    "locator": "s. 2, tabela specyfikacji technicznej"
+  },
+  "kaisai-fly-plus-leaflet": {
+    "title": "KAISAI FLY+ – ulotka techniczna",
+    "url": "https://kaisai.com/pl/files/page_files/966/fly-251211-pl-1.pdf",
+    "publisher": "KAISAI / Klima-Therm",
+    "kind": "manufacturer-document",
+    "accessedAt": "2026-10-28",
+    "locator": "s. 2, tabela specyfikacji technicznej"
+  },
+  "kaisai-geo-leaflet": {
+    "title": "KAISAI GEO – ulotka techniczna 03/2025",
+    "url": "https://kaisai.com/pl/files/page_files/545/ulotka-new-03-2025-pl-geo.pdf",
+    "publisher": "KAISAI / Klima-Therm",
+    "kind": "manufacturer-document",
+    "accessedAt": "2026-10-28",
+    "locator": "s. 2, tabela specyfikacji technicznej"
+  },
+  "kaisai-geo-plus-leaflet": {
+    "title": "KAISAI GEO+ – ulotka producenta",
+    "url": "https://ebook.klima-therm.com/GEO-PLUS-PL",
+    "publisher": "KAISAI / Klima-Therm",
+    "kind": "manufacturer-document",
+    "accessedAt": "2026-10-28",
+    "locator": "s. 2, tabela specyfikacji GEO+"
+  },
+  "kaisai-art-leaflet": {
+    "title": "KAISAI ART – ulotka techniczna 2026",
+    "url": "https://kaisai.com/pl/files/page_files/968/art-260212-pl-1.pdf",
+    "publisher": "KAISAI / Klima-Therm",
+    "kind": "manufacturer-document",
+    "accessedAt": "2026-10-28",
+    "locator": "s. 2, tabela specyfikacji technicznej"
+  },
+  "kaisai-pro-heat-plus-leaflet": {
+    "title": "KAISAI PRO HEAT+ – ulotka techniczna",
+    "url": "https://kaisai.com/pl/files/page_files/745/ulotka-pro-heat-1.pdf",
+    "publisher": "KAISAI / Klima-Therm",
+    "kind": "manufacturer-document",
+    "accessedAt": "2026-10-28",
+    "locator": "s. 2, tabela specyfikacji technicznej"
+  },
+  "kaisai-ice-leaflet": {
+    "title": "KAISAI ICE / ICE BLACK – ulotka techniczna 03/2025",
+    "url": "https://kaisai.com/pl/files/page_files/461/ulotka-new-03-2025-pl-ice.pdf",
+    "publisher": "KAISAI / Klima-Therm",
+    "kind": "manufacturer-document",
+    "accessedAt": "2026-10-28",
+    "locator": "s. 2, tabela specyfikacji technicznej"
+  },
+  "kaisai-console-leaflet": {
+    "title": "KAISAI KONSOLA KKGB – ulotka 2026",
+    "url": "https://kaisai.com/pl/files/page_files/872/console-260115-pl.pdf",
+    "publisher": "KAISAI / Klima-Therm",
+    "kind": "manufacturer-document",
+    "accessedAt": "2026-10-28",
+    "locator": "s. 2, tabela specyfikacji technicznej"
+  },
+  "kaisai-nordic-leaflet": {
+    "title": "KAISAI NORDIC – ulotka techniczna",
+    "url": "https://kaisai.com/pl/files/page_files/721/kaisai-nordic-pl.pdf",
+    "publisher": "KAISAI / Klima-Therm",
+    "kind": "manufacturer-document",
+    "accessedAt": "2026-10-28",
+    "locator": "s. 4, tabela specyfikacji NORDIC"
+  },
+  "kaisai-air-page": {
+    "title": "KAISAI AIR KKWK – strona produktu",
+    "url": "https://kaisai.com/pl/klimatyzator-scienny-kaisai-air-kkwk",
+    "publisher": "KAISAI / Klima-Therm",
+    "kind": "manufacturer-document",
+    "accessedAt": "2026-10-28",
+    "locator": "Opis produktu / Charakterystyka / Dane techniczne"
+  },
+  "kaisai-geo-page": {
+    "title": "KAISAI GEO KGE – strona produktu",
+    "url": "https://kaisai.com/pl/klimatyzatory-scienne-kaisai-geo-kge",
+    "publisher": "KAISAI / Klima-Therm",
+    "kind": "manufacturer-document",
+    "accessedAt": "2026-10-28",
+    "locator": "Charakterystyka / Dane techniczne"
+  },
+  "kaisai-geo-plus-page": {
+    "title": "KAISAI GEO+ KKWR/KKWS – strona produktu",
+    "url": "https://kaisai.com/pl/klimatyzator-scienny-geo-kkwr-kkws",
+    "publisher": "KAISAI / Klima-Therm",
+    "kind": "manufacturer-document",
+    "accessedAt": "2026-10-28",
+    "locator": "Charakterystyka / Dane techniczne"
+  },
+  "kaisai-fly-plus-page": {
+    "title": "KAISAI FLY+ KKWX – strona produktu",
+    "url": "https://kaisai.com/pl/klimatyzator-scienny-fly-kkwx",
+    "publisher": "KAISAI / Klima-Therm",
+    "kind": "manufacturer-document",
+    "accessedAt": "2026-10-28",
+    "locator": "Funkcje / Wielofunkcyjna płyta MFB (opcja)"
+  },
+  "kaisai-pro-heat-plus-page": {
+    "title": "KAISAI PRO HEAT+ KRW/KRB – strona produktu",
+    "url": "https://kaisai.com/pl/klimatyzator-scienny-kaisai-pro-heat-krw-krb",
+    "publisher": "KAISAI / Klima-Therm",
+    "kind": "manufacturer-document",
+    "accessedAt": "2026-10-28",
+    "locator": "Charakterystyka / Dane techniczne"
+  },
+  "kaisai-console-page": {
+    "title": "KAISAI KONSOLA KKGB – strona produktu",
+    "url": "https://kaisai.com/pl/klimatyzator-konsola-kkgb",
+    "publisher": "KAISAI / Klima-Therm",
+    "kind": "manufacturer-document",
+    "accessedAt": "2026-10-28",
+    "locator": "Charakterystyka / Dane techniczne"
+  },
+  "kaisai-product-guide-2026": {
+    "title": "KAISAI Przegląd produktów 2026, wydanie maj",
+    "url": "https://kaisai.com/pl/files/page_files/738/kaisai-product-guide-2026-a4-pl-maj.pdf",
+    "publisher": "KAISAI / Klima-Therm",
+    "kind": "manufacturer-document",
+    "accessedAt": "2026-10-28",
+    "locator": "s. 7 NORDIC / s. 11 PRO HEAT+ / s. 17 KONSOLA"
+  },
+  "kaisai-product-guide-2026-first": {
+    "title": "KAISAI Przegląd produktów 2026 – wcześniejsze wydanie",
+    "url": "https://kaisai.com/pl/files/page_files/738/kaisai-product-guide-2026-1.pdf",
+    "publisher": "KAISAI / Klima-Therm",
+    "kind": "manufacturer-document",
+    "accessedAt": "2026-10-28",
+    "locator": "s. 6 FLY+ / s. 10 GEO+"
+  },
+  "kaisai-fly-plus-fiche": {
+    "title": "KAISAI FLY+ – karta produktu UE, zestawy 09/12/18/24",
+    "url": "https://kaisai.com/pl/files/page_files/869/fiche-fly09l-scalone.pdf",
+    "publisher": "KAISAI / Klima-Therm",
+    "kind": "manufacturer-document",
+    "accessedAt": "2026-10-28",
+    "locator": "Karta produktu zgodna z UE 626/2011; wiersz poziomu mocy akustycznej"
+  },
+  "kaisai-geo-fiche": {
+    "title": "KAISAI GEO KGE 09/24 – karta produktu",
+    "url": "https://kaisai.com/pl/files/page_files/659/karta-produktu-kaisai-geo-kge-09-24-grhi-grho-1.pdf",
+    "publisher": "KAISAI / Klima-Therm",
+    "kind": "manufacturer-document",
+    "accessedAt": "2026-10-28",
+    "locator": "Karta produktu zgodna z UE 626/2011; wiersz poziomu mocy akustycznej"
+  },
+  "kaisai-pro-heat-plus-fiche": {
+    "title": "KAISAI PRO HEAT+ – karta produktu 03/2025",
+    "url": "https://kaisai.com/pl/files/page_files/746/karta-produktu-tabelka-proheat03-25.pdf",
+    "publisher": "KAISAI / Klima-Therm",
+    "kind": "manufacturer-document",
+    "accessedAt": "2026-10-28",
+    "locator": "Karta produktu zgodna z UE 626/2011; wiersz poziomu mocy akustycznej"
+  },
+  "kaisai-console-fiche": {
+    "title": "KAISAI KONSOLA KKGB – karta produktu UE",
+    "url": "https://kaisai.com/pl/files/page_files/872/ficheconsole-pl.pdf",
+    "publisher": "KAISAI / Klima-Therm",
+    "kind": "manufacturer-document",
+    "accessedAt": "2026-10-28",
+    "locator": "Karta produktu zgodna z UE 626/2011; wiersz poziomu mocy akustycznej"
+  },
+  "kaisai-art-fiche": {
+    "title": "KAISAI ART – karty produktu UE KKWI/KKWF",
+    "url": "https://kaisai.com/pl/files/page_files/870/fiche-pl-scalone.pdf",
+    "publisher": "KAISAI / Klima-Therm",
+    "kind": "manufacturer-document",
+    "accessedAt": "2026-10-28",
+    "locator": "Karta produktu zgodna z UE 626/2011; wiersz poziomu mocy akustycznej"
+  },
+  "kaisai-geo-plus-fiche": {
+    "title": "KAISAI GEO+ – karty produktu UE KKWR/KKWS",
+    "url": "https://kaisai.com/pl/files/page_files/871/fichekkws-09-pl-scalone.pdf",
+    "publisher": "KAISAI / Klima-Therm",
+    "kind": "manufacturer-document",
+    "accessedAt": "2026-10-28",
+    "locator": "Karta produktu zgodna z UE 626/2011; wiersz poziomu mocy akustycznej"
+  }
+}

@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /panel
+Disallow: /oferty
 
 Sitemap: https://frigac.pl/sitemap.xml

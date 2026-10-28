@@ -3,3 +3,9 @@ node_modules
 dist
 .DS_Store
 .wrangler
+output/offers/
+output/offers-panel-*.png
+.env
+.env.*
+.dev.vars
+.dev.vars.*

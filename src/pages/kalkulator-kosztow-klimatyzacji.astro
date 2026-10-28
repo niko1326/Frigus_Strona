@@ -275,15 +275,18 @@ const appSchema = {
       <a class="text-link" href="/porady/ile-kosztuje-montaz-klimatyzacji">Artykuł: ile kosztuje montaż klimatyzacji</a>
     </div>
   </section>
+  <script is:inline id="cost-calculator-config" type="application/json" set:html={JSON.stringify(COST_CALCULATOR_CONFIG).replaceAll('<', '\\u003c')} />
 </Layout>
 
 <script>
   import {
-    COST_CALCULATOR_CONFIG,
-    calculateCostEstimate,
-    getRoomEstimate,
+    createCostCalculator,
+    type CostCalculatorConfig,
     type DevicePriority
-  } from '../config/costCalculator';
+  } from '../utils/cost-estimate';
+
+  const COST_CALCULATOR_CONFIG = JSON.parse(document.getElementById('cost-calculator-config')!.textContent!) as CostCalculatorConfig;
+  const { calculateCostEstimate, getRoomEstimate } = createCostCalculator(COST_CALCULATOR_CONFIG);
 
   const $ = (id: string) => document.getElementById(id);
   const clen = $('clen') as HTMLInputElement;

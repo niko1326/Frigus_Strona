@@ -1,0 +1,114 @@
+---
+import { OFFER_PRIORITIES, DEFAULT_OFFER_PRIORITY } from '../../config/offer-priorities';
+import { PRICING, SITE } from '../../config/site';
+import '../../styles/fonts.css';
+import '../../styles/offers-panel.css';
+---
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="referrer" content="no-referrer" />
+    <title>Oferty · {SITE.brandName}</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <header class="panel-header no-print">
+      <a class="home-logo" href="/" aria-label="FrigAC — strona główna"><img src="/brand/frigac-logo.svg" alt="FrigAC" width="144" height="44" /></a>
+      <span>Panel wewnętrzny <span aria-hidden="true">/</span> Oferty</span>
+      <span class="private-badge">Użytek wewnętrzny</span>
+    </header>
+    <main>
+      <div class="workspace no-print">
+        <div class="workspace-heading">
+          <div><p class="eyebrow">FRIGAC · OFERTA DLA KLIENTA</p><h1>Przygotuj ofertę.</h1></div>
+          <p>Wybierz urządzenia i priorytety klienta. Przygotuj ofertę A4 z aktualnymi cenami, zdjęciami i parametrami.</p>
+        </div>
+        <noscript>Generator wymaga JavaScript. Dostęp do panelu weryfikuje serwer.</noscript>
+        <form id="offer-form">
+          <section class="form-section" aria-labelledby="customer-heading">
+            <div class="section-heading"><span class="step">01</span><div><h2 id="customer-heading">Dane oferty</h2><p>Informacje trafią wyłącznie do przygotowanego dokumentu.</p></div></div>
+            <label class="checkbox-label anonymous-option"><input id="without-customer" type="checkbox" checked />Bez danych klienta — oferta ogólna</label>
+            <div class="form-grid">
+              <label data-customer-field hidden>Klient / nazwa firmy<input id="customer" name="customer" maxlength="120" placeholder="np. Anna Kowalska" disabled /></label>
+              <label data-customer-field hidden>Miejscowość / adres montażu<input id="location" name="location" maxlength="180" placeholder="np. Gdańsk" disabled /></label>
+              <label>Numer oferty<input id="offer-number" name="offerNumber" maxlength="64" /></label>
+              <label>Data oferty<input id="offer-date" name="offerDate" type="date" required /></label>
+              <label class="checkbox-label"><input id="include-validity" type="checkbox" />Ustaw termin ważności</label>
+              <label id="valid-days-field" hidden>Ważność oferty (dni)<input id="valid-days" name="validDays" type="number" min="1" max="365" value="14" disabled /></label>
+            </div>
+          </section>
+          <section class="form-section" aria-labelledby="models-heading">
+            <div class="section-heading"><span class="step">02</span><div><h2 id="models-heading">Urządzenia w zestawieniu</h2><p>Od 1 do 8 urządzeń. Cena obejmuje standardowy montaż do {PRICING.standardInstallationMeters} mb.</p></div><span id="device-count" class="count" aria-live="polite"></span></div>
+            <fieldset class="selection-mode"><legend>Sposób wyboru urządzeń</legend><div class="mode-options">
+              <label class="checkbox-label"><input type="radio" name="selectionMode" value="manual" checked />Wybieram ręcznie</label>
+              <label class="checkbox-label"><input type="radio" name="selectionMode" value="auto" />Dobierz urządzenia</label>
+            </div></fieldset>
+            <div id="manual-selection">
+            <div id="device-rows"></div>
+            <button class="button secondary" id="add-device" type="button">+ Dodaj urządzenie</button>
+            <p class="field-help">Brak ceny wybranej mocy lub koloru wymaga uzupełnienia centralnego cennika przed dodaniem do oferty.</p>
+            </div>
+            <fieldset id="auto-selection" hidden disabled><legend>Pomieszczenie do doboru</legend>
+              <p class="field-help">Propozycje alternatywnych modeli do jednej strefy chłodzenia. Liczba propozycji oznacza liczbę modeli w ofercie, a nie liczbę jednostek do jednoczesnego montażu. Potrzeby wybierz w sekcji poniżej.</p>
+              <div class="form-grid auto-room-grid">
+                <label>Powierzchnia po podłodze (m²)<input id="room-area" type="number" min="5" max="200" step="0.1" placeholder="np. 25" required /></label>
+                <label><span id="room-height-label">Wysokość pomieszczenia (m)</span><input id="room-height" type="number" min="1.8" max="6" step="0.01" value="2.6" required /></label>
+                <label>Liczba propozycji<select id="room-count">{Array.from({length:8}, (_, i) => <option value={i + 1} selected={i === 2}>{i + 1} {i === 0 ? 'model' : i < 4 ? 'modele' : 'modeli'}</option>)}</select></label>
+                <label>Marki do porównania<select id="room-brand"><option value="all">Obie marki — GREE i KAISAI</option><option value="gree">Tylko GREE</option><option value="kaisai">Tylko KAISAI</option></select><span class="field-help">Od 2 propozycji uwzględniamy obie marki, jeśli mają pasujące modele.</span></label>
+                <label>Układ przestrzeni<select id="room-layout"><option value="open">Jedno pomieszczenie / otwarta strefa</option><option value="separate">Kilka oddzielnych pokoi</option></select></label>
+                <label>Izolacja<select id="room-insulation"><option value="good">Dobra</option><option value="standard" selected>Standardowa</option><option value="poor">Słaba</option></select></label>
+                <label>Nasłonecznienie<select id="room-sun"><option value="low">Niewielkie</option><option value="standard" selected>Standardowe</option><option value="high">Duże</option></select></label>
+                <label>Położenie<select id="room-location"><option value="middle">Środkowe piętro</option><option value="top">Ostatnie piętro / poddasze</option></select></label>
+                <label>Duże przeszklenia<select id="room-glazing"><option value="no">Nie</option><option value="yes">Tak</option></select></label>
+                <label>Liczba osób zwykle w pomieszczeniu<input id="room-occupants" type="number" min="1" max="30" step="1" value="2" required /></label>
+                <label>Dodatkowe zyski ciepła ze sprzętu (W)<input id="room-equipment" type="number" min="0" max="10000" step="10" value="0" required /><span class="field-help">Ponad typowe wyposażenie, np. stale pracująca stacja robocza.</span></label>
+                <label>Budżet za model z montażem (zł)<input id="room-budget" type="number" min="1" max="100000" step="1" placeholder="Bez limitu" /><span class="field-help">Limit ceny bazowej; dopłata za kolor jest podana osobno.</span></label>
+              </div>
+              <label class="checkbox-label"><input id="room-sloped" type="checkbox" />Pomieszczenie ma skosy</label>
+              <fieldset id="room-slopes" hidden disabled><legend>Geometria skosów</legend><div class="form-grid">
+                <label>Minimalna wysokość pod skosem (m)<input id="room-min-height" type="number" min="0.1" max="6" step="0.01" placeholder="np. 1.2" required /></label>
+                <label>Część podłogi pod skosami (%)<input id="room-slope-percent" type="number" min="1" max="100" step="1" value="100" required /></label>
+              </div><p class="field-help">Dla prostych skosów liczymy średnią wysokość części skośnej z wysokości minimalnej i maksymalnej. Przy złożonym dachu potrzebny jest pomiar kubatury.</p></fieldset>
+              <label class="checkbox-label auto-uvc"><input id="room-uvc" type="checkbox" />Wymagana lampa UVC</label>
+              <p class="field-help">„Jakość powietrza” premiuje UVC i potwierdzone funkcje oczyszczania. Powyższy warunek ogranicza propozycje wyłącznie do modeli z potwierdzoną lampą UVC.</p>
+              <p class="field-help">To wstępny dobór mocy chłodniczej. Ogrzewanie jako główne źródło, oddzielne pokoje i nietypowe obciążenia wymagają osobnej weryfikacji.</p>
+            </fieldset>
+          </section>
+          <section class="form-section" aria-labelledby="priorities-heading">
+            <div class="section-heading"><span class="step">03</span><div><h2 id="priorities-heading">Co jest najważniejsze dla klienta?</h2><p>Priorytet główny ustala wyróżnienie. W ofercie ogólnej wyróżniamy pierwszy zaznaczony na liście priorytet dodatkowy. Hałas zawsze pozostaje w danych urządzenia.</p></div></div>
+            <label class="main-priority">Priorytet główny<select id="main-priority" name="mainPriority">{OFFER_PRIORITIES.map(priority => <option value={priority.id} selected={priority.id === DEFAULT_OFFER_PRIORITY}>{priority.label}</option>)}</select></label>
+            <fieldset class="additional-priorities"><legend>Dodatkowe priorytety</legend><div class="checkbox-grid">{OFFER_PRIORITIES.filter(priority => priority.id !== DEFAULT_OFFER_PRIORITY).map(priority => <label class="checkbox-label"><input type="checkbox" name="additionalPriority" value={priority.id} />{priority.label}</label>)}</div></fieldset>
+          </section>
+          <section id="energy-section" class="form-section" hidden aria-labelledby="energy-heading">
+            <div class="section-heading"><span class="step">04</span><div><h2 id="energy-heading">Założenia kosztów energii</h2><p>Te same obliczenia i zakresy co w kalkulatorze FrigAC. Każde urządzenie jest alternatywą dla tego samego pomieszczenia.</p></div></div>
+            <div class="form-grid">
+              <label>Powierzchnia pomieszczenia (m²)<input id="energy-area" type="number" min="1" max="1000" step="0.1" placeholder="np. 25" /></label>
+              <label>Twoja cena energii (zł/kWh)<input id="energy-price" type="number" min="0" max="100" step="0.01" placeholder="np. 1,15" /></label>
+              <label>Izolacja budynku<select id="energy-insulation"><option value="standard">Standardowa</option><option value="good">Dobra</option><option value="poor">Słaba</option></select></label>
+              <label>Użytkowanie — chłodzenie<select id="cooling-usage"><option value="standard">Standardowo</option><option value="occasional">Sporadycznie</option><option value="intensive">Intensywnie</option></select></label>
+              <label>Użytkowanie — ogrzewanie<select id="heating-usage"><option value="supplemental">Dogrzewanie</option><option value="regular">Regularnie</option><option value="primary">Główne ogrzewanie</option></select></label>
+              <label>Układ porównania kosztów<select id="energy-layout"><option value="shared">Wspólne zestawienie</option><option value="per-device">Osobna strona dla każdego urządzenia</option></select></label>
+            </div>
+          </section>
+          <section class="form-section" aria-label="Uwagi do oferty">
+            <label class="checkbox-label"><input id="include-summary" type="checkbox" />Dodaj osobną stronę podsumowania i porównania modeli</label>
+            <p class="field-help">Domyślnie każdy wybrany model ma własną stronę ze zdjęciem, ceną i najważniejszymi parametrami.</p>
+            <br />
+            <label>Uwagi / uzgodniony zakres<textarea id="offer-notes" rows="3" maxlength="1200" placeholder="Opcjonalne ustalenia z klientem"></textarea></label>
+          </section>
+          <div id="offer-message" role="status" aria-live="polite"></div>
+          <div id="auto-selection-result" class="selection-result" hidden aria-live="polite"></div>
+          <div class="form-actions"><button class="button" type="submit">Przygotuj podgląd oferty</button><button class="button secondary" id="print-offer" type="button" disabled>Zapisz PDF / drukuj</button></div>
+          <p class="field-help">Zapis PDF: wybierz „Zapisz jako PDF” w oknie drukowania, format A4 i wyłącz nagłówki oraz stopki przeglądarki. Dane klienta nie są zapisywane w przeglądarce ani wysyłane na serwer.</p>
+        </form>
+      </div>
+      <div class="preview-heading no-print" id="preview-heading" hidden><p class="eyebrow">PODGLĄD DOKUMENTU A4</p><p>Brakujące parametry są pomijane. Porównania odnoszą się do wybranych urządzeń.</p></div>
+      <div id="offer-preview" aria-label="Podgląd oferty"></div>
+      <p id="print-empty">Najpierw przygotuj podgląd oferty w panelu.</p>
+    </main>
+    <script>import '../../scripts/offers-panel.ts';</script>
+  </body>
+</html>

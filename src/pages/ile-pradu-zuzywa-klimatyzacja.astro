@@ -3,6 +3,7 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import CTAButton from '../components/CTAButton.astro';
 import Layout from '../components/Layout.astro';
 import { PHONE_TEL, SITE } from '../config/site';
+import { ENERGY_MODELS } from '../config/lineups';
 import { calculatorNavLabels, pageMeta, routes } from '../i18n/content';
 import {
   calculateEnergyEstimate,
@@ -13,6 +14,13 @@ import {
 
 const meta = pageMeta.calcEnergy;
 const insulationDisplayOrder = ['poor', 'standard', 'good'] as const;
+// Only calculator inputs cross into the public page. The full central catalog,
+// including research and offer metadata, remains in the build process.
+const energyCatalog = ENERGY_MODELS.map(({ name, slug, brand, brandLabel, variants }) => ({
+  name, slug, brand, brandLabel,
+  variants: variants.map(({ label, powerKw, coolingCapacityKw, heatingCapacityKw, seer, scop }) =>
+    ({ label, powerKw, coolingCapacityKw, heatingCapacityKw, seer, scop }))
+}));
 
 const seerTable = [4, 5.5, 6.5, 8, 8.5].map((seer) => ({
   seer: seer.toLocaleString('pl-PL'),
@@ -256,10 +264,11 @@ const appSchema = {
       <a class="text-link" href="/porady/jak-czesto-serwisowac-klimatyzacje">Jak serwis wpływa na zużycie energii</a>
     </div>
   </section>
+  <script is:inline id="energy-catalog" type="application/json" set:html={JSON.stringify(energyCatalog).replaceAll('<', '\\u003c')} />
 </Layout>
 
 <script>
-  import { ENERGY_MODELS } from '../config/lineups';
+  import type { EnergyVariant, LineupModel } from '../config/lineups';
   import {
     calculateEnergyEstimate,
     calculateHeatingEstimate,
@@ -273,6 +282,13 @@ const appSchema = {
     selectCalculatorModel,
     stateFromQuery
   } from '../utils/energy-calculator-state.mjs';
+
+  type EnergyCalculatorModel = Pick<LineupModel, 'name' | 'slug'> & {
+    brand: 'gree' | 'kaisai';
+    brandLabel: string;
+    variants: Pick<EnergyVariant, 'label' | 'powerKw' | 'coolingCapacityKw' | 'heatingCapacityKw' | 'seer' | 'scop'>[];
+  };
+  const ENERGY_MODELS = JSON.parse(document.getElementById('energy-catalog')!.textContent!) as EnergyCalculatorModel[];
 
   const form = document.getElementById('energy-form') as HTMLFormElement;
   const modelSelect = document.getElementById('energy-model') as HTMLSelectElement;

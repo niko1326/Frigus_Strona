@@ -27,6 +27,11 @@ const coolingDefaults = {
   insulation: 'standard'
 };
 
+// This suite checks the calculator's original inputs; the complete catalog and
+// its newly added provenance are covered by the baseline preservation test.
+const energyVariantData = ({ label, powerKw, coolingCapacityKw, heatingCapacityKw, seer, scop, priceFromPLN }) =>
+  ({ label, powerKw, coolingCapacityKw, heatingCapacityKw, seer, scop, priceFromPLN });
+
 test('cooling keeps capacity × 350 / SEER as its reference', () => {
   for (const [power, seer, expected, rounded] of [
     [3.5, 8.5, 144.11764705882354, '144'],
@@ -115,7 +120,7 @@ test('central model data exposes Kaisai console and Pular variants exactly', () 
   const consoleModel = ENERGY_MODELS.find((model) => model.slug === 'kaisai-konsola');
   const pular = ENERGY_MODELS.find((model) => model.slug === 'gree-pular');
   assert.deepEqual(consoleModel.variants.map((variant) => variant.powerKw), [3.5]);
-  assert.deepEqual(consoleModel.variants[0], {
+  assert.deepEqual(energyVariantData(consoleModel.variants[0]), {
     label: '3,5', powerKw: 3.5, coolingCapacityKw: 3.5, heatingCapacityKw: 3.6,
     seer: 6.5, scop: 4, priceFromPLN: 4399
   });
@@ -134,8 +139,8 @@ test('every listed variant has complete, positive manufacturer energy data', () 
 
   assert.deepEqual(incomplete, []);
   assert.deepEqual(
-    ENERGY_MODELS.find((model) => model.slug === 'kaisai-air')
-      .variants.find((variant) => variant.powerKw === 3.4),
+    energyVariantData(ENERGY_MODELS.find((model) => model.slug === 'kaisai-air')
+      .variants.find((variant) => variant.powerKw === 3.4)),
     {
       label: '3,4',
       powerKw: 3.4,

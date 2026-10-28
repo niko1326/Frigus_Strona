@@ -1,8 +1,12 @@
 name = "frigac-strona"
+main = "worker/panel-auth.mjs"
 compatibility_date = "2026-09-05"
 
 [assets]
 directory = "./dist"
+binding = "ASSETS"
+# Authentication must run before HTML aliases or other static assets are served.
+run_worker_first = true
 
 # ...
 [observability.logs]

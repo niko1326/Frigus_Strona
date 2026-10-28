@@ -40,7 +40,7 @@ const allPaths = Array.from(
     ...greeProductPaths,
     ...kaisaiProductPaths
   ])
-);
+).filter((path) => path !== '/oferty' && path !== '/panel' && !path.startsWith('/panel/') && !path.startsWith('/panel.'));
 
 const articleDates = new Map(
   ARTICLES.map((article) => [`/porady/${article.slug}`, article.datePublished])

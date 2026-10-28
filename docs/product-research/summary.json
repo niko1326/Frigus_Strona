@@ -1,0 +1,1287 @@
+{
+  "asOf": "2026-10-28",
+  "models": 18,
+  "activeModels": 17,
+  "variants": 65,
+  "activeVariants": 64,
+  "addedParameters": 1539,
+  "addedVariantParameters": 1338,
+  "addedSharedParameters": 201,
+  "auditRows": 10070,
+  "statusCounts": {
+    "VERIFIED": 7286,
+    "MISSING": 2743,
+    "CONFLICT": 41
+  },
+  "conflicts": [
+    {
+      "model": "G-TIME",
+      "modelSlug": "gree-g-time",
+      "powerKw": 2.7,
+      "path": "seer",
+      "currentValue": 8.5,
+      "newValue": 9.2,
+      "source": "gree-rac-2026 | https://gree.pl/pliki-do-pobrania/katalog-rac | PDF spread 23; printed p. 44; Split table; seer; configured 2.7 kW",
+      "note": null
+    },
+    {
+      "model": "G-TIME",
+      "modelSlug": "gree-g-time",
+      "powerKw": 2.7,
+      "path": "scop",
+      "currentValue": 4.6,
+      "newValue": 4.7,
+      "source": "gree-rac-2026 | https://gree.pl/pliki-do-pobrania/katalog-rac | PDF spread 23; printed p. 44; Split table; scop; configured 2.7 kW",
+      "note": null
+    },
+    {
+      "model": "G-TIME",
+      "modelSlug": "gree-g-time",
+      "powerKw": 3.5,
+      "path": "scop",
+      "currentValue": 4.8,
+      "newValue": 4.7,
+      "source": "gree-rac-2026 | https://gree.pl/pliki-do-pobrania/katalog-rac | PDF spread 23; printed p. 44; Split table; scop; configured 3.5 kW",
+      "note": null
+    },
+    {
+      "model": "G-TIME",
+      "modelSlug": "gree-g-time",
+      "powerKw": 5.3,
+      "path": "seer",
+      "currentValue": 8.5,
+      "newValue": 8.6,
+      "source": "gree-rac-2026 | https://gree.pl/pliki-do-pobrania/katalog-rac | PDF spread 23; printed p. 44; Split table; seer; configured 5.3 kW",
+      "note": null
+    },
+    {
+      "model": "Fairy",
+      "modelSlug": "gree-fairy",
+      "powerKw": 3.5,
+      "path": "coolingCapacityKw",
+      "currentValue": 3.5,
+      "newValue": 3.51,
+      "source": "gree-rac-2026 | https://gree.pl/pliki-do-pobrania/katalog-rac | PDF spread 61; printed p. 120; Split table; coolingCapacityKw; configured 3.5 kW",
+      "note": null
+    },
+    {
+      "model": "Fairy",
+      "modelSlug": "gree-fairy",
+      "powerKw": 3.5,
+      "path": "heatingCapacityKw",
+      "currentValue": 3.8,
+      "newValue": 3.81,
+      "source": "gree-rac-2026 | https://gree.pl/pliki-do-pobrania/katalog-rac | PDF spread 61; printed p. 120; Split table; heatingCapacityKw; configured 3.5 kW",
+      "note": null
+    },
+    {
+      "model": "Pular",
+      "modelSlug": "gree-pular",
+      "powerKw": 2.5,
+      "path": "seer",
+      "currentValue": 6.5,
+      "newValue": 6.6,
+      "source": "gree-rac-2026 | https://gree.pl/pliki-do-pobrania/katalog-rac | PDF spread 51; printed p. 100; Split table; seer; configured 2.5 kW",
+      "note": null
+    },
+    {
+      "model": "Pular",
+      "modelSlug": "gree-pular",
+      "powerKw": 2.5,
+      "path": "scop",
+      "currentValue": 4,
+      "newValue": 4.1,
+      "source": "gree-rac-2026 | https://gree.pl/pliki-do-pobrania/katalog-rac | PDF spread 51; printed p. 100; Split table; scop; configured 2.5 kW",
+      "note": null
+    },
+    {
+      "model": "GEO (KGE)",
+      "modelSlug": "kaisai-geo",
+      "powerKw": 5.3,
+      "path": "legacy.energyClass",
+      "currentValue": "A+++ / A++",
+      "newValue": "A++ / A+",
+      "source": "kaisai-geo-leaflet | https://kaisai.com/pl/files/page_files/545/ulotka-new-03-2025-pl-geo.pdf | s. 2, wiersz Klasa energetyczna chł./grz., kolumna wariantu",
+      "note": "Obecne pole jest etykietą serii. Nie nadpisywać; dla wariantu zapisać osobno udokumentowane coolingEnergyClass/heatingEnergyClass."
+    },
+    {
+      "model": "GEO (KGE)",
+      "modelSlug": "kaisai-geo",
+      "powerKw": 7,
+      "path": "legacy.energyClass",
+      "currentValue": "A+++ / A++",
+      "newValue": "A++ / A+",
+      "source": "kaisai-geo-leaflet | https://kaisai.com/pl/files/page_files/545/ulotka-new-03-2025-pl-geo.pdf | s. 2, wiersz Klasa energetyczna chł./grz., kolumna wariantu",
+      "note": "Obecne pole jest etykietą serii. Nie nadpisywać; dla wariantu zapisać osobno udokumentowane coolingEnergyClass/heatingEnergyClass."
+    },
+    {
+      "model": "PRO HEAT+ (KRW / KRB)",
+      "modelSlug": "kaisai-pro-heat-plus",
+      "powerKw": 2.6,
+      "path": "heatingCapacityKw",
+      "currentValue": 3,
+      "newValue": 3.3,
+      "source": "kaisai-pro-heat-plus-leaflet | https://kaisai.com/pl/files/page_files/745/ulotka-pro-heat-1.pdf | s. 2, tabela wydajności",
+      "note": "Nie nadpisywać. Ulotka i polska strona podają różne wartości dla tej samej serii."
+    },
+    {
+      "model": "PRO HEAT+ (KRW / KRB)",
+      "modelSlug": "kaisai-pro-heat-plus",
+      "powerKw": 3.5,
+      "path": "heatingCapacityKw",
+      "currentValue": 3.9,
+      "newValue": 3.8,
+      "source": "kaisai-pro-heat-plus-page | https://kaisai.com/pl/klimatyzator-scienny-kaisai-pro-heat-krw-krb | Dane techniczne – nominalne moce grzewcze",
+      "note": "Nie nadpisywać. Ulotka i polska strona podają różne wartości dla tej samej serii."
+    },
+    {
+      "model": "ICE (KLW / KLB)",
+      "modelSlug": "kaisai-ice",
+      "powerKw": 2.6,
+      "path": "legacy.energyClass",
+      "currentValue": "A+++ / A+",
+      "newValue": "A+++ / A++",
+      "source": "kaisai-ice-leaflet | https://kaisai.com/pl/files/page_files/461/ulotka-new-03-2025-pl-ice.pdf | s. 2, wiersz Klasa energetyczna chł./grz., kolumna wariantu",
+      "note": "Obecne pole jest etykietą serii. Nie nadpisywać; dla wariantu zapisać osobno udokumentowane coolingEnergyClass/heatingEnergyClass."
+    },
+    {
+      "model": "ICE (KLW / KLB)",
+      "modelSlug": "kaisai-ice",
+      "powerKw": 3.5,
+      "path": "legacy.energyClass",
+      "currentValue": "A+++ / A+",
+      "newValue": "A+++ / A++",
+      "source": "kaisai-ice-leaflet | https://kaisai.com/pl/files/page_files/461/ulotka-new-03-2025-pl-ice.pdf | s. 2, wiersz Klasa energetyczna chł./grz., kolumna wariantu",
+      "note": "Obecne pole jest etykietą serii. Nie nadpisywać; dla wariantu zapisać osobno udokumentowane coolingEnergyClass/heatingEnergyClass."
+    },
+    {
+      "model": "ICE (KLW / KLB)",
+      "modelSlug": "kaisai-ice",
+      "powerKw": 5.3,
+      "path": "legacy.energyClass",
+      "currentValue": "A+++ / A+",
+      "newValue": "A++ / A+",
+      "source": "kaisai-ice-leaflet | https://kaisai.com/pl/files/page_files/461/ulotka-new-03-2025-pl-ice.pdf | s. 2, wiersz Klasa energetyczna chł./grz., kolumna wariantu",
+      "note": "Obecne pole jest etykietą serii. Nie nadpisywać; dla wariantu zapisać osobno udokumentowane coolingEnergyClass/heatingEnergyClass."
+    },
+    {
+      "model": "ICE (KLW / KLB)",
+      "modelSlug": "kaisai-ice",
+      "powerKw": 7,
+      "path": "legacy.energyClass",
+      "currentValue": "A+++ / A+",
+      "newValue": "A++ / A+",
+      "source": "kaisai-ice-leaflet | https://kaisai.com/pl/files/page_files/461/ulotka-new-03-2025-pl-ice.pdf | s. 2, wiersz Klasa energetyczna chł./grz., kolumna wariantu",
+      "note": "Obecne pole jest etykietą serii. Nie nadpisywać; dla wariantu zapisać osobno udokumentowane coolingEnergyClass/heatingEnergyClass."
+    }
+  ],
+  "sourceConflictFindings": 4,
+  "sourceConflicts": [
+    {
+      "model": "Amber Prestige",
+      "modelSlug": "gree-amber-prestige",
+      "powerKw": 2.7,
+      "path": "modulation.heatingMaxKw",
+      "currentValue": null,
+      "newValue": [
+        6.5,
+        5.5
+      ],
+      "source": "gree-amber-prestige-page | https://gree.pl/produkt/klimatyzator-amber-prestige/ | Polska strona produktu: Parametry techniczne → Model / zestaw 2,7 kW, wydajność grzewcza min/nom/max; Katalog RAC/LCAC 2026, PDF spread 58, s. drukowane 114–115, Split, kolumna 09k.",
+      "note": "Strona produktu: maksimum 6,50 kW; katalog 2026: maksimum 5,50 kW. Nie rozstrzygnięto sprzeczności; centralne pole pozostaje null."
+    },
+    {
+      "model": "GEO (KGE)",
+      "modelSlug": "kaisai-geo",
+      "powerKw": 2.6,
+      "path": "operatingRange.heatingMaxC",
+      "currentValue": null,
+      "newValue": [
+        24,
+        30
+      ],
+      "source": "kaisai-geo-leaflet | https://kaisai.com/pl/files/page_files/545/ulotka-new-03-2025-pl-geo.pdf | s. 2: tabela podaje -25÷24°C, akapit SZEROKI ZAKRES TEMPERATUR -25÷30°C. Polska strona produktu także +24°C. Nie przyjęto nowej wartości.",
+      "note": null
+    },
+    {
+      "model": "GEO (KGE)",
+      "modelSlug": "kaisai-geo",
+      "powerKw": 3.5,
+      "path": "operatingRange.heatingMaxC",
+      "currentValue": null,
+      "newValue": [
+        24,
+        30
+      ],
+      "source": "kaisai-geo-leaflet | https://kaisai.com/pl/files/page_files/545/ulotka-new-03-2025-pl-geo.pdf | s. 2: tabela podaje -25÷24°C, akapit SZEROKI ZAKRES TEMPERATUR -25÷30°C. Polska strona produktu także +24°C. Nie przyjęto nowej wartości.",
+      "note": null
+    },
+    {
+      "model": "GEO (KGE)",
+      "modelSlug": "kaisai-geo",
+      "powerKw": 5.3,
+      "path": "operatingRange.heatingMaxC",
+      "currentValue": null,
+      "newValue": [
+        24,
+        30
+      ],
+      "source": "kaisai-geo-leaflet | https://kaisai.com/pl/files/page_files/545/ulotka-new-03-2025-pl-geo.pdf | s. 2: tabela podaje -25÷24°C, akapit SZEROKI ZAKRES TEMPERATUR -25÷30°C. Polska strona produktu także +24°C. Nie przyjęto nowej wartości.",
+      "note": null
+    },
+    {
+      "model": "GEO (KGE)",
+      "modelSlug": "kaisai-geo",
+      "powerKw": 7,
+      "path": "operatingRange.heatingMaxC",
+      "currentValue": null,
+      "newValue": [
+        24,
+        30
+      ],
+      "source": "kaisai-geo-leaflet | https://kaisai.com/pl/files/page_files/545/ulotka-new-03-2025-pl-geo.pdf | s. 2: tabela podaje -25÷24°C, akapit SZEROKI ZAKRES TEMPERATUR -25÷30°C. Polska strona produktu także +24°C. Nie przyjęto nowej wartości.",
+      "note": null
+    },
+    {
+      "model": "ART (KKWI / KKWF)",
+      "modelSlug": "kaisai-art",
+      "powerKw": 2.7,
+      "path": "outdoorNoise.soundPowerDb",
+      "currentValue": null,
+      "newValue": {
+        "blackCoolingDb": 62,
+        "whiteCoolingDb": 63,
+        "whiteHeatingDb": 62
+      },
+      "source": "kaisai-art-fiche | https://kaisai.com/pl/files/page_files/870/fiche-pl-scalone.pdf | s. 1 (KKWF-09RTA1), s. 9 (KKWI-09RTA1)",
+      "note": "Nie przypisano jednej wartości całemu wariantowi mocy. Karta różnicuje kolor/tryb lub zawiera błąd; pozostawiono null do weryfikacji."
+    },
+    {
+      "model": "PRO HEAT+ (KRW / KRB)",
+      "modelSlug": "kaisai-pro-heat-plus",
+      "powerKw": 2.6,
+      "path": "operatingRange.coolingMaxC",
+      "currentValue": 53,
+      "newValue": 50,
+      "source": "kaisai-product-guide-2026 | https://kaisai.com/pl/files/page_files/738/kaisai-product-guide-2026-a4-pl-maj.pdf | s. 11 przeglądu: -15~50°C; ulotka s. 2 i polska strona produktu: -15~53°C",
+      "note": "Ulotka i polska strona są zgodne na +53°C; sprzeczne wydanie przeglądu odnotowano."
+    },
+    {
+      "model": "PRO HEAT+ (KRW / KRB)",
+      "modelSlug": "kaisai-pro-heat-plus",
+      "powerKw": 3.5,
+      "path": "operatingRange.coolingMaxC",
+      "currentValue": 53,
+      "newValue": 50,
+      "source": "kaisai-product-guide-2026 | https://kaisai.com/pl/files/page_files/738/kaisai-product-guide-2026-a4-pl-maj.pdf | s. 11 przeglądu: -15~50°C; ulotka s. 2 i polska strona produktu: -15~53°C",
+      "note": "Ulotka i polska strona są zgodne na +53°C; sprzeczne wydanie przeglądu odnotowano."
+    },
+    {
+      "model": "PRO HEAT+ (KRW / KRB)",
+      "modelSlug": "kaisai-pro-heat-plus",
+      "powerKw": 5.2,
+      "path": "operatingRange.coolingMaxC",
+      "currentValue": 53,
+      "newValue": 50,
+      "source": "kaisai-product-guide-2026 | https://kaisai.com/pl/files/page_files/738/kaisai-product-guide-2026-a4-pl-maj.pdf | s. 11 przeglądu: -15~50°C; ulotka s. 2 i polska strona produktu: -15~53°C",
+      "note": "Ulotka i polska strona są zgodne na +53°C; sprzeczne wydanie przeglądu odnotowano."
+    },
+    {
+      "model": "PRO HEAT+ (KRW / KRB)",
+      "modelSlug": "kaisai-pro-heat-plus",
+      "powerKw": 7,
+      "path": "operatingRange.coolingMaxC",
+      "currentValue": 53,
+      "newValue": 50,
+      "source": "kaisai-product-guide-2026 | https://kaisai.com/pl/files/page_files/738/kaisai-product-guide-2026-a4-pl-maj.pdf | s. 11 przeglądu: -15~50°C; ulotka s. 2 i polska strona produktu: -15~53°C",
+      "note": "Ulotka i polska strona są zgodne na +53°C; sprzeczne wydanie przeglądu odnotowano."
+    }
+  ],
+  "missingOverview": [
+    {
+      "label": "Akustyka i warunki pomiaru",
+      "fields": [
+        {
+          "path": "indoorNoise.soundPowerDb",
+          "missingVariants": 65
+        },
+        {
+          "path": "outdoorNoise.soundPowerDb",
+          "missingVariants": 15
+        },
+        {
+          "path": "outdoorNoise.context",
+          "missingVariants": 32
+        }
+      ]
+    },
+    {
+      "label": "Ogrzewanie przy niskiej temperaturze",
+      "fields": [
+        {
+          "path": "heatingFeatures.lowTempPerformance",
+          "missingVariants": 64
+        },
+        {
+          "path": "heatingFeatures.crankcaseHeater",
+          "missingVariants": 24
+        },
+        {
+          "path": "heatingClimate",
+          "missingVariants": 65
+        }
+      ]
+    },
+    {
+      "label": "Komfort nawiewu i higiena",
+      "fields": [
+        {
+          "path": "airflow.gentleCooling",
+          "missingVariants": 56
+        },
+        {
+          "path": "airflow.nightMode",
+          "missingVariants": 30
+        },
+        {
+          "path": "airQuality.filters",
+          "missingVariants": 41
+        },
+        {
+          "path": "airQuality.sterilization",
+          "missingVariants": 60
+        }
+      ]
+    },
+    {
+      "label": "Sterowanie i integracje",
+      "fields": [
+        {
+          "path": "controls.app",
+          "missingVariants": 30
+        },
+        {
+          "path": "controls.voiceControl",
+          "missingVariants": 65
+        },
+        {
+          "path": "controls.modbus",
+          "missingVariants": 29
+        },
+        {
+          "path": "controls.bms",
+          "missingVariants": 65
+        }
+      ]
+    },
+    {
+      "label": "Design i przypisanie wariantów",
+      "fields": [
+        {
+          "path": "design.colors",
+          "missingVariants": 33
+        },
+        {
+          "path": "design.finish",
+          "missingVariants": 57
+        },
+        {
+          "path": "design.dimensions",
+          "missingVariants": 3
+        }
+      ]
+    }
+  ],
+  "researchFindings": [
+    {
+      "modelSlug": "gree-amber-prestige",
+      "powerKw": 2.7,
+      "path": "modulation.heatingMaxKw",
+      "status": "CONFLICT",
+      "values": [
+        6.5,
+        5.5
+      ],
+      "sourceId": "gree-amber-prestige-page",
+      "otherSourceId": "gree-rac-2026",
+      "locator": "Polska strona produktu: Parametry techniczne → Model / zestaw 2,7 kW, wydajność grzewcza min/nom/max; Katalog RAC/LCAC 2026, PDF spread 58, s. drukowane 114–115, Split, kolumna 09k.",
+      "reason": "Official product page says 0.70–6.50 kW for 2.7 kW; 2026 catalogue says 0.70–5.50 kW. Withheld (null) pending manufacturer clarification. Existing central configuration has no range.",
+      "note": "Strona produktu: maksimum 6,50 kW; katalog 2026: maksimum 5,50 kW. Nie rozstrzygnięto sprzeczności; centralne pole pozostaje null.",
+      "source": "gree-amber-prestige-page | https://gree.pl/produkt/klimatyzator-amber-prestige/ | Polska strona produktu: Parametry techniczne → Model / zestaw 2,7 kW, wydajność grzewcza min/nom/max; Katalog RAC/LCAC 2026, PDF spread 58, s. drukowane 114–115, Split, kolumna 09k."
+    },
+    {
+      "modelSlug": "gree-amber-prestige",
+      "powerKw": 2.7,
+      "path": "modulation.heatingMinKw",
+      "status": "MISSING",
+      "sourceValue": 0.7,
+      "otherSourceValue": 0.7,
+      "sourceId": "gree-amber-prestige-page",
+      "otherSourceId": "gree-rac-2026",
+      "locator": "Polska strona produktu: Parametry techniczne → Model / zestaw 2,7 kW, wydajność grzewcza min/nom/max; Katalog RAC/LCAC 2026, PDF spread 58, s. drukowane 114–115, Split, kolumna 09k.",
+      "note": "Oba źródła podają zgodne minimum 0,70 kW. W zgromadzonym researchu wstrzymano cały zakres grzewczy ze względu na sprzeczne maksimum, dlatego minimum także pozostaje null; nie oznaczono zgodnych minimów jako CONFLICT.",
+      "source": "gree-amber-prestige-page | https://gree.pl/produkt/klimatyzator-amber-prestige/ | Polska strona produktu: Parametry techniczne → Model / zestaw 2,7 kW, wydajność grzewcza min/nom/max; Katalog RAC/LCAC 2026, PDF spread 58, s. drukowane 114–115, Split, kolumna 09k."
+    },
+    {
+      "modelSlug": "gree-u-crown",
+      "reason": "2026 catalogue has detailed Split data only for UC09S / 2.7 kW. Existing 3.5 and 5.3 kW capacities, SEER, SCOP preserved; other quantitative fields null pending exact matching model documentation.",
+      "source": ""
+    },
+    {
+      "modelSlug": "gree-g-time",
+      "powerKw": 7.1,
+      "path": "indoorNoise.levelsDb",
+      "reason": "Catalogue and official product tab give seven levels followed by an empty eighth position; no ultra-silent numeric value invented. Lowest published pressure is 32 dB(A).",
+      "source": ""
+    },
+    {
+      "modelSlug": "gree-clivia",
+      "path": "design.colors",
+      "reason": "Catalogue technical footnote erroneously mentions C/Champagne despite table header N and official product page Navy Blue. Existing confirmed five-color selector preserved.",
+      "sourceId": "gree-clivia-page",
+      "otherSourceId": "gree-rac-2026",
+      "locator": "Polska strona producenta: nazwa Clivia Beige Stone / Satin Black / Navy Blue / Silver / White; Katalog RAC/LCAC 2026, PDF spread 43, s. drukowane 84–85, nagłówek wariantu N i przypis kolorystyczny C/Champagne.",
+      "note": "Zastrzeżenie dotyczy niespójnego kodu w przypisie, nie potwierdzonego wyboru kolorów. Zastany selektor pięciu kolorów zachowano; nie przeniesiono nazwy Champagne na model Clivia.",
+      "source": "gree-clivia-page | https://gree.pl/produkt/klimatyzator-scienny-clivia/ | Polska strona producenta: nazwa Clivia Beige Stone / Satin Black / Navy Blue / Silver / White; Katalog RAC/LCAC 2026, PDF spread 43, s. drukowane 84–85, nagłówek wariantu N i przypis kolorystyczny C/Champagne."
+    },
+    {
+      "modelSlug": null,
+      "reason": "No exact variant heating capacity at -7/-10/-15 C verified. Generic manufacturer percentage claims are not converted into kW or copied to all variants.",
+      "source": ""
+    },
+    {
+      "modelSlug": null,
+      "reason": "Manufacturer acoustic levels apply to cooling. Quiet-mode minima are declared limits, not rated sound pressure or proof of noise at the same airflow. Indoor pressure and outdoor power kept separate.",
+      "source": ""
+    },
+    {
+      "modelSlug": "gree-pular-pro",
+      "path": "design.finish",
+      "reason": "Manufacturer page describes matte finish, whereas 2026 technical footnote distinguishes matte/shiny variants by code. Series-wide finish withheld; existing color image selection retained.",
+      "status": "MISSING",
+      "sourceId": "gree-pular-pro-page",
+      "otherSourceId": "gree-rac-2026",
+      "locator": "Strona producenta: opis wykończenia Pular PRO Dark / White; Katalog RAC/LCAC 2026, PDF spread 47, s. drukowane 92–93, przypis techniczny o wykończeniu zależnym od kodu.",
+      "note": "Strona opisuje mat, a przypis katalogu rozróżnia warianty matowe i błyszczące według kodu. Zgromadzone dowody nie dają jednoznacznego przypisania wykończenia do każdej kombinacji mocy i koloru. Nie przyjęto jednej wartości dla całej serii; pozostawiono null.",
+      "source": "gree-pular-pro-page | https://gree.pl/produkt/klimatyzator-pular-pro/ | Strona producenta: opis wykończenia Pular PRO Dark / White; Katalog RAC/LCAC 2026, PDF spread 47, s. drukowane 92–93, przypis techniczny o wykończeniu zależnym od kodu."
+    },
+    {
+      "modelSlug": "kaisai-geo",
+      "path": "operatingRange.heatingMaxC",
+      "status": "CONFLICT",
+      "sourceId": "kaisai-geo-leaflet",
+      "values": [
+        24,
+        30
+      ],
+      "locator": "s. 2: tabela podaje -25÷24°C, akapit SZEROKI ZAKRES TEMPERATUR -25÷30°C. Polska strona produktu także +24°C. Nie przyjęto nowej wartości.",
+      "source": "kaisai-geo-leaflet | https://kaisai.com/pl/files/page_files/545/ulotka-new-03-2025-pl-geo.pdf | s. 2: tabela podaje -25÷24°C, akapit SZEROKI ZAKRES TEMPERATUR -25÷30°C. Polska strona produktu także +24°C. Nie przyjęto nowej wartości."
+    },
+    {
+      "modelSlug": "kaisai-konsola",
+      "powerKw": 3.5,
+      "path": "design.dimensions",
+      "status": "MISSING",
+      "sourceId": "kaisai-console-leaflet",
+      "sourceValue": "700×215×600 mm",
+      "locator": "s. 2, tabela: Wymiary netto s/w/g",
+      "note": "Kolejność osi szerokość/wysokość/głębokość wygląda niespójnie z rysunkiem konsoli. Zachowano surowy zapis, nie przestawiano osi i nie zasilono tym ustrukturyzowanych wymiarów.",
+      "source": "kaisai-console-leaflet | https://kaisai.com/pl/files/page_files/872/console-260115-pl.pdf | s. 2, tabela: Wymiary netto s/w/g"
+    },
+    {
+      "modelSlug": "kaisai-ice",
+      "path": "heatingFeatures.crankcaseHeater",
+      "status": "MISSING",
+      "sourceId": "kaisai-ice-leaflet",
+      "locator": "s. 1: Wbudowane grzałki tacy skroplin i sprężarki",
+      "note": "Producent potwierdza grzałkę sprężarki, ale ta ulotka nie nazywa jej wprost grzałką karteru; nie utożsamiono tych pól.",
+      "source": "kaisai-ice-leaflet | https://kaisai.com/pl/files/page_files/461/ulotka-new-03-2025-pl-ice.pdf | s. 1: Wbudowane grzałki tacy skroplin i sprężarki"
+    },
+    {
+      "modelSlug": "kaisai-nordic",
+      "path": "heatingFeatures.crankcaseHeater",
+      "status": "MISSING",
+      "sourceId": "kaisai-nordic-leaflet",
+      "locator": "s. 2: przewód grzewczy sprężarki",
+      "note": "Nie zamieniono ogólnego przewodu grzewczego sprężarki na potwierdzenie grzałki karteru.",
+      "source": "kaisai-nordic-leaflet | https://kaisai.com/pl/files/page_files/721/kaisai-nordic-pl.pdf | s. 2: przewód grzewczy sprężarki"
+    },
+    {
+      "modelSlug": "kaisai-geo-plus",
+      "path": "indoorNoise.levelsDb",
+      "status": "VERIFIED",
+      "sourceId": "kaisai-geo-plus-leaflet",
+      "locator": "s. 2: pięć wartości dB(A), nagłówek Hi/Mi/Lo/Si",
+      "note": "Zachowano pięć publikowanych wartości w kolejności źródła; nie przypisano arbitralnie nazw biegów ani liczby prędkości na podstawie tego niespójnego nagłówka.",
+      "source": "kaisai-geo-plus-leaflet | https://ebook.klima-therm.com/GEO-PLUS-PL | s. 2: pięć wartości dB(A), nagłówek Hi/Mi/Lo/Si"
+    },
+    {
+      "modelSlug": "kaisai-pro-heat-plus",
+      "path": "operatingRange.coolingMaxC",
+      "status": "CONFLICT",
+      "sourceId": "kaisai-product-guide-2026",
+      "sourceValue": 50,
+      "otherSourceValue": 53,
+      "otherSourceId": "kaisai-pro-heat-plus-leaflet",
+      "locator": "s. 11 przeglądu: -15~50°C; ulotka s. 2 i polska strona produktu: -15~53°C",
+      "note": "Ulotka i polska strona są zgodne na +53°C; sprzeczne wydanie przeglądu odnotowano.",
+      "source": "kaisai-product-guide-2026 | https://kaisai.com/pl/files/page_files/738/kaisai-product-guide-2026-a4-pl-maj.pdf | s. 11 przeglądu: -15~50°C; ulotka s. 2 i polska strona produktu: -15~53°C"
+    },
+    {
+      "modelSlug": "kaisai-geo-plus",
+      "powerKw": 2.7,
+      "path": "outdoorNoise.soundPowerDb",
+      "status": "MISSING",
+      "sourceId": "kaisai-geo-plus-fiche",
+      "sourceValue": 61,
+      "locator": "s. 1 i 9: nagłówek zestawu podaje KKOG-09RAA1, szczegółowy identyfikator KKOG-09RRA1",
+      "note": "Nie zastosowano 61 dB przed wyjaśnieniem rozbieżnego kodu jednostki zewnętrznej w karcie UE.",
+      "source": "kaisai-geo-plus-fiche | https://kaisai.com/pl/files/page_files/871/fichekkws-09-pl-scalone.pdf | s. 1 i 9: nagłówek zestawu podaje KKOG-09RAA1, szczegółowy identyfikator KKOG-09RRA1"
+    },
+    {
+      "modelSlug": "kaisai-art",
+      "powerKw": 2.7,
+      "path": "outdoorNoise.soundPowerDb",
+      "status": "CONFLICT",
+      "sourceId": "kaisai-art-fiche",
+      "values": {
+        "blackCoolingDb": 62,
+        "whiteCoolingDb": 63,
+        "whiteHeatingDb": 62
+      },
+      "locator": "s. 1 (KKWF-09RTA1), s. 9 (KKWI-09RTA1)",
+      "note": "Nie przypisano jednej wartości całemu wariantowi mocy. Karta różnicuje kolor/tryb lub zawiera błąd; pozostawiono null do weryfikacji.",
+      "source": "kaisai-art-fiche | https://kaisai.com/pl/files/page_files/870/fiche-pl-scalone.pdf | s. 1 (KKWF-09RTA1), s. 9 (KKWI-09RTA1)"
+    }
+  ],
+  "unpricedCombinations": [
+    {
+      "model": "U-Crown Silver",
+      "powerKw": 3.5,
+      "color": "Nieokreślony w zastanej konfiguracji"
+    },
+    {
+      "model": "U-Crown Silver",
+      "powerKw": 5.3,
+      "color": "Nieokreślony w zastanej konfiguracji"
+    },
+    {
+      "model": "ICE (KLW / KLB)",
+      "powerKw": 5.3,
+      "color": "Czarny"
+    },
+    {
+      "model": "ICE (KLW / KLB)",
+      "powerKw": 7,
+      "color": "Czarny"
+    },
+    {
+      "model": "NORDIC (KNP)",
+      "powerKw": 3.5,
+      "color": "Nieokreślony w zastanej konfiguracji"
+    }
+  ],
+  "unavailableImages": [],
+  "calculatorCompleteVariants": 65,
+  "completeness": [
+    {
+      "model": "Clivia",
+      "modelSlug": "gree-clivia",
+      "variants": 4,
+      "present": 188,
+      "total": 256,
+      "percentage": 73,
+      "missing": {
+        "heatingClimate": 4,
+        "indoorNoise.soundPowerDb": 4,
+        "heatingFeatures.compressorWindingHeating": 4,
+        "heatingFeatures.lowTempPerformance": 4,
+        "airflow.gentleCooling": 4,
+        "airflow.indirectAirflow": 4,
+        "airQuality.filters": 4,
+        "airQuality.sterilization": 4,
+        "airQuality.sterilizationTempC": 4,
+        "controls.voiceControl": 4,
+        "controls.bms": 4,
+        "design.finish": 4,
+        "airflow.fanSpeedControl": 4,
+        "airQuality.dehumidificationLh": 4,
+        "controls.onOffPort": 4,
+        "outdoorNoise.soundPowerContext": 4,
+        "outdoorNoise.silentMode": 4
+      },
+      "unavailable": false
+    },
+    {
+      "model": "Airy",
+      "modelSlug": "gree-airy",
+      "variants": 4,
+      "present": 188,
+      "total": 256,
+      "percentage": 73,
+      "missing": {
+        "heatingClimate": 4,
+        "indoorNoise.soundPowerDb": 4,
+        "heatingFeatures.compressorWindingHeating": 4,
+        "heatingFeatures.lowTempPerformance": 4,
+        "airflow.gentleCooling": 4,
+        "airQuality.filters": 4,
+        "airQuality.sterilization": 4,
+        "airQuality.sterilizationTempC": 4,
+        "airQuality.humidityControl": 4,
+        "controls.voiceControl": 4,
+        "controls.bms": 4,
+        "design.finish": 4,
+        "airflow.fanSpeedControl": 4,
+        "airQuality.dehumidificationLh": 4,
+        "controls.onOffPort": 4,
+        "outdoorNoise.soundPowerContext": 4,
+        "outdoorNoise.silentMode": 4
+      },
+      "unavailable": false
+    },
+    {
+      "model": "G-TIME",
+      "modelSlug": "gree-g-time",
+      "variants": 4,
+      "present": 176,
+      "total": 256,
+      "percentage": 69,
+      "missing": {
+        "heatingClimate": 4,
+        "indoorNoise.soundPowerDb": 4,
+        "heatingFeatures.compressorWindingHeating": 4,
+        "heatingFeatures.lowTempPerformance": 4,
+        "airflow.gentleCooling": 4,
+        "airflow.indirectAirflow": 4,
+        "airQuality.uvc": 4,
+        "airQuality.filters": 4,
+        "airQuality.sterilization": 4,
+        "airQuality.sterilizationTempC": 4,
+        "controls.voiceControl": 4,
+        "controls.bms": 4,
+        "design.colors": 4,
+        "design.finish": 4,
+        "colorAffectsPrice": 4,
+        "airflow.fanSpeedControl": 4,
+        "airQuality.dehumidificationLh": 4,
+        "controls.onOffPort": 4,
+        "outdoorNoise.soundPowerContext": 4,
+        "outdoorNoise.silentMode": 4
+      },
+      "unavailable": false
+    },
+    {
+      "model": "Cosmo Pearl",
+      "modelSlug": "gree-cosmo-pearl",
+      "variants": 4,
+      "present": 176,
+      "total": 256,
+      "percentage": 69,
+      "missing": {
+        "heatingClimate": 4,
+        "indoorNoise.soundPowerDb": 4,
+        "heatingFeatures.compressorWindingHeating": 4,
+        "heatingFeatures.lowTempPerformance": 4,
+        "airflow.gentleCooling": 4,
+        "airflow.indirectAirflow": 4,
+        "airQuality.uvc": 4,
+        "airQuality.filters": 4,
+        "airQuality.sterilization": 4,
+        "airQuality.sterilizationTempC": 4,
+        "airQuality.humidityControl": 4,
+        "controls.voiceControl": 4,
+        "controls.bms": 4,
+        "design.colors": 4,
+        "colorAffectsPrice": 4,
+        "airflow.fanSpeedControl": 4,
+        "airQuality.dehumidificationLh": 4,
+        "controls.onOffPort": 4,
+        "outdoorNoise.soundPowerContext": 4,
+        "outdoorNoise.silentMode": 4
+      },
+      "unavailable": false
+    },
+    {
+      "model": "Fairy",
+      "modelSlug": "gree-fairy",
+      "variants": 4,
+      "present": 176,
+      "total": 256,
+      "percentage": 69,
+      "missing": {
+        "heatingClimate": 4,
+        "indoorNoise.soundPowerDb": 4,
+        "heatingFeatures.compressorWindingHeating": 4,
+        "heatingFeatures.lowTempPerformance": 4,
+        "airflow.gentleCooling": 4,
+        "airflow.indirectAirflow": 4,
+        "airQuality.uvc": 4,
+        "airQuality.filters": 4,
+        "airQuality.sterilization": 4,
+        "airQuality.sterilizationTempC": 4,
+        "airQuality.humidityControl": 4,
+        "controls.voiceControl": 4,
+        "controls.bms": 4,
+        "design.finish": 4,
+        "colorAffectsPrice": 4,
+        "airflow.fanSpeedControl": 4,
+        "airQuality.dehumidificationLh": 4,
+        "controls.onOffPort": 4,
+        "outdoorNoise.soundPowerContext": 4,
+        "outdoorNoise.silentMode": 4
+      },
+      "unavailable": false
+    },
+    {
+      "model": "Pular",
+      "modelSlug": "gree-pular",
+      "variants": 4,
+      "present": 176,
+      "total": 256,
+      "percentage": 69,
+      "missing": {
+        "heatingClimate": 4,
+        "indoorNoise.soundPowerDb": 4,
+        "heatingFeatures.compressorWindingHeating": 4,
+        "heatingFeatures.lowTempPerformance": 4,
+        "airflow.gentleCooling": 4,
+        "airflow.indirectAirflow": 4,
+        "airQuality.uvc": 4,
+        "airQuality.filters": 4,
+        "airQuality.sterilization": 4,
+        "airQuality.sterilizationTempC": 4,
+        "airQuality.humidityControl": 4,
+        "controls.voiceControl": 4,
+        "controls.bms": 4,
+        "design.colors": 4,
+        "colorAffectsPrice": 4,
+        "airflow.fanSpeedControl": 4,
+        "airQuality.dehumidificationLh": 4,
+        "controls.onOffPort": 4,
+        "outdoorNoise.soundPowerContext": 4,
+        "outdoorNoise.silentMode": 4
+      },
+      "unavailable": false
+    },
+    {
+      "model": "Pular PRO",
+      "modelSlug": "gree-pular-pro",
+      "variants": 4,
+      "present": 176,
+      "total": 256,
+      "percentage": 69,
+      "missing": {
+        "heatingClimate": 4,
+        "indoorNoise.soundPowerDb": 4,
+        "heatingFeatures.compressorWindingHeating": 4,
+        "heatingFeatures.lowTempPerformance": 4,
+        "airflow.gentleCooling": 4,
+        "airflow.indirectAirflow": 4,
+        "airQuality.uvc": 4,
+        "airQuality.filters": 4,
+        "airQuality.sterilization": 4,
+        "airQuality.sterilizationTempC": 4,
+        "airQuality.humidityControl": 4,
+        "controls.voiceControl": 4,
+        "controls.bms": 4,
+        "design.finish": 4,
+        "colorAffectsPrice": 4,
+        "airflow.fanSpeedControl": 4,
+        "airQuality.dehumidificationLh": 4,
+        "controls.onOffPort": 4,
+        "outdoorNoise.soundPowerContext": 4,
+        "outdoorNoise.silentMode": 4
+      },
+      "unavailable": false
+    },
+    {
+      "model": "Amber Prestige",
+      "modelSlug": "gree-amber-prestige",
+      "variants": 4,
+      "present": 166,
+      "total": 256,
+      "percentage": 65,
+      "missing": {
+        "heatingClimate": 4,
+        "modulation.heatingMinKw": 1,
+        "modulation.heatingMaxKw": 1,
+        "indoorNoise.soundPowerDb": 4,
+        "heatingFeatures.compressorWindingHeating": 4,
+        "heatingFeatures.lowTempPerformance": 4,
+        "airflow.gentleCooling": 4,
+        "airflow.indirectAirflow": 4,
+        "airQuality.uvc": 4,
+        "airQuality.filters": 4,
+        "airQuality.selfClean": 4,
+        "airQuality.sterilization": 4,
+        "airQuality.sterilizationTempC": 4,
+        "airQuality.humidityControl": 4,
+        "controls.voiceControl": 4,
+        "controls.bms": 4,
+        "design.colors": 4,
+        "design.finish": 4,
+        "colorAffectsPrice": 4,
+        "airflow.fanSpeedControl": 4,
+        "airQuality.dehumidificationLh": 4,
+        "controls.onOffPort": 4,
+        "outdoorNoise.soundPowerContext": 4,
+        "outdoorNoise.silentMode": 4
+      },
+      "unavailable": false
+    },
+    {
+      "model": "FLY+ (KKWX)",
+      "modelSlug": "kaisai-fly-plus",
+      "variants": 4,
+      "present": 156,
+      "total": 256,
+      "percentage": 61,
+      "missing": {
+        "heatingClimate": 4,
+        "indoorNoise.soundPowerDb": 4,
+        "outdoorNoise.context": 4,
+        "heatingFeatures.compressorWindingHeating": 4,
+        "heatingFeatures.lowTempPerformance": 4,
+        "airflow.directions": 4,
+        "airflow.fanSpeeds": 4,
+        "airflow.gentleCooling": 4,
+        "airflow.silentMode": 4,
+        "airflow.nightMode": 4,
+        "airflow.automaticLouvers": 4,
+        "airflow.indirectAirflow": 4,
+        "airQuality.ionizer": 4,
+        "airQuality.uvc": 4,
+        "airQuality.filters": 4,
+        "airQuality.dehumidification": 4,
+        "airQuality.humidityControl": 4,
+        "controls.app": 4,
+        "controls.voiceControl": 4,
+        "controls.bms": 4,
+        "design.colors": 4,
+        "design.finish": 4,
+        "colorAffectsPrice": 4,
+        "controls.onOffPort": 4,
+        "airQuality.autoDry": 4
+      },
+      "unavailable": false
+    },
+    {
+      "model": "PRO HEAT+ (KRW / KRB)",
+      "modelSlug": "kaisai-pro-heat-plus",
+      "variants": 4,
+      "present": 156,
+      "total": 256,
+      "percentage": 61,
+      "missing": {
+        "heatingClimate": 4,
+        "indoorNoise.soundPowerDb": 4,
+        "outdoorNoise.context": 4,
+        "heatingFeatures.crankcaseHeater": 4,
+        "heatingFeatures.compressorWindingHeating": 4,
+        "heatingFeatures.lowTempPerformance": 4,
+        "airflow.fanSpeeds": 4,
+        "airflow.silentMode": 4,
+        "airflow.nightMode": 4,
+        "airQuality.selfClean": 4,
+        "airQuality.sterilization": 4,
+        "airQuality.sterilizationTempC": 4,
+        "airQuality.dehumidification": 4,
+        "airQuality.humidityControl": 4,
+        "controls.app": 4,
+        "controls.voiceControl": 4,
+        "controls.modbus": 4,
+        "controls.bms": 4,
+        "controls.remote": 4,
+        "controls.additionalControllers": 4,
+        "design.finish": 4,
+        "airflow.fanSpeedControl": 4,
+        "controls.onOffPort": 4,
+        "airQuality.autoDry": 4,
+        "outdoorNoise.silentMode": 4
+      },
+      "unavailable": false
+    },
+    {
+      "model": "GEO+ (KKWR / KKWS)",
+      "modelSlug": "kaisai-geo-plus",
+      "variants": 4,
+      "present": 154,
+      "total": 256,
+      "percentage": 60,
+      "missing": {
+        "heatingClimate": 4,
+        "indoorNoise.soundPowerDb": 4,
+        "outdoorNoise.soundPowerDb": 1,
+        "outdoorNoise.context": 4,
+        "heatingFeatures.crankcaseHeater": 4,
+        "heatingFeatures.compressorWindingHeating": 4,
+        "heatingFeatures.lowTempPerformance": 4,
+        "airflow.directions": 4,
+        "airflow.fanSpeeds": 4,
+        "airflow.silentMode": 4,
+        "airflow.nightMode": 4,
+        "airflow.automaticLouvers": 4,
+        "airQuality.ionizer": 4,
+        "airQuality.sterilization": 4,
+        "airQuality.sterilizationTempC": 4,
+        "airQuality.dehumidification": 4,
+        "airQuality.humidityControl": 4,
+        "controls.app": 4,
+        "controls.voiceControl": 4,
+        "controls.modbus": 4,
+        "controls.bms": 4,
+        "controls.additionalControllers": 4,
+        "design.finish": 4,
+        "airflow.fanSpeedControl": 4,
+        "airQuality.autoDry": 4,
+        "outdoorNoise.soundPowerContext": 1,
+        "outdoorNoise.silentMode": 4
+      },
+      "unavailable": false
+    },
+    {
+      "model": "ART (KKWI / KKWF)",
+      "modelSlug": "kaisai-art",
+      "variants": 4,
+      "present": 142,
+      "total": 256,
+      "percentage": 55,
+      "missing": {
+        "heatingClimate": 4,
+        "indoorNoise.soundPowerDb": 4,
+        "outdoorNoise.soundPowerDb": 1,
+        "outdoorNoise.context": 4,
+        "heatingFeatures.crankcaseHeater": 4,
+        "heatingFeatures.compressorWindingHeating": 4,
+        "heatingFeatures.lowTempPerformance": 4,
+        "airflow.fanSpeeds": 4,
+        "airflow.gentleCooling": 4,
+        "airflow.silentMode": 4,
+        "airflow.nightMode": 4,
+        "airflow.automaticLouvers": 4,
+        "airflow.indirectAirflow": 4,
+        "airQuality.ionizer": 4,
+        "airQuality.uvc": 4,
+        "airQuality.selfClean": 4,
+        "airQuality.sterilization": 4,
+        "airQuality.sterilizationTempC": 4,
+        "airQuality.dehumidification": 4,
+        "airQuality.humidityControl": 4,
+        "controls.app": 4,
+        "controls.voiceControl": 4,
+        "controls.modbus": 4,
+        "controls.bms": 4,
+        "controls.additionalControllers": 4,
+        "design.finish": 4,
+        "airflow.fanSpeedControl": 4,
+        "airQuality.autoDry": 4,
+        "outdoorNoise.soundPowerContext": 1,
+        "outdoorNoise.silentMode": 4
+      },
+      "unavailable": false
+    },
+    {
+      "model": "NORDIC (KNP)",
+      "modelSlug": "kaisai-nordic",
+      "variants": 1,
+      "present": 35,
+      "total": 64,
+      "percentage": 55,
+      "missing": {
+        "heatingClimate": 1,
+        "indoorNoise.soundPowerDb": 1,
+        "outdoorNoise.soundPowerDb": 1,
+        "outdoorNoise.context": 1,
+        "heatingFeatures.crankcaseHeater": 1,
+        "heatingFeatures.compressorWindingHeating": 1,
+        "airflow.fanSpeeds": 1,
+        "airflow.silentMode": 1,
+        "airflow.nightMode": 1,
+        "airflow.automaticLouvers": 1,
+        "airQuality.uvc": 1,
+        "airQuality.filters": 1,
+        "airQuality.dehumidification": 1,
+        "airQuality.humidityControl": 1,
+        "controls.app": 1,
+        "controls.voiceControl": 1,
+        "controls.modbus": 1,
+        "controls.bms": 1,
+        "controls.additionalControllers": 1,
+        "design.colors": 1,
+        "design.finish": 1,
+        "priceFromPLN": 1,
+        "colorAffectsPrice": 1,
+        "airflow.fanSpeedControl": 1,
+        "airQuality.dehumidificationLh": 1,
+        "controls.onOffPort": 1,
+        "airQuality.autoDry": 1,
+        "outdoorNoise.soundPowerContext": 1,
+        "outdoorNoise.silentMode": 1
+      },
+      "unavailable": true
+    },
+    {
+      "model": "GEO (KGE)",
+      "modelSlug": "kaisai-geo",
+      "variants": 4,
+      "present": 136,
+      "total": 256,
+      "percentage": 53,
+      "missing": {
+        "heatingClimate": 4,
+        "indoorNoise.soundPowerDb": 4,
+        "outdoorNoise.context": 4,
+        "operatingRange.heatingMaxC": 4,
+        "heatingFeatures.compressorWindingHeating": 4,
+        "heatingFeatures.lowTempPerformance": 4,
+        "airflow.fanSpeeds": 4,
+        "airflow.gentleCooling": 4,
+        "airflow.silentMode": 4,
+        "airflow.nightMode": 4,
+        "airflow.indirectAirflow": 4,
+        "airQuality.uvc": 4,
+        "airQuality.sterilization": 4,
+        "airQuality.sterilizationTempC": 4,
+        "airQuality.dehumidification": 4,
+        "airQuality.humidityControl": 4,
+        "controls.app": 4,
+        "controls.voiceControl": 4,
+        "controls.modbus": 4,
+        "controls.bms": 4,
+        "controls.additionalControllers": 4,
+        "design.colors": 4,
+        "design.finish": 4,
+        "colorAffectsPrice": 4,
+        "airflow.fanSpeedControl": 4,
+        "airQuality.dehumidificationLh": 4,
+        "controls.onOffPort": 4,
+        "airQuality.autoDry": 4,
+        "outdoorNoise.silentMode": 4,
+        "outdoorNoise.soundPowerDb": 2,
+        "outdoorNoise.soundPowerContext": 2
+      },
+      "unavailable": false
+    },
+    {
+      "model": "ICE (KLW / KLB)",
+      "modelSlug": "kaisai-ice",
+      "variants": 4,
+      "present": 134,
+      "total": 256,
+      "percentage": 52,
+      "missing": {
+        "heatingClimate": 4,
+        "indoorNoise.soundPowerDb": 4,
+        "outdoorNoise.soundPowerDb": 4,
+        "outdoorNoise.context": 4,
+        "heatingFeatures.crankcaseHeater": 4,
+        "heatingFeatures.compressorWindingHeating": 4,
+        "heatingFeatures.lowTempPerformance": 4,
+        "airflow.fanSpeeds": 4,
+        "airflow.gentleCooling": 4,
+        "airflow.silentMode": 4,
+        "airflow.nightMode": 4,
+        "airflow.indirectAirflow": 4,
+        "airQuality.uvc": 4,
+        "airQuality.selfClean": 4,
+        "airQuality.sterilization": 4,
+        "airQuality.sterilizationTempC": 4,
+        "airQuality.dehumidification": 4,
+        "airQuality.humidityControl": 4,
+        "controls.app": 4,
+        "controls.voiceControl": 4,
+        "controls.modbus": 4,
+        "controls.bms": 4,
+        "controls.additionalControllers": 4,
+        "design.finish": 4,
+        "airflow.fanSpeedControl": 4,
+        "airQuality.dehumidificationLh": 4,
+        "controls.onOffPort": 4,
+        "airQuality.autoDry": 4,
+        "outdoorNoise.soundPowerContext": 4,
+        "outdoorNoise.silentMode": 4,
+        "colorAffectsPrice": 2
+      },
+      "unavailable": false
+    },
+    {
+      "model": "AIR (KKWK)",
+      "modelSlug": "kaisai-air",
+      "variants": 4,
+      "present": 128,
+      "total": 256,
+      "percentage": 50,
+      "missing": {
+        "heatingClimate": 4,
+        "indoorNoise.soundPowerDb": 4,
+        "outdoorNoise.soundPowerDb": 4,
+        "outdoorNoise.context": 4,
+        "heatingFeatures.crankcaseHeater": 4,
+        "heatingFeatures.lowTempPerformance": 4,
+        "airflow.directions": 4,
+        "airflow.fanSpeeds": 4,
+        "airflow.gentleCooling": 4,
+        "airflow.silentMode": 4,
+        "airflow.nightMode": 4,
+        "airflow.automaticLouvers": 4,
+        "airflow.indirectAirflow": 4,
+        "airQuality.ionizer": 4,
+        "airQuality.uvc": 4,
+        "airQuality.sterilization": 4,
+        "airQuality.sterilizationTempC": 4,
+        "airQuality.dehumidification": 4,
+        "airQuality.humidityControl": 4,
+        "controls.app": 4,
+        "controls.voiceControl": 4,
+        "controls.modbus": 4,
+        "controls.bms": 4,
+        "controls.additionalControllers": 4,
+        "design.colors": 4,
+        "design.finish": 4,
+        "colorAffectsPrice": 4,
+        "airflow.fanSpeedControl": 4,
+        "controls.onOffPort": 4,
+        "airQuality.autoDry": 4,
+        "outdoorNoise.soundPowerContext": 4,
+        "outdoorNoise.silentMode": 4
+      },
+      "unavailable": false
+    },
+    {
+      "model": "Konsola (KKGB / KKOS)",
+      "modelSlug": "kaisai-konsola",
+      "variants": 1,
+      "present": 31,
+      "total": 64,
+      "percentage": 48,
+      "missing": {
+        "heatingClimate": 1,
+        "indoorNoise.soundPowerDb": 1,
+        "outdoorNoise.context": 1,
+        "heatingFeatures.crankcaseHeater": 1,
+        "heatingFeatures.compressorWindingHeating": 1,
+        "heatingFeatures.lowTempPerformance": 1,
+        "airflow.directions": 1,
+        "airflow.fanSpeeds": 1,
+        "airflow.gentleCooling": 1,
+        "airflow.nightMode": 1,
+        "airflow.indirectAirflow": 1,
+        "airQuality.ionizer": 1,
+        "airQuality.uvc": 1,
+        "airQuality.filters": 1,
+        "airQuality.selfClean": 1,
+        "airQuality.sterilization": 1,
+        "airQuality.sterilizationTempC": 1,
+        "airQuality.dehumidification": 1,
+        "airQuality.humidityControl": 1,
+        "controls.app": 1,
+        "controls.voiceControl": 1,
+        "controls.modbus": 1,
+        "controls.bms": 1,
+        "controls.additionalControllers": 1,
+        "design.colors": 1,
+        "design.finish": 1,
+        "design.dimensions": 1,
+        "colorAffectsPrice": 1,
+        "airflow.fanSpeedControl": 1,
+        "airQuality.dehumidificationLh": 1,
+        "controls.onOffPort": 1,
+        "airQuality.autoDry": 1,
+        "outdoorNoise.silentMode": 1
+      },
+      "unavailable": false
+    },
+    {
+      "model": "U-Crown Silver",
+      "modelSlug": "gree-u-crown",
+      "variants": 3,
+      "present": 72,
+      "total": 192,
+      "percentage": 38,
+      "missing": {
+        "heatingClimate": 3,
+        "indoorNoise.soundPowerDb": 3,
+        "heatingFeatures.compressorWindingHeating": 3,
+        "heatingFeatures.lowTempPerformance": 3,
+        "airflow.gentleCooling": 3,
+        "airflow.indirectAirflow": 3,
+        "airQuality.uvc": 3,
+        "airQuality.filters": 3,
+        "airQuality.selfClean": 3,
+        "airQuality.sterilization": 3,
+        "airQuality.sterilizationTempC": 3,
+        "airQuality.humidityControl": 3,
+        "controls.voiceControl": 3,
+        "controls.modbus": 3,
+        "controls.bms": 3,
+        "controls.additionalControllers": 3,
+        "design.colors": 3,
+        "design.finish": 3,
+        "colorAffectsPrice": 3,
+        "airflow.fanSpeedControl": 3,
+        "airQuality.dehumidificationLh": 3,
+        "controls.onOffPort": 3,
+        "outdoorNoise.soundPowerContext": 3,
+        "outdoorNoise.silentMode": 3,
+        "modelCode": 2,
+        "coolingEnergyClass": 2,
+        "heatingEnergyClass": 2,
+        "ratedInput.coolingKw": 2,
+        "ratedInput.heatingKw": 2,
+        "modulation.coolingMinKw": 2,
+        "modulation.coolingMaxKw": 2,
+        "modulation.heatingMinKw": 2,
+        "modulation.heatingMaxKw": 2,
+        "indoorNoise.minDb": 2,
+        "indoorNoise.maxDb": 2,
+        "indoorNoise.levelsDb": 2,
+        "indoorNoise.context": 2,
+        "outdoorNoise.soundPressureDb": 2,
+        "outdoorNoise.soundPowerDb": 2,
+        "outdoorNoise.context": 2,
+        "operatingRange.coolingMinC": 2,
+        "operatingRange.coolingMaxC": 2,
+        "operatingRange.heatingMinC": 2,
+        "operatingRange.heatingMaxC": 2,
+        "heatingFeatures.trayHeater": 2,
+        "heatingFeatures.crankcaseHeater": 2,
+        "design.dimensions": 2,
+        "priceFromPLN": 2
+      },
+      "unavailable": false
+    }
+  ],
+  "sourceIds": [
+    "gree-airy-page",
+    "gree-amber-prestige-page",
+    "gree-clivia-page",
+    "gree-cosmo-pearl-page",
+    "gree-fairy-page",
+    "gree-g-time-page",
+    "gree-pular-page",
+    "gree-pular-pro-page",
+    "gree-rac-2026",
+    "gree-u-crown-page",
+    "kaisai-air-leaflet",
+    "kaisai-air-page",
+    "kaisai-art-fiche",
+    "kaisai-art-leaflet",
+    "kaisai-console-fiche",
+    "kaisai-console-leaflet",
+    "kaisai-fly-plus-fiche",
+    "kaisai-fly-plus-leaflet",
+    "kaisai-geo-fiche",
+    "kaisai-geo-leaflet",
+    "kaisai-geo-plus-fiche",
+    "kaisai-geo-plus-leaflet",
+    "kaisai-geo-plus-page",
+    "kaisai-ice-leaflet",
+    "kaisai-nordic-leaflet",
+    "kaisai-pro-heat-plus-fiche",
+    "kaisai-pro-heat-plus-leaflet",
+    "kaisai-pro-heat-plus-page",
+    "kaisai-product-guide-2026",
+    "kaisai-product-guide-2026-first"
+  ]
+}
