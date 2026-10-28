@@ -51,6 +51,25 @@ function response(message, status, extraHeaders = {}) {
   });
 }
 
+function panelConfigurationError(env) {
+  const missing = [];
+  if (typeof env.PANEL_USERNAME !== 'string' || !env.PANEL_USERNAME) missing.push('PANEL_USERNAME');
+  if (typeof env.PANEL_PASSWORD !== 'string' || !env.PANEL_PASSWORD) missing.push('PANEL_PASSWORD');
+  if (missing.length) {
+    return {
+      message: `Panel nie jest skonfigurowany: brak sekretu ${missing.join(' oraz ')} w aktywnej wersji Workera.`,
+      code: `missing-${missing.map((name) => name.toLowerCase().replaceAll('_', '-')).join('-and-')}`
+    };
+  }
+  if (env.PANEL_USERNAME.includes(':')) {
+    return {
+      message: 'Panel nie jest skonfigurowany: login w PANEL_USERNAME nie może zawierać dwukropka.',
+      code: 'invalid-panel-username'
+    };
+  }
+  return null;
+}
+
 function parseBasicCredentials(authorization) {
   if (!authorization || authorization.length > 8192) return null;
   const match = /^Basic ([A-Za-z0-9+/]+={0,2})$/i.exec(authorization);
@@ -93,9 +112,11 @@ export default {
       return response('Panel wymaga połączenia HTTPS.', 403);
     }
     // No fallback credentials: an unconfigured deployment cannot expose the panel.
-    if (typeof env.PANEL_USERNAME !== 'string' || !env.PANEL_USERNAME || env.PANEL_USERNAME.includes(':') ||
-        typeof env.PANEL_PASSWORD !== 'string' || !env.PANEL_PASSWORD) {
-      return response('Panel nie jest skonfigurowany.', 503);
+    const configurationError = panelConfigurationError(env);
+    if (configurationError) {
+      return response(configurationError.message, 503, {
+        'X-Panel-Config-Error': configurationError.code
+      });
     }
     const credentials = parseBasicCredentials(request.headers.get('Authorization'));
     if (credentials === null || !await credentialsMatch(credentials, `${env.PANEL_USERNAME}:${env.PANEL_PASSWORD}`)) {

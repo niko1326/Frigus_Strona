@@ -63,12 +63,20 @@ test('offer shortcut redirects to the protected panel only after authentication'
 });
 
 test('missing server secrets always fail closed, even with an otherwise valid header', async () => {
-  for (const overrides of [{ PANEL_USERNAME: undefined }, { PANEL_PASSWORD: undefined }, { PANEL_PASSWORD: '' }, { PANEL_USERNAME: 'invalid:username' }]) {
+  const cases = [
+    [{ PANEL_USERNAME: undefined }, /PANEL_USERNAME/, 'missing-panel-username'],
+    [{ PANEL_PASSWORD: undefined }, /PANEL_PASSWORD/, 'missing-panel-password'],
+    [{ PANEL_PASSWORD: '' }, /PANEL_PASSWORD/, 'missing-panel-password'],
+    [{ PANEL_USERNAME: 'invalid:username' }, /nie może zawierać dwukropka/, 'invalid-panel-username']
+  ];
+  for (const [overrides, message, code] of cases) {
     const { env, calls } = fixture(overrides);
     const response = await worker.fetch(request('/panel/oferty/', basic()), env);
     assert.equal(response.status, 503);
     assert.equal(calls.length, 0);
     assert.match(response.headers.get('Cache-Control'), /no-store/);
+    assert.equal(response.headers.get('X-Panel-Config-Error'), code);
+    assert.match(await response.text(), message);
   }
 });
 
