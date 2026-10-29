@@ -1,16 +1,16 @@
 {
-  "asOf": "2026-10-28",
+  "asOf": "2026-10-29",
   "models": 18,
   "activeModels": 17,
   "variants": 65,
   "activeVariants": 64,
-  "addedParameters": 1539,
-  "addedVariantParameters": 1338,
-  "addedSharedParameters": 201,
+  "addedParameters": 1555,
+  "addedVariantParameters": 1342,
+  "addedSharedParameters": 213,
   "auditRows": 10070,
   "statusCounts": {
-    "VERIFIED": 7286,
-    "MISSING": 2743,
+    "VERIFIED": 7364,
+    "MISSING": 2665,
     "CONFLICT": 41
   },
   "conflicts": [
@@ -303,7 +303,7 @@
       "fields": [
         {
           "path": "indoorNoise.soundPowerDb",
-          "missingVariants": 65
+          "missingVariants": 61
         },
         {
           "path": "outdoorNoise.soundPowerDb",
@@ -328,7 +328,7 @@
         },
         {
           "path": "heatingClimate",
-          "missingVariants": 65
+          "missingVariants": 35
         }
       ]
     },
@@ -358,7 +358,7 @@
       "fields": [
         {
           "path": "controls.app",
-          "missingVariants": 30
+          "missingVariants": 26
         },
         {
           "path": "controls.voiceControl",
@@ -796,6 +796,37 @@
       "unavailable": false
     },
     {
+      "model": "PRO HEAT+ (KRW / KRB)",
+      "modelSlug": "kaisai-pro-heat-plus",
+      "variants": 4,
+      "present": 176,
+      "total": 256,
+      "percentage": 69,
+      "missing": {
+        "outdoorNoise.context": 4,
+        "heatingFeatures.crankcaseHeater": 4,
+        "heatingFeatures.compressorWindingHeating": 4,
+        "heatingFeatures.lowTempPerformance": 4,
+        "airflow.fanSpeeds": 4,
+        "airflow.silentMode": 4,
+        "airflow.nightMode": 4,
+        "airQuality.selfClean": 4,
+        "airQuality.sterilization": 4,
+        "airQuality.sterilizationTempC": 4,
+        "airQuality.dehumidification": 4,
+        "airQuality.humidityControl": 4,
+        "controls.voiceControl": 4,
+        "controls.modbus": 4,
+        "controls.bms": 4,
+        "controls.additionalControllers": 4,
+        "design.finish": 4,
+        "controls.onOffPort": 4,
+        "airQuality.autoDry": 4,
+        "outdoorNoise.silentMode": 4
+      },
+      "unavailable": false
+    },
+    {
       "model": "Amber Prestige",
       "modelSlug": "gree-amber-prestige",
       "variants": 4,
@@ -834,11 +865,10 @@
       "model": "FLY+ (KKWX)",
       "modelSlug": "kaisai-fly-plus",
       "variants": 4,
-      "present": 156,
+      "present": 160,
       "total": 256,
-      "percentage": 61,
+      "percentage": 63,
       "missing": {
-        "heatingClimate": 4,
         "indoorNoise.soundPowerDb": 4,
         "outdoorNoise.context": 4,
         "heatingFeatures.compressorWindingHeating": 4,
@@ -867,50 +897,13 @@
       "unavailable": false
     },
     {
-      "model": "PRO HEAT+ (KRW / KRB)",
-      "modelSlug": "kaisai-pro-heat-plus",
-      "variants": 4,
-      "present": 156,
-      "total": 256,
-      "percentage": 61,
-      "missing": {
-        "heatingClimate": 4,
-        "indoorNoise.soundPowerDb": 4,
-        "outdoorNoise.context": 4,
-        "heatingFeatures.crankcaseHeater": 4,
-        "heatingFeatures.compressorWindingHeating": 4,
-        "heatingFeatures.lowTempPerformance": 4,
-        "airflow.fanSpeeds": 4,
-        "airflow.silentMode": 4,
-        "airflow.nightMode": 4,
-        "airQuality.selfClean": 4,
-        "airQuality.sterilization": 4,
-        "airQuality.sterilizationTempC": 4,
-        "airQuality.dehumidification": 4,
-        "airQuality.humidityControl": 4,
-        "controls.app": 4,
-        "controls.voiceControl": 4,
-        "controls.modbus": 4,
-        "controls.bms": 4,
-        "controls.remote": 4,
-        "controls.additionalControllers": 4,
-        "design.finish": 4,
-        "airflow.fanSpeedControl": 4,
-        "controls.onOffPort": 4,
-        "airQuality.autoDry": 4,
-        "outdoorNoise.silentMode": 4
-      },
-      "unavailable": false
-    },
-    {
       "model": "GEO+ (KKWR / KKWS)",
       "modelSlug": "kaisai-geo-plus",
       "variants": 4,
-      "present": 154,
+      "present": 158,
       "total": 256,
-      "percentage": 60,
+      "percentage": 62,
       "missing": {
-        "heatingClimate": 4,
         "indoorNoise.soundPowerDb": 4,
         "outdoorNoise.soundPowerDb": 1,
         "outdoorNoise.context": 4,
@@ -944,11 +937,10 @@
       "model": "ART (KKWI / KKWF)",
       "modelSlug": "kaisai-art",
       "variants": 4,
-      "present": 142,
+      "present": 146,
       "total": 256,
-      "percentage": 55,
+      "percentage": 57,
       "missing": {
-        "heatingClimate": 4,
         "indoorNoise.soundPowerDb": 4,
         "outdoorNoise.soundPowerDb": 1,
         "outdoorNoise.context": 4,
@@ -985,11 +977,10 @@
       "model": "NORDIC (KNP)",
       "modelSlug": "kaisai-nordic",
       "variants": 1,
-      "present": 35,
+      "present": 36,
       "total": 64,
-      "percentage": 55,
+      "percentage": 56,
       "missing": {
-        "heatingClimate": 1,
         "indoorNoise.soundPowerDb": 1,
         "outdoorNoise.soundPowerDb": 1,
         "outdoorNoise.context": 1,
@@ -1025,11 +1016,10 @@
       "model": "GEO (KGE)",
       "modelSlug": "kaisai-geo",
       "variants": 4,
-      "present": 136,
+      "present": 140,
       "total": 256,
-      "percentage": 53,
+      "percentage": 55,
       "missing": {
-        "heatingClimate": 4,
         "indoorNoise.soundPowerDb": 4,
         "outdoorNoise.context": 4,
         "operatingRange.heatingMaxC": 4,
@@ -1067,11 +1057,10 @@
       "model": "ICE (KLW / KLB)",
       "modelSlug": "kaisai-ice",
       "variants": 4,
-      "present": 134,
+      "present": 138,
       "total": 256,
-      "percentage": 52,
+      "percentage": 54,
       "missing": {
-        "heatingClimate": 4,
         "indoorNoise.soundPowerDb": 4,
         "outdoorNoise.soundPowerDb": 4,
         "outdoorNoise.context": 4,
@@ -1109,11 +1098,10 @@
       "model": "AIR (KKWK)",
       "modelSlug": "kaisai-air",
       "variants": 4,
-      "present": 128,
+      "present": 132,
       "total": 256,
-      "percentage": 50,
+      "percentage": 52,
       "missing": {
-        "heatingClimate": 4,
         "indoorNoise.soundPowerDb": 4,
         "outdoorNoise.soundPowerDb": 4,
         "outdoorNoise.context": 4,
@@ -1152,11 +1140,10 @@
       "model": "Konsola (KKGB / KKOS)",
       "modelSlug": "kaisai-konsola",
       "variants": 1,
-      "present": 31,
+      "present": 32,
       "total": 64,
-      "percentage": 48,
+      "percentage": 50,
       "missing": {
-        "heatingClimate": 1,
         "indoorNoise.soundPowerDb": 1,
         "outdoorNoise.context": 1,
         "heatingFeatures.crankcaseHeater": 1,

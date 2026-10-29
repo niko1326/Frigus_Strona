@@ -30,7 +30,7 @@ export const OFFER_PRIORITIES = [
   },
   {
     id: 'price', label: 'Cena', description: 'Aktualna cena dokładnie wybranego wariantu mocy i koloru.',
-    fields: ['priceFromPLN', 'colorAffectsPrice', 'coolingCapacityKw', 'heatingCapacityKw']
+    fields: ['priceFromPLN', 'coolingCapacityKw', 'heatingCapacityKw', 'seer', 'scop']
   },
   {
     id: 'airflow', label: 'Komfort nawiewu', description: 'Kierunki, regulacja, łagodny nawiew i tryb nocny.',
@@ -42,7 +42,7 @@ export const OFFER_PRIORITIES = [
   },
   {
     id: 'design', label: 'Design', description: 'Zdjęcia przypisane do kolorów, wykończenie i wymiary.',
-    fields: ['productImages', 'design.colors', 'design.finish', 'design.dimensions', 'colorAffectsPrice']
+    fields: ['productImages', 'design.finish', 'design.dimensions', 'coolingCapacityKw', 'heatingCapacityKw']
   },
   {
     id: 'year-round', label: 'Całoroczne użytkowanie', description: 'Parametry chłodzenia i ogrzewania oraz wyposażenie zimowe.',

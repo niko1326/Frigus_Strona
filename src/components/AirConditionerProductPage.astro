@@ -12,6 +12,7 @@ import {
 import { buildProductStructuredData } from '../utils/product-structured-data';
 import { toColorParam, toPowerParam } from '../utils/product-variant-url.mjs';
 import { getResponsiveImage } from '../utils/responsive-images';
+import { variantHighlights } from '../utils/product-highlights';
 
 interface Props {
   brand: string;
@@ -54,6 +55,8 @@ const productImageAlt = firstColor?.alt ?? model.alt;
 const responsiveProductImage = getResponsiveImage(productImage);
 const productImageSizes = '(min-width: 1160px) 475px, (min-width: 900px) 44vw, (min-width: 760px) calc(100vw - 120px), calc(100vw - 66px)';
 const firstVariant = model.variants[0];
+const variantFacts = model.variants.map((variant) => variantHighlights(model, variant));
+const firstFacts = variantFacts[0];
 const firstVariantPrice = firstColor?.priceTier === 'color'
   ? firstVariant.colorPriceFromPLN ?? firstVariant.priceFromPLN
   : firstVariant.priceFromPLN;
@@ -172,6 +175,9 @@ const productSchema = buildProductStructuredData({
                   data-heating={formatNumber(variant.heatingCapacityKw)}
                   data-seer={formatNumber(variant.seer)}
                   data-scop={formatNumber(variant.scop)}
+                  data-noise={variantFacts[index].noiseLabel}
+                  data-classes={variantFacts[index].classLabel}
+                  data-climate={variantFacts[index].heatingClimate ? `SCOP: ${variantFacts[index].heatingClimate.toLowerCase()}` : 'Klasy dla wybranej mocy'}
                   data-power={variant.powerKw}
                   data-power-param={toPowerParam(variant.label)}
                   data-power-label={variant.label}
@@ -243,6 +249,27 @@ const productSchema = buildProductStructuredData({
     </div>
   </section>
 
+  <section class="section product-detail-facts-section">
+    <div class="container" data-reveal>
+      <div class="section-head">
+        <p class="eyebrow">Dane wybranego wariantu</p>
+        <h2>Hałas i klasa energetyczna · <span data-spec="power-label">{firstVariant.label} kW</span></h2>
+      </div>
+      <div class="product-variant-highlights" aria-live="polite">
+        <div>
+          <span>Hałas jednostki wewnętrznej</span>
+          <strong data-spec="noise">{firstFacts.noiseLabel}</strong>
+          <small>Najniższe deklarowane ciśnienie akustyczne dla wybranej mocy</small>
+        </div>
+        <div>
+          <span>Klasa chłodzenia / grzania</span>
+          <strong data-spec="classes">{firstFacts.classLabel}</strong>
+          <small data-spec="climate">{firstFacts.heatingClimate ? `SCOP: ${firstFacts.heatingClimate.toLowerCase()}` : 'Klasy dla wybranej mocy'}</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="section">
     <div class="container" data-reveal>
       <div class="section-head">
@@ -262,12 +289,6 @@ const productSchema = buildProductStructuredData({
           <li>
             <span class="product-feature-check" aria-hidden="true">✓</span>
             <span><strong>Sterowanie Wi-Fi</strong><small>{model.connectivityLabel.replace('Sterowanie Wi-Fi / ', '')}</small></span>
-          </li>
-        )}
-        {model.energyClass && (
-          <li>
-            <span class="product-feature-check" aria-hidden="true">✓</span>
-            <span><strong>Klasa energetyczna</strong><small>{model.energyClass}</small></span>
           </li>
         )}
       </ul>
@@ -351,10 +372,6 @@ const productSchema = buildProductStructuredData({
       <p class="tiny-note">
         Dane pochodzą z kart produktowych producenta. Etykieta wariantu może być zaokrągloną nazwą
         handlową; tabela pokazuje dokładną moc znamionową.
-      </p>
-      <p class="product-shared-specs">
-        {model.energyClass && <span><strong>Klasa energetyczna:</strong> {model.energyClass}</span>}
-        {model.noise && <span><strong>Głośność:</strong> {model.noise}</span>}
       </p>
     </div>
   </section>
@@ -490,6 +507,10 @@ const productSchema = buildProductStructuredData({
       setText('heating', button.dataset.heating);
       setText('seer', button.dataset.seer);
       setText('scop', button.dataset.scop);
+      setText('noise', button.dataset.noise);
+      setText('classes', button.dataset.classes);
+      setText('climate', button.dataset.climate);
+      setText('power-label', `${button.dataset.powerLabel} kW`);
       updateEnergyCta(button);
       updatePrice();
     };

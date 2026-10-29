@@ -117,8 +117,11 @@ input:read-only { background: #f3f5f7; }
 .spec-grid > div { border-bottom: 1px solid #e1e7ec; padding: 1.5mm 0; break-inside: avoid; }
 .spec-grid dt { color: #6c7d8b; font-size: 8px; margin-bottom: 1mm; }
 .spec-grid dd { margin: 0; font-size: 11px; font-weight: 500; }
-.feature-list { display: flex; flex-wrap: wrap; gap: 2mm; padding: 0; list-style: none; margin: 2mm 0 4mm; }
-.feature-list li { background: #f0f5f7; color: #34576a; padding: 1.5mm 2.5mm; font-size: 8px; border-radius: 20px; }
+.feature-list { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 2mm; padding: 0; list-style: none; margin: 2mm 0 4mm; }
+.feature-list li { background: #f2f7f9; border: 1px solid #e1ebef; border-top: 2px solid #5d9aab; color: #34576a; padding: 1.6mm 2mm; border-radius: 2mm; break-inside: avoid; min-width: 0; }
+.feature-list strong, .feature-list small { display: block; line-height: 1.25; }
+.feature-list strong { font-size: 8px; font-weight: 600; color: #1b4657; }
+.feature-list small { font-size: 7px; color: #637c89; margin-top: .6mm; }
 .acoustic-context { color: #75838e; font-size: 7px; line-height: 1.45; margin: 2mm 0; }
 .energy-assumptions { color: #687886; font-size: 9px; margin-bottom: 6mm; }
 .energy-section-title { margin-top: 7mm; }
@@ -127,7 +130,14 @@ input:read-only { background: #f3f5f7; }
 .device-cutout { display: block; position: relative; width: min(82mm, calc(42mm * var(--image-aspect))); max-width: 100%; aspect-ratio: var(--image-aspect); overflow: hidden; }
 .device-cutout > img { position: absolute; display: block; max-width: none; margin: 0; object-fit: fill; }
 .device-color-stack .stacked-cutout { position: absolute; left: var(--stack-left); top: var(--stack-top); z-index: var(--stack-z); transform: translate(-50%, -50%); }
-.acoustics-focus .device-color-stack, .acoustics-focus .device-single-stage { height: 42mm; }
+.acoustics-focus .device-color-stack, .acoustics-focus .device-single-stage { height: 38mm; }
+.acoustics-focus .device-cutout { width: min(76mm, calc(35mm * var(--image-aspect))); }
+.recommended-focus .device-color-stack, .recommended-focus .device-single-stage { height: 38mm; }
+.recommended-focus .device-cutout { width: min(76mm, calc(35mm * var(--image-aspect))); }
+.recommended-focus .product-showcase { margin-bottom: 3mm; }
+.recommended-focus .spec-grid { margin-bottom: 2mm; }
+.recommended-focus.acoustics-focus .device-color-stack, .recommended-focus.acoustics-focus .device-single-stage { height: 38mm; }
+.recommended-focus.acoustics-focus .device-cutout { width: min(76mm, calc(35mm * var(--image-aspect))); }
 .color-caption strong, .color-caption span { display: block; }
 .color-caption strong { font-weight: 500; color: #253b4c; font-size: 8px; }
 .color-caption span { font-size: 7px; margin-top: 1mm; }

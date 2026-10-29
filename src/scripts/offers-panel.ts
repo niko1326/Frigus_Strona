@@ -22,6 +22,15 @@ const number = (value: number) => new Intl.NumberFormat('pl-PL', { maximumFracti
 const money = (value: number) => new Intl.NumberFormat('pl-PL', { style: 'currency', currency: 'PLN', maximumFractionDigits: 0 }).format(value);
 const range = (values: number[]) => values.map(value => money(value)).join(' – ');
 const fieldInfo = new Map<string, readonly [string, string]>(TECHNICAL_FIELDS.map(([path, label, unit]) => [path, [label, unit]]));
+const featureDescriptions: Record<string, string> = {
+  'Sterowanie Wi-Fi': 'Wygodna obsługa',
+  'Lampa UVC': 'Higiena nawiewu',
+  Jonizator: 'Jonizacja powietrza',
+  'Grzałka tacy skroplin': 'Wsparcie pracy zimą',
+  'Grzałka karteru': 'Wsparcie przy mrozie',
+  Samooczyszczanie: 'Czystość wymiennika',
+  'Tryb cichy': 'Niższa głośność pracy'
+};
 let sequence = 0;
 let previewVersion = 0;
 let manualEnergy: { area: string; insulation: string } | null = null;
@@ -115,6 +124,50 @@ function readSelection(row: HTMLElement): OfferSelection {
   };
 }
 
+function selectionKey(selection: OfferSelection): string {
+  try { return resolveOfferSelection(selection).id; }
+  catch { return JSON.stringify([selection.modelSlug, selection.powerKw, selection.colorName ?? null]); }
+}
+
+function possibleSelections(modelSlug: string, preferredPower?: number, preferredColor?: string | null): OfferSelection[] {
+  const model = ENERGY_MODELS.find(item => item.slug === modelSlug)!;
+  const colors = getProductColors(model);
+  const names = [...new Set([preferredColor ?? null, null, ...colors.map(color => color.name)])];
+  const powers = [...model.variants].sort((a, b) =>
+    Math.abs(a.powerKw - (preferredPower ?? 3.5)) - Math.abs(b.powerKw - (preferredPower ?? 3.5)) || a.powerKw - b.powerKw);
+  return powers.flatMap(variant => names.map(colorName => ({ modelSlug, powerKw: variant.powerKw, colorName })));
+}
+
+function refreshAvailability(changedRow?: HTMLElement) {
+  if (changedRow) {
+    const otherKeys = new Set([...rows.children].filter(row => row !== changedRow).map(row => selectionKey(readSelection(row as HTMLElement))));
+    const selected = readSelection(changedRow);
+    if (otherKeys.has(selectionKey(selected))) {
+      const candidate = possibleSelections(selected.modelSlug, selected.powerKw, selected.colorName).find(option => !otherKeys.has(selectionKey(option)));
+      if (candidate) {
+        changedRow.querySelector<HTMLSelectElement>('[data-power]')!.value = String(candidate.powerKw);
+        changedRow.querySelector<HTMLSelectElement>('[data-color]')!.value = candidate.colorName ?? '';
+        refreshRow(changedRow);
+        changedRow.querySelector<HTMLElement>('[data-state]')!.textContent += ' Identyczny wariant jest już dodany; ustawiono inną dostępną wersję.';
+      }
+    }
+  }
+  for (const row of [...rows.children] as HTMLElement[]) {
+    const selected = readSelection(row);
+    const otherKeys = new Set([...rows.children].filter(other => other !== row).map(other => selectionKey(readSelection(other as HTMLElement))));
+    const model = ENERGY_MODELS.find(item => item.slug === selected.modelSlug)!;
+    row.querySelectorAll<HTMLOptionElement>('[data-model] option').forEach(option => {
+      option.disabled = !possibleSelections(option.value).some(candidate => !otherKeys.has(selectionKey(candidate)));
+    });
+    row.querySelectorAll<HTMLOptionElement>('[data-power] option').forEach(option => {
+      option.disabled = !possibleSelections(model.slug, Number(option.value), selected.colorName).filter(candidate => candidate.powerKw === Number(option.value)).some(candidate => !otherKeys.has(selectionKey(candidate)));
+    });
+    row.querySelectorAll<HTMLOptionElement>('[data-color] option').forEach(option => {
+      option.disabled = otherKeys.has(selectionKey({ ...selected, colorName: option.value || null }));
+    });
+  }
+}
+
 function refreshRow(row: HTMLElement, modelChanged = false) {
   const modelSelect = row.querySelector<HTMLSelectElement>('[data-model]')!;
   const model = ENERGY_MODELS.find(item => item.slug === modelSelect.value)!;
@@ -148,8 +201,9 @@ function updateCount() {
   rows.querySelectorAll<HTMLButtonElement>('[data-remove]').forEach(button => { button.disabled = rows.children.length <= 1; });
 }
 
-function addRow(slug = ENERGY_MODELS[0].slug) {
+function addRow(slug?: string) {
   if (rows.children.length >= MAX_OFFER_ITEMS) return;
+  slug ??= ENERGY_MODELS.find(model => !model.unavailable && ![...rows.children].some(row => (row as HTMLElement).querySelector<HTMLSelectElement>('[data-model]')!.value === model.slug))?.slug ?? ENERGY_MODELS[0].slug;
   const row = document.createElement('div');
   row.className = 'device-row';
   const id = ++sequence;
@@ -161,11 +215,12 @@ function addRow(slug = ENERGY_MODELS[0].slug) {
   const models = row.querySelector<HTMLSelectElement>('[data-model]')!;
   models.replaceChildren(...ENERGY_MODELS.filter(model => !model.unavailable).map(model => new Option(`${model.brandLabel} ${model.name}`, model.slug)));
   models.value = slug;
-  models.addEventListener('change', () => { refreshRow(row, true); });
-  for (const selector of ['[data-power]', '[data-color]']) row.querySelector(selector)!.addEventListener('change', () => refreshRow(row));
-  row.querySelector('[data-remove]')!.addEventListener('click', () => { row.remove(); updateCount(); markDirty(); });
+  models.addEventListener('change', () => { refreshRow(row, true); refreshAvailability(row); });
+  for (const selector of ['[data-power]', '[data-color]']) row.querySelector(selector)!.addEventListener('change', () => { refreshRow(row); refreshAvailability(row); });
+  row.querySelector('[data-remove]')!.addEventListener('click', () => { row.remove(); updateCount(); refreshAvailability(); markDirty(); });
   rows.append(row);
   refreshRow(row, true);
+  refreshAvailability(row);
   updateCount();
 }
 
@@ -286,7 +341,7 @@ function hero(item: OfferItem, offer: OfferDocument): [string, string] {
 
 function productPages(offer: OfferDocument, item: OfferItem, index: number) {
   const features = [item.technicalData.controls.wifi && 'Sterowanie Wi-Fi', item.technicalData.airQuality.uvc && 'Lampa UVC', item.technicalData.airQuality.ionizer && 'Jonizator', item.technicalData.heatingFeatures.trayHeater && 'Grzałka tacy skroplin', item.technicalData.heatingFeatures.crankcaseHeater && 'Grzałka karteru', item.technicalData.airQuality.selfClean && 'Samooczyszczanie', item.technicalData.airflow.gentleCooling, item.technicalData.airflow.silentMode && 'Tryb cichy'].filter(Boolean).slice(0, 5);
-  const skip = new Set(['productImages', 'priceFromPLN', 'indoorNoise.context', 'outdoorNoise.context', 'outdoorNoise.soundPowerContext']);
+  const skip = new Set(['productImages', 'priceFromPLN', 'colorAffectsPrice', 'design.colors', 'indoorNoise.context', 'outdoorNoise.context', 'outdoorNoise.soundPowerContext']);
   const selectedFields = getOfferPriorityFields(offer.priorities);
   const general: TechnicalFieldPath[] = ['coolingCapacityKw', 'heatingCapacityKw', 'coolingEnergyClass', 'heatingEnergyClass'];
   const focus = displayPriority(offer);
@@ -297,23 +352,25 @@ function productPages(offer: OfferDocument, item: OfferItem, index: number) {
   if (focus === 'quiet' && item.technicalData.indoorNoise.minDb !== null) skip.add('indoorNoise.minDb');
   if (focus === 'heating' || focus === 'year-round') skip.add('operatingRange.heatingMinC');
   if (focus === 'efficiency') for (const path of ['seer', 'scop']) skip.add(path);
-  const fields = [...new Set<TechnicalFieldPath>(['indoorNoise.minDb', ...selectedFields, ...(offer.priorities.main === 'general' ? general : [])])].filter(path => !skip.has(path) && (path === 'indoorNoise.minDb' || readPath(item.technicalData, path) !== null));
-  const firstPageSize = focus === 'general' ? 10 : offer.priorities.main === 'design' ? (fields.length > 6 ? 3 : 6) : offer.recommendation || offer.priorities.main === 'general' && offer.priorities.additional.length ? 8 : getProductColors(item.model).filter(color => color.image).length > 1 ? 10 : 12;
-  const chunks = [fields.slice(0, firstPageSize)];
-  for (let start = firstPageSize; start < fields.length; start += 12) chunks.push(fields.slice(start, start + 12));
+  const essentials: TechnicalFieldPath[] = focus === 'heating' || focus === 'year-round' || focus === 'heating-cost'
+    ? ['coolingCapacityKw', 'heatingCapacityKw', 'indoorNoise.minDb']
+    : ['coolingCapacityKw', 'indoorNoise.minDb'];
+  const fields = [...new Set<TechnicalFieldPath>([...essentials, ...selectedFields, ...(offer.priorities.main === 'general' ? general : [])])].filter(path => !skip.has(path) && (path === 'indoorNoise.minDb' || readPath(item.technicalData, path) !== null));
+  const pageCapacity = focus === 'general' ? 10 : focus === 'design' ? 6 : 8;
+  const chunk = fields.slice(0, pageCapacity);
 
   const [heroLabel, heroValue] = hero(item, offer);
-  return chunks.map((chunk, part) => page(offer, `Urządzenie ${index + 1} / ${offer.items.length}${part ? ' · dalsze parametry' : ''}`,
-    `<div class="recipient-line${offer.withoutCustomer ? ' without-customer' : ''}">${offer.withoutCustomer ? '' : `<div><small>PRZYGOTOWANO DLA</small><strong>${escape(offer.customer || 'Klient indywidualny')}</strong>${offer.location ? `<span>${escape(offer.location)}</span>` : ''}</div>`}<div><small>${escape(dateLabel(offer.date))}</small>${offer.validUntil ? `<span>Ważna do ${escape(dateLabel(offer.validUntil))}</span>` : ''}</div></div><p class="document-kicker">${escape(priorityLabel(focus))}${part ? ' · dalsze parametry' : ''}</p><div class="device-heading"><div><p class="device-brand">${escape(item.model.brandLabel)}</p><h2 class="document-title">${escape(item.model.product.ctaName ?? item.model.name)}</h2></div><span class="variant-label">${escape(item.variant.label)} <small>kW</small></span></div>
-    ${part === 0 ? `<div class="product-showcase"><div class="product-visual">${productVisual(item)}</div><aside class="product-price-card"><span class="price-label">${item.defaultColors ? 'CENA BAZOWA Z MONTAŻEM' : 'URZĄDZENIE Z MONTAŻEM'}</span><strong class="offer-price">${escape(money(item.price))}</strong><span class="price-inclusion">Standardowy montaż<br>do ${PRICING.standardInstallationMeters} mb w cenie</span><div class="price-variant"><small>${item.defaultColors ? 'KOLORY DO WYBORU' : 'WYBRANY WARIANT'}</small><span>${escape(item.variant.label)} kW · ${escape(variantCaption(item))}</span></div>${item.defaultColors ? `<p class="color-price-note">${escape(colorPriceNote(item))}</p>` : ''}</aside></div>${heroLabel !== 'Cena z montażem' ? `<div class="device-hero"><div><small>${escape(heroLabel)}</small><strong>${escape(heroValue)}</strong></div><span class="price-secondary">${escape(item.technicalData.seer !== null ? `SEER ${number(item.technicalData.seer)}` : '')}<small>${escape(item.technicalData.scop !== null ? `SCOP ${number(item.technicalData.scop)}` : '')}</small></span></div>` : ''}` : ''}
-    <p class="spec-heading">${part ? 'Dalsze parametry' : 'Parametry wybranego wariantu'}</p><dl class="spec-grid">${chunk.map(path => `<div><dt>${escape(fieldInfo.get(path)![0])}</dt><dd>${escape(formatField(path, readPath(item.technicalData, path)))}</dd></div>`).join('')}</dl>
-    ${part === 0 && features.length ? `<ul class="feature-list">${features.map(feature => `<li>${escape(feature)}</li>`).join('')}</ul>` : ''}
-    ${part === 0 && offer.recommendation ? `<p class="selection-reason"><strong>Dlaczego ten model?</strong> Moc chłodnicza ${escape(number(item.variant.coolingCapacityKw))} kW pokrywa oszacowane ${escape(number(offer.recommendation.estimate.needKw))} kW. ${offer.recommendation.reasons[item.id].length ? `${escape(offer.recommendation.reasons[item.id].join(' · '))}. ` : ''}Założenia na stronie „Dlaczego taka moc?”.</p>` : ''}
-    ${part === 0 ? comparisonNotes(offer, item) : ''}
+  return page(offer, `Urządzenie ${index + 1} / ${offer.items.length}`,
+    `<div class="recipient-line${offer.withoutCustomer ? ' without-customer' : ''}">${offer.withoutCustomer ? '' : `<div><small>PRZYGOTOWANO DLA</small><strong>${escape(offer.customer || 'Klient indywidualny')}</strong>${offer.location ? `<span>${escape(offer.location)}</span>` : ''}</div>`}<div><small>${escape(dateLabel(offer.date))}</small>${offer.validUntil ? `<span>Ważna do ${escape(dateLabel(offer.validUntil))}</span>` : ''}</div></div><p class="document-kicker">${escape(priorityLabel(focus))}</p><div class="device-heading"><div><p class="device-brand">${escape(item.model.brandLabel)}</p><h2 class="document-title">${escape(item.model.product.ctaName ?? item.model.name)}</h2></div><span class="variant-label">${escape(item.variant.label)} <small>kW</small></span></div>
+    <div class="product-showcase"><div class="product-visual">${productVisual(item)}</div><aside class="product-price-card"><span class="price-label">${item.defaultColors ? 'CENA BAZOWA Z MONTAŻEM' : 'URZĄDZENIE Z MONTAŻEM'}</span><strong class="offer-price">${escape(money(item.price))}</strong><span class="price-inclusion">Standardowy montaż<br>do ${PRICING.standardInstallationMeters} mb w cenie</span><div class="price-variant"><small>${item.defaultColors ? 'KOLORY DO WYBORU' : 'WYBRANY WARIANT'}</small><span>${escape(item.variant.label)} kW · ${escape(variantCaption(item))}</span></div>${item.defaultColors ? `<p class="color-price-note">${escape(colorPriceNote(item))}</p>` : ''}</aside></div>${heroLabel !== 'Cena z montażem' ? `<div class="device-hero"><div><small>${escape(heroLabel)}</small><strong>${escape(heroValue)}</strong></div><span class="price-secondary">${escape(item.technicalData.seer !== null ? `SEER ${number(item.technicalData.seer)}` : '')}<small>${escape(item.technicalData.scop !== null ? `SCOP ${number(item.technicalData.scop)}` : '')}</small></span></div>` : ''}
+    <p class="spec-heading">Parametry wybranego wariantu</p><dl class="spec-grid">${chunk.map(path => `<div><dt>${escape(fieldInfo.get(path)![0])}</dt><dd>${escape(formatField(path, readPath(item.technicalData, path)))}</dd></div>`).join('')}</dl>
+    ${features.length ? `<ul class="feature-list" aria-label="Funkcje urządzenia">${features.map(feature => `<li><strong>${escape(feature)}</strong><small>${escape(featureDescriptions[String(feature)] ?? 'Łagodniejszy nawiew')}</small></li>`).join('')}</ul>` : ''}
+    ${offer.recommendation ? `<p class="selection-reason"><strong>Dlaczego ten model?</strong> Moc chłodnicza ${escape(number(item.variant.coolingCapacityKw))} kW pokrywa oszacowane ${escape(number(offer.recommendation.estimate.needKw))} kW. ${offer.recommendation.reasons[item.id].length ? `${escape(offer.recommendation.reasons[item.id].join(' · '))}. ` : ''}Założenia na stronie „Dlaczego taka moc?”.</p>` : ''}
+    ${comparisonNotes(offer, item)}
     ${chunk.some(path => path.startsWith('indoorNoise.')) && item.technicalData.indoorNoise.context ? `<p class="acoustic-context">${escape(item.technicalData.indoorNoise.context)}</p>` : ''}
     ${chunk.some(path => path.startsWith('outdoorNoise.')) ? `<p class="acoustic-context">${escape([item.technicalData.outdoorNoise.context, item.technicalData.outdoorNoise.soundPowerContext].filter(Boolean).join(' '))} Ciśnienie i moc akustyczna to różne wielkości.</p>` : ''}
     ${item.conflictPaths.length ? '<p class="acoustic-context">Część danych katalogowych wymaga potwierdzenia. Zachowano wartości z konfiguracji FrigAC; sporne parametry pominięto w porównaniach i obliczeniach kosztów.</p>' : ''}
-    <p class="document-terms">Cena obejmuje standardowy montaż do ${PRICING.standardInstallationMeters} mb; dodatkowy zakres wymaga uzgodnienia. Nominalna moc i minimalna temperatura pracy nie określają mocy dostępnej przy danej temperaturze zewnętrznej.</p>`, part === 0 ? (offer.priorities.main === 'design' ? 'design-focus' : focus === 'quiet' ? 'acoustics-focus' : '') : '')).join('');
+    <p class="document-terms">Cena obejmuje standardowy montaż do ${PRICING.standardInstallationMeters} mb; dodatkowy zakres wymaga uzgodnienia. Nominalna moc i minimalna temperatura pracy nie określają mocy dostępnej przy danej temperaturze zewnętrznej.</p>`, `${offer.priorities.main === 'design' ? 'design-focus' : focus === 'quiet' ? 'acoustics-focus' : ''}${offer.recommendation ? ' recommended-focus' : ''}`);
 }
 
 function energyPages(offer: OfferDocument) {

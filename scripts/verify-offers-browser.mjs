@@ -75,6 +75,7 @@ async function capture(name) {
       const footer = children.find(child => child.classList.contains('document-footer'));
       const footerRect = footer?.getBoundingClientRect();
       return {
+        title: element.querySelector('h2')?.textContent?.trim(), className: element.className,
         height: rect.height, width: rect.width, scrollHeight: element.scrollHeight, scrollWidth: element.scrollWidth,
         maxChildBottom: Math.max(...children.map(child => child.getBoundingClientRect().bottom - rect.top)),
         maxContentBottom: Math.max(...children.filter(child => child !== footer).map(child => child.getBoundingClientRect().bottom - rect.top)),
@@ -84,7 +85,7 @@ async function capture(name) {
     }));
     assert.ok(dimensions.length > 0, `${name}: missing document pages`);
     assert.ok(dimensions.every(item => item.scrollWidth <= item.width + 1), `${name}: horizontal page overflow`);
-    assert.ok(dimensions.every(item => item.height <= printableHeightPx), `${name}: page exceeds printable A4 height: ${Math.max(...dimensions.map(item => item.height))} px`);
+    assert.ok(dimensions.every(item => item.height <= printableHeightPx), `${name}: page exceeds printable A4 height: ${JSON.stringify(dimensions.map((item, index) => ({ index, title: item.title, className: item.className, height: item.height, maxContentBottom: item.maxContentBottom, footerTop: item.footerTop })))}`);
     assert.ok(dimensions.every(item => item.scrollHeight <= item.height + 1 && item.maxChildBottom <= item.height + 1), `${name}: content overflows logical page`);
     assert.ok(dimensions.every(item => item.footerTop !== null && item.footerBottom !== null), `${name}: missing document footer`);
     assert.ok(dimensions.every(item => item.maxContentBottom <= item.footerTop - 2), `${name}: content overlaps the absolute footer or leaves less than a 2 px gap: ${JSON.stringify(dimensions.map(({ maxContentBottom, footerTop }) => ({ maxContentBottom, footerTop })))}`);
@@ -240,6 +241,8 @@ try {
     scenario = `priorytet-${priority}`;
     await page.locator('#main-priority').selectOption(priority);
     await prepare();
+    assert.equal(await page.locator('.offer-page:has(.device-heading)').count(), 3, `${priority}: every model must have exactly one product page`);
+    assert.equal(await page.locator('.offer-page').count(), 3, `${priority}: product details must not create continuation pages`);
     if (priority === 'quiet') assert.match(await page.locator('.device-hero').first().innerText(), /hałas/);
     else {
       assert.doesNotMatch((await page.locator('.device-hero').allTextContents()).join(' '), /hałas/);
@@ -264,6 +267,8 @@ try {
   await selectAllAdditional();
   await page.locator('#offer-notes').fill('Uzgodniony zakres obejmuje standardowy montaż. '.repeat(25));
   await prepare(); await capture('wszystkie-priorytety');
+  assert.equal(await page.locator('.offer-page:has(.device-heading)').count(), 3, 'even all priorities keep one product page per model');
+  assert.doesNotMatch(await page.locator('#offer-preview').innerText(), /Dalsze parametry|Kolor wpływa na cenę/);
 
   scenario = 'stress-maksymalne-dane';
   await countDevices(8);
@@ -275,6 +280,7 @@ try {
   await page.locator('#energy-layout').selectOption('shared');
   await page.locator('#offer-notes').fill('Uzgodniony zakres obejmuje standardowy montaż oraz ustalenia z klientem. '.repeat(30).slice(0, 1200));
   await prepare(); await capture(scenario);
+  assert.equal(await page.locator('.offer-page:has(.device-heading)').count(), 8, 'stress: product pages stay one per model');
   assert.equal(await page.locator('#offer-notes').inputValue().then(value => value.length), 1200);
   checks.push('8 devices, all priorities, maximum customer/address/reference lengths and 1200-character notes');
 
@@ -436,6 +442,41 @@ try {
   assert.deepEqual(await page.locator('.device-row select').evaluateAll(selects => selects.map(select => select.value)), manualBefore);
   assert.equal(await page.locator('#energy-area').inputValue(), '');
   checks.push('automatic selection: UVC, limited matches, sloped volume, all priorities, shared energy inputs, invalid rooms and restoration of manual choices');
+
+  scenario = 'kaisai-pro-heat-sprawnosc';
+  await open(); await countDevices(1);
+  await page.locator('#main-priority').selectOption('efficiency');
+  for (const [powerKw, scop] of [[2.6, '4,6'], [3.5, '4,7'], [5.2, '4,6'], [7, '4,7']]) {
+    await setDevice(0, { modelSlug: 'kaisai-pro-heat-plus', powerKw });
+    await prepare();
+    const productText = await page.locator('.offer-page:has(.device-heading)').innerText();
+    assert.match(productText, new RegExp(`8,5 / ${scop}`));
+    assert.match(productText, /A\+\+\+.*A\+\+.*Sezon umiarkowany/s);
+  }
+  await capture(scenario);
+  checks.push('PRO HEAT+ efficiency shows SEER, power-specific SCOP, both energy classes and the documented moderate heating season');
+
+  scenario = 'bez-zduplikowanych-wariantow';
+  await open(); await countDevices(2);
+  await setDevice(0, { modelSlug: 'gree-g-time', powerKw: 3.5 });
+  await rowAt(1).locator('[data-model]').selectOption('gree-g-time');
+  assert.notEqual(await rowAt(1).locator('[data-power]').inputValue(), '3.5');
+  assert.equal(await rowAt(1).locator('[data-power] option[value="3.5"]').evaluate(option => option.disabled), true);
+  await prepare();
+  assert.equal(await page.locator('.offer-page:has(.device-heading)').count(), 2);
+  await rowAt(0).locator('[data-model]').selectOption('gree-clivia');
+  await rowAt(1).locator('[data-model]').selectOption('gree-clivia');
+  await rowAt(1).locator('[data-power]').selectOption('3.5');
+  assert.equal(await rowAt(0).locator('[data-power]').inputValue(), await rowAt(1).locator('[data-power]').inputValue());
+  assert.notEqual(await rowAt(0).locator('[data-color]').inputValue(), await rowAt(1).locator('[data-color]').inputValue());
+  assert.equal(await rowAt(1).locator('[data-color] option[value=""]').evaluate(option => option.disabled), true);
+  await prepare();
+  await capture(scenario);
+  await open();
+  const existingModels = await page.locator('.device-row [data-model]').evaluateAll(selects => selects.map(select => select.value));
+  await page.locator('#add-device').click();
+  assert.ok(!existingModels.includes(await rowAt(3).locator('[data-model]').inputValue()), 'adding a row chooses another model by default');
+  checks.push('duplicate model + power + color is unavailable immediately; the same model remains selectable with another power or color');
   assert.deepEqual(runtimeErrors, [], 'no JavaScript runtime errors');
 } catch (error) {
   failure = { scenario, message: error instanceof Error ? error.message : String(error) };

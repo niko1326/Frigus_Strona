@@ -121,3 +121,17 @@ test('existing energy calculator receives complete per-power values from central
     }
   }
 });
+
+test('KAISAI heating efficiency has a documented climate and PRO HEAT+ keeps power-specific acoustic data', () => {
+  for (const model of [...KAISAI_MODELS, ...KAISAI_UNAVAILABLE_MODELS]) for (const variant of model.variants) {
+    const data = resolveTechnicalData(model, variant);
+    assert.equal(data.heatingClimate, 'Sezon umiarkowany', `${model.slug}/${variant.powerKw}`);
+    assert.ok(resolveTechnicalSources(model, variant).heatingClimate, `${model.slug}/${variant.powerKw}: climate source`);
+  }
+  const proHeat = KAISAI_MODELS.find(model => model.slug === 'kaisai-pro-heat-plus');
+  assert.deepEqual(proHeat.variants.map(variant => {
+    const data = resolveTechnicalData(proHeat, variant);
+    assert.ok(resolveTechnicalSources(proHeat, variant)['indoorNoise.soundPowerDb']);
+    return [variant.powerKw, data.seer, data.scop, data.indoorNoise.soundPowerDb];
+  }), [[2.6, 8.5, 4.6, 54], [3.5, 8.5, 4.7, 54], [5.2, 8.5, 4.6, 57], [7, 8.5, 4.7, 60]]);
+});

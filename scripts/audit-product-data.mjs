@@ -17,7 +17,7 @@ const findings = research.flatMap((document) => document.findings ?? []);
 const conflictingSourceFindings = findings.filter((item) => item.status === 'CONFLICT')
   .map((item) => ({ ...item, conflictKind: 'source' }));
 const existingSource = 'src/config/lineups.ts — zastana wartość używana na stronie; snapshot catalog-before.json';
-const asOf = '2026-10-28';
+const asOf = '2026-10-29';
 const rows = [];
 const conflicts = new Map();
 const sourceConflicts = new Map();
@@ -175,6 +175,7 @@ const csv = '\uFEFF' + [headers.map(escapeCsv).join(';'), ...rows.map((row) => h
 const md = (value) => serialized(value).replaceAll('|', '\\|').replaceAll('\n', ' ');
 const report = [
   '# Audyt i research danych produktowych FrigAC', '', `Stan researchu: ${asOf}.`, '',
+  'Uzupełnienie sprawności sezonowej KAISAI i źródła: [KAISAI-ENERGY-UPDATE.md](KAISAI-ENERGY-UPDATE.md).', '',
   '## Zakres i znaczenie statusów', '',
   `Katalog: **${summary.models} modeli, ${summary.variants} wariantów mocy**; w tym dostępne: ${summary.activeModels} modeli i ${summary.activeVariants} wariantów.`, '',
   '`VERIFIED` dla zastanych wartości oznacza zgodnie z poleceniem użytkownika „wartość już używana przez stronę i zachowana”. Nie oznacza ponownego potwierdzenia każdej zastanej wartości u producenta. Nowe wartości VERIFIED mają dowód z rejestru źródeł. `MISSING` oznacza null / brak dowodu. `CONFLICT` oznacza różnicę względem zastanej wartości albo jawną sprzeczność źródeł; w drugim przypadku parametr może pozostać null. Obecne wartości pozostają bez zmian.', '',

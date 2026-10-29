@@ -78,7 +78,7 @@ import '../../styles/offers-panel.css';
             </fieldset>
           </section>
           <section class="form-section" aria-labelledby="priorities-heading">
-            <div class="section-heading"><span class="step">03</span><div><h2 id="priorities-heading">Co jest najważniejsze dla klienta?</h2><p>Priorytet główny ustala wyróżnienie. W ofercie ogólnej wyróżniamy pierwszy zaznaczony na liście priorytet dodatkowy. Hałas zawsze pozostaje w danych urządzenia.</p></div></div>
+            <div class="section-heading"><span class="step">03</span><div><h2 id="priorities-heading">Co jest najważniejsze dla klienta?</h2><p>Priorytet główny ustala wyróżnienie. W ofercie ogólnej wyróżniamy pierwszy zaznaczony na liście priorytet dodatkowy. Hałas zawsze pozostaje w danych urządzenia. Na kartę trafiają najważniejsze parametry, aby każdy model zajmował jedną stronę.</p></div></div>
             <label class="main-priority">Priorytet główny<select id="main-priority" name="mainPriority">{OFFER_PRIORITIES.map(priority => <option value={priority.id} selected={priority.id === DEFAULT_OFFER_PRIORITY}>{priority.label}</option>)}</select></label>
             <fieldset class="additional-priorities"><legend>Dodatkowe priorytety</legend><div class="checkbox-grid">{OFFER_PRIORITIES.filter(priority => priority.id !== DEFAULT_OFFER_PRIORITY).map(priority => <label class="checkbox-label"><input type="checkbox" name="additionalPriority" value={priority.id} />{priority.label}</label>)}</div></fieldset>
           </section>

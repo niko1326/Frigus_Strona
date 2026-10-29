@@ -1,6 +1,6 @@
 {
   "brand": "KAISAI",
-  "researchedAt": "2026-10-28",
+  "researchedAt": "2026-10-29",
   "scope": {
     "modelCount": 9,
     "variantCount": 30,
@@ -7162,6 +7162,134 @@
       "value": "Moc akustyczna dB, chłodzenie i grzanie; wartości równe według karty UE.",
       "sourceId": "kaisai-art-fiche",
       "locator": "s. 7, poziomy mocy akustycznej na zewnątrz"
+    },
+    {
+      "modelSlug": "kaisai-air",
+      "powerKw": null,
+      "path": "heatingClimate",
+      "value": "Sezon umiarkowany",
+      "sourceId": "kaisai-air-leaflet",
+      "locator": "s. 2, wiersz SCOP średni, moce 09 / 12 / 18 / 24"
+    },
+    {
+      "modelSlug": "kaisai-fly-plus",
+      "powerKw": null,
+      "path": "heatingClimate",
+      "value": "Sezon umiarkowany",
+      "sourceId": "kaisai-fly-plus-fiche",
+      "locator": "s. 1, 3, 5, 7, SCOP dla sezonu umiarkowanego"
+    },
+    {
+      "modelSlug": "kaisai-geo",
+      "powerKw": null,
+      "path": "heatingClimate",
+      "value": "Sezon umiarkowany",
+      "sourceId": "kaisai-geo-leaflet",
+      "locator": "s. 2, wiersz SCOP średni, moce 09 / 12 / 18 / 24"
+    },
+    {
+      "modelSlug": "kaisai-geo-plus",
+      "powerKw": null,
+      "path": "heatingClimate",
+      "value": "Sezon umiarkowany",
+      "sourceId": "kaisai-geo-plus-fiche",
+      "locator": "s. 1, 3, 5, 7, SCOP dla sezonu umiarkowanego"
+    },
+    {
+      "modelSlug": "kaisai-art",
+      "powerKw": null,
+      "path": "heatingClimate",
+      "value": "Sezon umiarkowany",
+      "sourceId": "kaisai-art-fiche",
+      "locator": "s. 1, 3, 5, 7 i 9, 11, 13, 15, SCOP dla sezonu umiarkowanego"
+    },
+    {
+      "modelSlug": "kaisai-pro-heat-plus",
+      "powerKw": null,
+      "path": "heatingClimate",
+      "value": "Sezon umiarkowany",
+      "sourceId": "kaisai-pro-heat-plus-fiche",
+      "locator": "s. 1, SCOP (średni sezon grzewczy), kolumny 09 / 12 / 18 / 24"
+    },
+    {
+      "modelSlug": "kaisai-ice",
+      "powerKw": null,
+      "path": "heatingClimate",
+      "value": "Sezon umiarkowany",
+      "sourceId": "kaisai-ice-leaflet",
+      "locator": "s. 2, wiersz SCOP średni, moce 09 / 12 / 18 / 24"
+    },
+    {
+      "modelSlug": "kaisai-konsola",
+      "powerKw": null,
+      "path": "heatingClimate",
+      "value": "Sezon umiarkowany",
+      "sourceId": "kaisai-console-fiche",
+      "locator": "s. 1, SCOP dla sezonu umiarkowanego, model 12"
+    },
+    {
+      "modelSlug": "kaisai-pro-heat-plus",
+      "powerKw": null,
+      "path": "controls.app",
+      "value": "Sterowanie z telefonu przez Wi-Fi",
+      "sourceId": "kaisai-pro-heat-plus-page",
+      "locator": "Opis produktu, Wi-Fi i sterowanie smartfonem"
+    },
+    {
+      "modelSlug": "kaisai-pro-heat-plus",
+      "powerKw": null,
+      "path": "controls.remote",
+      "value": "Pilot bezprzewodowy 85T",
+      "sourceId": "kaisai-pro-heat-plus-leaflet",
+      "locator": "s. 2, Pilot bezprzewodowy 85T"
+    },
+    {
+      "modelSlug": "kaisai-pro-heat-plus",
+      "powerKw": null,
+      "path": "airflow.fanSpeedControl",
+      "value": "Regulacja siły nawiewu z pilota",
+      "sourceId": "kaisai-pro-heat-plus-page",
+      "locator": "Charakterystyka, regulacja siły nawiewu z pilota"
+    },
+    {
+      "modelSlug": "kaisai-pro-heat-plus",
+      "powerKw": 2.6,
+      "path": "indoorNoise.soundPowerDb",
+      "value": 54,
+      "sourceId": "kaisai-pro-heat-plus-fiche",
+      "locator": "s. 1, poziom mocy akustycznej jednostki wewnętrznej, kolumna 1"
+    },
+    {
+      "modelSlug": "kaisai-pro-heat-plus",
+      "powerKw": 3.5,
+      "path": "indoorNoise.soundPowerDb",
+      "value": 54,
+      "sourceId": "kaisai-pro-heat-plus-fiche",
+      "locator": "s. 1, poziom mocy akustycznej jednostki wewnętrznej, kolumna 2"
+    },
+    {
+      "modelSlug": "kaisai-pro-heat-plus",
+      "powerKw": 5.2,
+      "path": "indoorNoise.soundPowerDb",
+      "value": 57,
+      "sourceId": "kaisai-pro-heat-plus-fiche",
+      "locator": "s. 1, poziom mocy akustycznej jednostki wewnętrznej, kolumna 3"
+    },
+    {
+      "modelSlug": "kaisai-pro-heat-plus",
+      "powerKw": 7,
+      "path": "indoorNoise.soundPowerDb",
+      "value": 60,
+      "sourceId": "kaisai-pro-heat-plus-fiche",
+      "locator": "s. 1, poziom mocy akustycznej jednostki wewnętrznej, kolumna 4"
+    },
+    {
+      "modelSlug": "kaisai-nordic",
+      "powerKw": null,
+      "path": "heatingClimate",
+      "value": "Sezon umiarkowany",
+      "sourceId": "kaisai-nordic-leaflet",
+      "locator": "s. 4, specyfikacja NORDIC, SCOP średni dla KNP-12NRHI / KNP-12NRHO"
     }
   ],
   "conflicts": [
