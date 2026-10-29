@@ -189,6 +189,22 @@ try {
   assert.doesNotMatch(await page.locator('#offer-preview').innerText(), /PRZYGOTOWANO DLA|Klient indywidualny/);
   assert.match(await page.locator('.color-price-note').nth(0).innerText(), /Wszystkie kolory w tej samej cenie/);
   assert.match(await page.locator('.color-price-note').nth(1).innerText(), /dopłata 100/);
+  assert.equal(await page.locator('#download-offer').innerText(), 'Pobierz PDF');
+  assert.equal(await page.locator('#print-offer').innerText(), 'Drukuj');
+  const logicalDownloadPages = await page.locator('#offer-preview .offer-page').count();
+  await page.locator('#pdf-filename').fill('Oferta QA: klient/test?');
+  assert.equal(await page.locator('#offer-preview .offer-page').count(), logicalDownloadPages, 'changing only the PDF filename keeps the prepared preview');
+  const downloadPromise = page.waitForEvent('download', { timeout: 60_000 });
+  await page.locator('#download-offer').click();
+  const download = await downloadPromise;
+  assert.equal(download.suggestedFilename(), 'Oferta QA klient test.pdf');
+  const downloadedPath = `${output}/pobrana-oferta.pdf`;
+  await download.saveAs(downloadedPath);
+  const downloadedPdf = await readFile(downloadedPath);
+  assert.ok(downloadedPdf.subarray(0, 5).equals(Buffer.from('%PDF-')), 'downloaded offer must be a PDF');
+  const downloadedPages = [...downloadedPdf.toString('latin1').matchAll(/\/Type\s*\/Page(?=[\s/>])/g)].length;
+  assert.equal(downloadedPages, logicalDownloadPages, 'downloaded PDF keeps one physical page per offer page');
+  checks.push('PDF download is separate from print, keeps the prepared preview, sanitizes the chosen filename and preserves page count');
   await capture('oferta-bez-danych-klienta');
 
   await page.locator('#without-customer').uncheck();

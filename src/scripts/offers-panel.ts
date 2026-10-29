@@ -22,6 +22,15 @@ const escape = (value: unknown) => String(value ?? '').replace(/[&<>"']/g, chara
 const number = (value: number) => new Intl.NumberFormat('pl-PL', { maximumFractionDigits: 3 }).format(value);
 const money = (value: number) => new Intl.NumberFormat('pl-PL', { style: 'currency', currency: 'PLN', maximumFractionDigits: 0 }).format(value);
 const range = (values: number[]) => values.map(value => money(value)).join(' – ');
+const rasterizeLogo = (image: HTMLImageElement) => {
+  const canvas = document.createElement('canvas');
+  canvas.width = 288;
+  canvas.height = 88;
+  const context = canvas.getContext('2d');
+  if (!context) throw new Error('Nie udało się przygotować logo do PDF.');
+  context.drawImage(image, 0, 0, canvas.width, canvas.height);
+  return canvas.toDataURL('image/png');
+};
 const fieldInfo = new Map<string, readonly [string, string]>(TECHNICAL_FIELDS.map(([path, label, unit]) => [path, [label, unit]]));
 const featureDescriptions: Record<string, string> = {
   'Sterowanie Wi-Fi': 'Wygodna obsługa',
@@ -294,7 +303,7 @@ function footer() {
   return `<footer class="document-footer"><span>${escape(COMPANY.legalName)} · NIP ${escape(COMPANY.nip)}</span><span>${escape(PHONE_DISPLAY)} · ${escape(EMAIL)} · ${escape(new URL(SITE.siteUrl).hostname)}</span><span class="document-page-number"></span></footer>`;
 }
 function header(offer: OfferDocument, caption: string) {
-  return `<header class="document-header"><a class="home-logo" href="${escape(SITE.siteUrl)}" aria-label="FrigAC — strona główna"><img src="/brand/frigac-logo.svg" alt="FrigAC" width="144" height="44"></a><span><strong>${escape(offer.reference)}</strong><br>${escape(caption)}</span></header>`;
+  return `<header class="document-header"><a class="home-logo" href="${escape(SITE.siteUrl)}" aria-label="FrigAC — strona główna"><img src="/brand/frigac-logo.svg?v=pdf-2" alt="FrigAC" width="144" height="44"></a><span><strong>${escape(offer.reference)}</strong><br>${escape(caption)}</span></header>`;
 }
 function page(offer: OfferDocument, caption: string, content: string, className = '') {
   return `<article class="offer-page ${className}">${header(offer, caption)}${content}${footer()}</article>`;
@@ -472,10 +481,18 @@ downloadButton.addEventListener('click', async () => {
   const enteredName = inputValue('pdf-filename').replace(/\.pdf$/i, '');
   const defaultName = `Oferta_${inputValue('offer-number') || warsawDate()}`;
   const baseName = (enteredName || defaultName).replace(/[\\/:*?"<>|]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 100) || 'Oferta_FrigAC';
+  let rasterizedLogos: Array<{ image: HTMLImageElement; source: string }> = [];
   downloadButton.disabled = true;
   try {
     await document.fonts.ready;
     await Promise.all([...preview.querySelectorAll<HTMLImageElement>('img')].map(image => image.decode()));
+    const logos = [...preview.querySelectorAll<HTMLImageElement>('.document-header img')];
+    const logoPng = logos[0] ? rasterizeLogo(logos[0]) : null;
+    if (logoPng) {
+      rasterizedLogos = logos.map(image => ({ image, source: image.getAttribute('src') ?? image.src }));
+      logos.forEach(image => { image.src = logoPng; });
+      await Promise.all(logos.map(image => image.decode()));
+    }
     const [{ default: html2canvas }, { jsPDF }] = await Promise.all([import('html2canvas'), import('jspdf')]);
     if (version !== previewVersion || !preview.children.length) return;
     document.body.classList.add('pdf-exporting');
@@ -496,6 +513,7 @@ downloadButton.addEventListener('click', async () => {
   } catch (error) {
     message.textContent = `Nie udało się przygotować PDF: ${error instanceof Error ? error.message : 'spróbuj ponownie'}`;
   } finally {
+    rasterizedLogos.forEach(({ image, source }) => { image.src = source; });
     document.body.classList.remove('pdf-exporting');
     downloadButton.disabled = preview.children.length === 0;
   }

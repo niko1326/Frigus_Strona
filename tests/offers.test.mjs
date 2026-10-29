@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { ENERGY_MODELS } from '../src/config/lineups.ts';
 import { TECHNICAL_FIELDS } from '../src/config/product-technical.ts';
 import { OFFER_PRIORITIES, DEFAULT_OFFER_PRIORITY, normalizeOfferPriorities, getOfferPriorityFields } from '../src/config/offer-priorities.ts';
@@ -10,6 +11,13 @@ const clivia = () => resolveOfferSelection({ modelSlug: 'gree-clivia', powerKw: 
 const airy = () => resolveOfferSelection({ modelSlug: 'gree-airy', powerKw: 3.5, colorName: 'Biały' });
 const energyInput = { area: 25, price: 1.1, insulation: 'standard', coolingUsage: 'standard', heatingUsage: 'regular' };
 const metric = (items, name) => calculateOfferComparisons(items).find((entry) => entry.metric === name);
+
+test('offer logo stays in one SVG viewport so canvas PDF export cannot clip the symbol', async () => {
+  const logo = await readFile(new URL('../public/brand/frigac-logo.svg', import.meta.url), 'utf8');
+  assert.equal((logo.match(/<svg\b/g) ?? []).length, 1);
+  assert.match(logo, /<rect[^>]+stroke="#101820"/);
+  assert.equal((logo.match(/stroke="#8[35]c[7b][bd][ab]"/g) ?? []).length, 3);
+});
 
 test('all 11 priorities map only to central field paths; blank choice is a general offer', () => {
   assert.equal(OFFER_PRIORITIES.length, 11);
