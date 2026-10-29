@@ -14,6 +14,7 @@ const rows = byId<HTMLDivElement>('device-rows');
 const preview = byId<HTMLDivElement>('offer-preview');
 const message = byId<HTMLDivElement>('offer-message');
 const printButton = byId<HTMLButtonElement>('print-offer');
+const downloadButton = byId<HTMLButtonElement>('download-offer');
 const addButton = byId<HTMLButtonElement>('add-device');
 const mainPriority = byId<HTMLSelectElement>('main-priority');
 const inputValue = (id: string) => (byId<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>(id)).value.trim();
@@ -50,6 +51,7 @@ function markDirty() {
   preview.replaceChildren();
   byId('preview-heading').hidden = true;
   printButton.disabled = true;
+  downloadButton.disabled = true;
   message.textContent = '';
   document.title = 'Oferty · FrigAC';
   byId('auto-selection-result').hidden = true;
@@ -245,6 +247,12 @@ type OfferDocument = {
   priorities: OfferPriorities; items: OfferItem[]; energyInput: OfferEnergyInput | null; energy: Map<string, OfferEnergyResult>;
 };
 const priorityLabel = (id: string) => OFFER_PRIORITIES.find(priority => priority.id === id)!.label;
+const visiblePriorityLabels = (offer: OfferDocument) => [offer.priorities.main, ...offer.priorities.additional]
+  .filter(id => id !== 'price').map(priorityLabel);
+const priceFocusLabel = (item: OfferItem) => ({
+  'kaisai-air': 'Rozsądny wybór',
+  'kaisai-geo': 'Dobry stosunek jakości do ceny'
+}[item.model.slug] ?? 'Komfort na co dzień');
 const itemName = (item: OfferItem) => `${item.model.brandLabel} ${item.model.product.ctaName ?? item.model.name}`;
 const itemIdentity = (item: OfferItem) => `${itemName(item)} ${item.variant.label} kW · ${variantCaption(item)}`;
 const variantCaption = (item: OfferItem) => item.defaultColors ? 'Wszystkie kolory' : item.color?.name ?? 'Wersja katalogowa';
@@ -283,7 +291,7 @@ function productVisual(item: OfferItem) {
 }
 
 function footer() {
-  return `<footer class="document-footer"><span>${escape(COMPANY.legalName)} · NIP ${escape(COMPANY.nip)}</span><span>${escape(PHONE_DISPLAY)} · ${escape(EMAIL)} · ${escape(new URL(SITE.siteUrl).hostname)}</span></footer>`;
+  return `<footer class="document-footer"><span>${escape(COMPANY.legalName)} · NIP ${escape(COMPANY.nip)}</span><span>${escape(PHONE_DISPLAY)} · ${escape(EMAIL)} · ${escape(new URL(SITE.siteUrl).hostname)}</span><span class="document-page-number"></span></footer>`;
 }
 function header(offer: OfferDocument, caption: string) {
   return `<header class="document-header"><a class="home-logo" href="${escape(SITE.siteUrl)}" aria-label="FrigAC — strona główna"><img src="/brand/frigac-logo.svg" alt="FrigAC" width="144" height="44"></a><span><strong>${escape(offer.reference)}</strong><br>${escape(caption)}</span></header>`;
@@ -312,12 +320,11 @@ function comparisonNotes(offer: OfferDocument, item?: OfferItem) {
 }
 
 function cover(offer: OfferDocument) {
-  const cheapest = Math.min(...offer.items.map(item => item.price));
-  const selected = [offer.priorities.main, ...offer.priorities.additional].map(priorityLabel).join(' · ');
+  const selected = visiblePriorityLabels(offer).join(' · ') || 'Modele dopasowane do Twoich potrzeb';
   return page(offer, 'Oferta z montażem', `<p class="document-kicker">KLIMATYZACJA Z MONTAŻEM</p><h1 class="document-title">Komfort dopasowany<br>do Twoich potrzeb.</h1><p class="document-lead">${escape(selected)}</p>
     <div class="customer-details">${offer.withoutCustomer ? '' : `<div><span>Przygotowano dla</span><strong>${escape(offer.customer || 'Klient indywidualny')}</strong>${offer.location ? `<span>${escape(offer.location)}</span>` : ''}</div>`}<div><span>Data oferty</span><strong>${escape(dateLabel(offer.date))}</strong>${offer.validUntil ? `<span>Ważna do ${escape(dateLabel(offer.validUntil))}</span>` : ''}</div></div>
     <h3>Wybrane warianty · ${offer.items.length}</h3><p class="document-terms">Warianty alternatywne dla tego samego pomieszczenia. Cena każdego wariantu obejmuje urządzenie i standardowy montaż do ${PRICING.standardInstallationMeters} mb.</p>
-    <table class="offer-table"><thead><tr><th>Urządzenie / kolor</th><th>Moc chłodnicza</th><th>Cena z montażem</th>${offer.priorities.main === 'price' ? '<th>Różnica do najtańszego</th>' : ''}</tr></thead><tbody>${offer.items.map(item => `<tr><td><strong>${escape(itemName(item))}</strong><small>${escape(variantCaption(item))}</small></td><td>${escape(number(item.variant.coolingCapacityKw))} kW</td><td><strong>${escape(money(item.price))}</strong>${item.defaultColors ? `<small>Cena bazowa. ${escape(colorPriceNote(item))}</small>` : ''}</td>${offer.priorities.main === 'price' ? `<td>+ ${escape(money(item.price - cheapest))}</td>` : ''}</tr>`).join('')}</tbody></table>
+    <table class="offer-table"><thead><tr><th>Urządzenie / kolor</th><th>Moc chłodnicza</th><th>Cena z montażem</th></tr></thead><tbody>${offer.items.map(item => `<tr><td><strong>${escape(itemName(item))}</strong><small>${escape(variantCaption(item))}</small></td><td>${escape(number(item.variant.coolingCapacityKw))} kW</td><td><strong>${escape(money(item.price))}</strong>${item.defaultColors ? `<small>Cena bazowa. ${escape(colorPriceNote(item))}</small>` : ''}</td></tr>`).join('')}</tbody></table>
     ${offer.items.length <= 5 && offer.priorities.additional.length <= 3 ? comparisonNotes(offer) : ''}${offer.notes && offer.notes.length <= 350 ? `<div class="document-note">${escape(offer.notes)}</div>` : ''}
     <p class="document-terms">${escape(PRICING.pricingNote)}</p><p class="document-terms">${escape(PRICING.travelIncluded)}</p>`, 'summary-page');
 }
@@ -361,7 +368,7 @@ function productPages(offer: OfferDocument, item: OfferItem, index: number) {
 
   const [heroLabel, heroValue] = hero(item, offer);
   return page(offer, `Urządzenie ${index + 1} / ${offer.items.length}`,
-    `<div class="recipient-line${offer.withoutCustomer ? ' without-customer' : ''}">${offer.withoutCustomer ? '' : `<div><small>PRZYGOTOWANO DLA</small><strong>${escape(offer.customer || 'Klient indywidualny')}</strong>${offer.location ? `<span>${escape(offer.location)}</span>` : ''}</div>`}<div><small>${escape(dateLabel(offer.date))}</small>${offer.validUntil ? `<span>Ważna do ${escape(dateLabel(offer.validUntil))}</span>` : ''}</div></div><p class="document-kicker">${escape(priorityLabel(focus))}</p><div class="device-heading"><div><p class="device-brand">${escape(item.model.brandLabel)}</p><h2 class="document-title">${escape(item.model.product.ctaName ?? item.model.name)}</h2></div><span class="variant-label">${escape(item.variant.label)} <small>kW</small></span></div>
+    `<div class="recipient-line${offer.withoutCustomer ? ' without-customer' : ''}">${offer.withoutCustomer ? '' : `<div><small>PRZYGOTOWANO DLA</small><strong>${escape(offer.customer || 'Klient indywidualny')}</strong>${offer.location ? `<span>${escape(offer.location)}</span>` : ''}</div>`}<div><small>${escape(dateLabel(offer.date))}</small>${offer.validUntil ? `<span>Ważna do ${escape(dateLabel(offer.validUntil))}</span>` : ''}</div></div><p class="document-kicker">${escape(focus === 'price' ? priceFocusLabel(item) : priorityLabel(focus))}</p><div class="device-heading"><div><p class="device-brand">${escape(item.model.brandLabel)}</p><h2 class="document-title">${escape(item.model.product.ctaName ?? item.model.name)}</h2></div><span class="variant-label">${escape(item.variant.label)} <small>kW</small></span></div>
     <div class="product-showcase"><div class="product-visual">${productVisual(item)}</div><aside class="product-price-card"><span class="price-label">${item.defaultColors ? 'CENA BAZOWA Z MONTAŻEM' : 'URZĄDZENIE Z MONTAŻEM'}</span><strong class="offer-price">${escape(money(item.price))}</strong><span class="price-inclusion">Standardowy montaż<br>do ${PRICING.standardInstallationMeters} mb w cenie</span><div class="price-variant"><small>${item.defaultColors ? 'KOLORY DO WYBORU' : 'WYBRANY WARIANT'}</small><span>${escape(item.variant.label)} kW · ${escape(variantCaption(item))}</span></div>${item.defaultColors ? `<p class="color-price-note">${escape(colorPriceNote(item))}</p>` : ''}</aside></div>${heroLabel !== 'Cena z montażem' ? `<div class="device-hero"><div><small>${escape(heroLabel)}</small><strong>${escape(heroValue)}</strong></div><span class="price-secondary">${escape(item.technicalData.seer !== null ? `SEER ${number(item.technicalData.seer)}` : '')}<small>${escape(item.technicalData.scop !== null ? `SCOP ${number(item.technicalData.scop)}` : '')}</small></span></div>` : ''}
     <p class="spec-heading">Parametry wybranego wariantu</p><dl class="spec-grid">${chunk.map(path => `<div><dt>${escape(fieldInfo.get(path)![0])}</dt><dd>${escape(formatField(path, readPath(item.technicalData, path)))}</dd></div>`).join('')}</dl>
     ${features.length ? `<ul class="feature-list" aria-label="Funkcje urządzenia">${features.map(feature => `<li><strong>${escape(feature)}</strong><small>${escape(featureDescriptions[String(feature)] ?? 'Łagodniejszy nawiew')}</small></li>`).join('')}</ul>` : ''}
@@ -400,7 +407,7 @@ function sizingPage(offer: OfferDocument) {
     <h3>Wymiary i kubatura</h3><p class="sizing-copy">${room.sloped ? `Wysokość minimalna ${escape(number(room.minHeight))} m, maksymalna ${escape(number(room.height))} m. Skosy obejmują ${escape(number(room.slopePercent))}% podłogi. Średnia wysokość części skośnej: (${escape(number(room.minHeight))} + ${escape(number(room.height))}) / 2. Pozostała część ma pełną wysokość.` : `Wysokość pomieszczenia: ${escape(number(room.height))} m, bez skosów.`}<br>Średnia wysokość całego pomieszczenia: ${escape(number(estimate.averageHeight))} m. Kubatura: ${escape(number(room.area))} m² × ${escape(number(estimate.averageHeight))} m = ${escape(number(estimate.volume))} m³.</p>
     <h3>Założenia obciążenia cieplnego</h3><table class="offer-table"><thead><tr><th>Czynnik</th><th>Przyjęta korekta</th></tr></thead><tbody>${estimate.adjustments.map(adjustment => `<tr><td>${escape(adjustment.label)}</td><td>${adjustment.value > 0 ? '+' : ''}${escape(number(adjustment.value * 100))}%</td></tr>`).join('')}<tr><td>Osoby: ${room.occupants} (baza obejmuje 2 osoby)</td><td>+ ${escape(number(estimate.peopleKw))} kW</td></tr><tr><td>Dodatkowe ciepło ze sprzętu: ${escape(number(room.equipmentW))} W</td><td>+ ${escape(number(estimate.equipmentKw))} kW</td></tr></tbody></table>
     <div class="document-note">${escape(number(estimate.volume))} m³ × 40 W/m³ ÷ 1000 × ${escape(number(1 + estimate.correction))} + ${escape(number(estimate.peopleKw))} kW + ${escape(number(estimate.equipmentKw))} kW ≈ ${escape(number(estimate.needKw))} kW.<br>Wynik zaokrąglono w górę do 0,1 kW. Dla każdej serii wybrano najmniejszy dostępny i wyceniony wariant pokrywający ten wynik, z ograniczeniem nadmiernego przewymiarowania.</div>
-    <p class="sizing-copy">Kolejność propozycji uwzględnia: ${escape([offer.priorities.main, ...offer.priorities.additional].map(priorityLabel).join(' · '))}. ${!room.brand || room.brand === 'all' ? 'Porównujemy GREE i KAISAI; od dwóch propozycji uwzględniamy obie marki, jeśli spełniają wymagania. ' : `Marka: ${room.brand.toUpperCase()}. `}${room.requireUvc ? 'Uwzględniono wyłącznie modele z potwierdzoną lampą UVC. ' : ''}${room.maxPrice !== null ? `Limit ceny bazowej z montażem: ${escape(money(room.maxPrice))}. ` : ''}Każdy model stanowi alternatywę dla tej samej strefy; mocy urządzeń nie sumujemy.</p>
+    <p class="sizing-copy">${visiblePriorityLabels(offer).length ? `Uwzględnione potrzeby: ${escape(visiblePriorityLabels(offer).join(' · '))}. ` : ''}${!room.brand || room.brand === 'all' ? 'Porównujemy GREE i KAISAI; od dwóch propozycji uwzględniamy obie marki, jeśli spełniają wymagania. ' : `Marka: ${room.brand.toUpperCase()}. `}${room.requireUvc ? 'Uwzględniono wyłącznie modele z potwierdzoną lampą UVC. ' : ''}${room.maxPrice !== null ? `Limit ceny bazowej z montażem: ${escape(money(room.maxPrice))}. ` : ''}Każdy model stanowi alternatywę dla tej samej strefy; mocy urządzeń nie sumujemy.</p>
     ${warnings.map(warning => `<p class="document-terms">${escape(warning)}</p>`).join('')}
     <p class="document-terms">Dobór wstępny według kubatury i jawnych korekt FrigAC, nie pełny bilans cieplny budynku. Złożona geometria dachu, wentylacja, intensywne gotowanie i nietypowe zyski ciepła wymagają oceny na miejscu. Moc grzewczą przy mrozie należy zweryfikować osobno.</p>`, 'sizing-page');
 }
@@ -435,6 +442,8 @@ function prepareOffer() {
     : '';
   const includeSummary = byId<HTMLInputElement>('include-summary').checked;
   preview.innerHTML = (includeSummary ? cover(offer) + comparisonsPage : '') + items.map((item, index) => productPages(offer, item, index)).join('') + sizingPage(offer) + energyPages(offer) + (offer.notes && (!includeSummary || offer.notes.length > 350) ? page(offer, 'Uzgodnienia', `<p class="document-kicker">ZAKRES OFERTY</p><h2 class="document-title">Ustalenia i uwagi.</h2><div class="document-note">${escape(offer.notes)}</div>`) : '');
+  const pageNumbers = preview.querySelectorAll<HTMLElement>('.document-page-number');
+  pageNumbers.forEach((element, index) => { element.textContent = `Strona ${index + 1} z ${pageNumbers.length}`; });
   if (recommendation) {
     const result = byId('auto-selection-result');
     result.hidden = false;
@@ -442,13 +451,14 @@ function prepareOffer() {
   }
   byId('preview-heading').hidden = false;
   printButton.disabled = false;
+  downloadButton.disabled = false;
   message.textContent = items.some(item => item.conflictPaths.length) ? 'Podgląd gotowy. Wybrane urządzenia mają parametry oznaczone do ręcznej weryfikacji w raporcie danych. Sporne pola nie tworzą porównań ani kosztów energii.' : 'Podgląd gotowy. Możesz zapisać ofertę jako PDF.';
   if (recommendation?.warnings.length) message.textContent += '\n' + recommendation.warnings.join('\n');
   document.title = `Oferta ${offer.reference || 'FrigAC'}${offer.customer ? ` — ${offer.customer}` : ''}`;
 }
 
-form.addEventListener('input', () => { updateSelectionMode(); markDirty(); });
-form.addEventListener('change', () => { updatePriorities(); updateCustomerFields(); updateValidityField(); updateSelectionMode(); markDirty(); });
+form.addEventListener('input', event => { if ((event.target as HTMLElement).id === 'pdf-filename') return; updateSelectionMode(); markDirty(); });
+form.addEventListener('change', event => { if ((event.target as HTMLElement).id === 'pdf-filename') return; updatePriorities(); updateCustomerFields(); updateValidityField(); updateSelectionMode(); markDirty(); });
 form.addEventListener('submit', event => {
   event.preventDefault();
   if (!form.reportValidity()) return;
@@ -456,6 +466,40 @@ form.addEventListener('submit', event => {
   catch (error) { message.textContent = error instanceof Error ? error.message : 'Nie udało się przygotować oferty.'; }
 });
 addButton.addEventListener('click', () => { addRow(); markDirty(); });
+downloadButton.addEventListener('click', async () => {
+  const version = previewVersion;
+  if (!preview.children.length) return;
+  const enteredName = inputValue('pdf-filename').replace(/\.pdf$/i, '');
+  const defaultName = `Oferta_${inputValue('offer-number') || warsawDate()}`;
+  const baseName = (enteredName || defaultName).replace(/[\\/:*?"<>|]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 100) || 'Oferta_FrigAC';
+  downloadButton.disabled = true;
+  try {
+    await document.fonts.ready;
+    await Promise.all([...preview.querySelectorAll<HTMLImageElement>('img')].map(image => image.decode()));
+    const [{ default: html2canvas }, { jsPDF }] = await Promise.all([import('html2canvas'), import('jspdf')]);
+    if (version !== previewVersion || !preview.children.length) return;
+    document.body.classList.add('pdf-exporting');
+    await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
+    const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4', compress: true });
+    const pages = [...preview.querySelectorAll<HTMLElement>('.offer-page')];
+    for (const [index, pageElement] of pages.entries()) {
+      if (version !== previewVersion) return;
+      const canvas = await html2canvas(pageElement, { backgroundColor: '#ffffff', scale: 2, useCORS: true, logging: false, scrollX: 0, scrollY: -window.scrollY });
+      const heightMm = canvas.height / canvas.width * 210;
+      if (heightMm > 297.2 || pageElement.scrollHeight > pageElement.clientHeight + 1) throw new Error(`Strona ${index + 1} nie mieści się na A4.`);
+      if (index) pdf.addPage('a4', 'portrait');
+      pdf.addImage(canvas.toDataURL('image/jpeg', 0.94), 'JPEG', 0, 0, 210, heightMm, undefined, 'FAST');
+    }
+    if (version !== previewVersion) return;
+    pdf.setProperties({ title: baseName, author: 'FrigAC', subject: 'Oferta klimatyzacji' });
+    pdf.save(`${baseName}.pdf`);
+  } catch (error) {
+    message.textContent = `Nie udało się przygotować PDF: ${error instanceof Error ? error.message : 'spróbuj ponownie'}`;
+  } finally {
+    document.body.classList.remove('pdf-exporting');
+    downloadButton.disabled = preview.children.length === 0;
+  }
+});
 printButton.addEventListener('click', async () => {
   const version = previewVersion;
   if (!preview.children.length) return;

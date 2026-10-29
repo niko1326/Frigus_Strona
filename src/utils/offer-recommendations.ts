@@ -89,7 +89,6 @@ function selectionReasons(item: OfferItem, priorities: OfferPriorities): string[
     if (['general', 'efficiency', 'cooling-cost'].includes(priority) && known(item, 'seer', d.seer) !== null) reasons.push(`SEER ${d.seer}`);
     if (priority === 'airflow' && feature(item, 'airflow.gentleCooling', d.airflow.gentleCooling)) reasons.push(String(d.airflow.gentleCooling));
     if (priority === 'design' && d.design.colors?.length) reasons.push(`${d.design.colors.length} wersji kolorystycznych`);
-    if (priority === 'price') reasons.push('Cena uwzględniona w kolejności propozycji');
   }
   return [...new Set(reasons)].slice(0, 2);
 }

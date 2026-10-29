@@ -29,7 +29,7 @@ const results = [];
 const checks = [];
 let scenario = 'initialization';
 let failure = null;
-const printableHeightPx = 1048; // 277 mm: A4 height minus the CSS 10 mm top/bottom page margins.
+const printableHeightPx = 1123; // Full A4 height (297 mm); page content has its own padding.
 const rowAt = index => page.locator('.device-row').nth(index);
 
 async function open() {

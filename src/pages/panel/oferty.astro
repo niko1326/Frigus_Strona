@@ -101,8 +101,9 @@ import '../../styles/offers-panel.css';
           </section>
           <div id="offer-message" role="status" aria-live="polite"></div>
           <div id="auto-selection-result" class="selection-result" hidden aria-live="polite"></div>
-          <div class="form-actions"><button class="button" type="submit">Przygotuj podgląd oferty</button><button class="button secondary" id="print-offer" type="button" disabled>Zapisz PDF / drukuj</button></div>
-          <p class="field-help">Zapis PDF: wybierz „Zapisz jako PDF” w oknie drukowania, format A4 i wyłącz nagłówki oraz stopki przeglądarki. Dane klienta nie są zapisywane w przeglądarce ani wysyłane na serwer.</p>
+          <label class="pdf-filename">Nazwa pliku PDF<input id="pdf-filename" type="text" maxlength="120" placeholder="np. Oferta dla klienta" autocomplete="off" /></label>
+          <div class="form-actions"><button class="button" type="submit">Przygotuj podgląd oferty</button><button class="button secondary" id="download-offer" type="button" disabled>Pobierz PDF</button><button class="button secondary" id="print-offer" type="button" disabled>Drukuj</button></div>
+          <p class="field-help">„Pobierz PDF” zapisuje gotową ofertę pod wybraną nazwą, bez dodatków przeglądarki. Przy drukowaniu odznacz „Nagłówki i stopki” w oknie przeglądarki. Dane klienta nie są zapisywane w przeglądarce ani wysyłane na serwer.</p>
         </form>
       </div>
       <div class="preview-heading no-print" id="preview-heading" hidden><p class="eyebrow">PODGLĄD DOKUMENTU A4</p><p>Brakujące parametry są pomijane. Porównania odnoszą się do wybranych urządzeń.</p></div>
